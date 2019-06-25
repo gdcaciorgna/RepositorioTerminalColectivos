@@ -39,7 +39,7 @@ public class ServletCerrarSesion extends HttpServlet {
 		doGet(request, response);
 		HttpSession sesion = request.getSession();
 		sesion.setAttribute("usuario", null);
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("index.jsp");
 	}
 
 }

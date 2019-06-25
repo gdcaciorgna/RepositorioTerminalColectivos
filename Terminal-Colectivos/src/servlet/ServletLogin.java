@@ -51,7 +51,8 @@ public class ServletLogin extends HttpServlet {
         if(r==true) 
 		{
         	sesion.setAttribute("usuario", txtusu);
-        	request.getRequestDispatcher("WEB-INF/menuppal.html").forward(request, response);	
+        	response.sendRedirect("index.jsp");	
+
             //redirijo a página con información de login exitoso
         	
 		}
@@ -66,9 +67,9 @@ public class ServletLogin extends HttpServlet {
  		        	}
  		        	else 
  		        	{
-	 		        	request.getSession().setAttribute("error", "Usuario y/o contraseña incorrecta");
+	 		        request.getSession().setAttribute("error", "Usuario y/o contraseña incorrecta");
  		        	}
-    		 response.sendRedirect("index.jsp");	
+    		 response.sendRedirect("login.jsp");	
         	 }				    
 	}
 
