@@ -11,10 +11,10 @@
 <jsp:include page="header.jsp" />  
 
 <div>
-<br>
 
  Bienvenido ${sessionScope.usuario} - Rol: ${sessionScope.rol}
- <%--Para recuperar el nombre de la sesión y el rol | Va a servir a la hora de ocultar elementos para determinados roles --%>
+ <%--Para recuperar el nombre de la sesión --%>
+
 </div>
 
 <br>
