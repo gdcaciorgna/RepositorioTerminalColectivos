@@ -12,16 +12,17 @@ import data.DataUsuario;
 import entities.Usuario;
 
 /**
- * Servlet implementation class ServletLogin
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/ServletLogin")
-public class ServletLogin extends HttpServlet {
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public ServletLogin() {
+    public LoginServlet() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -30,12 +31,11 @@ public class ServletLogin extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		HttpSession sesion = request.getSession();
 
 		Usuario usu = new Usuario();
 		DataUsuario dusu = new DataUsuario();
-		
-		
 		
 
         boolean r;

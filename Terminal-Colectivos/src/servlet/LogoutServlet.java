@@ -9,16 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class CerrarSesion
+ * Servlet implementation class LogoutServlet
  */
-@WebServlet("/CerrarSesion")
-public class ServletCerrarSesion extends HttpServlet {
+@WebServlet("/LogoutServlet")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletCerrarSesion() {
+    public LogoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,6 +29,11 @@ public class ServletCerrarSesion extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession sesion = request.getSession();
+		sesion.setAttribute("usuario", null);
+		sesion.invalidate();
+		response.sendRedirect("login.jsp");
+	
 	}
 
 	/**
@@ -37,9 +42,7 @@ public class ServletCerrarSesion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		HttpSession sesion = request.getSession();
-		sesion.setAttribute("usuario", null);
-		response.sendRedirect("index.jsp");
+		
 	}
 
 }
