@@ -39,18 +39,24 @@ public class LoginServlet extends HttpServlet {
 		
 
         boolean r;
+        Usuario usuarioEncontrado;
         String txtusu = request.getParameter("txtusu");
         String txtpass = request.getParameter("txtpass");
         
+        
         usu.setUsuario(txtusu);
         usu.setContrasenia(txtpass);
+       
         
         r= dusu.validar(usu);
+        usuarioEncontrado = dusu.getByUsuario(txtusu);
+        usu.setRol(usuarioEncontrado.getRol());
        
  
         if(r==true) 
 		{
         	sesion.setAttribute("usuario", txtusu);
+        	sesion.setAttribute("rol", usu.getRol());
         	response.sendRedirect("index.jsp");	
 
             //redirijo a página con información de login exitoso
