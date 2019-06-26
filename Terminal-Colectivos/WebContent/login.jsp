@@ -4,16 +4,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Iniciar Sesión</title>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
- <link rel="stylesheet" href="estilos.css"> 
 
+<jsp:include page="imports.jsp" /> 
+
+<title>Iniciar Sesión</title>
 
 </head>
 <body>
 
-
+<jsp:include page="header.jsp" />  
 
 <div class="container login-container">
        <div class="col-md-6 login-form-1">
