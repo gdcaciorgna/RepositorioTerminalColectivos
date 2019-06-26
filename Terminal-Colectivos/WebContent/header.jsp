@@ -5,7 +5,7 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-home"></i> Inicio</a>
+        <a class="nav-link" href="index.jsp"><i class="fas fa-home"></i> Inicio</a>
 
       </li>
    <li class="nav-item">

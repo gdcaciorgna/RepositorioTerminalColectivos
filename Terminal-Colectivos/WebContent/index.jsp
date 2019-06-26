@@ -12,7 +12,9 @@
 
 <div>
 
- Bienvenido ${sessionScope.usuario} - Rol: ${sessionScope.rol}
+
+
+ Usuario: <%= session.getAttribute("usuario") %> - Rol: <%= session.getAttribute("rol") %>
  <%--Para recuperar el nombre de la sesión --%>
 
 </div>
