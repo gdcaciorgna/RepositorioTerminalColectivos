@@ -72,7 +72,7 @@ if(usuario==null)
 
 
 <div>
- Bienvenido ${sessionScope.usuario} 
+ Bienvenido ${sessionScope.usuario} - Rol: ${sessionScope.rol}
  <%--Para recuperar el nombre de la sesión --%>
 </div>
 
