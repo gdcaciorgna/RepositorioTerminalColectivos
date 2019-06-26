@@ -54,8 +54,7 @@ public class Conectar {
 		}
 		
 		} catch (SQLException e) 
-		{
-			e.printStackTrace();
+		{			e.printStackTrace();
 		}
 		conectados++;
 		return conn;

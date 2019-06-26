@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,31 +9,24 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/a0183d84ac.js"></script>
 
+
  <link rel="stylesheet" href="estilos.css"> 
-<meta charset="ISO-8859-1">
+<meta charset="charset=UTF-8">
 <title>Inicio</title>
-
-
-
 
 </head>
 <body>
 
-        
-<div class="row no-gutters ">
-<div class="col-sm-10 float-left">
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#"><i class="fas fa-home"></i> Inicio <span class="sr-only">(current)</span></a>
       </li>
-       <li class="nav-item">
+   <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-suitcase"></i> Mis Reservas</a>
       </li>
        <li class="nav-item">
@@ -44,50 +36,47 @@
         <a class="nav-link" href="#"><i class="fas fa-bus"></i> Viajes</a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-address-book"></i> Información</a>
+        <a class="nav-link" href="#"><i class="fas fa-address-book"></i> InformaciÃ³n</a>
       </li>
-
     </ul>
-    
-  </div>
-</nav>
-
-
-
-</div>
-
-
-<div class="col-sm-2 float-right">
-
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-  <div class=" collapse navbar-collapse" id="navbarTogglerDemo03">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-<%
+   
+    <span class="navbar-item">
+    <ul class="navbar-nav mr-auto">
+      <%
 String usuario=(String)session.getAttribute("usuario");
 if(usuario==null)
 {%>
-<a href="login.jsp" class="nav-link" href="#"><i class="fas fa-user-cog"></i> Iniciar Sesión </a>
+	<li class="nav-item">
+	<a class="nav-link" href="login.jsp"><i class="fas fa-user"></i> Iniciar SesiÃ³n</a>
+	</li>
 <% } else
 { %>
- <a href="ServletCerrarSesion?param=value" class="nav-link" href="#"><i class="fas fa-user-cog"></i> Cerrar Sesión </a>
+         
+       <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user"></i> Mi cuenta
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#"><i class="fas fa-id-card"></i> Mi Perfil</a>
+          <a class="dropdown-item" href="LogoutServlet"><i class="fas fa-times-circle"></i> Cerrar SesiÃ³n</a>
+        </div>
+      </li>
+    </ul>
 <% 
 }
 %>
-
-
- 
-
- </li>
-
-    </ul>
-    
+    </span>
     
   </div>
 </nav>
+
+
+<div>
+ Bienvenido ${sessionScope.usuario} 
+ <%--Para recuperar el nombre de la sesiÃ³n --%>
 </div>
-</div>
+
+
 
 
 </body>

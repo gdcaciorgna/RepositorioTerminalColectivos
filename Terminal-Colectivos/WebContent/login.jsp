@@ -18,7 +18,7 @@
 <div class="container login-container">
        <div class="col-md-6 login-form-1">
              <h3>Iniciar Sesión</h3>
-             <form action="ServletLogin" method = "post">
+             <form action="LoginServlet" method = "post">
                  <div class="form-group">
                      <input type="text" class="form-control" name="txtusu" placeholder="Ingresar usuario..." value="" />
                  </div>
@@ -29,7 +29,7 @@
                  <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Ingresar" />
                  </div>
-                  <div align="center"> <a href="url">Crear una nueva cuenta</a> </div>
+                  <div align="center"> <a href="#">Crear una nueva cuenta</a> </div>
               	<% String error = (String)session.getAttribute("error");%>
 			<% if(session.getAttribute("error")!=null) { %>
 			<br>
