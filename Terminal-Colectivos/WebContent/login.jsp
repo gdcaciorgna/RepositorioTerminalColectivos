@@ -24,6 +24,7 @@
                  <div class="form-group">
                      <input type="password" class="form-control" name="txtpass" placeholder="Ingresar contraseña..." value="" />
                  </div>
+                 
            
                  <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Ingresar" />
