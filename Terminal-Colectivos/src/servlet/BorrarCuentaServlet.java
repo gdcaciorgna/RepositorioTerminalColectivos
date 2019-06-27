@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import data.DataUsuario;
 import entities.Usuario;
@@ -31,44 +32,49 @@ public class BorrarCuentaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession sesion = request.getSession();
+
 		
-		Usuario usuarioEncontrado;
+		Usuario usu;
 		DataUsuario dusu = new DataUsuario();
-		boolean testIgualdad, r;
-		
+		boolean testPassword;
+		int filasAfectadas;
 		
 		String txtusu;
-		String txtpass1 = request.getParameter("txtpass1");
-		String txtpass2 = request.getParameter("txtpass2");
+		String txtpass = request.getParameter("txtpass1");
 		txtusu = (String) request.getParameter("txtusu");
 		
-		usuarioEncontrado = dusu.getByUsuario(txtusu);
+		usu = dusu.getByUsuario(txtusu);
 		
-		testIgualdad = validarIgualdadContraseñas(txtpass1, txtpass2);
-		if (testIgualdad) 
+		testPassword= dusu.validar(usu);
+		
+		if(testPassword) 
 		{
-			request.getSession().setAttribute("error", "Las contraseñas SI coinciden");
-		}
-		else 
-		{
-			request.getSession().setAttribute("error", "Las contraseñas no coinciden.");
-		}
-		
-		 response.sendRedirect("#");
-	
-		
+        	filasAfectadas = dusu.borrarUsuario(usu);
+        	sesion.setAttribute("filasAfectadas", filasAfectadas);
+        	
 
-	
-	
+		}
+        	 else 
+        	 { 
+		        	
+		        	
+        		 if (txtusu.isEmpty() || txtpass.isEmpty()) 
+        		 	{ 
+ 		        	//lógica para falta de datos
+ 		        	request.getSession().setAttribute("error", "Hay campos vacíos");
+ 		        	}
+ 		        	else 
+ 		        	{
+	 		        request.getSession().setAttribute("error", "Usuario y/o contraseña incorrecta");
+ 		        	}
+    		 response.sendRedirect("MiPerfil.jsp");	
+        	 }				    
 	}
+		
+	
  
 	
-
-	private boolean validarIgualdadContraseñas(String txtpass1, String txtpass2) {
-		if(txtpass1.equals(txtpass2))
-		return true;
-		else return false;
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

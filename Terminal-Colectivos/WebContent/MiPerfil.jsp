@@ -1,24 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="utf-8">
 <jsp:include page="imports.jsp" />
 <title>Mi Perfil</title>
 
-<script> 
-function comprobarClave(){ 
-   	clave1 = document.formBorrarMiCuenta.txtpass1.value 
-   	clave2 = document.formBorrarMiCuenta.txtpass2.value 
+<script type="text/javascript" src="validarIgualdadPassword.js"></script>
 
-   	if (clave1 == clave2) 
-   		document.formBorrarMiCuenta.submit() 
-   	else 
-   		document.getElementById('mensajeContraseniasNoCoinciden').style.display = 'block';
-   		document.getElementById('mensajeContraseniasNoCoinciden').innerHTML='Las contraseñas no coinciden';   	
-   	} 
-</script> 
 
 
 </head>
@@ -29,7 +19,7 @@ function comprobarClave(){
 
 <div>
 <br> 
-Información de Mi Perfil, con posibilidad de realizar Cambios
+InformaciÃ³n de Mi Perfil, con posibilidad de realizar Cambios
 <br> 
 </div>
 
@@ -37,8 +27,8 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
 <div class="card border-danger mb-3" style="max-width: 15rem;">
   <div class="card-header">Eliminar Cuenta</div>
   <div class="card-body text-danger">
-    <h5 class="card-title">¡Cuidado!</h5>
-    <p class="card-text">Al eliminar tu cuenta, no podrás recuperarla en un futuro.</p>
+    <h5 class="card-title">Â¡Cuidado!</h5>
+    <p class="card-text">Al eliminar tu cuenta, no podrÃ¡s recuperarla en un futuro.</p>
     	
         <button type="button" class="btn pull-right btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">Eliminar Cuenta</button>
         
@@ -57,19 +47,19 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
         
         <div class="form-group">
                
-                 <label class="p-2" for="exampleFormControlInput1">Para que podamos dar de baja tu cuenta, es necesario que escribas tu contraseña:</label>
+                 <label class="p-2" for="exampleFormControlInput1">Para que podamos dar de baja tu cuenta, es necesario que escribas tu contraseÃ±a:</label>
            
-                 <input type="password" class="form-control" name="txtpass1" placeholder="Ingresar contraseña..." value="" />
+                 <input type="password" class="form-control" name="txtpass1" placeholder="Ingresar contraseÃ±a..." value="" />
     	</div>
         <div class="form-group">
-            <input type="password" class="form-control" name="txtpass2" placeholder="Repetir contraseña..." value="" />
+            <input type="password" class="form-control" name="txtpass2" placeholder="Repetir contraseÃ±a..." value="" />
             
         </div>
         <input type="hidden" name="txtusu" value=<%=txtusuario %> /> 
       </div>
       <div class="modal-footer">
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>
-                <input type="button" class="btn pull-right btn-danger" value="Eliminar mi Cuenta" onClick="comprobarClave()"/>
+                <input type="button" class="btn pull-right btn-danger" value="Eliminar mi Cuenta" onClick="validarIgualdadPassword()"/>
             
             <div id="mensajeContraseniasNoCoinciden" class="alert alert-danger" role="alert"><br></div> 
                

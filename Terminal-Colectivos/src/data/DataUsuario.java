@@ -91,7 +91,39 @@ public class DataUsuario implements Validar
 
 
 
-	
+	public int borrarUsuario(Usuario usu) {
+		PreparedStatement pstmt = null;
+		String sql = "delete from usuario where usuario = ?";
+
+		
+		
+		try 
+		{
+		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		
+			pstmt.setString(1, "usuario");
+			int filasAfectadas = pstmt.executeUpdate();
+			return filasAfectadas;
+			
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			return 0;
+		}
+		finally 
+		{
+			try 
+			{
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();}
+		}
+	}
 
 
 	
