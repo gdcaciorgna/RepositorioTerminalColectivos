@@ -54,7 +54,7 @@ public class BorrarCuentaServlet extends HttpServlet {
 			request.getSession().setAttribute("error", "Las contraseñas no coinciden.");
 		}
 		
-		 response.sendRedirect("asdasdas.jsp");
+		 response.sendRedirect("#");
 	
 		
 

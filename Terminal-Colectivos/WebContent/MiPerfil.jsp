@@ -6,6 +6,21 @@
 <meta charset="ISO-8859-1">
 <jsp:include page="imports.jsp" />
 <title>Mi Perfil</title>
+
+<script> 
+function comprobarClave(){ 
+   	clave1 = document.formBorrarMiCuenta.txtpass1.value 
+   	clave2 = document.formBorrarMiCuenta.txtpass2.value 
+
+   	if (clave1 == clave2) 
+   		document.formBorrarMiCuenta.submit() 
+   	else 
+   		document.getElementById('mensajeContraseniasNoCoinciden').style.display = 'block';
+   		document.getElementById('mensajeContraseniasNoCoinciden').innerHTML='Las contraseñas no coinciden';   	
+   	} 
+</script> 
+
+
 </head>
 <body>
 <jsp:include page="header.jsp" /> 
@@ -18,7 +33,7 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
 <br> 
 </div>
 
-<form action="BorrarCuentaServlet" method="get">
+<form name="formBorrarMiCuenta" action="BorrarCuentaServlet" method="get">
 <div class="card border-danger mb-3" style="max-width: 15rem;">
   <div class="card-header">Eliminar Cuenta</div>
   <div class="card-body text-danger">
@@ -54,14 +69,12 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
       </div>
       <div class="modal-footer">
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>
-                <input type="submit" class="btn pull-right btn-danger" value="Eliminar Cuenta"/>
-                <% String error = (String)session.getAttribute("error");%>
-			<% if(session.getAttribute("error")!=null) { %>
-			<br>
-			<div class="alert alert-danger" role="alert">
-			Error: <%= error %>
+                <input type="button" class="btn pull-right btn-danger" value="Eliminar mi Cuenta" onClick="comprobarClave()"/>
+            
+            <div id="mensajeContraseniasNoCoinciden" class="alert alert-danger" role="alert"><br></div> 
+               
 			</div> 
-			<%}%>
+			
     
 
       </div>
@@ -72,7 +85,6 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
         
     	
   </div>
-</div>
 
 
 </form>
