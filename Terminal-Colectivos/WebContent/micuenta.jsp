@@ -31,7 +31,14 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
     <p class="card-text">Al eliminar tu cuenta, no podrás recuperarla en un futuro.</p>
     	
         <button type="button" class="btn pull-right btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">Eliminar Cuenta</button>
-        
+    		<br>
+    		<% String error = (String)session.getAttribute("errorEliminarUsuario");%>
+			<% if(error != null) { %>      
+   			<div class="alert alert-danger" role="alert">
+			Error: <%= error %>
+			</div> 
+			<% } %>
+			
         <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -61,18 +68,10 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>
                 <input type="button" class="btn pull-right btn-danger" value="Eliminar mi Cuenta" onClick="validarIgualdadPassword()"/>
             
-            <div id="mensajeContraseniasNoCoinciden" class="alert alert-danger" role="alert">
-            	<% String error = (String)session.getAttribute("errorEliminarUsuario");%>
-			<% if(error!=null) { %>
-			<br>
-			<div class="alert alert-danger" role="alert">
-			Error: <%= error %>
-			</div> 
-			<%}%>
-			<br></div> 
-               
-			</div> 
-			
+            <div id="mensajeContraseniasNoCoinciden" class="alert alert-danger" role="alert"></div> 
+            
+            
+		</div> 
     
 
       </div>
@@ -86,8 +85,8 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
 
 
 </form>
-
-   
+	
+		
 
 </body>
 </html>

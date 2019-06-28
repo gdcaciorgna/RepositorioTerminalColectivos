@@ -12,8 +12,8 @@
 <jsp:include page="header.jsp" />  
 <br>
 <div class="alert alert-success" role="alert">
-  <h4 class="alert-heading">¡Adiós !</h4>
-  <p>Se ha logrado dar de baja la cuenta <div class="font-weight-bold"><%= session.getAttribute("usuario") %> de manera satisfactoria</div>  .</p>
+  <h4 class="alert-heading">¡Adiós!</h4>
+  <p>Se ha logrado dar de baja al usuario <span class="font-weight-bold"><%= session.getAttribute("usuario") %></span> de manera satisfactoria  .</p>
   <hr>
   <p class="mb-0"><a href="index.jsp"> Volver a la página principal</a>.</p>
 </div>
