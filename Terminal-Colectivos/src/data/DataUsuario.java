@@ -96,13 +96,61 @@ public class DataUsuario implements Validar
 
 	
 	
+	
+	
+
+	@Override
+	public boolean validar(Usuario usu, String txtpass) {
+		int r=0;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement("select * from usuario where  estado= 'activo' and usuario = ? and contrasenia = ?");
+			pstmt.setString(1, usu.getUsuario());
+			pstmt.setString(2, txtpass);
+			rs = pstmt.executeQuery();
+			
+			if(rs!=null && rs.next())
+			{
+				usu.setUsuario(rs.getString("usuario"));
+				usu.setRol(rs.getString("rol"));
+				usu.setEmail(rs.getString("email"));
+				usu.setContrasenia(rs.getString("contrasenia"));
+				usu.setEstado(rs.getString("estado"));
+				r=r+1;
+				
+			}
+		}catch(SQLException e) { e.printStackTrace();}
+		finally 
+		{
+			try 
+			{
+				if(rs!=null) {rs.close();}
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();}
+		}	
+
+		
+
+		if(r==1) 
+		{
+			return true;
+		}
+		else {return false;}
+		
+	}
+	
 	@Override
 	public boolean validar(Usuario usu) {
 		int r=0;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
-		String sql1 = "";
-
 		
 		try 
 		{
@@ -145,29 +193,26 @@ public class DataUsuario implements Validar
 		
 	}
 	
-
-
-	
-	public int borrarUsuario(Usuario usu) {
+	public int borrarUsuario(Usuario usu){
 		PreparedStatement pstmt = null;
-		String sql = "update usuario set estado = 'eliminado' where usuario = ?";
+		int filasAfectadas = 0;
 
 		
 		
 		try 
 		{
-		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		pstmt = Conectar.getInstancia().getConn().prepareStatement("update usuario set estado = 'eliminado' where usuario = ?");
 		
-			pstmt.setString(1, "usuario");
-			int filasAfectadas = pstmt.executeUpdate();
-			return filasAfectadas;
+			pstmt.setString(1, usu.getUsuario());
 			
+			 filasAfectadas = pstmt.executeUpdate();			
 			
 			
 			
 		} catch(SQLException e) 
 		{
-			return 0;
+			
+			e.printStackTrace();
 		}
 		finally 
 		{
@@ -178,8 +223,15 @@ public class DataUsuario implements Validar
 				
 				
 				
-			} catch(SQLException e) {e.printStackTrace();}
+			} catch(SQLException e) {e.printStackTrace();
+			
+			}
+			
+			
+			
 		}
+		
+		return filasAfectadas;
 	}
 
 

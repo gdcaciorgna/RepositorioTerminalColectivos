@@ -31,14 +31,14 @@ public class BorrarCuentaServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 		HttpSession sesion = request.getSession();
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 
 		
 		Usuario usu;
 		DataUsuario dusu = new DataUsuario();
 		boolean testPassword;
-		int filasAfectadas;
+		
 		
 		String txtusu;
 		String txtpass = request.getParameter("txtpass1");
@@ -46,13 +46,14 @@ public class BorrarCuentaServlet extends HttpServlet {
 		
 		usu = dusu.getByUsuario(txtusu);
 		
-		testPassword= dusu.validar(usu);
+		testPassword= dusu.validar(usu,txtpass);
 		
 		if(testPassword) 
 		{
-        	filasAfectadas = dusu.borrarUsuario(usu);
+			int filasAfectadas = dusu.borrarUsuario(usu);
         	sesion.setAttribute("filasAfectadas", filasAfectadas);
-        	
+
+        	 response.sendRedirect("index.jsp");	
 
 		}
         	 else 
