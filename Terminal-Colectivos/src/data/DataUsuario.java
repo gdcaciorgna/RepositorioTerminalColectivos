@@ -68,6 +68,7 @@ public class DataUsuario implements Validar
 				u.setRol(rs.getString("rol"));
 				u.setEmail(rs.getString("email"));
 				u.setContrasenia(rs.getString("contrasenia"));
+				u.setEstado(rs.getString("estado"));
 							
 				
 		}
@@ -91,9 +92,65 @@ public class DataUsuario implements Validar
 
 
 
+
+
+	
+	
+	@Override
+	public boolean validar(Usuario usu) {
+		int r=0;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		String sql1 = "";
+
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement("select * from usuario where  estado= 'activo' and usuario = ? and contrasenia = ?");
+			pstmt.setString(1, usu.getUsuario());
+			pstmt.setString(2, usu.getContrasenia());
+			rs = pstmt.executeQuery();
+			
+			if(rs!=null && rs.next())
+			{
+				usu.setUsuario(rs.getString("usuario"));
+				usu.setRol(rs.getString("rol"));
+				usu.setEmail(rs.getString("email"));
+				usu.setContrasenia(rs.getString("contrasenia"));
+				usu.setEstado(rs.getString("estado"));
+				r=r+1;
+				
+			}
+		}catch(SQLException e) { e.printStackTrace();}
+		finally 
+		{
+			try 
+			{
+				if(rs!=null) {rs.close();}
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();}
+		}	
+
+		
+
+		if(r==1) 
+		{
+			return true;
+		}
+		else {return false;}
+		
+	}
+	
+
+
+	
 	public int borrarUsuario(Usuario usu) {
 		PreparedStatement pstmt = null;
-		String sql = "delete from usuario where usuario = ?";
+		String sql = "update usuario set estado = 'eliminado' where usuario = ?";
 
 		
 		
@@ -125,60 +182,5 @@ public class DataUsuario implements Validar
 		}
 	}
 
-
-	
-	
-	@Override
-	public boolean validar(Usuario usu) {
-		int r=0;
-		ResultSet rs = null;
-		PreparedStatement pstmt = null;
-		String sql = "select * from usuario where usuario = ? and contrasenia = ?";
-
-		
-		try 
-		{
-			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usu.getUsuario());
-			pstmt.setString(2, usu.getContrasenia());
-			rs = pstmt.executeQuery();
-			
-			if(rs!=null && rs.next())
-			{
-				usu.setUsuario(rs.getString("usuario"));
-				usu.setRol(rs.getString("rol"));
-				usu.setEmail(rs.getString("email"));
-				usu.setContrasenia(rs.getString("contrasenia"));
-				r=r+1;
-				
-			}
-		}catch(SQLException e) { e.printStackTrace();}
-		finally 
-		{
-			try 
-			{
-				if(rs!=null) {rs.close();}
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();}
-		}	
-
-		
-
-		if(r==1) 
-		{
-			return true;
-		}
-		else {return false;}
-		
-	}
-	
-
-
-	
-	
 
 }

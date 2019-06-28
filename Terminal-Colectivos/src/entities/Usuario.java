@@ -5,6 +5,7 @@ public class Usuario {
 	private String email;
 	private String contrasenia;
 	private String rol;
+	private String estado;
 	
 	public String getUsuario() {
 		return usuario;
@@ -30,6 +31,13 @@ public class Usuario {
 	}
 	public void setRol(String rol) {
 		this.rol = rol;
+	}
+	
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 	
 	
