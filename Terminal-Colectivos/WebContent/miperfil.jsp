@@ -61,7 +61,15 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>
                 <input type="button" class="btn pull-right btn-danger" value="Eliminar mi Cuenta" onClick="validarIgualdadPassword()"/>
             
-            <div id="mensajeContraseniasNoCoinciden" class="alert alert-danger" role="alert"><br></div> 
+            <div id="mensajeContraseniasNoCoinciden" class="alert alert-danger" role="alert">
+            	<% String error = (String)session.getAttribute("error");%>
+			<% if(session.getAttribute("error")!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= error %>
+			</div> 
+			<%}%>
+			<br></div> 
                
 			</div> 
 			
@@ -79,7 +87,7 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
 
 </form>
 
-
+   
 
 </body>
 </html>

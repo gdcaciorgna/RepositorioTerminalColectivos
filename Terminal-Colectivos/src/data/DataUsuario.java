@@ -193,10 +193,9 @@ public class DataUsuario implements Validar
 		
 	}
 	
-	public int borrarUsuario(Usuario usu){
+	public void eliminarUsuario(Usuario usu) 
+	{
 		PreparedStatement pstmt = null;
-		int filasAfectadas = 0;
-
 		
 		
 		try 
@@ -205,7 +204,7 @@ public class DataUsuario implements Validar
 		
 			pstmt.setString(1, usu.getUsuario());
 			
-			 filasAfectadas = pstmt.executeUpdate();			
+			 pstmt.executeUpdate();			
 			
 			
 			
@@ -231,8 +230,8 @@ public class DataUsuario implements Validar
 			
 		}
 		
-		return filasAfectadas;
 	}
+
 
 
 }
