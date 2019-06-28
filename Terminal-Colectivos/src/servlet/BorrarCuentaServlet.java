@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -56,9 +55,8 @@ public class BorrarCuentaServlet extends HttpServlet {
 			
 
 			dusu.eliminarUsuario(usu);
-			RequestDispatcher dispatcher=getServletContext().getRequestDispatcher( "/WEB-INF/bajasatisfactoria.jsp" );
-			dispatcher.forward( request, response );
-
+			response.sendRedirect("/bajasatisfactoria.jsp");	
+   		 
 
 		}
         	 else 
@@ -68,13 +66,13 @@ public class BorrarCuentaServlet extends HttpServlet {
         		 if (txtusu.isEmpty() || txtpass.isEmpty()) 
         		 	{ 
  		        	//lógica para falta de datos
- 		        	sesion.setAttribute("error", "Hay campos vacíos");
+ 		        	sesion.setAttribute("errorEliminarUsuario", "Hay campos vacíos");
  		        	}
  		        	else 
  		        	{
-	 		        sesion.setAttribute("error", "Usuario y/o contraseña incorrecta");
+	 		        sesion.setAttribute("errorEliminarUsuario", "Usuario y/o contraseña incorrecta");
  		        	}
-    		 response.sendRedirect("miperfil.jsp");	
+    		 response.sendRedirect("micuenta.jsp");	
         	 }				    
 	}
 		

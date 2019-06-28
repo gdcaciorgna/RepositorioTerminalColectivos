@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <jsp:include page="imports.jsp" />
-<title>Mi Perfil</title>
+<title>Mi Cuenta</title>
 
 <script type="text/javascript" src="validarIgualdadPassword.js"></script>
 
@@ -19,7 +19,7 @@
 
 <div>
 <br> 
-Información de Mi Perfil, con posibilidad de realizar Cambios
+Informaci�n de Mi Perfil, con posibilidad de realizar Cambios
 <br> 
 </div>
 
@@ -27,8 +27,8 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
 <div class="card border-danger mb-3" style="max-width: 15rem;">
   <div class="card-header">Eliminar Cuenta</div>
   <div class="card-body text-danger">
-    <h5 class="card-title">¡Cuidado!</h5>
-    <p class="card-text">Al eliminar tu cuenta, no podrás recuperarla en un futuro.</p>
+    <h5 class="card-title">�Cuidado!</h5>
+    <p class="card-text">Al eliminar tu cuenta, no podr�s recuperarla en un futuro.</p>
     	
         <button type="button" class="btn pull-right btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">Eliminar Cuenta</button>
         
@@ -47,12 +47,12 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
         
         <div class="form-group">
                
-                 <label class="p-2" for="exampleFormControlInput1">Para que podamos dar de baja tu cuenta, es necesario que escribas tu contraseña:</label>
+                 <label class="p-2" for="exampleFormControlInput1">Para que podamos dar de baja tu cuenta, es necesario que escribas tu contrase�a:</label>
            
-                 <input type="password" class="form-control" name="txtpass1" placeholder="Ingresar contraseña..." value="" />
+                 <input type="password" class="form-control" name="txtpass1" placeholder="Ingresar contrase�a..." value="" />
     	</div>
         <div class="form-group">
-            <input type="password" class="form-control" name="txtpass2" placeholder="Repetir contraseña..." value="" />
+            <input type="password" class="form-control" name="txtpass2" placeholder="Repetir contrase�a..." value="" />
             
         </div>
         <input type="hidden" name="txtusu" value=<%=txtusuario %> /> 
@@ -62,8 +62,8 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
                 <input type="button" class="btn pull-right btn-danger" value="Eliminar mi Cuenta" onClick="validarIgualdadPassword()"/>
             
             <div id="mensajeContraseniasNoCoinciden" class="alert alert-danger" role="alert">
-            	<% String error = (String)session.getAttribute("error");%>
-			<% if(session.getAttribute("error")!=null) { %>
+            	<% String error = (String)session.getAttribute("errorEliminarUsuario");%>
+			<% if(error!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
 			Error: <%= error %>
