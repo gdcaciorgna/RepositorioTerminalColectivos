@@ -14,8 +14,12 @@
 </head>
 <body>
 <jsp:include page="header.jsp" /> 
-<% if(session.getAttribute("usuario")==null) request.getRequestDispatcher("login.jsp").forward(request, response); %>
-<% String txtusuario = session.getAttribute("usuario").toString(); %> 
+<% String txtusuario = (String) session.getAttribute("usuario"); %> 
+
+<% String txtestado = (String) session.getAttribute("estado"); %>
+
+<% if(txtusuario==null) request.getRequestDispatcher("login.jsp").forward(request, response); %>
+<% if(txtestado==null || txtestado.equals("eliminado")) request.getRequestDispatcher("login.jsp").forward(request, response); %>
 
 <div>
 <br> 

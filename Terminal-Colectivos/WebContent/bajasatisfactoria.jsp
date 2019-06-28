@@ -11,12 +11,15 @@
 <body>
 <jsp:include page="header.jsp" />  
 <br>
-<div class="alert alert-success" role="alert">
-  <h4 class="alert-heading">¡Adiós!</h4>
-  <p>Se ha logrado dar de baja al usuario <span class="font-weight-bold"><%= session.getAttribute("usuario") %></span> de manera satisfactoria  .</p>
-  <hr>
-  <p class="mb-0"><a href="index.jsp"> Volver a la página principal</a>.</p>
-</div>
+<div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+  <div class="card-header">¡Adiós!</div>
+  <div class="card-body">
+    <h5 class="card-title">Baja Satisfactoria</h5>
+    <p class="card-text">Se ha logrado dar de baja al usuario <span class="font-weight-bold"><%= session.getAttribute("usuario") %></span> de manera satisfactoria  .</p>
+    <hr>
+  <p class="mb-0"><a href="index.jsp" class="text-white font-weight-bold"><i class="fas fa-link"></i>  Volver a la página principal</a>.</p>
+  </div>
+ </div>
 
 </body>
 </html>

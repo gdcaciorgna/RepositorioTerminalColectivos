@@ -59,6 +59,7 @@ public class LoginServlet extends HttpServlet {
 		{
         	sesion.setAttribute("usuario", txtusu);
         	sesion.setAttribute("rol", usu.getRol());
+        	sesion.setAttribute("estado", usu.getEstado());
         	response.sendRedirect("index.jsp");	
 
             //redirijo a página con información de login exitoso
