@@ -50,7 +50,7 @@
          
          <%  if(rol.equals("admin")) { %>
          <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-bus"></i> Rutas</a> <!-- Disponible para Administradores -->
+        <a class="nav-link" href="#"><i class="fas fa-road"></i> Rutas</a> <!-- Disponible para Administradores -->
       </li>
       <%  } %>
        <li class="nav-item">
