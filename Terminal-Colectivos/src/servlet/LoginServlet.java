@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
         String txtpass = request.getParameter("txtpass");
         
         
+        
         usu.setUsuario(txtusu);
         usu.setContrasenia(txtpass);
         
@@ -53,13 +54,14 @@ public class LoginServlet extends HttpServlet {
         usuarioEncontrado = dusu.getByUsuario(txtusu);
         usu.setRol(usuarioEncontrado.getRol());
         usu.setEstado(usuarioEncontrado.getEstado());
+        String txtEstado = usu.getEstado();
        
  
         if(r==true) 
 		{
         	sesion.setAttribute("usuario", txtusu);
         	sesion.setAttribute("rol", usu.getRol());
-        	sesion.setAttribute("estado", usu.getEstado());
+        	sesion.setAttribute("estado", txtEstado);
         	response.sendRedirect("index.jsp");	
 
             //redirijo a página con información de login exitoso

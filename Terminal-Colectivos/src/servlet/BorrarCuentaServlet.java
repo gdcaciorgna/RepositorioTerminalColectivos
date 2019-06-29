@@ -54,6 +54,11 @@ public class BorrarCuentaServlet extends HttpServlet {
 			
 
 			dusu.eliminarUsuario(usu);
+			sesion.setAttribute("usuario", null);
+			
+			sesion.setAttribute("rol", null);
+			sesion.setAttribute("estado", null);
+			sesion.invalidate(); //CERRAR SESION
 			response.sendRedirect("bajasatisfactoria.jsp");			 
 
 		}

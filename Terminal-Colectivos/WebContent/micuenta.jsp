@@ -4,28 +4,25 @@
 <html>
 <head>
 <meta charset="utf-8">
-<jsp:include page="imports.jsp" />
+<jsp:include page="JSPFiles/imports.jsp" />
 <title>Mi Cuenta</title>
 
-<script type="text/javascript" src="validarIgualdadPassword.js"></script>
+<script type="text/javascript" src="JavascriptFiles/validarIgualdadPassword.js"></script>
 
 
 
 </head>
 <body>
-<jsp:include page="header.jsp" /> 
-<% String txtusuario = (String) session.getAttribute("usuario"); %> 
-
-<% String txtestado = (String) session.getAttribute("estado"); %>
-
-<% if(txtusuario==null) request.getRequestDispatcher("login.jsp").forward(request, response); %>
-<% if(txtestado==null || txtestado.equals("eliminado")) request.getRequestDispatcher("login.jsp").forward(request, response); %>
+<jsp:include page="JSPFiles/header.jsp" /> 
+<jsp:include page="JSPFiles/redireccionlogin.jsp" /> 
 
 <div>
 <br> 
 Información de Mi Perfil, con posibilidad de realizar Cambios
 <br> 
 </div>
+
+<% String usuarioActual = (String) session.getAttribute("usuario"); //Recupera el atributo "usuario" de la sesión actual para pasarlo como parametro al BorrarCuentaServlet %> 
 
 <form name="formBorrarMiCuenta" action="BorrarCuentaServlet" method="get">
 <div class="card border-danger mb-3" style="max-width: 15rem;">
@@ -66,7 +63,7 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
             <input type="password" class="form-control" name="txtpass2" placeholder="Repetir contraseña..." value="" />
             
         </div>
-        <input type="hidden" name="txtusu" value=<%=txtusuario %> /> 
+        <input type="hidden" name="txtusu" value=<%=usuarioActual %> /> 
       </div>
       <div class="modal-footer">
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>

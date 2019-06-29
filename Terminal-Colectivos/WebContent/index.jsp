@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="imports.jsp" />  
+<jsp:include page="JSPFiles/imports.jsp" />  
 <meta charset="charset=UTF-8">
 <title>Inicio</title>
 </head>
 
 <body>
-<jsp:include page="header.jsp" />  
+<jsp:include page="JSPFiles/header.jsp" />  
 
 <div>
 
