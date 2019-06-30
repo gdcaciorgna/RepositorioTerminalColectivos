@@ -6,6 +6,7 @@
 .login-container{
     margin-top: 5%;
     margin-bottom: 5%;
+
 }
 .login-form-1{
     padding: 5%;
@@ -95,16 +96,8 @@ box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 25
 
 /* FIN - BUSCADOR DE VIAJES  */
 
-
-
-#IntroduccionTerminal
+footer
 {
 	color: white;
-	background-color: black;
-	background-image: url('fondoColectivos1.jpg') ;
-	background-position: center; /* Center the image */
-	background-repeat: no-repeat; /* Do not repeat the image */
-	background-size: cover; /* Resize the background image to cover the entire container */
 }
-
 

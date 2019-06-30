@@ -87,7 +87,7 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
 
 </form>
 	
-		
+<jsp:include page="JSPFiles/footer.jsp" />  
 
 </body>
 </html>
