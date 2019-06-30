@@ -49,13 +49,14 @@
       </select>
   	 </div>
    
+   
    <!-- Fecha -->
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.SimpleDateFormat"%>  
 <%
    Date dNow = new Date();
    SimpleDateFormat ft = 
-   new SimpleDateFormat ("MM/dd/yyyy");
+   new SimpleDateFormat ("dd/MM/yyyy");
    String currentDate = ft.format(dNow);
 %>
  
@@ -65,7 +66,7 @@
     <div class="input-group-prepend">
       <div class="input-group-text"><i class="fas fa-calendar"></i></div>
     </div>
-    <input class="form-control" id="date" name="fechaViaje" placeholder="MM/DD/YYY" type="text" value=<%=currentDate%> />
+    <input class="form-control" id="date" name="date" placeholder="DD/MM/YYY" type="text" value=<%= currentDate %>  />
   </div>
   </div>
 	
