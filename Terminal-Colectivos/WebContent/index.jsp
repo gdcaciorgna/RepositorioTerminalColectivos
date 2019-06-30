@@ -10,7 +10,6 @@
 <body>
 <jsp:include page="JSPFiles/header.jsp" />  
 <script type="text/javascript" src="JavascriptFiles/datepickerEs.js"></script>
-
 <div>
 
  Usuario: <%= session.getAttribute("usuario") %> - Rol: <%= session.getAttribute("rol") %>
@@ -22,8 +21,33 @@
 <br>
 
 
-<div class="container">
-<div class="col-md-6 login-form-1">
+<div id="base"  class="container-fluid">
+<div class="row">
+
+<!--Grid column-->
+        <div class="col-sm-7 mb-4">
+            <div class="card card-image" style="background-image: url('fondoColectivos1.jpg'); background-position: center;">
+                <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
+                    <div>
+                    	<hr>
+                        <h3 class="card-title py-3 font-weight-bold"><strong>Terminal de Colectivos "Mariano Moreno"</strong></h3>
+                        <hr>
+                        <p class="pb-3">La Estación de Ómnibus Mariano Moreno es la terminal de micros de corta,
+                         media y larga distancia donde confluye el transporte de pasajeros por vía terrestre de carácter 
+                         interurbano, interprovincial e internacional desde y hacia la ciudad de Rosario, Argentina.</p>
+                        <a class="btn btn-success btn-rounded" href=""><i class="fas fa-info-circle"></i> Más información</a>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Grid column-->
+
+
+
+
+<div class="col-sm-5">
+<div class="login-form-1">
 <!-- Default form contact -->
 <form class="text-center border border-light p-5">
 
@@ -81,7 +105,10 @@
 
 </form>
 <!-- Default form contact -->
-</div></div>
+</div>
+</div>
+</div>
+</div>
 
 
 

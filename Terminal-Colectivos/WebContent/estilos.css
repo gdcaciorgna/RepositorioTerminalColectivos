@@ -1,5 +1,8 @@
 @charset "ISO-8859-1";
 
+ /* INICIO - FORMULARIO DE LOGIN  */
+
+
 .login-container{
     margin-top: 5%;
     margin-bottom: 5%;
@@ -12,15 +15,7 @@
     text-align: center;
     color: #333;
 }
-.login-form-2{
-    padding: 5%;
-    background: #0062cc;
-    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
-}
-.login-form-2 h3{
-    text-align: center;
-    color: #fff;
-}
+
 .login-container form{
     padding: 10%;
 }
@@ -38,16 +33,7 @@
     color: #fff;
     background-color: #0062cc;
 }
-.login-form-2 .btnSubmit{
-    font-weight: 600;
-    color: #0062cc;
-    background-color: #fff;
-}
-.login-form-2 .ForgetPwd{
-    color: #fff;
-    font-weight: 600;
-    text-decoration: none;
-}
+
 .login-form-1 .ForgetPwd{
     color: #0062cc;
     font-weight: 600;
@@ -60,9 +46,15 @@
 	
 }
 
+
+ /* FIN - FORMULARIO DE LOGIN  */
+
 body
 {
 	padding:1.5%;
+
+
+  
 }
 
 .no-gutters {
@@ -76,10 +68,16 @@ body
   }
 }
 
+
+
+
 #mensajeContraseniasNoCoinciden
 {
 	display:none;
 }
+
+
+
 
  /* INICIO - BUSCADOR DE VIAJES  */
 .form-elegant .font-small {
@@ -97,4 +95,16 @@ box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 25
 
 /* FIN - BUSCADOR DE VIAJES  */
 
- 
+
+
+#IntroduccionTerminal
+{
+	color: white;
+	background-color: black;
+	background-image: url('fondoColectivos1.jpg') ;
+	background-position: center; /* Center the image */
+	background-repeat: no-repeat; /* Do not repeat the image */
+	background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+
