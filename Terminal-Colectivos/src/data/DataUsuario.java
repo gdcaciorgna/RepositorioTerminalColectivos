@@ -1,6 +1,8 @@
 package data;
 
 import java.sql.*;
+import java.util.ArrayList;
+
 import entities.Usuario;
 
 
@@ -231,6 +233,48 @@ public class DataUsuario implements Validar
 		}
 		
 	}
+	
+	public ArrayList <Usuario> getAll()
+	{
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "select * from usuario";
+		ArrayList<Usuario> usuarios = new ArrayList<>();
+		try 
+		{
+			stmt = Conectar.getInstancia().getConn().createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs!=null) 
+			{
+				while(rs.next()) 
+				{
+					Usuario usu = new Usuario();
+					usu.setUsuario(rs.getString("usuario"));
+					usu.setRol(rs.getString("rol"));
+					usu.setEmail(rs.getString("email"));
+					usu.setEstado(rs.getString("estado"));
+					usuarios.add(usu);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				e.printStackTrace();
+			} 
+		}
+		
+	return usuarios;	
+	}
+	
 
 
 

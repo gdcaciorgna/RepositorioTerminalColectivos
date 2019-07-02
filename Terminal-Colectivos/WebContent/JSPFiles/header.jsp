@@ -25,7 +25,7 @@
     	    
     	<% if(rol.equals("admin")) {%>     
        <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-users"></i> Usuarios</a> <!-- Disponible para Administradores -->
+        <a class="nav-link" href="usuarios.jsp"><i class="fas fa-users"></i> Usuarios</a> <!-- Disponible para Administradores -->
       </li>
       <% } %>
     

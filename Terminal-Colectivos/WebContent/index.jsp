@@ -26,7 +26,7 @@
 
 <!--Grid column-->
         <div class="col-sm-7 mb-4">
-            <div class="card card-image" style="background-image: url('fondoColectivos1.jpg'); background-position: center;">
+            <div class="card card-image" style="background-image: url('Imagenes/fondoColectivos1.jpg'); background-color: #343a40 ; background-position: center;">
                 <div class="text-white text-center d-flex align-items-center rgba-black-strong py-5 px-4">
                     <div>
                     	<hr>
