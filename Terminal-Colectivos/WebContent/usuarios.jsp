@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="JSPFiles/imports.jsp" />  
+<jsp:include page="JSPFiles/imports.jsp" />
+ 
 <meta charset="ISO-8859-1">
 <title>Usuarios</title>
 </head>
@@ -25,7 +26,17 @@
 
 
 <div class="container" style=" margin-top: 2%; margin-bottom: 2%;  ">
-<h1>Listado de Usuarios</h1>
+ <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+               
+                    <span class="float-left"><h2>Listado de <b>Usuarios</b></h2></span>
+                    <span class="float-right">
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Nuevo Usuario</button>
+                    </span>
+                
+            </div> </div> </div>
+           
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
@@ -34,7 +45,7 @@
       <th>Rol</th>
       <th>Email</th>
       <th>Estado</th>
-   	  <th></th>
+   	  <th> </th>
     </tr>
   </thead>
   <tbody>
