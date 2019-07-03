@@ -65,7 +65,7 @@ public class Conectar {
 		conectados--;
 		try 
 		{
-			if(conectados==0) 
+			if(conectados<=0) 
 			{
 				conn.close();
 			}
