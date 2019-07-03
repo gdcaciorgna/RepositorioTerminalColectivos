@@ -73,7 +73,7 @@ public class BorrarCuentaServlet extends HttpServlet {
  		        	}
  		        	else 
  		        	{
-	 		        sesion.setAttribute("errorEliminarUsuario", "Usuario y/o contraseña incorrecta");
+	 		        sesion.setAttribute("errorEliminarUsuario", "Contraseña incorrecta");
  		        	}
     		 response.sendRedirect("micuenta.jsp");	
         		 
