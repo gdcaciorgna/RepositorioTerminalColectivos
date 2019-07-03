@@ -22,10 +22,10 @@
              <h3>Iniciar Sesión</h3>
              <form action="LoginServlet" method = "post">
                  <div class="form-group">
-                     <input type="text" class="form-control" name="txtusu" placeholder="Ingresar usuario..." value="" />
+                     <input type="text" class="form-control" name="txtusu" placeholder="Ingresar usuario..." value="" required />
                  </div>
                  <div class="form-group">
-                     <input type="password" class="form-control" name="txtpass" placeholder="Ingresar contraseña..." value="" />
+                     <input type="password" class="form-control" name="txtpass" placeholder="Ingresar contraseña..." value=""  required/>
                  </div>
                  
            

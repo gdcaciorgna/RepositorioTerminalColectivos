@@ -66,17 +66,7 @@ public class LoginServlet extends HttpServlet {
 		}
         	 else 
         	 { 
-		        	
-		        	
-        		 if (txtusu.isEmpty() || txtpass.isEmpty()) 
-        		 	{ 
- 		        	//lógica para falta de datos
- 		        	request.getSession().setAttribute("error", "Hay campos vacíos");
- 		        	}
- 		        	else 
- 		        	{
-	 		        request.getSession().setAttribute("error", "Usuario y/o contraseña incorrecta");
- 		        	}
+	 		 request.getSession().setAttribute("error", "Usuario y/o contraseña incorrecta");	
     		 response.sendRedirect("login.jsp");	
         	 }	
     		 	

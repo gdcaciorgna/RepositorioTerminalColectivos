@@ -21,59 +21,12 @@ public class DataUsuario implements Validar
 		try {
 			pstmt=Conectar.getInstancia().getConn().prepareStatement(sql);
 			pstmt.setString(1, txtusu);
-			rs=pstmt.executeQuery();
-			
-			//INICIO - Código aplicando herencia (incompleto)
-			
-/*			if(rs!=null && rs.next()) {
-				if(rs.getString("rol").equals("admin") ) 
-				{
-					adm.setUsuario(rs.getString("usuario"));
-					adm.setRol(rs.getString("rol"));
-					adm.setEmail(rs.getString("email"));
-					adm.setContrasenia(rs.getString("contrasenia"));
-					
-					
-					
-				}
-				
-				else if(rs.getString("rol").equals("chofer") ) 
-				{
-					cho.setUsuario(rs.getString("usuario"));
-					cho.setRol(rs.getString("rol"));
-					cho.setEmail(rs.getString("email"));
-					cho.setContrasenia(rs.getString("contrasenia"));
-					
-					return cho;
-				}
-				
-				else if(rs.getString("rol").equals("cliente") ) 
-				{
-					cli.setUsuario(rs.getString("usuario"));
-					cli.setRol(rs.getString("rol"));
-					cli.setEmail(rs.getString("email"));
-					cli.setContrasenia(rs.getString("contrasenia"));
-					
-					return cli;
-				}
-				*/
-			
-			//FIN - Código aplicando herencia (incompleto)
-			
+			rs=pstmt.executeQuery();	
 			
 			//INICIO - Código sin aplicar herencia
 			if(rs!=null && rs.next()) 
 		{
-				usuario = new Usuario();
-				usuario.setUsuario(rs.getString("usuario"));
-				usuario.setRol(rs.getString("rol"));
-				usuario.setNombre(rs.getString("nombre"));
-				usuario.setApellido(rs.getString("apellido"));
-				usuario.setEmail(rs.getString("email"));
-				usuario.setContrasenia(rs.getString("contrasenia"));
-				usuario.setEstado(rs.getString("estado"));
-							
-				
+				usuario = setearUsuario(rs);							
 		}
 			//FIN - Código sin aplicar herencia
 			
@@ -118,13 +71,6 @@ public class DataUsuario implements Validar
 			
 			if(rs!=null && rs.next())
 			{
-				usuario.setUsuario(rs.getString("usuario"));
-				usuario.setRol(rs.getString("rol"));
-				usuario.setNombre(rs.getString("nombre"));
-				usuario.setApellido(rs.getString("apellido"));
-				usuario.setEmail(rs.getString("email"));
-				usuario.setContrasenia(rs.getString("contrasenia"));
-				usuario.setEstado(rs.getString("estado"));
 				r=true;
 				
 			}
@@ -164,12 +110,6 @@ public class DataUsuario implements Validar
 			
 			if(rs!=null && rs.next())
 			{
-				usuario.setUsuario(rs.getString("usuario"));
-				
-				usuario.setRol(rs.getString("rol"));
-				usuario.setEmail(rs.getString("email"));
-				usuario.setContrasenia(rs.getString("contrasenia"));
-				usuario.setEstado(rs.getString("estado"));
 				r=true;
 				
 			}
@@ -247,13 +187,7 @@ public class DataUsuario implements Validar
 			{
 				while(rs.next()) 
 				{
-					Usuario usuario = new Usuario();
-					usuario.setUsuario(rs.getString("usuario"));
-					usuario.setNombre(rs.getString("nombre"));
-					usuario.setApellido(rs.getString("apellido"));
-					usuario.setRol(rs.getString("rol"));
-					usuario.setEmail(rs.getString("email"));
-					usuario.setEstado(rs.getString("estado"));
+					Usuario usuario = setearUsuario(rs);
 					usuarios.add(usuario);
 				}
 			}
@@ -274,6 +208,27 @@ public class DataUsuario implements Validar
 		}
 		
 	return usuarios;	
+	}
+	
+	private Usuario setearUsuario(ResultSet rs)
+	{
+		Usuario usuario = new Usuario();
+		try {
+			usuario.setUsuario(rs.getString("usuario"));
+			usuario.setNombre(rs.getString("nombre"));
+			usuario.setApellido(rs.getString("apellido"));
+			usuario.setRol(rs.getString("rol"));
+			usuario.setEmail(rs.getString("email"));
+			usuario.setContrasenia(rs.getString("contrasenia"));
+			usuario.setEstado(rs.getString("estado"));
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return usuario;
+	
 	}
 	
 
