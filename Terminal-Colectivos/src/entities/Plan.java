@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class Plan {
 	private Timestamp fecha_hora_plan;
 	private Colectivo colectivo;
-	private Chofer chofer;
+	private Usuario usuario;
 	private Ruta ruta;
 	private double precio;
 	
@@ -22,12 +22,7 @@ public class Plan {
 	public void setColectivo(Colectivo colectivo) {
 		this.colectivo = colectivo;
 	}
-	public Chofer getChofer() {
-		return chofer;
-	}
-	public void setChofer(Chofer chofer) {
-		this.chofer = chofer;
-	}
+	
 	public Ruta getRuta() {
 		return ruta;
 	}
@@ -40,6 +35,13 @@ public class Plan {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 	
 	
 	

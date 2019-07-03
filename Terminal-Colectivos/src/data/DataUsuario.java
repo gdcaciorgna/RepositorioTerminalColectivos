@@ -150,7 +150,7 @@ public class DataUsuario implements Validar
 	
 	@Override
 	public boolean validar(Usuario usu) {
-		int r=0;
+		boolean r=false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		
@@ -168,7 +168,7 @@ public class DataUsuario implements Validar
 				usu.setEmail(rs.getString("email"));
 				usu.setContrasenia(rs.getString("contrasenia"));
 				usu.setEstado(rs.getString("estado"));
-				r=r+1;
+				r=true;
 				
 			}
 		}catch(SQLException e) { e.printStackTrace();}
@@ -187,11 +187,7 @@ public class DataUsuario implements Validar
 
 		
 
-		if(r==1) 
-		{
-			return true;
-		}
-		else {return false;}
+		return r;
 		
 	}
 	

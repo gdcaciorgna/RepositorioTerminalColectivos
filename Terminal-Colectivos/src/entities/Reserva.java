@@ -6,7 +6,7 @@ public class Reserva {
 	
 	private Timestamp fecha_res;
 	private Ruta ruta;
-	private Cliente cliente;
+	private Usuario usuario;
 	private int cant_pas;
 	private Timestamp fecha_viaje;
 	private Timestamp fecha_venc;
@@ -28,12 +28,7 @@ public class Reserva {
 	public void setRuta(Ruta ruta) {
 		this.ruta = ruta;
 	}
-	public Cliente getCliente() {
-		return cliente;
-	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+	
 	public int getCant_pas() {
 		return cant_pas;
 	}
@@ -75,6 +70,12 @@ public class Reserva {
 	}
 	public void setFecha_pago(Timestamp fecha_pago) {
 		this.fecha_pago = fecha_pago;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	
