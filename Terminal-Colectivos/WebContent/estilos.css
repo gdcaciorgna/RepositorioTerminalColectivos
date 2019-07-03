@@ -3,11 +3,13 @@
  /* INICIO - FORMULARIO DE LOGIN  */
 
 
+
+
 .login-container{
     margin-top: 5%;
     margin-bottom: 5%;
-    margin-left: 30%;
-    margin-right:30%;
+    align-content: center;
+
 
 }
 .login-form-1{
@@ -101,5 +103,7 @@ box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 25
 footer
 {
 	color: white;
+
+ 
 }
 

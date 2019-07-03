@@ -34,34 +34,30 @@ public class LoginServlet extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 
-		Usuario usu = new Usuario();
+		Usuario usuario = new Usuario();
 		DataUsuario dusu = new DataUsuario();
 		
 
         boolean r;
-        Usuario usuarioEncontrado;
         String txtusu = request.getParameter("txtusu");
         String txtpass = request.getParameter("txtpass");
         
         
         
-        usu.setUsuario(txtusu);
-        usu.setContrasenia(txtpass);
+        usuario.setUsuario(txtusu);
+        usuario.setContrasenia(txtpass);
         
        
         
-        r= dusu.validar(usu);
-        
-       
+        r= dusu.validar(usuario);
  
         if(r==true) 
 		{
-        	usuarioEncontrado = dusu.getByUsuario(txtusu);
-            usu.setRol(usuarioEncontrado.getRol());
-            usu.setEstado(usuarioEncontrado.getEstado());
-            String txtEstado = usu.getEstado();
+        	usuario = dusu.getByUsuario(txtusu);
+            
+            String txtEstado = usuario.getEstado();
         	sesion.setAttribute("usuario", txtusu);
-        	sesion.setAttribute("rol", usu.getRol());
+        	sesion.setAttribute("rol", usuario.getRol());
         	sesion.setAttribute("estado", txtEstado);
         	response.sendRedirect("index.jsp");	
 

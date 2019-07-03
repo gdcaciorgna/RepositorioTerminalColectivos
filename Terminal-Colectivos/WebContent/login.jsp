@@ -17,10 +17,8 @@
 
 <div class="container login-container">
 <div class="row">
-    <div class="col-sm-2">
-      
-    </div>
-    <div class="col-sm-8">
+   
+    <div class="col-sm-6">
        <div class="login-form-1">
              <h3>Iniciar Sesión</h3>
              <form action="LoginServlet" method = "post">
@@ -46,8 +44,7 @@
              </form>
          </div>
     </div>
-    <div class="col-sm-2">
-    </div>
+ 
   </div>
       
 </div>
