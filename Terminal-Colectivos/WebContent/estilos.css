@@ -4,15 +4,16 @@
 
 
 
-
 .login-container{
     margin-top: 5%;
     margin-bottom: 5%;
-    align-content: center;
+    max-width: 650px;
+  
 
 
 }
 .login-form-1{
+	
     padding: 5%;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
@@ -50,7 +51,6 @@
 	text-align: center;
 	
 }
-
 
  /* FIN - FORMULARIO DE LOGIN  */
 

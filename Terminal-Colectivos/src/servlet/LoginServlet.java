@@ -78,8 +78,10 @@ public class LoginServlet extends HttpServlet {
 	 		        request.getSession().setAttribute("error", "Usuario y/o contraseña incorrecta");
  		        	}
     		 response.sendRedirect("login.jsp");	
-        	 }				    
-	}
+        	 }	
+    		 	
+    }				    
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

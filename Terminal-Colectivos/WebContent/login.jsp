@@ -14,12 +14,11 @@
 
 <jsp:include page="JSPFiles/header.jsp" />  
 
-
 <div class="container login-container">
 <div class="row">
-   
-    <div class="col-sm-6">
-       <div class="login-form-1">
+    
+    <div class="col-sm">
+       <div class="login-form-1 center-block">
              <h3>Iniciar Sesión</h3>
              <form action="LoginServlet" method = "post">
                  <div class="form-group">
@@ -43,11 +42,14 @@
 			<%}%>
              </form>
          </div>
+       
     </div>
+    
  
   </div>
       
 </div>
+
 <jsp:include page="JSPFiles/footer.jsp" />  
 </body>
 </html>
