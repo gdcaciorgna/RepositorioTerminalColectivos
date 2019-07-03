@@ -51,14 +51,15 @@ public class LoginServlet extends HttpServlet {
        
         
         r= dusu.validar(usu);
-        usuarioEncontrado = dusu.getByUsuario(txtusu);
-        usu.setRol(usuarioEncontrado.getRol());
-        usu.setEstado(usuarioEncontrado.getEstado());
-        String txtEstado = usu.getEstado();
+        
        
  
         if(r==true) 
 		{
+        	usuarioEncontrado = dusu.getByUsuario(txtusu);
+            usu.setRol(usuarioEncontrado.getRol());
+            usu.setEstado(usuarioEncontrado.getEstado());
+            String txtEstado = usu.getEstado();
         	sesion.setAttribute("usuario", txtusu);
         	sesion.setAttribute("rol", usu.getRol());
         	sesion.setAttribute("estado", txtEstado);
