@@ -22,7 +22,7 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
 <br> 
 </div>
 <%@ page import = "entities.Usuario" %>
-<% Usuario usuario = (Usuario) session.getAttribute("ClaseUsuario");  //Recupera el atributo "usuario" de la sesión actual para pasarlo como parametro al BorrarCuentaServlet
+<% Usuario usuario = (Usuario) session.getAttribute("Usuario");  //Recupera el atributo "usuario" de la sesión actual para pasarlo como parametro al BorrarCuentaServlet
 %> 
 
 <form name="formBorrarMiCuenta" action="BorrarCuentaServlet" method="get">
@@ -58,13 +58,12 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
                
                  <label class="p-2" for="exampleFormControlInput1">Para que podamos dar de baja tu cuenta, es necesario que escribas tu contraseña:</label>
            
-                 <input type="password" class="form-control" name="txtpass1" placeholder="Ingresar contraseña..." value="" />
+                 <input type="password" class="form-control" name="password" placeholder="Ingresar contraseña..." value="" />
     	</div>
         <div class="form-group">
-            <input type="password" class="form-control" name="txtpass2" placeholder="Repetir contraseña..." value="" />
-            
+            <input type="password" class="form-control" name="passwordrep" placeholder="Repetir contraseña..." value="" />            
         </div>
-        <input type="hidden" name="txtusu" value=<%= usuario.getUsuario() %> /> 
+        <input type="hidden" name="username" value=<%= usuario.getUsername() %> /> 
       </div>
       <div class="modal-footer">
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>

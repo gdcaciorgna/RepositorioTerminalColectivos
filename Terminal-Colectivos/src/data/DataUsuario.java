@@ -11,22 +11,22 @@ import entities.Usuario;
 public class DataUsuario implements Validar 
 {
 	
-	public Usuario getByUsuario(String txtusu) {
+	public Usuario getByUsuario(String username) {
 		Usuario usuario = null;
-		String sql = "select * from usuarios where usuario=?";
+		String sql = "select * from usuarios where username=?";
 		
 		
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			pstmt=Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, txtusu);
+			pstmt.setString(1, username);
 			rs=pstmt.executeQuery();	
 			
 			//INICIO - Código sin aplicar herencia
 			if(rs!=null && rs.next()) 
 		{
-				usuario = setearUsuario(rs);							
+				usuario = setUsuario(rs);							
 		}
 			//FIN - Código sin aplicar herencia
 			
@@ -56,17 +56,17 @@ public class DataUsuario implements Validar
 	
 
 	@Override
-	public boolean validar(Usuario usuario, String txtpass) {
+	public boolean validar(Usuario usuario, String password) {
 		boolean r = false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
-		String sql = "select * from usuarios where estado= 'activo' and usuario = ? and contrasenia = ?";
+		String sql = "select * from usuarios where estado= 'activo' and username = ? and password = ?";
 		
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usuario.getUsuario());
-			pstmt.setString(2, txtpass);
+			pstmt.setString(1, usuario.getUsername());
+			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
 			
 			if(rs!=null && rs.next())
@@ -99,13 +99,13 @@ public class DataUsuario implements Validar
 		boolean r=false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
-		String sql = "select * from usuarios where  estado= 'activo' and usuario = ? and contrasenia = ?";
+		String sql = "select * from usuarios where  estado= 'activo' and username = ? and password = ?";
 		
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usuario.getUsuario());
-			pstmt.setString(2, usuario.getContrasenia());
+			pstmt.setString(1, usuario.getUsername());
+			pstmt.setString(2, usuario.getPassword());
 			rs = pstmt.executeQuery();
 			
 			if(rs!=null && rs.next())
@@ -133,19 +133,19 @@ public class DataUsuario implements Validar
 		
 	}
 	
-	public void eliminarUsuario(Usuario usuario) 
+	public Integer eliminarUsuario(Usuario usuario) 
 	{
 		PreparedStatement pstmt = null;
-		String sql = "update usuarios set estado = 'eliminado' where usuario = ?";
-		
+		String sql = "update usuarios set estado = 'eliminado' where username = ?";
+		Integer filasAfectadas = 0;
 		
 		try 
 		{
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
 		
-			pstmt.setString(1, usuario.getUsuario());
+			pstmt.setString(1, usuario.getUsername());
 			
-			 pstmt.executeUpdate();			
+			filasAfectadas = pstmt.executeUpdate();			
 			
 			
 			
@@ -170,6 +170,7 @@ public class DataUsuario implements Validar
 			
 			
 		}
+		return filasAfectadas;
 		
 	}
 	
@@ -187,7 +188,7 @@ public class DataUsuario implements Validar
 			{
 				while(rs.next()) 
 				{
-					Usuario usuario = setearUsuario(rs);
+					Usuario usuario = setUsuario(rs);
 					usuarios.add(usuario);
 				}
 			}
@@ -210,16 +211,16 @@ public class DataUsuario implements Validar
 	return usuarios;	
 	}
 	
-	private Usuario setearUsuario(ResultSet rs)
+	private Usuario setUsuario(ResultSet rs)
 	{
 		Usuario usuario = new Usuario();
 		try {
-			usuario.setUsuario(rs.getString("usuario"));
+			usuario.setUsername(rs.getString("username"));
 			usuario.setNombre(rs.getString("nombre"));
 			usuario.setApellido(rs.getString("apellido"));
 			usuario.setRol(rs.getString("rol"));
 			usuario.setEmail(rs.getString("email"));
-			usuario.setContrasenia(rs.getString("contrasenia"));
+			usuario.setPassword(rs.getString("password"));
 			usuario.setEstado(rs.getString("estado"));
 			
 		} catch (SQLException e) {

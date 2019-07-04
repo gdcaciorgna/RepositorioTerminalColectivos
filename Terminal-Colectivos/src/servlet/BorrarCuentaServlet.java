@@ -41,32 +41,37 @@ public class BorrarCuentaServlet extends HttpServlet {
 		boolean testPassword;
 		
 		
-		String txtusu;
-		String txtpass = request.getParameter("txtpass1");
-		txtusu = (String) request.getParameter("txtusu");
+		String username =  request.getParameter("username");
+		String password = request.getParameter("password");
 		
-		usu = dusu.getByUsuario(txtusu);
 		
-		testPassword= dusu.validar(usu,txtpass);
+		usu = dusu.getByUsuario(username);
+		
+		testPassword= dusu.validar(usu,password);
 		
 		if(testPassword) 
 		{
 			
 
-			dusu.eliminarUsuario(usu);
-			sesion.setAttribute("usuario", null);
-			
-			sesion.setAttribute("rol", null);
-			sesion.setAttribute("estado", null);
+			Integer filasAfectadas = dusu.eliminarUsuario(usu);
+			String url = request.getHeader("Referer"); //Obtiene el URL de la página que llamó al servlet (String)
+			if(url.contains("micuenta")) 
+			{
+			sesion.setAttribute("Usuario", null);
 			sesion.invalidate(); //CERRAR SESION
-			response.sendRedirect("bajasatisfactoria.jsp");			 
+			response.sendRedirect("bajasatisfactoria.jsp");		
+			} else if(url.contains("usuarios")) 
+			{
+			request.setAttribute("filasAfectadas", filasAfectadas);
+			response.sendRedirect("usuarios.jsp");	
+			}
 
 		}
         	 else 
         	 { 
 		        	
 		        	
-        		 if (txtusu.isEmpty() || txtpass.isEmpty()) 
+        		 if (username.isEmpty() || password.isEmpty()) 
         		 	{ 
  		        	//lógica para falta de datos
  		        	sesion.setAttribute("errorEliminarUsuario", "Hay campos vacíos");

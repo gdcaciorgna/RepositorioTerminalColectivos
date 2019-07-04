@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 
 <%@ page import = "entities.Usuario" %>
-<% Usuario usuario = (Usuario) session.getAttribute("ClaseUsuario"); %>
+<% Usuario usuario = (Usuario) session.getAttribute("Usuario"); %>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
@@ -20,7 +20,7 @@
       
       if(usuario!=null) {
       rol = usuario.getRol();
-      nomUsuario = usuario.getUsuario();
+      nomUsuario = usuario.getUsername();
       }
       else { rol= "visitante" ;} %>
       <% if(!rol.equals("visitante")) {  %>

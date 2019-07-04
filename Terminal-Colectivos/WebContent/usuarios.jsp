@@ -10,6 +10,9 @@
 </head>
 <body>
 
+<jsp:include page="JSPFiles/redireccionlogin.jsp" /> 
+
+
    <%@ page import = "data.DataUsuario" %>
     <%@ page import = "java.util.*" %>
     <%@ page import = "entities.Usuario" %>
@@ -57,7 +60,7 @@
 	   usu = itr.next();
     %>
    <th scope="row"><%= cont %></th>
-   <td> <%= usu.getUsuario() %> </td>
+   <td> <%= usu.getUsername() %> </td>
    <td> <%= usu.getRol() %> </td>
    <td> <%= usu.getEmail() %> </td>
    <td>
@@ -69,7 +72,18 @@
 
    <% } %>
    </td>
-   <td><button type="button" class="btn btn-warning"><i class="fas fa-edit"></i></button>  <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>  </td>
+   <td>
+   
+   <form action="#" method="post">
+   <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
+   <input type="hidden" value=<%=usu.getPassword() %> name="password"/>
+   <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button></form> 
+   <form action="BorrarCuentaServlet" method="post">
+   <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
+   <input type="hidden" value=<%=usu.getPassword() %> name="password"/>
+   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></form>
+   </td>
+   
    </tr>
    
    
@@ -79,7 +93,17 @@
     
   </tbody>
 </table>
+ 
 </div>
+
+<% Integer filasAfectadas = 0;%> 
+<% filasAfectadas = (Integer) session.getAttribute("filasAfectadas");%>
+<% if(session.getAttribute("filasAfectadas")!=null) { %>
+<br>
+<div class="alert alert-danger" role="alert">
+Filas Afectadas: <%= filasAfectadas %>
+</div> 
+<%}%>
 
 <jsp:include page="JSPFiles/footer.jsp" />  
 

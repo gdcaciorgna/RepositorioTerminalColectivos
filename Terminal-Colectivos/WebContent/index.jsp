@@ -12,12 +12,12 @@
 <script type="text/javascript" src="JavascriptFiles/datepickerEs.js"></script>
 <div>
  <%@ page import = "entities.Usuario" %>
- <% Usuario usuario = (Usuario) session.getAttribute("ClaseUsuario"); 
+ <% Usuario usuario = (Usuario) session.getAttribute("Usuario"); 
  String nomUsuario = null;
  String rol  = null;
 if(usuario!=null)
 	{ 
-	nomUsuario = usuario.getUsuario();
+	nomUsuario = usuario.getUsername();
 	rol = usuario.getRol();
 	}
  %>
