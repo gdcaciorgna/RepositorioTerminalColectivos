@@ -21,8 +21,9 @@
 Información de Mi Perfil, con posibilidad de realizar Cambios
 <br> 
 </div>
-
-<% String usuarioActual = (String) session.getAttribute("usuario"); //Recupera el atributo "usuario" de la sesión actual para pasarlo como parametro al BorrarCuentaServlet %> 
+<%@ page import = "entities.Usuario" %>
+<% Usuario usuario = (Usuario) session.getAttribute("ClaseUsuario");  //Recupera el atributo "usuario" de la sesión actual para pasarlo como parametro al BorrarCuentaServlet
+%> 
 
 <form name="formBorrarMiCuenta" action="BorrarCuentaServlet" method="get">
 <div class="card border-danger mb-3" style="max-width: 15rem;">
@@ -63,7 +64,7 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
             <input type="password" class="form-control" name="txtpass2" placeholder="Repetir contraseña..." value="" />
             
         </div>
-        <input type="hidden" name="txtusu" value=<%=usuarioActual %> /> 
+        <input type="hidden" name="txtusu" value=<%= usuario.getUsuario() %> /> 
       </div>
       <div class="modal-footer">
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>

@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
-
+<%@ page import = "entities.Usuario" %>
+<% Usuario usuario = (Usuario) session.getAttribute("ClaseUsuario"); %>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
@@ -14,9 +15,14 @@
         <a class="nav-link" href="index.jsp"><i class="fas fa-home"></i> Inicio</a><!-- Disponible para todos -->
 
       </li>
-      <%! String rol; %>
-      <% rol =(String) session.getAttribute("rol") ; %>
-      <% if(rol==null) rol= "visitante" ; %>
+      <%! String rol, nomUsuario; %>
+      <% 
+      
+      if(usuario!=null) {
+      rol = usuario.getRol();
+      nomUsuario = usuario.getUsuario();
+      }
+      else { rol= "visitante" ;} %>
       <% if(!rol.equals("visitante")) {  %>
    <li class="nav-item">
       <a class="nav-link" href="#"><i class="fas fa-suitcase"></i> Mis Reservas</a> <!-- Disponible para clientes, choferes y admin -->
@@ -60,8 +66,8 @@
    
     <span class="navbar-item">
     <ul class="navbar-nav mr-auto">
-      <%  String usuario=(String)session.getAttribute("usuario");
-  if(usuario==null)
+      <%
+  if(usuario==null || usuario.getEstado()=="eliminado")
  {%>
 	<li class="nav-item">
 	<a class="nav-link" href="login.jsp"><i class="fas fa-user"></i> Iniciar Sesión</a>

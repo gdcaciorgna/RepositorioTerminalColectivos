@@ -11,9 +11,20 @@
 <jsp:include page="JSPFiles/header.jsp" />  
 <script type="text/javascript" src="JavascriptFiles/datepickerEs.js"></script>
 <div>
+ <%@ page import = "entities.Usuario" %>
+ <% Usuario usuario = (Usuario) session.getAttribute("ClaseUsuario"); 
+ String nomUsuario = null;
+ String rol  = null;
+if(usuario!=null)
+	{ 
+	nomUsuario = usuario.getUsuario();
+	rol = usuario.getRol();
+	}
+ %>
+	Usuario: <%= nomUsuario %>
+	Rol: <%= rol %>
 
- Usuario: <%= session.getAttribute("usuario") %> - Rol: <%= session.getAttribute("rol") %>
- <%--Para recuperar el nombre de la sesión --%>
+
 
 </div>
 
