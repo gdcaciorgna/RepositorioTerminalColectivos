@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -5,25 +6,48 @@
 <head>
 <meta charset="utf-8">
 <jsp:include page="JSPFiles/imports.jsp" />
+
+
+
+
 <title>Mi Cuenta</title>
 
 <script type="text/javascript" src="JavascriptFiles/validarIgualdadPassword.js"></script>
 
 
-
 </head>
 <body>
 <jsp:include page="JSPFiles/header.jsp" /> 
-<jsp:include page="JSPFiles/redireccionlogin.jsp" /> 
+
+
+<!-- INICIO - REDIRECCION A LOGIN --> 
+<%@ page import = "entities.Usuario" %>
+<% Usuario usuario;%>
+ 
+<%
+String username="s/usuario", estado="s/estado"; 
+usuario = (Usuario) session.getAttribute("Usuario");  
+if(usuario!=null) 
+{
+	username = usuario.getUsername(); 
+	estado = usuario.getEstado(); 
+}
+
+ if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
+	{   
+ 
+	String sitioweb = "http://localhost:8080/Terminal-Colectivos/"; 
+	response.sendRedirect(sitioweb+"login.jsp"); 
+	} 
+%>
+<!-- FIN - REDIRECCION A LOGIN -->
 
 <div>
 <br> 
 Información de Mi Perfil, con posibilidad de realizar Cambios
 <br> 
 </div>
-<%@ page import = "entities.Usuario" %>
-<% Usuario usuario = (Usuario) session.getAttribute("Usuario");  //Recupera el atributo "usuario" de la sesión actual para pasarlo como parametro al BorrarCuentaServlet
-%> 
+
 
 <form name="formBorrarMiCuenta" action="BorrarCuentaServlet" method="get">
 <div class="card border-danger mb-3" style="max-width: 15rem;">
@@ -63,7 +87,7 @@ Información de Mi Perfil, con posibilidad de realizar Cambios
         <div class="form-group">
             <input type="password" class="form-control" name="passwordrep" placeholder="Repetir contraseña..." value="" />            
         </div>
-        <input type="hidden" name="username" value=<%= usuario.getUsername() %> /> 
+        <input type="hidden" name="username" value=<%=username %> /> 
       </div>
       <div class="modal-footer">
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>

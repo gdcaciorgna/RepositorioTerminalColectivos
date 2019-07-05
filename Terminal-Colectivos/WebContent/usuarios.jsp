@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <jsp:include page="JSPFiles/imports.jsp" />
  
 <meta charset="ISO-8859-1">
@@ -10,7 +11,6 @@
 </head>
 <body>
 
-<jsp:include page="JSPFiles/redireccionlogin.jsp" /> 
 
 
    <%@ page import = "data.DataUsuario" %>
@@ -24,6 +24,26 @@
     Usuario usu = null;
     
     %>
+
+<% Usuario usuario;%>
+<!-- INICIO - REDIRECCION A LOGIN -->
+<%
+String username="s/usuario", estado="s/estado"; 
+usuario = (Usuario) session.getAttribute("Usuario");  
+if(usuario!=null) 
+{
+	username = usuario.getUsername(); 
+	estado = usuario.getEstado(); 
+}
+
+ if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
+	{   
+ 
+	String sitioweb = "http://localhost:8080/Terminal-Colectivos/"; 
+	response.sendRedirect(sitioweb+"login.jsp"); 
+	} 
+%>
+<!-- FIN - REDIRECCION A LOGIN -->
 
 <jsp:include page="JSPFiles/header.jsp" /> 
 

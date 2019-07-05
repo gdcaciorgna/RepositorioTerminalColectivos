@@ -62,7 +62,7 @@ public class BorrarCuentaServlet extends HttpServlet {
 			response.sendRedirect("bajasatisfactoria.jsp");		
 			} else if(url.contains("usuarios")) 
 			{
-			request.setAttribute("filasAfectadas", filasAfectadas);
+			sesion.setAttribute("filasAfectadas", filasAfectadas);
 			response.sendRedirect("usuarios.jsp");	
 			}
 
