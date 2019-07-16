@@ -11,16 +11,16 @@ import entities.Usuario;
 public class DataUsuario implements Validar 
 {
 	
-	public Usuario getByUsuario(String username) {
+	public Usuario getByUsuario(String usu) {
 		Usuario usuario = null;
-		String sql = "select * from usuarios where username=?";
+		String sql = "select * from usuarios where usuario=?";
 		
 		
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			pstmt=Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, username);
+			pstmt.setString(1, usu);
 			rs=pstmt.executeQuery();	
 			
 			//INICIO - Código sin aplicar herencia
@@ -60,12 +60,12 @@ public class DataUsuario implements Validar
 		boolean r = false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
-		String sql = "select * from usuarios where estado= 'activo' and username = ? and password = ?";
+		String sql = "select * from usuarios where estado= 'activo' and usuario = ? and password = ?";
 		
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usuario.getUsername());
+			pstmt.setString(1, usuario.getUsuario());
 			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
 			
@@ -99,12 +99,12 @@ public class DataUsuario implements Validar
 		boolean r=false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
-		String sql = "select * from usuarios where  estado= 'activo' and username = ? and password = ?";
+		String sql = "select * from usuarios where  estado= 'activo' and usuario = ? and password = ?";
 		
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usuario.getUsername());
+			pstmt.setString(1, usuario.getUsuario());
 			pstmt.setString(2, usuario.getPassword());
 			rs = pstmt.executeQuery();
 			
@@ -136,14 +136,14 @@ public class DataUsuario implements Validar
 	public Integer eliminarUsuario(Usuario usuario) 
 	{
 		PreparedStatement pstmt = null;
-		String sql = "update usuarios set estado = 'eliminado' where username = ?";
+		String sql = "update usuarios set estado = 'eliminado' where usuario = ?";
 		Integer filasAfectadas = 0;
 		
 		try 
 		{
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
 		
-			pstmt.setString(1, usuario.getUsername());
+			pstmt.setString(1, usuario.getUsuario());
 			
 			filasAfectadas = pstmt.executeUpdate();			
 			
@@ -215,7 +215,7 @@ public class DataUsuario implements Validar
 	{
 		Usuario usuario = new Usuario();
 		try {
-			usuario.setUsername(rs.getString("username"));
+			usuario.setUsuario(rs.getString("usuario"));
 			usuario.setNombre(rs.getString("nombre"));
 			usuario.setApellido(rs.getString("apellido"));
 			usuario.setRol(rs.getString("rol"));

@@ -20,7 +20,7 @@
       
       if(usuario!=null) {
       rol = usuario.getRol();
-      nomUsuario = usuario.getUsername();
+      nomUsuario = usuario.getUsuario();
       }
       else { rol= "visitante" ;} %>
       <% if(!rol.equals("visitante")) {  %>

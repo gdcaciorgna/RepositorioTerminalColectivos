@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
         
         
         
-        usuario.setUsername(username);
+        usuario.setUsuario((username));
         usuario.setPassword(password);
         
        

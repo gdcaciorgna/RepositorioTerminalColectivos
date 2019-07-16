@@ -1,8 +1,8 @@
 
 
 function validarIgualdadPassword(){ 
-   	clave1 = document.formBorrarMiCuenta.password.value 
-   	clave2 = document.formBorrarMiCuenta.passwordrep.value 
+   	clave1 = document.formBorrarMiCuenta.txtpass1.value 
+   	clave2 = document.formBorrarMiCuenta.txtpass2.value 
 
    	if (clave1 == clave2) 
    		document.formBorrarMiCuenta.submit() 

@@ -6,7 +6,7 @@ String nomUsuario="s/usuario", estado="s/estado";
 usuario = (Usuario) session.getAttribute("Usuario");  
 if(usuario!=null) 
 {
-	nomUsuario = usuario.getUsername(); 
+	nomUsuario = usuario.getUsuario(); 
 	estado = usuario.getEstado(); 
 }
 

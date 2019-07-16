@@ -1,7 +1,7 @@
 package entities;
 
 public class Usuario {
-	private String username;
+	private String usuario;
 	private String nombre;
 	private String apellido;
 	private String email;
@@ -10,13 +10,14 @@ public class Usuario {
 	private String estado;
 	
 
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
+
 	
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 	public String getPassword() {
 		return password;
 	}

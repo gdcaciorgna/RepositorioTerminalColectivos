@@ -29,7 +29,7 @@ String username="s/usuario", estado="s/estado";
 usuario = (Usuario) session.getAttribute("Usuario");  
 if(usuario!=null) 
 {
-	username = usuario.getUsername(); 
+	username = usuario.getUsuario(); 
 	estado = usuario.getEstado(); 
 }
 

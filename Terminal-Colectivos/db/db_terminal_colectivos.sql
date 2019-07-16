@@ -296,7 +296,7 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(45) DEFAULT NULL,
   `rol` varchar(45) NOT NULL DEFAULT 'Cliente',
   `email` varchar(45) NOT NULL,
-  `contrasenia` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
   `cuil` int(11) DEFAULT NULL,
   `estado` varchar(45) DEFAULT 'activo',
   PRIMARY KEY (`usuario`)
@@ -309,7 +309,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES ('admin',NULL,NULL,'admin','admin@hotmail.com','admin',NULL,'activo'),('federico',NULL,NULL,'chofer','f_caciorgna@hotmail.com','123456',123,'eliminado'),('gdcaciorgna',NULL,NULL,'admin','gdcaciorgna@hotmail.com','123456',NULL,'activo'),('joaquinvilchez',NULL,NULL,'cliente','joaquinvilchez@hotmail.com','123456',NULL,'activo');
+INSERT INTO `usuarios` VALUES ('admin',NULL,NULL,'admin','admin@hotmail.com','admin',NULL,'activo'),('federico',NULL,NULL,'chofer','f_caciorgna@hotmail.com','123456',123,'activo'),('gdcaciorgna',NULL,NULL,'admin','gdcaciorgna@hotmail.com','123456',NULL,'activo'),('joaquinvilchez',NULL,NULL,'cliente','joaquinvilchez@hotmail.com','123456',NULL,'activo');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -322,4 +322,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-03  0:51:17
+-- Dump completed on 2019-07-16 11:31:45

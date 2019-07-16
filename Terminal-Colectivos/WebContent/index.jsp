@@ -17,7 +17,7 @@
  String rol  = null;
 if(usuario!=null)
 	{ 
-	nomUsuario = usuario.getUsername();
+	nomUsuario = usuario.getUsuario();
 	rol = usuario.getRol();
 	}
  %>
