@@ -222,6 +222,7 @@ public class DataUsuario implements Validar
 			usuario.setEmail(rs.getString("email"));
 			usuario.setPassword(rs.getString("password"));
 			usuario.setEstado(rs.getString("estado"));
+			usuario.setCuil(rs.getString("cuil"));
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

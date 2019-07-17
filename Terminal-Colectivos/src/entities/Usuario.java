@@ -8,10 +8,16 @@ public class Usuario {
 	private String password;
 	private String rol;
 	private String estado;
+	private String cuil;
 	
-
-
 	
+	
+	public String getCuil() {
+		return cuil;
+	}
+	public void setCuil(String cuil) {
+		this.cuil = cuil;
+	}
 	public String getUsuario() {
 		return usuario;
 	}
