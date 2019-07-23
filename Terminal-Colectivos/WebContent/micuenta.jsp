@@ -137,7 +137,7 @@ if(usuario!=null)
       </div>
       <div class="modal-footer">
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>
-                <input type="button" class="btn pull-right btn-danger" value="Eliminar mi Cuenta" onClick="validarIgualdadPassword()"/>
+                <input type="submit" class="btn pull-right btn-danger" value="Eliminar mi Cuenta" onClick="validarIgualdadPassword()"/>
             
             <div id="mensajeContraseniasNoCoinciden" class="alert alert-danger" role="alert"></div> 
             
