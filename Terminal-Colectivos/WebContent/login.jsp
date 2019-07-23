@@ -32,7 +32,15 @@
                  <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Ingresar" />
                  </div>
-                  <div align="center"> <a href="#">Crear una nueva cuenta</a> </div>
+                  <div align="center"> <a href="registro.jsp">Crear una nueva cuenta</a> </div>
+                 		<% String registroExitoso = (String)session.getAttribute("registroExitoso");%>
+			<% if(session.getAttribute("registroExitoso")!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			Felicitaciones: <%= registroExitoso %>
+			</div> 
+			<%}%>
+            
               	<% String error = (String)session.getAttribute("error");%>
 			<% if(session.getAttribute("error")!=null) { %>
 			<br>
@@ -40,6 +48,8 @@
 			Error: <%= error %>
 			</div> 
 			<%}%>
+			</div>
+         
              </form>
          </div>
        

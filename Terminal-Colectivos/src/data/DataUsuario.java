@@ -133,6 +133,44 @@ public class DataUsuario implements Validar
 		
 	}
 	
+	public boolean validarUsuario (Usuario usuario) {
+		boolean r=false;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		String sql = "select * from usuarios where usuario = ? ";
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			pstmt.setString(1, usuario.getUsuario());
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs!=null && rs.next())
+			{
+				r=true;
+				
+			}
+		}catch(SQLException e) { e.printStackTrace();}
+		finally 
+		{
+			try 
+			{
+				if(rs!=null) {rs.close();}
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();}
+		}	
+
+		
+
+		return r;
+		
+	}
+	
 	public Integer eliminarUsuario(Usuario usuario) 
 	{
 		PreparedStatement pstmt = null;
@@ -233,7 +271,44 @@ public class DataUsuario implements Validar
 	
 	}
 	
-
+	
+	
+	public void ingresarUsuario(Usuario usuario)
+	{
+	PreparedStatement pstmt = null;
+	
+	String sql = "INSERT INTO usuarios (nombre, apellido, email, cuil, rol, usuario,password,estado) VALUES (?,?,?,?,?,?,?,?) ";
+	
+	try 
+	{
+		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		pstmt.setString(1, usuario.getNombre());
+		pstmt.setString(2, usuario.getApellido());
+		pstmt.setString(3, usuario.getEmail());
+		pstmt.setString(4, usuario.getCuil());
+		pstmt.setString(5, usuario.getRol());
+		pstmt.setString(6, usuario.getUsuario());
+		pstmt.setString(7, usuario.getPassword());
+		pstmt.setString(8, "activo");
+	    pstmt.executeUpdate();
+		
+		
+	}catch(SQLException e) { e.printStackTrace();}
+	
+	finally 
+	{
+		try 
+		{
+			
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) {e.printStackTrace();}
+	}	
+	
+	}
 
 
 }
