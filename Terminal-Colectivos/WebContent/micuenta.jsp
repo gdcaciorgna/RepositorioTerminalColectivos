@@ -48,7 +48,13 @@ if(usuario!=null)
 		<div class="row">
 		<div class="col-6">
 			
+			
+			<!--  -->
+			
 			<form action="EditarUsuarioServlet" method="post">
+			  
+			  <input type="hidden" name="username" class="form-control" value=<%= usuario.getUsuario() %> hidden>
+			  
 			  <div class="form-group">
 			    <label>Nombre</label>
 			    <input type="text" name="nombre" class="form-control" value=<%= usuario.getNombre() %>>
@@ -57,11 +63,6 @@ if(usuario!=null)
 			  <div class="form-group">
 			    <label>Apellido</label>
 			    <input type="text" name="apellido" class="form-control" value=<%= usuario.getApellido() %>>
-			  </div>
-			  
-			  <div class="form-group">
-			    <label>Usuario</label>
-			    <input type="text" name="usuario" class="form-control" value=<%= usuario.getUsuario() %>>
 			  </div>
 			  
 			  <div class="form-group">
@@ -83,7 +84,7 @@ if(usuario!=null)
 			    </select>
 			  </div>
 			  
-			  <button type="submit" class="btn btn-primary">Submit</button>
+			  <button type="submit" class="btn btn-primary">Editar</button>
 			</form>
 			
 			

@@ -46,15 +46,6 @@ public class DataUsuario implements Validar
 	}
 	
 
-
-
-
-
-	
-	
-	
-	
-
 	@Override
 	public boolean validar(Usuario usuario, String password) {
 		boolean r = false;
@@ -231,6 +222,30 @@ public class DataUsuario implements Validar
 		
 		return usuario;
 	
+	}
+	
+	public void editarUsuario(Usuario usuario)
+	{
+	PreparedStatement pstmt = null;
+	
+	String sql = "UPDATE usuarios SET nombre=?, apellido=?, email=?, cuil=?, rol=? WHERE usuario=?";
+	
+	
+	try 
+	{
+		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		pstmt.setString(1, usuario.getNombre());
+		pstmt.setString(2, usuario.getApellido());
+		pstmt.setString(3, usuario.getEmail());
+		pstmt.setString(4, usuario.getCuil());
+		pstmt.setString(5, usuario.getRol());
+		pstmt.setString(6, usuario.getUsuario());
+	    pstmt.executeUpdate();
+		
+		
+	}catch(SQLException e) { 
+		e.printStackTrace();
+		}
 	}
 	
 

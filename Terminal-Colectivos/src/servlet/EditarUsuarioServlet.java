@@ -6,6 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import data.DataUsuario;
+import entities.Usuario;
 
 /**
  * Servlet implementation class EditarUsuarioServlet
@@ -28,6 +32,26 @@ public class EditarUsuarioServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		Usuario user;
+		DataUsuario datauser = new DataUsuario();
+		
+
+		String username = request.getParameter("username");
+		
+		user = datauser.getByUsuario(username);
+		
+		user.setNombre(request.getParameter("nombre"));
+		user.setApellido(request.getParameter("apellido"));
+		user.setEmail(request.getParameter("email"));
+		user.setCuil(request.getParameter("cuil"));
+		user.setRol(request.getParameter("rol"));
+		
+		datauser.editarUsuario(user);
+		HttpSession sesion = request.getSession();
+		sesion.setAttribute("Usuario", user); //ESTA BIEN ESTO PARA REESCRIBIR LAS VARIABLES DE SESSION O PUEDO TRAER LOS DATOS DE LA BASE DE DATOS DIRECTAMENTE Y MOSTRARLAS EN EL FORMULARIO??
+		response.sendRedirect("micuenta.jsp");
+		
 	}
 
 	/**
