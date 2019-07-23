@@ -43,53 +43,63 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		DataUsuario dusu = new DataUsuario();
 
 		
-		String passrep= "";
+		String passrep= request.getParameter("passwordrep");
 		String username = request.getParameter("usuario");
 		
 	
-	   
+	   boolean r=false;
 		usuario.setUsuario((username));
-		
+		usuario.setPassword(request.getParameter("password"));
 		
 		if((dusu.validarUsuario(usuario) == false)) {
-			usuario.setPassword(request.getParameter("password"));
-			if(usuario.getPassword()==passrep)
-			if(usuario.getPassword().length()>=8) {
-				
-				usuario.setNombre(request.getParameter("nombre")); 
-				usuario.setApellido(request.getParameter("apellido")); 
-				usuario.setEmail(request.getParameter("email"));
-				usuario.setCuil(request.getParameter("cuil"));
-				usuario.setRol(request.getParameter("rol"));
-				
-				
-				dusu.ingresarUsuario( usuario);
 			
-		 		request.getSession().setAttribute("registroExitoso", "Te has registrado exitosamente!");	
-				response.sendRedirect("login.jsp");
-				
-				
-			}
-			else 
+			
+			 request.getSession().setAttribute("error", "El nombre de usuario esta en uso");	
+			 
+			 }
+		
+			
+			 else if(usuario.getPassword().length()<8)
        	 { 
-	 		 request.getSession().setAttribute("error2", "La contraseña debe contener 8 caracteres como minimo");	
-   		 response.sendRedirect("registro.jsp");	
-       	 }	
-			else 
-	       	 { 
-		 		 request.getSession().setAttribute("error3", "Las contraseñas no coinciden");	
-	   		 response.sendRedirect("registro.jsp");	
-	       	 }	
+	 		 request.getSession().setAttribute("error", "La contraseña debe contener 8 caracteres como minimo");	
+   		 	
+   		
+       	 }		
 			
+					 	else if(!usuario.getPassword().equals(passrep)) 
+			    	 { 
+				 		 request.getSession().setAttribute("error", "Las contraseñas no coinciden");	
+			   		 
+			   		
+			       	 }	
+			
+								
+								else 
+						   	 { 
+									
+									usuario.setNombre(request.getParameter("nombre")); 
+									usuario.setApellido(request.getParameter("apellido")); 
+									usuario.setEmail(request.getParameter("email"));
+									usuario.setCuil(request.getParameter("cuil"));
+									usuario.setRol(request.getParameter("rol"));
+									
+									
+									dusu.ingresarUsuario( usuario);
+								
+							 		request.getSession().setAttribute("registroExitoso", "Te has registrado exitosamente!");	
+									
+									r=true;
+								}
+		if (r==true) {
+			response.sendRedirect("login.jsp");
 		}
-		else 
-   	 { 
-		 request.getSession().setAttribute("error1", "El nombre de usuario esta en uso");	
-		 response.sendRedirect("registro.jsp");	
+		else {response.sendRedirect("registro.jsp");	}
+	    
+								
    	 }	
 		
-	    
-	}
+	
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

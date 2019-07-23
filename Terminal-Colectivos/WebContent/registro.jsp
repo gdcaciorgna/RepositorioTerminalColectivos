@@ -65,28 +65,14 @@ if(usuario!=null)
                <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Registrarse" />
                  </div>
-              		<% String error1 = (String)session.getAttribute("error1");%>
-			<% if(session.getAttribute("error1")!=null) { %>
+              		<% String error = (String)session.getAttribute("error");%>
+			<% if(session.getAttribute("error")!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Error: <%= error1 %>
+			Error: <%= error %>
 			</div> 
 			<%}%>
-			  	<% String error2 = (String)session.getAttribute("error2");%>
-			<% if(session.getAttribute("error2")!=null) { %>
-			<br>
-			<div class="alert alert-danger" role="alert">
-			Error: <%= error2 %>
-			</div> 
-			<%}%>
-			
-			  	<% String error3 = (String)session.getAttribute("error3");%>
-			<% if(session.getAttribute("error3")!=null) { %>
-			<br>
-			<div class="alert alert-danger" role="alert">
-			Error: <%= error3 %>
-			</div> 
-			<%}%>
+			  
              </form>
          </div>
        

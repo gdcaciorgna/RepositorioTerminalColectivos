@@ -125,7 +125,7 @@ public class DataUsuario implements Validar
 	}
 	
 	public boolean validarUsuario (Usuario usuario) {
-		boolean r=false;
+		boolean r=true;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		String sql = "select * from usuarios where usuario = ? ";
@@ -139,7 +139,7 @@ public class DataUsuario implements Validar
 			
 			if(rs!=null && rs.next())
 			{
-				r=true;
+				r=false;
 				
 			}
 		}catch(SQLException e) { e.printStackTrace();}
