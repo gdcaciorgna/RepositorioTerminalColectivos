@@ -79,6 +79,14 @@ if(usuario!=null)
 			Error: <%= error2 %>
 			</div> 
 			<%}%>
+			
+			  	<% String error3 = (String)session.getAttribute("error3");%>
+			<% if(session.getAttribute("error3")!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= error3 %>
+			</div> 
+			<%}%>
              </form>
          </div>
        

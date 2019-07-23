@@ -43,7 +43,7 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		DataUsuario dusu = new DataUsuario();
 
 		
-		
+		String passrep= "";
 		String username = request.getParameter("usuario");
 		
 	
@@ -52,7 +52,8 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		
 		
 		if((dusu.validarUsuario(usuario) == false)) {
-			usuario.setPassword(request.getParameter("password")); 
+			usuario.setPassword(request.getParameter("password"));
+			if(usuario.getPassword()==passrep)
 			if(usuario.getPassword().length()>=8) {
 				
 				usuario.setNombre(request.getParameter("nombre")); 
@@ -74,7 +75,11 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 	 		 request.getSession().setAttribute("error2", "La contraseña debe contener 8 caracteres como minimo");	
    		 response.sendRedirect("registro.jsp");	
        	 }	
-			
+			else 
+	       	 { 
+		 		 request.getSession().setAttribute("error3", "Las contraseñas no coinciden");	
+	   		 response.sendRedirect("registro.jsp");	
+	       	 }	
 			
 		}
 		else 
