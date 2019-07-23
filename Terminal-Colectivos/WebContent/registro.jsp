@@ -8,6 +8,18 @@
 <title>Registrar nueva cuenta</title>
 </head>
 <body>
+ <%@ page import = "entities.Usuario" %>
+ <% Usuario usuario = (Usuario) session.getAttribute("Usuario"); 
+ String rol  = "cliente";
+if(usuario!=null)
+	{ 
+	rol = usuario.getRol();
+	}
+ %>
+
+
+<jsp:include page="JSPFiles/header.jsp" /> 
+
 <div class="container login-container">
 <div class="row">
     
@@ -33,6 +45,7 @@
                   <div class="form-group">
                      <input type="text" class="form-control" name="email" placeholder="E-mail" value=""  required/>
                  </div>
+               <% if(rol.equals("admin")) { %>
                   <div class="form-group">
                      <input type="text" class="form-control" name="cuil" placeholder="Cuil" value=""  required/>
                  </div>
@@ -46,6 +59,8 @@
 			      <option value="cliente">Cliente</option>
 			    </select>
 			  </div>
+			   <%}
+			   %>
                 
                <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Registrarse" />
@@ -70,8 +85,8 @@
     </div>
     
  
-  </div>
-      
 </div>
+</div>
+<jsp:include page="JSPFiles/footer.jsp" />  
 </body>
 </html>

@@ -279,6 +279,12 @@ public class DataUsuario implements Validar
 	
 	String sql = "INSERT INTO usuarios (nombre, apellido, email, cuil, rol, usuario,password,estado) VALUES (?,?,?,?,?,?,?,?) ";
 	
+	if(usuario.getRol()==null)
+	{
+		usuario.setRol("cliente");
+		usuario.setCuil("");
+	}
+	
 	try 
 	{
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
@@ -290,6 +296,7 @@ public class DataUsuario implements Validar
 		pstmt.setString(6, usuario.getUsuario());
 		pstmt.setString(7, usuario.getPassword());
 		pstmt.setString(8, "activo");
+		
 	    pstmt.executeUpdate();
 		
 		
