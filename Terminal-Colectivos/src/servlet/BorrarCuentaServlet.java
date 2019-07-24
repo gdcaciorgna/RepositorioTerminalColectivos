@@ -47,7 +47,7 @@ public class BorrarCuentaServlet extends HttpServlet {
 		
 		usu = dusu.getByUsuario(username);
 		
-		testPassword= dusu.validar(usu,password);
+		testPassword= dusu.validarUsuarioyPassword(usu,password);
 		
 		if(testPassword) 
 		{

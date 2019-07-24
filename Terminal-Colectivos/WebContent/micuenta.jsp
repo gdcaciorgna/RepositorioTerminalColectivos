@@ -7,12 +7,11 @@
 <meta charset="utf-8">
 <jsp:include page="JSPFiles/imports.jsp" />
 
-
+<script type="text/javascript" src="JavascriptFiles/validarIgualdadPassword.js"></script>
 
 
 <title>Mi Cuenta</title>
 
-<script type="text/javascript" src="JavascriptFiles/validarIgualdadPassword.js"></script>
 
 
 </head>
@@ -88,7 +87,6 @@ if(usuario!=null)
 			</form>
 			
 			
-			<form name="formBorrarMiCuenta" action="BorrarCuentaServlet" method="post">
 			<div class="card border-danger mb-3">
 			  <div class="card-header">Eliminar Cuenta</div>
 			  <div class="card-body text-danger">
@@ -106,7 +104,6 @@ if(usuario!=null)
 						
 				</div>
 			  </div>
-			</form>
 		</div>
 		</div>
 </div>
@@ -124,16 +121,21 @@ if(usuario!=null)
       <div class="modal-body">
         
         
+       
+        <form name="formBorrarMiCuenta" action="BorrarCuentaServlet" method="post">
+        
         <div class="form-group">
                
                  <label class="p-2" for="exampleFormControlInput1">Para que podamos dar de baja tu cuenta, es necesario que escribas tu contraseña:</label>
            
                  <input type="password" class="form-control" name="password" placeholder="Ingresar contraseña..." value="" />
     	</div>
+         
         <div class="form-group">
             <input type="password" class="form-control" name="passwordrep" placeholder="Repetir contraseña..." value="" />            
         </div>
             <input type="hidden" name="username" value=<%= username %> /> 
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>

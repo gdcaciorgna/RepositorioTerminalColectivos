@@ -95,7 +95,7 @@ if(usuario!=null)
    </td>
    <td>
    
-   <form action="#" method="post">
+   <form action="micuenta.jsp" method="post">
    <input type="hidden" value=<%=usu.getUsuario()%> name="username"/>
    <input type="hidden" value=<%=usu.getPassword() %> name="password"/>
    <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button></form> 
