@@ -41,11 +41,11 @@
 			</div> 
 			<%}%>
             
-              	<% String error = (String)session.getAttribute("error");%>
-			<% if(session.getAttribute("error")!=null) { %>
+              	<% String errorLogin = (String)session.getAttribute("errorLogin");%>
+			<% if(session.getAttribute("errorLogin")!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Error: <%= error %>
+			Error: <%= errorLogin %>
 			</div> 
 			<%}%>
 			</div>

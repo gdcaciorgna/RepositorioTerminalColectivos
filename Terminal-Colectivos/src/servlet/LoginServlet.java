@@ -49,10 +49,10 @@ public class LoginServlet extends HttpServlet {
         
        
         
-        r= dusu.validar(usuario);
+        r= dusu.validarUsuarioyPassword(usuario);
  
-        if(r==true) 
-		{
+        if(r==true)
+        {
         	usuario = dusu.getByUsuario(username);
             
             String txtEstado = usuario.getEstado();
@@ -65,11 +65,11 @@ public class LoginServlet extends HttpServlet {
             //redirijo a página con información de login exitoso
         	
 		}
-        	 else 
-        	 { 
-	 		 request.getSession().setAttribute("error", "Usuario y/o contraseña incorrecta");	
-    		 response.sendRedirect("login.jsp");	
-        	 }	
+    	 else 
+    	 { 
+ 		 request.getSession().setAttribute("errorLogin", "Usuario y/o contraseña incorrecta");	
+		 response.sendRedirect("login.jsp");	
+    	 }	
     		 	
     }				    
 	

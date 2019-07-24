@@ -51,24 +51,24 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		usuario.setUsuario((username));
 		usuario.setPassword(request.getParameter("password"));
 		
-		if((dusu.validarUsuario(usuario) == false)) {
+		if((dusu.validarUsuarioInexistente(usuario) == false)) {
 			
 			
-			 request.getSession().setAttribute("error", "El nombre de usuario esta en uso");	
+			 request.getSession().setAttribute("errorRegistro", "El nombre de usuario esta en uso");	
 			 
 			 }
 		
 			
 			 else if(usuario.getPassword().length()<8)
        	 { 
-	 		 request.getSession().setAttribute("error", "La contraseña debe contener 8 caracteres como minimo");	
+	 		 request.getSession().setAttribute("errorRegistro", "La contraseña debe contener 8 caracteres como minimo");	
    		 	
    		
        	 }		
 			
 					 	else if(!usuario.getPassword().equals(passrep)) 
 			    	 { 
-				 		 request.getSession().setAttribute("error", "Las contraseñas no coinciden");	
+				 		 request.getSession().setAttribute("errorRegistro", "Las contraseñas no coinciden");	
 			   		 
 			   		
 			       	 }	

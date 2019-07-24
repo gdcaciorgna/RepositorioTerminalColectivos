@@ -47,7 +47,7 @@ public class DataUsuario implements Validar
 	
 
 	@Override
-	public boolean validar(Usuario usuario, String password) {
+	public boolean validarUsuarioyPassword(Usuario usuario, String password) {
 		boolean r = false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -86,7 +86,7 @@ public class DataUsuario implements Validar
 	}
 	
 	@Override
-	public boolean validar(Usuario usuario) {
+	public boolean validarUsuarioyPassword(Usuario usuario) {
 		boolean r=false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -124,7 +124,7 @@ public class DataUsuario implements Validar
 		
 	}
 	
-	public boolean validarUsuario (Usuario usuario) {
+	public boolean validarUsuarioInexistente (Usuario usuario) {
 		boolean r=true;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;

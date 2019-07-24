@@ -43,7 +43,7 @@ if(usuario!=null)
                      <input type="password" class="form-control" name="passwordrep" placeholder="Confirmar Contraseña" value=""  required/>
                  </div>
                   <div class="form-group">
-                     <input type="text" class="form-control" name="email" placeholder="E-mail" value=""  required/>
+                     <input type="email" class="form-control" name="email" placeholder="E-mail" value=""  required/>
                  </div>
                <% if(rol.equals("admin")) { %>
                   <div class="form-group">
@@ -65,11 +65,11 @@ if(usuario!=null)
                <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Registrarse" />
                  </div>
-              		<% String error = (String)session.getAttribute("error");%>
-			<% if(session.getAttribute("error")!=null) { %>
+              		<% String errorRegistro = (String)session.getAttribute("errorRegistro");%>
+			<% if(session.getAttribute("errorRegistro")!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Error: <%= error %>
+			Error: <%= errorRegistro %>
 			</div> 
 			<%}%>
 			  
