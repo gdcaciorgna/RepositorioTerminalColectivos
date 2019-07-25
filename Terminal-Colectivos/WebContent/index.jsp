@@ -12,17 +12,18 @@
 <script type="text/javascript" src="JavascriptFiles/datepickerEs.js"></script>
 <div>
  <%@ page import = "entities.Usuario" %>
- <% Usuario usuario = (Usuario) session.getAttribute("Usuario"); 
- String nomUsuario = null;
- String rol  = null;
-if(usuario!=null)
-	{ 
-	nomUsuario = usuario.getUsuario();
-	rol = usuario.getRol();
-	}
+ <%
+ 	Usuario usuario = (Usuario) session.getAttribute("Usuario"); 
+  String nomUsuario = null;
+  String rol  = null;
+ if(usuario!=null)
+ 	{ 
+ 	nomUsuario = usuario.getUsuario();
+ 	rol = usuario.getRol();
+ 	}
  %>
-	Usuario: <%= nomUsuario %>
-	Rol: <%= rol %>
+	Usuario: <%=nomUsuario%>
+	Rol: <%=rol%>
 
 
 
@@ -67,10 +68,25 @@ if(usuario!=null)
     <!-- Origen -->
     <div class="form-group">
       <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="origenViaje">
-        <option selected>Origen...</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+      <option selected>Origen...</option>
+      <%@ page import="data.DataLocalidad" %>
+      <%@ page import="entities.Localidad" %>
+       <%
+       	//Inicialización de variables
+           DataLocalidad dloc = new DataLocalidad();
+           ArrayList<Localidad> localidades = dloc.getAll();
+           Iterator<Localidad> itr1 = localidades.iterator();
+           Localidad loc = null;
+       %>
+    
+    <%    
+    while(itr1.hasNext()){
+ 	loc = itr1.next();
+	%>
+	<option><%=loc.getNombre() %></option>
+	<% } %>
+
+      
       </select>
       </div>
     
@@ -78,9 +94,13 @@ if(usuario!=null)
     <div class="form-group">
       <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="destinoViaje">
         <option selected>Destino...</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+    <%    
+    Iterator<Localidad> itr2 = localidades.iterator();
+    while(itr2.hasNext()){
+ 	loc = itr2.next();
+	%>
+	<option><%=loc.getNombre() %></option>
+	<% } %>
       </select>
   	 </div>
    

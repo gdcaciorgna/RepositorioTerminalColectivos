@@ -2,7 +2,7 @@ package entities;
 
 public class Terminal {
 	private int cod_terminal;
-	private Ciudad ciudad;
+	private Localidad localidad;
 	
 	public int getCod_terminal() {
 		return cod_terminal;
@@ -10,11 +10,12 @@ public class Terminal {
 	public void setCod_terminal(int cod_terminal) {
 		this.cod_terminal = cod_terminal;
 	}
-	public Ciudad getCiudad() {
-		return ciudad;
+	
+	public Localidad getLocalidad() {
+		return localidad;
 	}
-	public void setCiudad(Ciudad ciudad) {
-		this.ciudad = ciudad;
+	public void setLocalidad(Localidad localidad) {
+		this.localidad = localidad;
 	}
 	
 	
