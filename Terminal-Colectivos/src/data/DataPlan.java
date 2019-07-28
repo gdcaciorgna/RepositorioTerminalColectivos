@@ -61,77 +61,46 @@ public class DataPlan {
 	{
 		
 		
-		String subconsulta1 = "DROP TEMPORARY TABLE IF EXISTS orden_ruta_destino;" + 
-				"CREATE TEMPORARY TABLE orden_ruta_destino " + 
-				"SELECT ruta_destino.cod_ruta, max(orden) ordenDestino " + 
-				"FROM planes plan_destino " + 
-				"INNER JOIN rutas ruta_destino on plan_destino.cod_ruta=ruta_destino.cod_ruta " + 
-				"INNER JOIN escalas escala_destino on escala_destino.cod_ruta=ruta_destino.cod_ruta " + 
-				"group by ruta_destino.cod_ruta;"
+		String subconsulta1 = "DROP TEMPORARY TABLE IF EXISTS orden_destino_ruta;\r\n" + 
+				"CREATE TEMPORARY TABLE orden_destino_ruta\r\n" + 
+				"SELECT pla.cod_ruta, MAX(orden) 'orden'\r\n" + 
+				"FROM planes pla \r\n" + 
+				"INNER JOIN escalas esc ON esc.cod_ruta=pla.cod_ruta\r\n" + 
+				"GROUP BY pla.cod_ruta;";
+		
+		String subconsulta2 = "DROP TEMPORARY TABLE IF EXISTS localidad_origen_ruta;\r\n" + 
+				"CREATE TEMPORARY TABLE localidad_origen_ruta\r\n" + 
+				"SELECT pla.cod_ruta, pla.fecha_hora_plan, loc.nombre\r\n" + 
+				"FROM planes pla\r\n" + 
+				"INNER JOIN escalas esc on esc.cod_ruta=pla.cod_ruta\r\n" + 
+				"INNER JOIN terminales ter on esc.cod_terminal=ter.cod_terminal\r\n" + 
+				"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad\r\n" + 
+				"where esc.orden=0; \r\n"
 				+" ";
 		
-		String subconsulta2 = "DROP TEMPORARY TABLE IF EXISTS localidad_origen_ruta;" +  
-				"CREATE TEMPORARY TABLE localidad_origen_ruta " + 
-				"SELECT pla.fecha_hora_plan 'planOrigen', pla.cod_ruta, loc.nombre 'origen' " + 
-				"FROM planes pla " + 
-				"INNER JOIN escalas esc on esc.cod_ruta=pla.cod_ruta " + 
-				"INNER JOIN terminales ter on esc.cod_terminal=ter.cod_terminal " + 
-				"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad " + 
-				"where esc.orden=0;"
-				+" ";
-		
-		String subconsulta3= "DROP TEMPORARY TABLE IF EXISTS localidad_destino_ruta; " + 
-				"CREATE TEMPORARY TABLE localidad_destino_ruta " + 
-				"SELECT rut.cod_ruta, pla.fecha_hora_plan 'planDestino', loc.nombre 'destino' " + 
-				"FROM planes pla " + 
-				"INNER JOIN rutas rut on pla.cod_ruta=rut.cod_ruta " + 
-				"INNER JOIN escalas esc on esc.cod_ruta=rut.cod_ruta " + 
-				"INNER JOIN terminales ter on ter.cod_terminal=esc.cod_terminal " + 
-				"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad " + 
-				"INNER JOIN colectivos col on col.patente=pla.patente " + 
-				"INNER JOIN empresas_colectivos ecol on ecol.id_empresa_colectivo=col.id_empresa_colectivo " + 
-				"INNER JOIN provincias prov on prov.id_provincia=loc.id_provincia; "
-				+ " ";
+		String subconsulta3= "DROP TEMPORARY TABLE IF EXISTS localidad_destino_ruta;\r\n" + 
+				"CREATE TEMPORARY TABLE localidad_destino_ruta\r\n" + 
+				"SELECT pla.cod_ruta, pla.fecha_hora_plan, loc.nombre\r\n" + 
+				"FROM planes pla \r\n" + 
+				"INNER JOIN escalas esc on esc.cod_ruta=pla.cod_ruta\r\n" + 
+				"INNER JOIN terminales ter on ter.cod_terminal=esc.cod_terminal\r\n" + 
+				"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad\r\n" + 
+				"INNER JOIN orden_destino_ruta odr on odr.cod_ruta=pla.cod_ruta and odr.orden=esc.orden; \r\n";
 
 		
 		String consultaFinal = 
-				"SELECT DISTINCT planOrigen 'fecha_hora_plan', lor.cod_ruta 'cod_ruta', origen, destino, patente, usuario_chofer, precio " + 
-				"FROM localidad_origen_ruta lor " + 
-				"INNER JOIN localidad_destino_ruta ldr ON lor.planOrigen = ldr.planDestino " + 
-				"INNER JOIN planes pla on pla.fecha_hora_plan = planOrigen "+
-				"WHERE lor.origen=? AND ldr.destino=? AND DATE(lor.planOrigen)=? ";
+				"SELECT DISTINCT pla.fecha_hora_plan,pla.fecha_hora_plan,pla.patente,pla.usuario_chofer,pla.precio,lor.nombre,ldr.nombre\r\n" + 
+				"FROM localidad_origen_ruta lor\r\n" + 
+				"INNER JOIN localidad_destino_ruta ldr ON lor.cod_ruta = ldr.cod_ruta\r\n" + 
+				"INNER JOIN planes pla on pla.fecha_hora_plan = ldr.fecha_hora_plan\r\n"+
+				"WHERE lor.nombre=? AND ldr.nombre=? AND DATE(pla.fecha_hora_plan)=? \r\n";
 		
 		
 		
-		String getViajesdelDiaconSubconsultas = "SELECT DISTINCT * " + 
-				"FROM (SELECT pla.cod_ruta, pla.fecha_hora_plan 'planOrigen', loc.nombre 'origen' " + 
-				"FROM planes pla " + 
-				"INNER JOIN escalas esc on esc.cod_ruta=pla.cod_ruta " + 
-				"INNER JOIN terminales ter on esc.cod_terminal=ter.cod_terminal " + 
-				"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad " + 
-				"where esc.orden=0) lor " + 
-				"INNER JOIN (SELECT rut.cod_ruta, pla.fecha_hora_plan 'planDestino', loc.nombre 'destino' " + 
-				"FROM planes pla " + 
-				"INNER JOIN rutas rut on pla.cod_ruta=rut.cod_ruta " + 
-				"INNER JOIN escalas esc on esc.cod_ruta=rut.cod_ruta " + 
-				"INNER JOIN terminales ter on ter.cod_terminal=esc.cod_terminal " + 
-				"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad " + 
-				"INNER JOIN colectivos col on col.patente=pla.patente " + 
-				"INNER JOIN empresas_colectivos ecol on ecol.id_empresa_colectivo=col.id_empresa_colectivo " + 
-				"INNER JOIN provincias prov on prov.id_provincia=loc.id_provincia) ldr ON lor.planOrigen = ldr.planDestino " + 
-				"INNER JOIN planes pla on pla.fecha_hora_plan = planOrigen " + 
-				"WHERE lor.origen=? AND ldr.destino=? ";
-		
-		//AND DATE(lor.planOrigen)=?;
-		
-		//String sql=subconsulta1+"\n"+subconsulta2+"\n"+subconsulta3+"\n"+consultaFinal;
-		
-		String sql= getViajesdelDiaconSubconsultas;
 		
 		
-		String pruebaorigen= origen;
-		String pruebaDestino = destino;
-		String pruebaFecha = fecha;
+		String sql= subconsulta1+subconsulta2+subconsulta3+consultaFinal;
+		
 		
 		ArrayList<Plan> planes = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -156,7 +125,7 @@ public class DataPlan {
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
 			pstmt.setString(1, origen);
 			pstmt.setString(2, destino);
-			// pstmt.setString(3, fecha);
+			pstmt.setString(3, fecha);
 			rs = pstmt.executeQuery(sql);
 			
 			if(rs!=null) 
@@ -164,22 +133,22 @@ public class DataPlan {
 				while(rs.next()) 
 				{
 					
-					String patente = rs.getString("patente");
-					int cod_ruta = rs.getInt("cod_ruta");
-					String usuario_chofer = rs.getString("usuario_chofer");
+					String patente = rs.getString("pla.patente");
+					int cod_ruta = rs.getInt("pla.cod_ruta");
+					String usuario_chofer = rs.getString("pla.usuario_chofer");
 					
 					ruta = druta.getByRuta(cod_ruta);
 					chofer = dusu.getByUsuario(usuario_chofer);
 					colectivo = dcol.getByPatente(patente);
 					
 					
-					plan.setFecha_hora_plan(rs.getTimestamp("fecha_hora_plan"));
+					plan.setFecha_hora_plan(rs.getTimestamp("pla.fecha_hora_plan"));
 					plan.setRuta(ruta);
 					plan.setChofer(chofer);
 					plan.setColectivo(colectivo);
-					plan.setOrigen(rs.getString("origen"));
-					plan.setDestino(rs.getString("destino"));
-					plan.setPrecio(rs.getDouble("precio"));
+					plan.setOrigen(rs.getString("lor.nombre"));
+					plan.setDestino(rs.getString("ldr.nombre"));
+					plan.setPrecio(rs.getDouble("pla.precio"));
 					
 
 					planes.add(plan);
