@@ -5,9 +5,11 @@ import java.sql.Timestamp;
 public class Plan {
 	private Timestamp fecha_hora_plan;
 	private Colectivo colectivo;
-	private Usuario usuario;
+	private Usuario chofer;
 	private Ruta ruta;
 	private double precio;
+	private String origen;
+	private String destino;
 	
 	
 	public Timestamp getFecha_hora_plan() {
@@ -35,11 +37,23 @@ public class Plan {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
-	public Usuario getUsuario() {
-		return usuario;
+	public String getOrigen() {
+		return origen;
 	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setOrigen(String origen) {
+		this.origen = origen;
+	}
+	public String getDestino() {
+		return destino;
+	}
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+	public Usuario getChofer() {
+		return chofer;
+	}
+	public void setChofer(Usuario chofer) {
+		this.chofer = chofer;
 	}
 	
 	
