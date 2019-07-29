@@ -11,8 +11,7 @@ public class DataColectivo {
 	
 	public Colectivo getByPatente(String patente) 
 	{
-		Colectivo colectivo = null;
-		DataEmpresa_Colectivo demp = new DataEmpresa_Colectivo();
+		Colectivo colectivo = new Colectivo();
 		String sql = "select * from colectivos where patente=?";
 		
 		

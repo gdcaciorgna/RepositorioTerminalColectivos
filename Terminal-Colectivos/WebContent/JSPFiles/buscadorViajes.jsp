@@ -1,3 +1,15 @@
+
+
+<% 
+
+String origenViaje = (String) session.getAttribute("origenViaje");
+String destinoViaje = (String) session.getAttribute("destinoViaje");
+String fechaViaje = (String) session.getAttribute("fechaViaje");
+
+
+
+%>
+
 <div class="login-form-1">
 <!-- Default form contact -->
 <form action="BuscarViajesOrigenDestinoFecha" method="post" class="text-center border border-light p-5">
@@ -6,7 +18,7 @@
     <!-- Origen -->
     <div class="form-group">
       <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="origenViaje">
-      <option selected>Origen...</option>
+      <option <% if(origenViaje==null) {%> selected <% } %>>Origen...</option>
       <%@ page import="data.DataLocalidad" %>
       <%@ page import="entities.Localidad" %>
        <%
@@ -21,7 +33,7 @@
     while(itr1.hasNext()){
  	loc = itr1.next();
 	%>
-	<option><%=loc.getNombre() %></option>
+	<option <% if(loc.getNombre().equals(destinoViaje)) {%> selected <%}%>> <%=loc.getNombre() %></option>
 	<% } %>
 
       
@@ -31,13 +43,13 @@
     <!-- Destino -->
     <div class="form-group">
       <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="destinoViaje">
-        <option selected>Destino...</option>
+        <option <% if(origenViaje==null) {%> selected <% } %>>Destino...</option>
     <%    
     Iterator<Localidad> itr2 = localidades.iterator();
     while(itr2.hasNext()){
  	loc = itr2.next();
 	%>
-	<option><%=loc.getNombre() %></option>
+	<option <% if(loc.getNombre().equals(origenViaje)) {%> selected <%}%>> <%=loc.getNombre() %></option>
 	<% } %>
       </select>
   	 </div>
@@ -46,13 +58,24 @@
    <!-- Fecha -->
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.SimpleDateFormat"%>  
+<%@ page import = "java.time.format.DateTimeFormatter" %>
+<%@ page import = "java.time.LocalDate" %>
 <%
    Date dNow = new Date();
    SimpleDateFormat ft = 
    new SimpleDateFormat ("dd/MM/yyyy");
    String currentDate = ft.format(dNow);
    
-  
+   
+   if(fechaViaje != null)
+  	{
+	  //INICIO - CAMBIAR EL FORMATO DE DD/MM/YYYY -> YYYYY/MM/DD
+	  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+      DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+      fechaViaje = LocalDate.parse(fechaViaje, formatter).format(formatter2);
+      
+	  currentDate = fechaViaje;
+	}
 %>
  
 

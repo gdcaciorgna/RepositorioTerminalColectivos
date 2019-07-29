@@ -9,7 +9,7 @@ import entities.Provincia;
 public class DataProvincia {
 	
 	public Provincia getById_Provincia(int id_provincia) {
-		Provincia provincia = null;
+		Provincia provincia = new Provincia();
 		String sql = "SELECT * FROM provincias where id_provincia = ?";
 				
 		

@@ -1,9 +1,10 @@
 package entities;
 
-import java.sql.Timestamp;
+import java.util.Calendar;
 
 public class Plan {
-	private Timestamp fecha_hora_plan;
+	private String fecha;
+	private String hora;
 	private Colectivo colectivo;
 	private Usuario chofer;
 	private Ruta ruta;
@@ -12,11 +13,19 @@ public class Plan {
 	private String destino;
 	
 	
-	public Timestamp getFecha_hora_plan() {
-		return fecha_hora_plan;
+	
+
+	public String getFecha() {
+		return fecha;
 	}
-	public void setFecha_hora_plan(Timestamp fecha_hora_plan) {
-		this.fecha_hora_plan = fecha_hora_plan;
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+	public String getHora() {
+		return hora;
+	}
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
 	public Colectivo getColectivo() {
 		return colectivo;

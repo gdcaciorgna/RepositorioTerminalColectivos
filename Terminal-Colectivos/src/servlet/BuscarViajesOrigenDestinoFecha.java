@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.DataPlan;
-import entities.Plan;
 
 /**
  * Servlet implementation class BuscarViajesOrigenDestinoFecha
@@ -38,8 +36,7 @@ public class BuscarViajesOrigenDestinoFecha extends HttpServlet {
 		HttpSession sesion = request.getSession();
 
 		
-		DataPlan dplan = new DataPlan();
-		Plan plan = new Plan();
+		
 		
         String origenViaje = request.getParameter("origenViaje");
         String destinoViaje = request.getParameter("destinoViaje");

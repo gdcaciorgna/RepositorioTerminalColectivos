@@ -12,8 +12,8 @@ public class DataTerminal {
 	
 	
 	public Terminal getByCod_Terminal(int cod_terminal) {
-		Terminal terminal = null;
-		Localidad localidad = null;
+		Terminal terminal = new Terminal();
+		Localidad localidad = new Localidad();
 		String sql = "SELECT * FROM terminales";
 		DataLocalidad dloc = new DataLocalidad();
 		

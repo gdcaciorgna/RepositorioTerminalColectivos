@@ -5,15 +5,14 @@ import java.util.ArrayList;
 
 import entities.Localidad;
 import entities.Provincia;
-import entities.Usuario;
 
 public class DataLocalidad {
 	
 	
 	public Localidad getById_Localidad(int id_localidad) 
 	{
-		Localidad localidad = null;
-		Provincia provincia = null;
+		Localidad localidad = new Localidad();
+		Provincia provincia = new Provincia();
 		DataProvincia dprov = new DataProvincia();
 		String sql = "select * from localidades where id_localidad=?";
 		

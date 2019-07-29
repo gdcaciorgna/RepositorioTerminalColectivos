@@ -10,11 +10,12 @@ public class DataRuta {
 	
 	public Ruta getByRuta(int cod_ruta) 
 	{
-		Ruta ruta = null;
+		Ruta ruta = new Ruta();
 		String sql= "SELECT * FROM rutas WHERE cod_ruta=?";
 		
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+		ruta.setCod_ruta(cod_ruta);
 		try {
 			pstmt=Conectar.getInstancia().getConn().prepareStatement(sql);
 			pstmt.setInt(1, cod_ruta);
@@ -23,7 +24,7 @@ public class DataRuta {
 			//INICIO - Código sin aplicar herencia
 			if(rs!=null && rs.next()) 
 		{
-				ruta.setCod_ruta(cod_ruta);
+				
 				ruta.setDias_sem(rs.getString("dias_sem"));
 		}
 			//FIN - Código sin aplicar herencia

@@ -10,7 +10,7 @@ public class DataEmpresa_Colectivo {
 	
 	public Empresa_Colectivo getById_Empresa_Colectivo(int id_empresa_colectivo) 
 	{
-		Empresa_Colectivo empresa = null;
+		Empresa_Colectivo empresa = new Empresa_Colectivo();
 		empresa.setId_empresa_colectivo(id_empresa_colectivo);
 		String sql = "select * from empresas_colectivos where id_empresa_colectivo=?";
 		
@@ -45,7 +45,7 @@ public class DataEmpresa_Colectivo {
 	
 	public Empresa_Colectivo getByPatente(String patente) 
 	{
-		Empresa_Colectivo empresa = null;
+		Empresa_Colectivo empresa = new Empresa_Colectivo();
 		String sql = "SELECT ecol.id_empresa_colectivo, ecol.nombre FROM colectivos col INNER JOIN empresas_colectivos ecol ON ecol.id_empresa_colectivo=col.id_empresa_colectivo where patente like '?' ";
 		
 		PreparedStatement pstmt=null;

@@ -1,7 +1,9 @@
 package data;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import entities.*;
 
@@ -60,46 +62,27 @@ public class DataPlan {
 	public ArrayList<Plan> getViajesDia(String origen, String destino, String fecha)
 	{
 		
-		
-		String subconsulta1 = "DROP TEMPORARY TABLE IF EXISTS orden_destino_ruta;\r\n" + 
-				"CREATE TEMPORARY TABLE orden_destino_ruta\r\n" + 
-				"SELECT pla.cod_ruta, MAX(orden) 'orden'\r\n" + 
-				"FROM planes pla \r\n" + 
-				"INNER JOIN escalas esc ON esc.cod_ruta=pla.cod_ruta\r\n" + 
-				"GROUP BY pla.cod_ruta;";
-		
-		String subconsulta2 = "DROP TEMPORARY TABLE IF EXISTS localidad_origen_ruta;\r\n" + 
-				"CREATE TEMPORARY TABLE localidad_origen_ruta\r\n" + 
+			
+		String sql= "SELECT DISTINCT pla.fecha_hora_plan,pla.cod_ruta ,pla.fecha_hora_plan,pla.patente,pla.usuario_chofer,pla.precio,lor.nombre,ldr.nombre\r\n" + 
+				"FROM planes pla\r\n" + 
+				"INNER JOIN (\r\n" + 
 				"SELECT pla.cod_ruta, pla.fecha_hora_plan, loc.nombre\r\n" + 
 				"FROM planes pla\r\n" + 
 				"INNER JOIN escalas esc on esc.cod_ruta=pla.cod_ruta\r\n" + 
 				"INNER JOIN terminales ter on esc.cod_terminal=ter.cod_terminal\r\n" + 
 				"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad\r\n" + 
-				"where esc.orden=0; \r\n"
-				+" ";
-		
-		String subconsulta3= "DROP TEMPORARY TABLE IF EXISTS localidad_destino_ruta;\r\n" + 
-				"CREATE TEMPORARY TABLE localidad_destino_ruta\r\n" + 
-				"SELECT pla.cod_ruta, pla.fecha_hora_plan, loc.nombre\r\n" + 
+				"where esc.orden=0\r\n" + 
+				") lor ON pla.cod_ruta = lor.cod_ruta\r\n" + 
+				"INNER JOIN (SELECT pla.cod_ruta, pla.fecha_hora_plan, loc.nombre\r\n" + 
 				"FROM planes pla \r\n" + 
 				"INNER JOIN escalas esc on esc.cod_ruta=pla.cod_ruta\r\n" + 
 				"INNER JOIN terminales ter on ter.cod_terminal=esc.cod_terminal\r\n" + 
 				"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad\r\n" + 
-				"INNER JOIN orden_destino_ruta odr on odr.cod_ruta=pla.cod_ruta and odr.orden=esc.orden; \r\n";
-
-		
-		String consultaFinal = 
-				"SELECT DISTINCT pla.fecha_hora_plan,pla.fecha_hora_plan,pla.patente,pla.usuario_chofer,pla.precio,lor.nombre,ldr.nombre\r\n" + 
-				"FROM localidad_origen_ruta lor\r\n" + 
-				"INNER JOIN localidad_destino_ruta ldr ON lor.cod_ruta = ldr.cod_ruta\r\n" + 
-				"INNER JOIN planes pla on pla.fecha_hora_plan = ldr.fecha_hora_plan\r\n"+
-				"WHERE lor.nombre=? AND ldr.nombre=? AND DATE(pla.fecha_hora_plan)=? \r\n";
-		
-		
-		
-		
-		
-		String sql= subconsulta1+subconsulta2+subconsulta3+consultaFinal;
+				"INNER JOIN (SELECT pla.cod_ruta, MAX(orden) orden\r\n" + 
+				"FROM planes pla \r\n" + 
+				"INNER JOIN escalas esc ON esc.cod_ruta=pla.cod_ruta\r\n" + 
+				"GROUP BY pla.cod_ruta) odr on odr.cod_ruta=pla.cod_ruta and odr.orden=esc.orden) ldr on pla.fecha_hora_plan = ldr.fecha_hora_plan\r\n" + 
+				"WHERE lor.nombre=? and ldr.nombre=? and DATE(pla.fecha_hora_plan)=? \r\n";
 		
 		
 		ArrayList<Plan> planes = new ArrayList<>();
@@ -126,7 +109,7 @@ public class DataPlan {
 			pstmt.setString(1, origen);
 			pstmt.setString(2, destino);
 			pstmt.setString(3, fecha);
-			rs = pstmt.executeQuery(sql);
+			rs = pstmt.executeQuery();
 			
 			if(rs!=null) 
 			{
@@ -142,7 +125,23 @@ public class DataPlan {
 					colectivo = dcol.getByPatente(patente);
 					
 					
-					plan.setFecha_hora_plan(rs.getTimestamp("pla.fecha_hora_plan"));
+					//INICIO - MANEJO DE FECHAS 
+					
+					Timestamp fecha_hora_plan_timestamp = rs.getTimestamp("pla.fecha_hora_plan");
+					Calendar fecha_hora_plan = Calendar.getInstance();
+					fecha_hora_plan.setTimeInMillis(fecha_hora_plan_timestamp.getTime());
+					
+					SimpleDateFormat formatoFecha= new SimpleDateFormat("dd/MM/yyyy");
+					SimpleDateFormat formatoHora= new SimpleDateFormat("H:mm");					
+					
+					plan.setFecha(formatoFecha.format(fecha_hora_plan.getTime()));
+					plan.setHora(formatoHora.format(fecha_hora_plan.getTime()));
+					
+					//FIN - MANEJO DE FECHAS 
+					
+					
+					
+
 					plan.setRuta(ruta);
 					plan.setChofer(chofer);
 					plan.setColectivo(colectivo);
@@ -234,7 +233,20 @@ public class DataPlan {
 		chofer.setCuil(rs.getString("usu.cuil"));
 		
 
-		plan.setFecha_hora_plan(rs.getTimestamp("fecha_hora_plan"));
+		//INICIO - MANEJO DE FECHAS 
+		
+		Timestamp fecha_hora_plan_timestamp = rs.getTimestamp("fecha_hora_plan");
+		Calendar fecha_hora_plan = Calendar.getInstance();
+		fecha_hora_plan.setTimeInMillis(fecha_hora_plan_timestamp.getTime());
+		
+		SimpleDateFormat formatoFecha= new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formatoHora= new SimpleDateFormat("H:mm");					
+		
+		plan.setFecha(formatoFecha.format(fecha_hora_plan.getTime()));
+		plan.setHora(formatoHora.format(fecha_hora_plan.getTime()));
+		
+		//FIN - MANEJO DE FECHAS 		
+		
 		plan.setColectivo(colectivo);
 		plan.setRuta(ruta);
 		plan.setChofer(chofer);

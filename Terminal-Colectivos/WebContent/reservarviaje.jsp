@@ -40,7 +40,7 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
 			 <div class="container">
 			        <div class="table-wrapper">
 			                    <span class="float-left"><h4>Listado de <b>Viajes</b></h2></span>
-			                    <span class="float-right"><h4><%=plan.getOrigen() %> <i class="fas fa-chevron-circle-right"></i> <%= plan.getDestino() %> </h5></span>
+			                    <span class="float-right"><h4><%=origenViaje %> <i class="fas fa-chevron-circle-right"></i> <%= destinoViaje %> </h5></span>
 			        </div> 
 		     </div>
 			           
@@ -62,8 +62,8 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
 				   plan = itr.next();
 			    %>
 			   <td> <%= plan.getColectivo().getEmpresa().getNombre() %> </td>
-			   <td> <%= plan.getFecha_hora_plan().getDate() %> </td>
-			   <td> <%= plan.getFecha_hora_plan().getHours() %> </td>
+			   <td> <%= plan.getFecha() %> </td>
+			   <td> <%= plan.getHora() %> </td>
 			   <td> <%= plan.getColectivo().getTipo_colectivo() %> </td>
 			   <td> <%= plan.getPrecio() %> </td>
 			   	   
