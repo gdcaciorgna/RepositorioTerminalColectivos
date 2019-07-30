@@ -8,7 +8,7 @@
 <meta charset="ISO-8859-1">
 <title>Registrar nuevo plan de viaje</title>
 
-<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" >
+
 
 </head>
 <body>
@@ -79,6 +79,10 @@
 </div>
 </div>
 <jsp:include page="JSPFiles/footer.jsp" />  
+
+
+<!-- Este script se debería realizar en un archivo js diferente para poder reutilizarlo en otras ocasiones -->
+
 <script type="text/javascript">
 $('.form_date').datetimepicker({
     language:  'es',

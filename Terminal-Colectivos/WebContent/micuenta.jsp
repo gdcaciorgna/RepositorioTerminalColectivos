@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <jsp:include page="JSPFiles/imports.jsp" />
 
-<script type="text/javascript" src="JavascriptFiles/validarIgualdadPassword.js"></script>
+<script type="text/javascript" src="js/validarIgualdadPassword.js"></script>
 
 
 <title>Mi Cuenta</title>
