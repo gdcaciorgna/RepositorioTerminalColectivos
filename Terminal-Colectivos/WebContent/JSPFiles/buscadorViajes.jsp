@@ -79,14 +79,17 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
 %>
  
 
-   <div class="form-group">
-  <div class="input-group mb-2 mr-sm-2">
-    <div class="input-group-prepend">
-      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-    </div>
-    <input class="form-control" id="date" name="date" placeholder="DD/MM/YYYY" type="text" value=<%= currentDate %>  />
-  </div>
-  </div>
+  <div class="form-group">
+                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                   <div class="input-group-prepend">
+				   <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+				   </div>
+                   <input class="form-control" type="text" value="" readonly>
+                   <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <!-- No tengo idea para que es el span pero es inevitable  -->
+                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>              
+                <input type="hidden" id="dtp_input2" value="" /> 
+                </div>	
+            </div>
 	
 	
 	
