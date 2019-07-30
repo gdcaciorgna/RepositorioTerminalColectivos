@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.Calendar;
-
 public class Plan {
 	private String fecha;
 	private String hora;

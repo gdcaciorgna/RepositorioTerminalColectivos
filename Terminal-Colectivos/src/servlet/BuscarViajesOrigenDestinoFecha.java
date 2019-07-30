@@ -40,15 +40,9 @@ public class BuscarViajesOrigenDestinoFecha extends HttpServlet {
 		
         String origenViaje = request.getParameter("origenViaje");
         String destinoViaje = request.getParameter("destinoViaje");
-        String fechaViaje = request.getParameter("date");
+        String fechaViaje = request.getParameter("fechaViaje");
         
-        
-        //INICIO - CAMBIAR EL FORMATO DE DD/MM/YYYY -> YYYYY/MM/DD
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        fechaViaje = LocalDate.parse(fechaViaje, formatter).format(formatter2);
-        //FIN - CAMBIAR EL FORMATO DE DD/MM/YYYY -> YYYYY/MM/DD
-        
+                
         sesion.setAttribute("origenViaje", origenViaje);
         sesion.setAttribute("destinoViaje", destinoViaje);
         sesion.setAttribute("fechaViaje", fechaViaje);

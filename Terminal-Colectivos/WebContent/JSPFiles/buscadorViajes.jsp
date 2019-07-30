@@ -68,12 +68,7 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
    
    
    if(fechaViaje != null)
-  	{
-	  //INICIO - CAMBIAR EL FORMATO DE DD/MM/YYYY -> YYYYY/MM/DD
-	  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-      DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-      fechaViaje = LocalDate.parse(fechaViaje, formatter).format(formatter2);
-      
+   {
 	  currentDate = fechaViaje;
 	}
 %>
@@ -87,7 +82,7 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
                    <input class="form-control" type="text" value="" readonly>
                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <!-- No tengo idea para que es el span pero es inevitable  -->
                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>              
-                <input type="hidden" id="dtp_input2" value="" /> 
+                <input type="hidden" name="fechaViaje"  id="dtp_input2" value=<%=currentDate %> /> 
                 </div>	
             </div>
 	
@@ -103,3 +98,33 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
 </form>
 <!-- Default form contact -->
 </div>
+
+
+<!-- Este script se debería realizar en un archivo js diferente para poder reutilizarlo en otras ocasiones -->
+
+
+<script type="text/javascript">
+$('.form_date').datetimepicker({
+    language:  'es',
+    weekStart: 1,
+    todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	minView: 2,
+	forceParse: 0,
+	format: 'dd/mm/yyyy'
+
+});
+$('.form_time').datetimepicker({
+    language:  'es',
+    weekStart: 1,
+    todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 1,
+	minView: 0,
+	maxView: 1,
+	forceParse: 0
+});
+</script>

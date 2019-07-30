@@ -15,6 +15,9 @@ String origenViaje = (String) session.getAttribute("origenViaje");
 String destinoViaje = (String) session.getAttribute("destinoViaje");
 String fechaViaje = (String) session.getAttribute("fechaViaje");
 
+if(origenViaje==null){origenViaje="Origen";}
+if(destinoViaje==null){destinoViaje="Destino";}
+
 %>
 
 
