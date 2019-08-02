@@ -223,6 +223,84 @@ public class DataPlan {
 			
 			return plan;
 		}
+	
+	public void editarPlan(Plan planViejo, Plan planNuevo)
+	{
+	PreparedStatement pstmt = null;
+	
+	String fechayHoraNueva = planNuevo.getFecha() + " " + planNuevo.getHora();
+	
+	String sql = "UPDATE planes SET fecha_hora_plan = ?, patente = ?, cod_ruta = ?, precio= ?, usuario_chofer= ? WHERE DATE(fecha_hora_plan)= ? AND DATE_FORMAT(fecha_hora_plan, '%H:%i') = ? AND patente= ? and cod_ruta= ?; ";
+	
+	
+	try 
+	{
+		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		pstmt.setString(1, fechayHoraNueva);
+		pstmt.setString(2, planNuevo.getColectivo().getPatente());
+		pstmt.setInt(3, planNuevo.getRuta().getCod_ruta());
+		pstmt.setDouble(4, planNuevo.getPrecio());
+		pstmt.setString(5, planNuevo.getChofer().getUsuario());
+		pstmt.setString(6, planViejo.getFecha());
+		pstmt.setString(7, planViejo.getHora());
+		pstmt.setString(8, planViejo.getColectivo().getPatente());
+		pstmt.setString(9, planViejo.getChofer().getUsuario()) ;
+
+
+
+	    pstmt.executeUpdate();
+		
+		
+	}catch(SQLException e) { 
+		e.printStackTrace();
+		}
+	}
+	
+	
+	public Integer eliminarPlan(Plan plan) 
+	{
+		PreparedStatement pstmt = null;
+		String sql = "WHERE DATE(fecha_hora_plan)= ? AND DATE_FORMAT(fecha_hora_plan, '%H:%i') = ? AND patente= ? and cod_ruta= ? ";
+		Integer filasAfectadas = 0;
+		
+		try 
+		{
+		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		
+			pstmt.setString(1, plan.getFecha());
+			pstmt.setString(2, plan.getHora());
+			pstmt.setString(3, plan.getColectivo().getPatente());
+			pstmt.setString(4, plan.getChofer().getUsuario());
+			
+			
+			filasAfectadas = pstmt.executeUpdate();			
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();
+			
+			}
+			
+			
+			
+		}
+		return filasAfectadas;
+		
+	}
 
 
 
