@@ -1,15 +1,15 @@
-CREATE DATABASE  IF NOT EXISTS `db_terminal_colectivos` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE  IF NOT EXISTS `db_terminal_colectivos` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `db_terminal_colectivos`;
--- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_terminal_colectivos
 -- ------------------------------------------------------
--- Server version	8.0.16
+-- Server version	5.7.20-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
- SET NAMES utf8 ;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,7 +23,7 @@ USE `db_terminal_colectivos`;
 
 DROP TABLE IF EXISTS `colectivos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `colectivos` (
   `patente` varchar(45) NOT NULL,
   `id_empresa_colectivo` int(11) DEFAULT NULL,
@@ -52,7 +52,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `companias_tarjetas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `companias_tarjetas` (
   `cod_compania` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
@@ -75,7 +75,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `empresas_colectivos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `empresas_colectivos` (
   `id_empresa_colectivo` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
@@ -99,7 +99,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `escalas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `escalas` (
   `cod_ruta` int(11) NOT NULL,
   `orden` int(11) NOT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE `escalas` (
 
 LOCK TABLES `escalas` WRITE;
 /*!40000 ALTER TABLE `escalas` DISABLE KEYS */;
-INSERT INTO `escalas` VALUES (1,0,1),(2,4,1),(1,4,2),(2,0,2),(3,0,2),(4,1,2),(1,3,4),(2,1,4),(3,1,4),(4,0,4),(1,2,6),(2,2,6),(1,1,7),(2,3,7);
+INSERT INTO `escalas` VALUES (1,0,1),(1,1,2),(2,0,2),(2,1,2);
 /*!40000 ALTER TABLE `escalas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `localidades`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `localidades` (
   `id_localidad` int(11) NOT NULL AUTO_INCREMENT,
   `id_provincia` int(11) NOT NULL,
@@ -155,7 +155,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pasajeros`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pasajeros` (
   `dni` int(11) NOT NULL,
   `nombre` varchar(45) DEFAULT NULL,
@@ -179,7 +179,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pasajeros_reservas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pasajeros_reservas` (
   `dni` int(11) NOT NULL,
   `cod_ruta` int(11) NOT NULL,
@@ -212,7 +212,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `planes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `planes` (
   `fecha_hora_plan` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `patente` varchar(45) NOT NULL,
@@ -245,7 +245,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `provincias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `provincias` (
   `id_provincia` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
@@ -269,7 +269,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `reservas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `reservas` (
   `fecha_res` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `cod_ruta` int(11) NOT NULL,
@@ -306,7 +306,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `rutas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rutas` (
   `cod_ruta` int(11) NOT NULL AUTO_INCREMENT,
   `dias_sem` varchar(300) DEFAULT NULL,
@@ -330,7 +330,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `terminales`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `terminales` (
   `cod_terminal` int(11) NOT NULL AUTO_INCREMENT,
   `id_localidad` int(11) DEFAULT NULL,
@@ -356,7 +356,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuarios` (
   `usuario` varchar(45) NOT NULL,
   `nombre` varchar(45) DEFAULT NULL,
@@ -389,4 +389,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-30 12:29:46
+-- Dump completed on 2019-08-02 19:49:36

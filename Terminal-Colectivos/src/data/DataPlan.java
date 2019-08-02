@@ -16,19 +16,16 @@ public class DataPlan {
 			"FROM planes pla\r\n" + 
 			"INNER JOIN escalas esc on esc.cod_ruta=pla.cod_ruta\r\n" + 
 			"INNER JOIN terminales ter on esc.cod_terminal=ter.cod_terminal\r\n" + 
-			"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad\r\n" +
+			"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad\r\n" + 
 			"where esc.orden=0\r\n" + 
 			") lor ON pla.cod_ruta = lor.cod_ruta\r\n" + 
-			"INNER JOIN (SELECT pla.cod_ruta, pla.fecha_hora_plan, loc.nombre\r\n" + 
-			"FROM planes pla \r\n" + 
-			"INNER JOIN escalas esc on esc.cod_ruta=pla.cod_ruta\r\n" + 
-			"INNER JOIN terminales ter on ter.cod_terminal=esc.cod_terminal\r\n" + 
-			"INNER JOIN localidades loc on loc.id_localidad=ter.id_localidad\r\n" + 
-			"INNER JOIN (SELECT pla.cod_ruta, MAX(orden) orden\r\n" + 
-			"FROM planes pla \r\n" + 
+			"INNER JOIN (\r\n" + 
+			"SELECT pla.cod_ruta, pla.fecha_hora_plan, loc.nombre\r\n" + 
+			"FROM planes pla\r\n" + 
 			"INNER JOIN escalas esc ON esc.cod_ruta=pla.cod_ruta\r\n" + 
-			"GROUP BY pla.cod_ruta) odr on odr.cod_ruta=pla.cod_ruta and odr.orden=esc.orden) ldr on pla.fecha_hora_plan = ldr.fecha_hora_plan\r\n";
-	
+			"INNER JOIN terminales ter ON esc.cod_terminal=ter.cod_terminal\r\n" + 
+			"INNER JOIN localidades loc ON loc.id_localidad=ter.id_localidad\r\n" + 
+			"where esc.orden=1) ldr ON pla.fecha_hora_plan = ldr.fecha_hora_plan\r\n";	
 
 	public ArrayList<Plan> getAll()
 	{
