@@ -12,10 +12,11 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
 
 <div class="login-form-1">
 <!-- Default form contact -->
-<form action="BuscarViajesOrigenDestinoFecha" method="post" class="text-center border border-light p-5">
+<form action="BuscarViajesCliente" method="post" class="text-center border border-light p-5">
     <p class="h4 mb-4"><i class="fas fa-bus"></i> Buscador de Viajes</p>
 
-    <!-- Origen -->
+
+ <!-- Origen -->
     <div class="form-group">
       <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="origenViaje">
       <option <% if(origenViaje==null) {%> selected <% } %>>Origen...</option>
@@ -53,6 +54,7 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
 	<% } %>
       </select>
   	 </div>
+    
    
    
    <!-- Fecha -->
@@ -116,15 +118,5 @@ $('.form_date').datetimepicker({
 	format: 'dd/mm/yyyy'
 
 });
-$('.form_time').datetimepicker({
-    language:  'es',
-    weekStart: 1,
-    todayBtn:  1,
-	autoclose: 1,
-	todayHighlight: 1,
-	startView: 1,
-	minView: 0,
-	maxView: 1,
-	forceParse: 0
-});
+
 </script>

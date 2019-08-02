@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<jsp:include page="JSPFiles/imports.jsp" />
+<jsp:include page="JSPFiles/includeimports.jsp" />
 
 <script type="text/javascript" src="js/validarIgualdadPassword.js"></script>
 
@@ -16,7 +16,7 @@
 
 </head>
 <body>
-<jsp:include page="JSPFiles/header.jsp" /> 
+<jsp:include page="JSPFiles/includemenu.jsp" />  
 
 
 <!-- INICIO - REDIRECCION A LOGIN --> 
@@ -151,7 +151,7 @@ if(usuario!=null)
     </div>
   </div>
 
-<jsp:include page="JSPFiles/footer.jsp" />  
+<jsp:include page="JSPFiles/includefooter.jsp" />  
 
 </body>
 </html>

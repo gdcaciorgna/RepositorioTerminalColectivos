@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="JSPFiles/imports.jsp" %>
+<%@include file="JSPFiles/includeimports.jsp" %>
 <meta charset="ISO-8859-1">
 <title>Registrar nueva cuenta</title>
 </head>
@@ -18,7 +18,7 @@ if(usuario!=null)
  %>
 
 
-<jsp:include page="JSPFiles/header.jsp" /> 
+<jsp:include page="JSPFiles/includemenu.jsp" />  
 
 <div class="container login-container">
 <div class="row">
@@ -81,6 +81,6 @@ if(usuario!=null)
  
 </div>
 </div>
-<jsp:include page="JSPFiles/footer.jsp" />  
+<jsp:include page="JSPFiles/includefooter.jsp" />  
 </body>
 </html>

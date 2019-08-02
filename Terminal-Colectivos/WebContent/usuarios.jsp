@@ -4,7 +4,7 @@
 <html>
 <head>
 
-<jsp:include page="JSPFiles/imports.jsp" />
+<jsp:include page="JSPFiles/includeimports.jsp" />
  
 <meta charset="ISO-8859-1">
 <title>Usuarios</title>
@@ -26,26 +26,8 @@
     %>
 
 <% Usuario usuario;%>
-<!-- INICIO - REDIRECCION A LOGIN -->
-<%
-String username="s/usuario", estado="s/estado"; 
-usuario = (Usuario) session.getAttribute("Usuario");  
-if(usuario!=null) 
-{
-	username = usuario.getUsuario(); 
-	estado = usuario.getEstado(); 
-}
 
- if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
-	{   
- 
-	String sitioweb = "http://localhost:8080/Terminal-Colectivos/"; 
-	response.sendRedirect(sitioweb+"login.jsp"); 
-	} 
-%>
-<!-- FIN - REDIRECCION A LOGIN -->
-
-<jsp:include page="JSPFiles/header.jsp" /> 
+<jsp:include page="JSPFiles/includemenu.jsp" /> 
 
 
 <div class="container" style=" margin-top: 2%; margin-bottom: 2%;  ">
@@ -126,7 +108,7 @@ Filas Afectadas: <%= filasAfectadas %>
 </div> 
 <%}%>
 
-<jsp:include page="JSPFiles/footer.jsp" />  
+<jsp:include page="JSPFiles/includefooter.jsp" />  
 
 </body>
 </html>

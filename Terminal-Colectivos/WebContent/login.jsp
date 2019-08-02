@@ -5,14 +5,14 @@
 <head>
 <meta charset="ISO-8859-1">
 
-<jsp:include page="JSPFiles/imports.jsp" /> 
+<jsp:include page="JSPFiles/includeimports.jsp" /> 
 
 <title>Iniciar Sesión</title>
 
 </head>
 <body>
 
-<jsp:include page="JSPFiles/header.jsp" />  
+<jsp:include page="JSPFiles/includemenu.jsp" />  
 
 <div class="container login-container">
 <div class="row">
@@ -60,6 +60,6 @@
       
 </div>
 
-<jsp:include page="JSPFiles/footer.jsp" />  
+<jsp:include page="JSPFiles/includefooter.jsp" />  
 </body>
 </html>

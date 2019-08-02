@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="JSPFiles/imports.jsp" />  
+<jsp:include page="JSPFiles/includeimports.jsp" />  
 <meta charset="charset=UTF-8">
 <title>Inicio</title>
 </head>
 
 <body>
-<jsp:include page="JSPFiles/header.jsp" />  
+<jsp:include page="JSPFiles/includemenu.jsp" />  
 <script type="text/javascript" src="JavascriptFiles/datepickerEs.js"></script>
 <div>
  <%@ page import = "entities.Usuario" %>
@@ -59,7 +59,7 @@
 
 
 <div class="col-sm-5">
-<jsp:include page="JSPFiles/buscadorViajes.jsp" />  
+<jsp:include page="JSPFiles/includebuscadorviajes.jsp" />  
 </div>
 
 </div>
@@ -67,7 +67,7 @@
 
 
 
-<jsp:include page="JSPFiles/footer.jsp" />  
+<jsp:include page="JSPFiles/includefooter.jsp" />  
 
 </body>
 </html>

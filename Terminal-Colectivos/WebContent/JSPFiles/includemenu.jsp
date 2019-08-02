@@ -34,25 +34,30 @@
         <a class="nav-link" href="usuarios.jsp"><i class="fas fa-users"></i> Usuarios</a> <!-- Disponible para Administradores -->
       </li>
       <% } %>
-    
-    <% if (!rol.equals("visitante")) { %>
-     <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-bus"></i> 
-       
-       
-         <% if(rol.equals("admin"))
-        {%>
-        Planes de Viaje
-        <% } else if(rol.equals("chofer")) { %>      
-        Viajes asignados
-        <% } else if(rol.equals("cliente")) { %>    
-        Viajes
-        <% } %> 
-        
-        </a> <!-- Planes de Viaje (Administradores) / Viajes asignados (Chofer) / Viajes (Cliente) -> Redirección a la misma página pero con distinto nombre dependiendo del rol -->
-      </li>
       
-      <% } %>
+      
+      
+        <% 
+        if(rol.equals("admin"))
+        {
+        %>
+        <li class="nav-item">
+        <a class="nav-link" href="buscarviajesadmin.jsp" ><i class="fas fa-bus"></i>Planes de Viaje </a> <!-- Planes de Viaje (Administradores) / Viajes asignados (Chofer) / Viajes (Cliente) -> Redirección a la misma página pero con distinto nombre dependiendo del rol -->
+        </li>
+        <% } else if(rol.equals("chofer")) { %>      
+		<li class="nav-item">
+        <a class="nav-link" href="buscarviajeschofer.jsp" ><i class="fas fa-bus"></i>Viajes Asignados </a> <!-- Planes de Viaje (Administradores) / Viajes asignados (Chofer) / Viajes (Cliente) -> Redirección a la misma página pero con distinto nombre dependiendo del rol -->
+        </li>        
+        <% } else if(rol.equals("cliente")) { %>
+        <li class="nav-item">
+        <a class="nav-link" href="buscarviajescliente.jsp" ><i class="fas fa-bus"></i>Viajes </a> <!-- Planes de Viaje (Administradores) / Viajes asignados (Chofer) / Viajes (Cliente) -> Redirección a la misma página pero con distinto nombre dependiendo del rol -->
+        </li>
+        <% } %> 
+    
+    
+
+
+
          
          <%  if(rol.equals("admin")) { %>
          <li class="nav-item">

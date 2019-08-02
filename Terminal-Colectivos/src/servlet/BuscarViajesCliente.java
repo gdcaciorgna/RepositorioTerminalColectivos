@@ -1,9 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,18 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
- * Servlet implementation class BuscarViajesOrigenDestinoFecha
+ * Servlet implementation class BuscarViajesCliente
  */
-@WebServlet("/BuscarViajesOrigenDestinoFecha")
-public class BuscarViajesOrigenDestinoFecha extends HttpServlet {
+@WebServlet("/BuscarViajesCliente")
+public class BuscarViajesCliente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BuscarViajesOrigenDestinoFecha() {
+    public BuscarViajesCliente() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,10 +29,8 @@ public class BuscarViajesOrigenDestinoFecha extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		
 		HttpSession sesion = request.getSession();
-
-		
-		
 		
         String origenViaje = request.getParameter("origenViaje");
         String destinoViaje = request.getParameter("destinoViaje");
@@ -48,12 +42,9 @@ public class BuscarViajesOrigenDestinoFecha extends HttpServlet {
         sesion.setAttribute("fechaViaje", fechaViaje);
         
         
-    	response.sendRedirect("reservarviaje.jsp");	
-
-
-
-
-	}
+        
+    	response.sendRedirect("buscarviajescliente.jsp");
+    	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

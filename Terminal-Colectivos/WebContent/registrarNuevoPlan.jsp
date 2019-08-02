@@ -4,7 +4,7 @@
 <html>
 <head>
 
-<%@include file="JSPFiles/imports.jsp" %>
+<%@include file="JSPFiles/includeimports.jsp" %>
 <meta charset="ISO-8859-1">
 <title>Registrar nuevo plan de viaje</title>
 
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<jsp:include page="JSPFiles/header.jsp" /> 
+<jsp:include page="JSPFiles/includemenu.jsp" />  
 
 <div class="container login-container">
 <div class="row">
@@ -78,7 +78,7 @@
  
 </div>
 </div>
-<jsp:include page="JSPFiles/footer.jsp" />  
+<jsp:include page="JSPFiles/includefooter.jsp" />  
 
 
 <!-- Este script se debería realizar en un archivo js diferente para poder reutilizarlo en otras ocasiones -->
