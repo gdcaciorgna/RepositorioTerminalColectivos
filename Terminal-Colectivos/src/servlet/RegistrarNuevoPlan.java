@@ -7,6 +7,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import data.DataColectivo;
+import data.DataPlan;
+import data.DataRuta;
+import data.DataUsuario;
+import entities.Usuario;
+ import entities.Plan;
+import entities.Ruta;
+import entities.Colectivo;
+
 /**
  * Servlet implementation class RegistrarNuevoPlan
  */
@@ -28,6 +37,51 @@ public class RegistrarNuevoPlan extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		DataPlan datplan= new DataPlan();
+		DataColectivo datcol= new DataColectivo();
+		DataRuta datrut= new DataRuta();
+		DataUsuario datchof= new DataUsuario();
+		String ros="ROSARIO";
+		Plan nuevoPlan= null;
+		
+		
+		String origenViaje = request.getParameter("origenViaje");
+		String destinoViaje = request.getParameter("destinoViaje");
+	
+		
+		if(origenViaje.equals(ros)||destinoViaje.equals(ros)) {
+			nuevoPlan.setFecha(request.getParameter("fechaViaje")); 
+			String usuarioChofer = request.getParameter("choferes");
+			nuevoPlan.setHora(request.getParameter("hora")); 
+			nuevoPlan.setOrigen(origenViaje); 
+			nuevoPlan.setPrecio(Double.parseDouble(request.getParameter("precio")));
+			String patente = request.getParameter("patente");
+			
+			Ruta rut= datrut.getRuta(origenViaje, destinoViaje);
+			Colectivo cole = datcol.getByPatente(patente);
+			Usuario chofer= datchof.getChofer(usuarioChofer);
+			nuevoPlan.setRuta(rut);
+			nuevoPlan.setColectivo(cole);
+			nuevoPlan.setChofer(chofer);
+			datplan.newPlan( nuevoPlan);
+			 
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	/**

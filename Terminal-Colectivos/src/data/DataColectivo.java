@@ -3,9 +3,12 @@ package data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import entities.Colectivo;
 import entities.Empresa_Colectivo;
+import entities.Usuario;
 
 public class DataColectivo {
 	
@@ -68,6 +71,42 @@ public class DataColectivo {
 
 	}
 	
-	
+	public ArrayList <Colectivo> getAll()
+	{
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "select * from colectivos";
+		ArrayList<Colectivo> colectivos = new ArrayList<>();
+		try 
+		{
+			stmt = Conectar.getInstancia().getConn().createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs!=null) 
+			{
+				while(rs.next()) 
+				{
+					Colectivo colec = setColectivo(rs);
+					
+					colectivos.add(colec);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				e.printStackTrace();
+			} 
+		}
+		
+	return colectivos;	
+	}
 
 }

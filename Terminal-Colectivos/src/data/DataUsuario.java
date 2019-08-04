@@ -3,6 +3,7 @@ package data;
 import java.sql.*;
 import java.util.ArrayList;
 
+import entities.Localidad;
 import entities.Usuario;
 
 
@@ -329,5 +330,87 @@ public class DataUsuario implements Validar
 		} catch(SQLException e) {e.printStackTrace();}
 	}	
 	
+	}
+	public ArrayList <Usuario> getAall()
+	{
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "select * from usuarios where rol='chofer'";
+		ArrayList<Usuario> choferes = new ArrayList<>();
+		try 
+		{
+			stmt = Conectar.getInstancia().getConn().createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs!=null) 
+			{
+				while(rs.next()) 
+				{
+					Usuario chofer = setUsuario(rs);
+					
+					choferes.add(chofer);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				e.printStackTrace();
+			} 
+		}
+		
+	return choferes;	
+	}
+	public Usuario getChofer (String usuario) {
+		Usuario chofer=null;
+		chofer.setUsuario(usuario);
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		String sql = "select * from usuarios where usuario = ? ";
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			pstmt.setString(1, usuario );
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs!=null && rs.next())
+			{
+				
+				chofer.setNombre(rs.getString("nombre"));
+				chofer.setApellido(rs.getString("apellido"));
+				chofer.setRol(rs.getString("rol"));
+				chofer.setEmail(rs.getString("email"));
+				chofer.setPassword(rs.getString("password"));
+				chofer.setEstado(rs.getString("estado"));
+				chofer.setCuil(rs.getString("cuil"));
+				
+			}
+		}catch(SQLException e) { e.printStackTrace();}
+		finally 
+		{
+			try 
+			{
+				if(rs!=null) {rs.close();}
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();}
+		}	
+
+		
+
+		return chofer;
+		
 	}
 }
