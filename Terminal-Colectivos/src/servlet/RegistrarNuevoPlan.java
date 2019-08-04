@@ -43,7 +43,7 @@ public class RegistrarNuevoPlan extends HttpServlet {
 		DataRuta datrut= new DataRuta();
 		DataUsuario datchof= new DataUsuario();
 		String ros="ROSARIO";
-		Plan nuevoPlan= null;
+		Plan nuevoPlan = new Plan();
 		
 		
 		String origenViaje = request.getParameter("origenViaje");
@@ -51,10 +51,11 @@ public class RegistrarNuevoPlan extends HttpServlet {
 	
 		
 		if(origenViaje.equals(ros)||destinoViaje.equals(ros)) {
-			nuevoPlan.setFecha(request.getParameter("fechaViaje")); 
+			nuevoPlan.setFecha(request.getParameter("fecha")); 
 			String usuarioChofer = request.getParameter("choferes");
 			nuevoPlan.setHora(request.getParameter("hora")); 
 			nuevoPlan.setOrigen(origenViaje); 
+			nuevoPlan.setDestino(destinoViaje);
 			nuevoPlan.setPrecio(Double.parseDouble(request.getParameter("precio")));
 			String patente = request.getParameter("patente");
 			
@@ -65,7 +66,13 @@ public class RegistrarNuevoPlan extends HttpServlet {
 			nuevoPlan.setColectivo(cole);
 			nuevoPlan.setChofer(chofer);
 			datplan.newPlan( nuevoPlan);
-			 
+			request.getSession().setAttribute("registroExitoso", "Se ha registrado exitosamente el nuevo Plan!");	
+			response.sendRedirect("registrarNuevoPlan.jsp");
+			
+			 }
+		else {
+			 request.getSession().setAttribute("errorOrigenDestino", "El Origen o el Destino debe ser Rosario");
+			 response.sendRedirect("registrarNuevoPlan.jsp");
 		}
 		
 		

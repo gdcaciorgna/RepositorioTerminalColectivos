@@ -304,21 +304,20 @@ public class DataPlan {
 	public void newPlan( Plan nuevoPlan)
 	{
 	PreparedStatement pstmt = null;
-	String fyh= nuevoPlan.getFecha()+ nuevoPlan.getHora();
+	String fyh= nuevoPlan.getFecha()+" "+ nuevoPlan.getHora();
 	
 	
-	String sql = "INSERT INTO  planes  fecha_hora_plan , patente , cod_ruta, precio, usuario_chofer ; ";
+	String sql = "INSERT INTO  planes  (fecha_hora_plan , patente , cod_ruta, precio, usuario_chofer )VALUES (?,?,?,?,?) ";
 	
 	
 	try 
 	{
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
 		pstmt.setString(1, fyh);
-		
 		pstmt.setString(2, nuevoPlan.getColectivo().getPatente());
 		pstmt.setInt(3,nuevoPlan.getRuta().getCod_ruta());
 		pstmt.setDouble(4, nuevoPlan.getPrecio());
-		pstmt.setString(5, nuevoPlan.getChofer().getCuil());
+		pstmt.setString(5, nuevoPlan.getChofer().getUsuario());
 
 
 

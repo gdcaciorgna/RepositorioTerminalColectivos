@@ -13,14 +13,14 @@
 </head>
 <body>
 <% 
-String patente="";
-String chof= "";
-String origenViaje = (String) session.getAttribute("origenViaje");
-String destinoViaje = (String) session.getAttribute("destinoViaje");
-String fechaViaje = (String) session.getAttribute("fechaViaje");
+	String patente="";
+	String chof= "";
+	String origenViaje = (String) session.getAttribute("origenViaje");
+	String destinoViaje = (String) session.getAttribute("destinoViaje");
+	String fechaViaje = (String) session.getAttribute("fechaViaje");
 
-if(origenViaje==null){origenViaje="Origen";}
-if(destinoViaje==null){destinoViaje="Destino";}
+	if(origenViaje==null){origenViaje="Origen";}
+	if(destinoViaje==null){destinoViaje="Destino";}
 
 %>
 
@@ -39,7 +39,7 @@ if(destinoViaje==null){destinoViaje="Destino";}
     %>
 
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+	<jsp:include page="JSPFiles/includemenu.jsp" />  
 
 <div class="container login-container">
 <div class="row">
@@ -54,10 +54,10 @@ if(destinoViaje==null){destinoViaje="Destino";}
                    <div class="input-group-prepend">
 				   <div class="input-group-text"><i class="fas fa-calendar"></i></div>
 				   </div>
-                   <input class="form-control" type="fecha" value="" readonly>
+                   <input class="form-control" type="text" value="" readonly>
                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <!-- No tengo idea para que es el span pero es inevitable  -->
                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>              
-                <input type="hidden" id="dtp_input2" value="" /> 
+                <input type="hidden" name= fecha id="dtp_input2" value="" /> 
                 </div>	
             </div>
       
@@ -67,10 +67,10 @@ if(destinoViaje==null){destinoViaje="Destino";}
                    <div class="input-group-prepend">
 				   <div class="input-group-text"><i class="fas fa-clock"></i></div>
 				   </div>
-                    <input class="form-control" type="hora" value="" readonly>
+                    <input class="form-control" type="text" value="" readonly>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                 
-                <input type="hidden" id="dtp_input3" value="" />
+                <input type="hidden" name= hora id="dtp_input3" value="" />
                 
                 </div>
 				
@@ -169,7 +169,7 @@ if(destinoViaje==null){destinoViaje="Destino";}
 
      </div>
            		 <div class="form-group">
-                     <input type="precio" class="form-control" name="precio" placeholder="Precio" value=""  required/>
+                     <input type="text" class="form-control" name="precio" placeholder="Precio" value=""  required/>
                  </div>
                 
                
@@ -177,15 +177,34 @@ if(destinoViaje==null){destinoViaje="Destino";}
                <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Registrar nuevo plan" />
                  </div>
+              		<% String registroExitoso = (String)session.getAttribute("registroExitoso");%>
+			<% if(session.getAttribute("registroExitoso")!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			Felicitaciones: <%= registroExitoso %>
+			</div> 
+			<%}%>
+			
+                 </div>
+                 
+              		<% String errorOrigenDestino = (String)session.getAttribute("errorOrigenDestino");%>
+			<% if(session.getAttribute("errorOrigenDestino")!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= errorOrigenDestino %>
+			</div> 
+			<%}%>
+                 
+                 
               		
-			  
+			
+              		
              </form>
          </div>
-       
     </div>
-    
- 
+    	 
 </div>
+ 
 </div>
 <jsp:include page="JSPFiles/includefooter.jsp" />  
 

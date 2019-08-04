@@ -368,9 +368,9 @@ public class DataUsuario implements Validar
 		
 	return choferes;	
 	}
-	public Usuario getChofer (String usuario) {
-		Usuario chofer=null;
-		chofer.setUsuario(usuario);
+	public Usuario getChofer (String usuarioChofer) {
+		Usuario chofer=new Usuario();
+		chofer.setUsuario(usuarioChofer);
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		String sql = "select * from usuarios where usuario = ? ";
@@ -378,7 +378,7 @@ public class DataUsuario implements Validar
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usuario );
+			pstmt.setString(1, usuarioChofer );
 			
 			rs = pstmt.executeQuery();
 			
