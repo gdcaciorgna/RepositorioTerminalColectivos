@@ -33,7 +33,6 @@ public class BorrarCuentaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession sesion = request.getSession();
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 
 		
 		Usuario usu;
@@ -62,7 +61,7 @@ public class BorrarCuentaServlet extends HttpServlet {
 			response.sendRedirect("bajasatisfactoria.jsp");		
 			} else if(url.contains("usuarios")) 
 			{
-			sesion.setAttribute("filasAfectadas", filasAfectadas);
+			sesion.setAttribute("UsuariosAfectados", filasAfectadas);
 			response.sendRedirect("usuarios.jsp");	
 			}
 

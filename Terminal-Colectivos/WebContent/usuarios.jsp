@@ -99,8 +99,8 @@
 </div>
 
 <% Integer filasAfectadas = 0;%> 
-<% filasAfectadas = (Integer) session.getAttribute("filasAfectadas");%>
-<% if(session.getAttribute("filasAfectadas")!=null) { %>
+<% filasAfectadas = (Integer) session.getAttribute("UsuariosAfectados");%>
+<% if(filasAfectadas != null) { %>
 <br>
 <div class="alert alert-danger" role="alert">
 Filas Afectadas: <%= filasAfectadas %>

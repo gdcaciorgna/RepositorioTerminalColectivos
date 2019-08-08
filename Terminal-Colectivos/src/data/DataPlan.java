@@ -162,6 +162,61 @@ public class DataPlan {
 	}
 		
 	
+	public Plan getByFechaHoraRutaPatente(Date fechaHoraViaje, int cod_ruta, String patente)
+	{
+		
+			
+		String sql= sqlBuscarPlanes + " WHERE pla.fecha_hora_plan = ? and pla.cod_ruta= ? and pla.patente= ? ";
+	
+
+			
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Plan plan = new Plan();
+	
+		
+		try 
+		{
+			
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			pstmt.setTimestamp(1, new Timestamp(fechaHoraViaje.getTime()));
+			pstmt.setInt(2, cod_ruta);
+			pstmt.setString(3, patente);
+					 
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs!=null) 
+			{
+				while(rs.next()) 
+				{
+					plan = setPlan(rs);
+									
+				}
+			}
+		}
+		
+		catch(SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		finally 
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				e.printStackTrace();
+			} 
+		}
+		return plan;
+		
+		
+	}
 	
 	
 	
@@ -207,9 +262,9 @@ public class DataPlan {
 		plan.setRuta(ruta);
 		plan.setChofer(chofer);
 		plan.setColectivo(colectivo);
-		plan.setOrigen(rs.getString("lor.nombre"));
-		plan.setDestino(rs.getString("ldr.nombre"));
 		plan.setPrecio(rs.getDouble("pla.precio"));
+		plan.setOrigen(rs.getString(7)); //"lor.nombre" ME TIRA ERROR
+		plan.setDestino(rs.getString(8));
 		
 
 		
@@ -254,23 +309,22 @@ public class DataPlan {
 	}catch(SQLException e) { 
 		e.printStackTrace();
 		}
-	}
+	}*/
 	
 	
 	public Integer eliminarPlan(Plan plan) 
 	{
 		PreparedStatement pstmt = null;
-		String sql = "WHERE DATE(fecha_hora_plan)= ? AND DATE_FORMAT(fecha_hora_plan, '%H:%i') = ? AND patente= ? and cod_ruta= ? ";
+		String sql = "DELETE from planes where fecha_hora_plan = ? and cod_ruta = ?  and patente = ? ";
 		Integer filasAfectadas = 0;
 		
 		try 
 		{
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
 		
-			pstmt.setString(1, plan.getFecha());
-			pstmt.setString(2, plan.getHora());
+			pstmt.setTimestamp(1, new Timestamp(plan.getFechaHora().getTime()));
+			pstmt.setInt(2, plan.getRuta().getCod_ruta());
 			pstmt.setString(3, plan.getColectivo().getPatente());
-			pstmt.setString(4, plan.getChofer().getUsuario());
 			
 			
 			filasAfectadas = pstmt.executeUpdate();			
@@ -301,7 +355,10 @@ public class DataPlan {
 		return filasAfectadas;
 		
 	}
-	*/
+	
+	
+	
+	
 	public void addPlan( Plan nuevoPlan)
 	{
 	PreparedStatement pstmt = null;

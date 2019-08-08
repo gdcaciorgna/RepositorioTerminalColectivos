@@ -18,6 +18,7 @@ String destinoViaje = (String) session.getAttribute("destinoViaje");
 java.util.Date fechaViajeDate = (Date) session.getAttribute("fechaViaje");
 String fechaViajeString = "-";
 
+
 if(origenViaje==null){origenViaje = "Cualquiera";}
 if(destinoViaje==null){destinoViaje = "Cualquiera";}
 
@@ -25,6 +26,7 @@ if(fechaViajeDate !=null)
 	{
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
 		fechaViajeString = sdf1.format(fechaViajeDate);
+	
 	}
 else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le asigna el día actual
 %>
@@ -91,9 +93,12 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 				 
 				   SimpleDateFormat sdfFechaSeparado = new SimpleDateFormat("dd/MM/yyyy");
 				   SimpleDateFormat sdfHoraSeparado = new SimpleDateFormat("HH:mm");
+				   SimpleDateFormat sdfFechaHoraJunto = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 				   String fecha = sdfFechaSeparado.format(plan.getFechaHora());
 				   String hora = sdfHoraSeparado.format(plan.getFechaHora());
+				   String fechaHoraString = sdfFechaHoraJunto.format(plan.getFechaHora());
+				   
 				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
 
 			    %>
@@ -109,17 +114,25 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			   <div class="row">
 			   		<div class="col-auto">
 					   <form action="micuenta.jsp" method="post">
-					   <input type="hidden" value=<%=plan.getFechaHora()%> name="fechaHoraViaje"/>
-					   <input type="hidden" value=<%= plan.getRuta()  %> name="rutaViaje"/>
-		   			   <input type="hidden" value=<%= plan.getColectivo()  %> name="colectivoViaje"/>
+			
+					   <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
+					   <input type="hidden" value=<%= fecha %> name="fechaString"/>
+					   <input type="hidden" value=<%= hora %> name="horaString"/>
+			
+					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta()  %> name="codRutaViajeString"/>
+		   			   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
 					   <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button>
 			  		   </form> 
 			   		</div>
 			   		<div class="col-auto">
-					   <form action="BorrarCuentaServlet" method="post">
-					   <input type="hidden" value=<%=plan.getFechaHora()%> name="fechaHoraViaje"/>
-					   <input type="hidden" value=<%= plan.getRuta()  %> name="rutaViaje"/>
-		   			   <input type="hidden" value=<%= plan.getColectivo()  %> name="colectivoViaje"/>
+					   <form action="EliminarPlanServlet" method="post">
+					
+					   <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
+					   <input type="hidden" value=<%= fecha %> name="fechaString"/>
+					   <input type="hidden" value=<%= hora %> name="horaString"/>
+					   
+					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta()  %> name="codRutaViajeString"/>
+		   			   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
 					   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 					   </form>
 			   		</div>
@@ -134,6 +147,15 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			</table>
 			 
 			</div>
+			
+			<% Integer planesAfectados = 0;%> 
+			<% planesAfectados = (Integer) session.getAttribute("planesAfectados");%>
+			<% if(session.getAttribute("planesAfectados")!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Viajes eliminados: <%= planesAfectados %>
+			</div> 
+			<%}%>
         </div>
         <!--Grid column-->
 
