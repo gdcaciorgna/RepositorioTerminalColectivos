@@ -38,7 +38,6 @@
                     <span class="float-left"><h2>Listado de <b>Usuarios</b></h2></span>
                     <span class="float-right">
                         <a href="registro.jsp"> <button type="button" class="btn btn-info add-new">  <i class="fa fa-plus"></i> Nuevo Usuario</button></a>
-                    
                     </span>
                 
             </div> </div> </div>

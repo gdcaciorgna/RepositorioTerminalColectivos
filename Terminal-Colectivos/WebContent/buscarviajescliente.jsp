@@ -9,14 +9,24 @@
 </head>
 <body>
 
+ <%@ page import = "java.text.SimpleDateFormat" %>
 
 <% 
 String origenViaje = (String) session.getAttribute("origenViaje");
 String destinoViaje = (String) session.getAttribute("destinoViaje");
-String fechaViaje = (String) session.getAttribute("fechaViaje");
+java.util.Date fechaViajeDate = (Date) session.getAttribute("fechaViaje");
+String fechaViajeString = "-";
 
-if(origenViaje==null){origenViaje="Origen";}
-if(destinoViaje==null){destinoViaje="Destino";}
+
+if(origenViaje==null){origenViaje = "Cualquiera";}
+if(destinoViaje==null){destinoViaje = "Cualquiera";}
+
+if(fechaViajeDate !=null)
+{
+	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
+	fechaViajeString = sdf1.format(fechaViajeDate);
+}
+else {fechaViajeDate = new Date();}
 
 %>
 
@@ -27,7 +37,7 @@ if(destinoViaje==null){destinoViaje="Destino";}
     <% 
     //Inicialización de variables
     DataPlan dplan = new DataPlan();
-    ArrayList<Plan> planes = dplan.getViajesDia(origenViaje, destinoViaje, fechaViaje);
+    ArrayList<Plan> planes = dplan.getViajesDia(origenViaje, destinoViaje, fechaViajeDate);
     Iterator<Plan> itr = planes.iterator();
     Plan plan = null;
     
@@ -43,7 +53,7 @@ if(destinoViaje==null){destinoViaje="Destino";}
 			 <div class="container">
 			        <div class="table-wrapper">
 			                    <span class="float-left"><h4>Listado de <b>Viajes</b></h2></span>
-			                    <span class="float-right"><h4><%=origenViaje %> <i class="fas fa-chevron-circle-right"></i> <%= destinoViaje %> </h5></span>
+			                    <span class="float-right"><h5><%=fechaViajeString %> | <%=origenViaje %> <i class="fas fa-chevron-circle-right"></i> <%= destinoViaje %> </h5></span>
 			        </div> 
 		     </div>
 			           
@@ -63,10 +73,20 @@ if(destinoViaje==null){destinoViaje="Destino";}
 			   
 			   while(itr.hasNext()){
 				   plan = itr.next();
+				   
+				   // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
+					 
+				   SimpleDateFormat sdfFechaSeparado = new SimpleDateFormat("dd/MM/yyyy");
+				   SimpleDateFormat sdfHoraSeparado = new SimpleDateFormat("HH:mm");
+
+				   String fecha = sdfFechaSeparado.format(plan.getFechaHora());
+				   String hora = sdfHoraSeparado.format(plan.getFechaHora());
+				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
+				   
 			    %>
 			   <td> <%= plan.getColectivo().getEmpresa().getNombre() %> </td>
-			   <td> <%= plan.getFecha() %> </td>
-			   <td> <%= plan.getHora() %> </td>
+			   <td> <%= fecha %> </td>
+			   <td> <%= hora %> </td>
 			   <td> <%= plan.getColectivo().getTipo_colectivo() %> </td>
 			   <td> <%= plan.getPrecio() %> </td>
 			   	   
@@ -87,103 +107,9 @@ if(destinoViaje==null){destinoViaje="Destino";}
 
 <div class="col-sm-5">
 
-<div class="login-form-1">
-<!-- Default form contact -->
 <form action="BuscarViajesCliente" method="post" class="text-center border border-light p-5">
-    <p class="h4 mb-4"><i class="fas fa-bus"></i> Buscador de Viajes</p>
-
- <!-- Origen -->
-    <div class="form-group">
-
-      <select class="custom-select" id="origenViaje" name="origenViaje">
-      <option <% if(origenViaje==null) {%> selected <% } %>>Origen</option>
-      <%@ page import="data.DataLocalidad" %>
-      <%@ page import="entities.Localidad" %>
-       <%
-       	//Inicialización de variables
-           DataLocalidad dloc = new DataLocalidad();
-           ArrayList<Localidad> localidades = dloc.getAll();
-           Iterator<Localidad> itr1 = localidades.iterator();
-           Localidad loc = null;
-       %>
-    
-    <%    
-    while(itr1.hasNext()){
- 	loc = itr1.next();
-	%>
-	<option <% if(loc.getNombre().equals(destinoViaje)) {%> selected <%}%>> <%=loc.getNombre() %></option>
-	<% } %>
-
-      
-      </select>
-      
-   
-      </div>
-    
-    <!-- Destino -->
-    <div class="form-group">
-      
-      <select class="custom-select" id="destinoViaje"  name="destinoViaje">
-        <option <% if(origenViaje==null) {%> selected <% } %>>Destino</option>
-    <%    
-    Iterator<Localidad> itr2 = localidades.iterator();
-    while(itr2.hasNext()){
- 	loc = itr2.next();
-	%>
-	<option <% if(loc.getNombre().equals(origenViaje)) {%> selected <%}%>> <%=loc.getNombre() %></option>
-	<% } %>
-     </select>
-
-     </div>
-  	 
-    
-   
-   
-   <!-- Fecha -->
-<%@ page import="java.util.*" %>
-<%@ page import="java.text.SimpleDateFormat"%>  
-<%@ page import = "java.time.format.DateTimeFormatter" %>
-<%@ page import = "java.time.LocalDate" %>
-<%
-   Date dNow = new Date();
-   SimpleDateFormat ft = 
-   new SimpleDateFormat ("dd/MM/yyyy");
-   String currentDate = ft.format(dNow);
-   
-   
-   if(fechaViaje != null)
-   {
-	  currentDate = fechaViaje;
-	}
-%>
- 
-
-  <div class="form-group">
-  
-                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                   <div class="input-group-prepend">
-				   <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-				   </div>
-                   <input class="form-control" type="text" value="" readonly>
-                   <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <!-- No tengo idea para que es el span pero es inevitable  -->
-                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>              
-                <input type="hidden" name="fechaViaje"  id="dtp_input2" /> 
-                </div>	
-  </div>
-            
-	
-	
-	
-
-<!-- Send button -->
-<div class="form-group">
-<button class="btn btn-info btn-block" type="submit"><i class="fas fa-search"></i> Buscar</button>
-</div>
-
-
+<jsp:include page="JSPFiles/includebuscadorviajes.jsp" />  
 </form>
-<!-- Default form contact -->
-</div>
 
 
 <!-- Este script se debería realizar en un archivo js diferente para poder reutilizarlo en otras ocasiones -->

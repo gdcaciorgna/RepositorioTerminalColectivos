@@ -59,7 +59,9 @@
 
 
 <div class="col-sm-5">
+<form action="BuscarViajesCliente" method="post" class="text-center border border-light p-5">
 <jsp:include page="JSPFiles/includebuscadorviajes.jsp" />  
+</form>
 </div>
 
 </div>
@@ -68,6 +70,22 @@
 
 
 <jsp:include page="JSPFiles/includefooter.jsp" />  
+
+<script type="text/javascript">
+$('.form_date').datetimepicker({
+    language:  'es',
+    weekStart: 1,
+    todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	minView: 2,
+	forceParse: 0,
+	format: 'dd/mm/yyyy'
+
+});
+
+</script>
 
 </body>
 </html>

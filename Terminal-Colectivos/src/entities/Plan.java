@@ -1,8 +1,9 @@
 package entities;
 
+import java.util.Date;
+
 public class Plan {
-	private String fecha;
-	private String hora;
+	private Date fechaHora;
 	private Colectivo colectivo;
 	private Usuario chofer;
 	private Ruta ruta;
@@ -13,17 +14,13 @@ public class Plan {
 	
 	
 
-	public String getFecha() {
-		return fecha;
+	
+	
+	public Date getFechaHora() {
+		return fechaHora;
 	}
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
-	public String getHora() {
-		return hora;
-	}
-	public void setHora(String hora) {
-		this.hora = hora;
+	public void setFechaHora(Date fechaHora) {
+		this.fechaHora = fechaHora;
 	}
 	public Colectivo getColectivo() {
 		return colectivo;

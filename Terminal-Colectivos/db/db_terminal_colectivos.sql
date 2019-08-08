@@ -117,7 +117,7 @@ CREATE TABLE `escalas` (
 
 LOCK TABLES `escalas` WRITE;
 /*!40000 ALTER TABLE `escalas` DISABLE KEYS */;
-INSERT INTO `escalas` VALUES (1,0,1),(1,1,2),(2,0,2),(2,1,2);
+INSERT INTO `escalas` VALUES (1,0,1),(2,1,1),(1,1,2),(2,0,2);
 /*!40000 ALTER TABLE `escalas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,7 +235,7 @@ CREATE TABLE `planes` (
 
 LOCK TABLES `planes` WRITE;
 /*!40000 ALTER TABLE `planes` DISABLE KEYS */;
-INSERT INTO `planes` VALUES ('2020-01-01 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-01 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-02 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-02 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-03 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-03 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-04 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-04 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-05 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-05 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-06 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-06 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-07 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-07 23:00:00','ABC-123',2,650,'lionelmessi');
+INSERT INTO `planes` VALUES ('2019-01-07 03:30:00','AGW-351',1,1515,'osopratto'),('2019-01-08 23:20:00','AGW-351',1,2500.54,'lionelmessi'),('2019-01-11 01:54:00','AGW-351',1,51085,'lionelmessi'),('2019-01-14 10:30:00','ANX-123',2,12314,'federico'),('2019-01-15 13:30:00','AYE-152',1,1500.5,'lionelmessi'),('2019-01-29 16:45:00','AGW-351',1,2500,'lionelmessi'),('2019-08-30 18:45:00','AYE-152',2,1500.5,'cristianoronaldo'),('2020-01-01 16:30:00','ABC-123',1,523,'lionelmessi'),('2020-01-01 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-01 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-02 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-02 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-03 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-03 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-04 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-04 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-05 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-05 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-06 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-06 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-07 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-07 23:00:00','ABC-123',2,650,'lionelmessi');
 /*!40000 ALTER TABLE `planes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -389,4 +389,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-02 19:49:36
+-- Dump completed on 2019-08-08 16:17:06

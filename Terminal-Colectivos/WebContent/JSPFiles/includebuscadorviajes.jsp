@@ -4,22 +4,31 @@
 
 String origenViaje = (String) session.getAttribute("origenViaje");
 String destinoViaje = (String) session.getAttribute("destinoViaje");
-String fechaViaje = (String) session.getAttribute("fechaViaje");
-
-
-
 %>
+
 
 <div class="login-form-1">
 <!-- Default form contact -->
-<form action="BuscarViajesCliente" method="post" class="text-center border border-light p-5">
+
     <p class="h4 mb-4"><i class="fas fa-bus"></i> Buscador de Viajes</p>
+
+   
+   
+   
+   <!-- Fecha -->
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.SimpleDateFormat"%>  
+<%@ page import = "java.time.format.DateTimeFormatter" %>
+<%@ page import = "java.time.LocalDate" %>
 
 
  <!-- Origen -->
-    <div class="form-group">
-      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="origenViaje">
-      <option <% if(origenViaje==null) {%> selected <% } %>>Origen...</option>
+    <div class="form-group row">
+
+	  <label for="origenViaje" class="col-sm-2 col-form-label">Origen</label>
+	  <div class="col-sm-10">
+      <select class="custom-select" id="origenViaje" name="origenViaje">
+      <option <% if(origenViaje==null) {%> selected <% } %>>Cualquiera</option>
       <%@ page import="data.DataLocalidad" %>
       <%@ page import="entities.Localidad" %>
        <%
@@ -39,12 +48,16 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
 
       
       </select>
+      
+ 	  </div>
       </div>
     
     <!-- Destino -->
-    <div class="form-group">
-      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="destinoViaje">
-        <option <% if(origenViaje==null) {%> selected <% } %>>Destino...</option>
+    <div class="form-group row">
+    <label for="destinoViaje" class="col-sm-2 col-form-label">Destino</label>
+    <div class="col-sm-10">
+    <select class="custom-select" id="destinoViaje"  name="destinoViaje">
+        <option <% if(origenViaje==null) {%> selected <% } %>>Cualquiera</option>
     <%    
     Iterator<Localidad> itr2 = localidades.iterator();
     while(itr2.hasNext()){
@@ -52,42 +65,31 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
 	%>
 	<option <% if(loc.getNombre().equals(origenViaje)) {%> selected <%}%>> <%=loc.getNombre() %></option>
 	<% } %>
-      </select>
-  	 </div>
+     </select>
+     
+     </div>
+     </div>
+  	 
     
    
-   
-   <!-- Fecha -->
-<%@ page import="java.util.*" %>
-<%@ page import="java.text.SimpleDateFormat"%>  
-<%@ page import = "java.time.format.DateTimeFormatter" %>
-<%@ page import = "java.time.LocalDate" %>
-<%
-   Date dNow = new Date();
-   SimpleDateFormat ft = 
-   new SimpleDateFormat ("dd/MM/yyyy");
-   String currentDate = ft.format(dNow);
-   
-   
-   if(fechaViaje != null)
-   {
-	  currentDate = fechaViaje;
-	}
-%>
- 
+       <!-- Fecha -->
+	<div class="form-group row">
+	<label for="dtp_input2" class="col-sm-2 col-form-label">Fecha</label>
+	<div class="col-sm-10">
+  
+  
+          <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+          <div class="input-group-prepend">
+ 		  <div class="input-group-text"><i class="fas fa-calendar"></i></div>
+          </div>
+          <input class="form-control" type="text" readonly>
+          <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <!-- No tengo idea para que es el span pero es inevitable  -->
+          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>              
+          <input type="hidden" name="fechaString"  id="dtp_input2"/> 
+	</div>
+	</div>	
+	</div>
 
-  <div class="form-group">
-                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                   <div class="input-group-prepend">
-				   <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-				   </div>
-                   <input class="form-control" type="text" value="" readonly>
-                   <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <!-- No tengo idea para que es el span pero es inevitable  -->
-                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>              
-                <input type="hidden" name="fechaViaje"  id="dtp_input2" value=<%=currentDate %> /> 
-                </div>	
-            </div>
-	
 	
 	
 
@@ -97,7 +99,7 @@ String fechaViaje = (String) session.getAttribute("fechaViaje");
 </div>
 
 
-</form>
+
 <!-- Default form contact -->
 </div>
 

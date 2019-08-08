@@ -368,49 +368,4 @@ public class DataUsuario implements Validar
 		
 	return choferes;	
 	}
-	public Usuario getChofer (String usuarioChofer) {
-		Usuario chofer=new Usuario();
-		chofer.setUsuario(usuarioChofer);
-		ResultSet rs = null;
-		PreparedStatement pstmt = null;
-		String sql = "select * from usuarios where usuario = ? ";
-		
-		try 
-		{
-			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usuarioChofer );
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs!=null && rs.next())
-			{
-				
-				chofer.setNombre(rs.getString("nombre"));
-				chofer.setApellido(rs.getString("apellido"));
-				chofer.setRol(rs.getString("rol"));
-				chofer.setEmail(rs.getString("email"));
-				chofer.setPassword(rs.getString("password"));
-				chofer.setEstado(rs.getString("estado"));
-				chofer.setCuil(rs.getString("cuil"));
-				
-			}
-		}catch(SQLException e) { e.printStackTrace();}
-		finally 
-		{
-			try 
-			{
-				if(rs!=null) {rs.close();}
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();}
-		}	
-
-		
-
-		return chofer;
-		
-	}
 }

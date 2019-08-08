@@ -9,45 +9,45 @@
 <title>Registrar nuevo plan de viaje</title>
 
 
-
 </head>
 <body>
 <% 
-	String patente="";
-	String chof= "";
-	String origenViaje = (String) session.getAttribute("origenViaje");
-	String destinoViaje = (String) session.getAttribute("destinoViaje");
-	String fechaViaje = (String) session.getAttribute("fechaViaje");
 
-	if(origenViaje==null){origenViaje="Origen";}
-	if(destinoViaje==null){destinoViaje="Destino";}
+
+String origenViaje = (String) session.getAttribute("origenViaje");
+String destinoViaje = (String) session.getAttribute("destinoViaje");
+String patenteColectivoViaje = (String) session.getAttribute("patenteColectivoViaje");
+String usuarioChoferViaje = (String) session.getAttribute("usuarioChoferViaje");
+String fechaViaje = (String) session.getAttribute("fechaViaje");
+String precioString = (String) session.getAttribute("precioString");
+
+
+if(origenViaje==null){origenViaje="";}
+if(destinoViaje==null){destinoViaje="";}
+if(patenteColectivoViaje==null){patenteColectivoViaje="";}
+if(usuarioChoferViaje==null){usuarioChoferViaje="";}
+if(precioString==null){precioString="";}
 
 %>
 
 
 <%@ page import = "data.DataPlan" %>
-    <%@ page import = "java.util.*" %>
-    <%@ page import = "entities.Plan" %>
-    <%@ page import = "entities.Colectivo" %>
-    <% 
-    //Inicialización de variables
-    DataPlan dplan = new DataPlan();
-    ArrayList<Plan> planes = dplan.getViajesDia(origenViaje, destinoViaje, fechaViaje);
-    Iterator<Plan> itr = planes.iterator();
-    Plan plan = null;
-    
-    %>
+<%@ page import = "java.util.*" %>
+<%@ page import = "entities.Plan" %>
+<%@ page import = "entities.Colectivo" %>
 
 
-	<jsp:include page="JSPFiles/includemenu.jsp" />  
 
+<jsp:include page="JSPFiles/includemenu.jsp" />  
+
+<form action="RegistrarNuevoPlan" method = "post">
 <div class="container login-container">
 <div class="row">
     
     <div class="col-sm">
        <div class="login-form-1 center-block">
              <h3>Ingrese datos del nuevo plan</h3>
-             <form action="RegistrarNuevoPlan" method = "post">
+             
                
             <div class="form-group">
                 <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
@@ -57,7 +57,7 @@
                    <input class="form-control" type="text" value="" readonly>
                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <!-- No tengo idea para que es el span pero es inevitable  -->
                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>              
-                <input type="hidden" name= fecha id="dtp_input2" value="" /> 
+                <input type="hidden" name= fechaString id="dtp_input2" value="" /> 
                 </div>	
             </div>
       
@@ -70,15 +70,15 @@
                     <input class="form-control" type="text" value="" readonly>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                 
-                <input type="hidden" name= hora id="dtp_input3" value="" />
+                <input type="hidden" name= horaString id="dtp_input3" value="" />
                 
                 </div>
 				
             </div>
                
                <div class="form-group">
-      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="choferes">
-      <option <% if(chof==null) {%> selected <% } %>>Choferes...</option>
+      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="usuarioChoferViaje">
+      <option>Chofer</option>
       <%@ page import="data.DataUsuario" %>
       <%@ page import="entities.Usuario" %>
        <%
@@ -94,16 +94,16 @@
  	chofer= itr3.next();
 	%>
 		
-	<option <% if(chofer.getUsuario().equals(chof)) {%> selected <%}%>> <%=chofer.getUsuario() %></option>
+	<option <% if(chofer.getUsuario().equals(usuarioChoferViaje)) { %> selected <% } %>> <%=chofer.getUsuario() %></option>
 	<% } %>
       </select>
   	 </div> 
   	 
   	 
   	 
-  	     <div class="form-group">
-      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="patente">
-      <option <% if(patente==null) {%> selected <% } %>>Patentes...</option>
+  	  <div class="form-group">
+      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="patenteColectivoViaje">
+      <option>Patente</option>
       <%@ page import="data.DataColectivo" %>
       <%@ page import="entities.Colectivo" %>
        <%
@@ -119,9 +119,9 @@
  	colectivo= itr4.next();
 	%>
 		
-	<option <% if(colectivo.getPatente().equals(patente)) {%> selected <%}%>> <%=colectivo.getPatente() %></option>
+	<option <% if(patenteColectivoViaje.equals(colectivo.getPatente())) {%> selected <% } %>> <%=colectivo.getPatente() %></option>
 	<% } %>
-      </select>
+    </select>
   	 </div> 
   	 
   	 
@@ -129,7 +129,7 @@
     <div class="form-group">
 
       <select class="custom-select" id="origenViaje" name="origenViaje">
-      <option <% if(origenViaje==null) {%> selected <% } %>>Origen</option>
+      <option>Origen</option>
       <%@ page import="data.DataLocalidad" %>
       <%@ page import="entities.Localidad" %>
        <%
@@ -144,7 +144,7 @@
     while(itr1.hasNext()){
  	loc = itr1.next();
 	%>
-	<option <% if(loc.getNombre().equals(destinoViaje)) {%> selected <%}%>> <%=loc.getNombre() %></option>
+	<option <% if(loc.getNombre().equals(origenViaje)) { %> selected <% } %> > <%=loc.getNombre() %></option>
 	<% } %>
 
       
@@ -157,19 +157,22 @@
     <div class="form-group">
       
       <select class="custom-select" id="destinoViaje"  name="destinoViaje">
-        <option <% if(origenViaje==null) {%> selected <% } %>>Destino</option>
+        <option>Destino</option>
     <%    
     Iterator<Localidad> itr2 = localidades.iterator();
     while(itr2.hasNext()){
  	loc = itr2.next();
 	%>
-	<option <% if(loc.getNombre().equals(origenViaje)) {%> selected <%}%>> <%=loc.getNombre() %></option>
+	<option  <% if(loc.getNombre().equals(destinoViaje)) {%> selected <%}%>><%=loc.getNombre() %></option>
 	<% } %>
      </select>
 
      </div>
-           		 <div class="form-group">
-                     <input type="text" class="form-control" name="precio" placeholder="Precio" value=""  required/>
+           		 <div class="form-group input-group">
+	           		 <div class="input-group-prepend">
+					 <div class="input-group-text"><i class="fas fa-dollar-sign"></i></div>
+					 </div>
+                     <input  type="text" class="form-control" name="precioString" placeholder="Precio" <%if (!precioString.equals("")) { %>  value= <%= precioString %> <% } %>  required/>
                  </div>
                 
                
@@ -177,35 +180,56 @@
                <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Registrar nuevo plan" />
                  </div>
-              		<% String registroExitoso = (String)session.getAttribute("registroExitoso");%>
-			<% if(session.getAttribute("registroExitoso")!=null) { %>
-			<br>
-			<div class="alert alert-success" role="alert">
-			Felicitaciones: <%= registroExitoso %>
-			</div> 
-			<%}%>
+                 
+     
+            <% String mensajeRegistro = (String) session.getAttribute("mensajeRegistro");%>
+			<% if(mensajeRegistro != null) 
+			{
+				if(mensajeRegistro.equals("OK"))
+				{ %>
+				<div class="alert alert-success text-center" role="alert">Felicitaciones: El Plan se ha registrado exitosamente </div>
+
+				<% 
+				} 
+				else if(mensajeRegistro.equals("Error1")) 
+				{ %>
+				<div class="alert alert-danger text-center" role="alert">Error: Hay campos vacíos</div>
+				<% 
+				} 
+				else if(mensajeRegistro.equals("Error2")) 
+				{ %>
+				<div class="alert alert-danger text-center" role="alert">Error: El origen o el destino debe ser Rosario</div>
+				<%
+				} 
+				else if(mensajeRegistro.equals("Error3")) 
+				{ %>
+				<div class="alert alert-danger text-center" role="alert">Error: El origen y el destino no </div>
+				<%
+				} 
+				else if(mensajeRegistro.equals("Error4")) 
+				{ %>
+				<div class="alert alert-danger text-center" role="alert">Error: No se encontraron rutas existentes para origen y destino indicados</div>
+				<% 
+				}
+				else if(mensajeRegistro.equals("Error5")) 
+				{ %>
+				<div class="alert alert-danger text-center" role="alert">Error: El campo <b>"precio"</b> no es un valor numérico</div>
+				<% 
+				}
+			} 	
+			%>
 			
-                 </div>
-                 
-              		<% String errorOrigenDestino = (String)session.getAttribute("errorOrigenDestino");%>
-			<% if(session.getAttribute("errorOrigenDestino")!=null) { %>
-			<br>
-			<div class="alert alert-danger" role="alert">
-			Error: <%= errorOrigenDestino %>
-			</div> 
-			<%}%>
-                 
-                 
-              		
 			
-              		
-             </form>
+			
+           </div>
+                 
+                 
          </div>
     </div>
     	 
 </div>
  
-</div>
+ </form>
 <jsp:include page="JSPFiles/includefooter.jsp" />  
 
 

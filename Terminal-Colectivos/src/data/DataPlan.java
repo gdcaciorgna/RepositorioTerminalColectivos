@@ -1,9 +1,8 @@
 package data;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
+import java.util.Date;
 
 import entities.*;
 
@@ -71,18 +70,16 @@ public class DataPlan {
 
 	}
 	
-	public ArrayList<Plan> getViajesDia(String origen, String destino, String fecha)
+	public ArrayList<Plan> getViajesDia(String origen, String destino, Date fechaViaje)
 	{
 		
 			
-		String sql= sqlBuscarPlanes + " WHERE lor.nombre=? and ldr.nombre=? and DATE(pla.fecha_hora_plan)=? \r\n";
-		String sqlFecha= sqlBuscarPlanes + " WHERE DATE(pla.fecha_hora_plan)=? \r\n";
-		String sqlOrigenFecha= sqlBuscarPlanes + " WHERE lor.nombre=? and DATE(pla.fecha_hora_plan)=? \r\n";
-		String sqlDestinoFecha= sqlBuscarPlanes + " WHERE ldr.nombre=? and DATE(pla.fecha_hora_plan)=? \r\n";
+		String sql= sqlBuscarPlanes + " WHERE lor.nombre=? and ldr.nombre=? and DATE(pla.fecha_hora_plan) = DATE(?) \r\n";
+		String sqlFecha= sqlBuscarPlanes + " WHERE DATE(pla.fecha_hora_plan) = DATE(?) \r\n";
+		String sqlOrigenFecha= sqlBuscarPlanes + " WHERE lor.nombre=? and DATE(pla.fecha_hora_plan) = DATE(?)  \r\n";
+		String sqlDestinoFecha= sqlBuscarPlanes + " WHERE ldr.nombre=? and DATE(pla.fecha_hora_plan) = DATE(?) \r\n";
 
 		
-		//Sólo dice el precio y el horario de salida correcto para el lugar de origen, pero no para los viajes intermedios
-		//P.E.: Funciona para viajes Venado (Origen) - Rosario (Destino), pero no para Murphy (Origen) - Firmat (Destino)
 		
 		
 		ArrayList<Plan> planes = new ArrayList<>();
@@ -97,7 +94,13 @@ public class DataPlan {
 			if(origen.equals("Cualquiera") && destino.equals("Cualquiera")) 
 			{
 				pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlFecha); //Origen y destino sin especificar
-				pstmt.setString(1, fecha);
+				
+				//INICIO - MANEJO DE FECHAS
+				Timestamp fechaViajeTS = new Timestamp(fechaViaje.getTime());
+                
+				//FIN - MANEJO DE FECHAS
+				
+				pstmt.setTimestamp(1, fechaViajeTS );
 
 			}
 			
@@ -105,7 +108,7 @@ public class DataPlan {
 			{
 				pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlOrigenFecha); //Origen sin especificar
 				pstmt.setString(1, destino);
-				pstmt.setString(2, fecha);
+				pstmt.setTimestamp(2, new Timestamp(fechaViaje.getTime()));
 
 			}
 			
@@ -113,14 +116,14 @@ public class DataPlan {
 			{
 				pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlDestinoFecha); //Destino sin especificar
 				pstmt.setString(1, origen);
-				pstmt.setString(2, fecha);
+				pstmt.setTimestamp(2, new Timestamp(fechaViaje.getTime()));
 			}
 			
 			else {
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
 			pstmt.setString(1, origen);
 			pstmt.setString(2, destino);
-			pstmt.setString(3, fecha);
+			pstmt.setTimestamp(3, new Timestamp(fechaViaje.getTime()));
 			}
 		
 			 
@@ -190,14 +193,11 @@ public class DataPlan {
 		//INICIO - MANEJO DE FECHAS 
 		
 		Timestamp fecha_hora_plan_timestamp = rs.getTimestamp("pla.fecha_hora_plan");
-		Calendar fecha_hora_plan = Calendar.getInstance();
-		fecha_hora_plan.setTimeInMillis(fecha_hora_plan_timestamp.getTime());
 		
-		SimpleDateFormat formatoFecha= new SimpleDateFormat("dd/MM/yyyy");
-		SimpleDateFormat formatoHora= new SimpleDateFormat("H:mm");					
+
+		Date fecha_hora_plan = new Date(fecha_hora_plan_timestamp.getTime());
 		
-		plan.setFecha(formatoFecha.format(fecha_hora_plan.getTime()));
-		plan.setHora(formatoHora.format(fecha_hora_plan.getTime()));
+		plan.setFechaHora(fecha_hora_plan);
 		
 		//FIN - MANEJO DE FECHAS 
 		
@@ -224,7 +224,7 @@ public class DataPlan {
 			return plan;
 		}
 	
-	public void editarPlan(Plan planViejo, Plan planNuevo)
+	/*public void editarPlan(Plan planViejo, Plan planNuevo)
 	{
 	PreparedStatement pstmt = null;
 	
@@ -301,10 +301,11 @@ public class DataPlan {
 		return filasAfectadas;
 		
 	}
-	public void newPlan( Plan nuevoPlan)
+	*/
+	public void addPlan( Plan nuevoPlan)
 	{
 	PreparedStatement pstmt = null;
-	String fyh= nuevoPlan.getFecha()+" "+ nuevoPlan.getHora();
+
 	
 	
 	String sql = "INSERT INTO  planes  (fecha_hora_plan , patente , cod_ruta, precio, usuario_chofer )VALUES (?,?,?,?,?) ";
@@ -313,7 +314,7 @@ public class DataPlan {
 	try 
 	{
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-		pstmt.setString(1, fyh);
+		pstmt.setTimestamp(1, new Timestamp(nuevoPlan.getFechaHora().getTime()));
 		pstmt.setString(2, nuevoPlan.getColectivo().getPatente());
 		pstmt.setInt(3,nuevoPlan.getRuta().getCod_ruta());
 		pstmt.setDouble(4, nuevoPlan.getPrecio());
@@ -322,8 +323,12 @@ public class DataPlan {
 
 
 	    pstmt.executeUpdate();
+	    
+	    
 		
-}catch(SQLException e) { e.printStackTrace();}
+}catch(SQLException e) {
+	e.printStackTrace();
+	}
 	
 	finally 
 	{

@@ -1,6 +1,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,12 +39,30 @@ public class BuscarViajesAdmin extends HttpServlet {
 		
         String origenViaje = request.getParameter("origenViaje");
         String destinoViaje = request.getParameter("destinoViaje");
-        String fechaViaje = request.getParameter("fechaViaje");
+      
         
-                
+		String fechaString = request.getParameter("fechaString");
+		Date fechaDate = new Date();
+		
+
+		try {
+		   
+			SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");  	
+
+			fechaDate = formatter.parse(fechaString);
+			
+
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+        sesion.setAttribute("fechaViaje", fechaDate);
         sesion.setAttribute("origenViaje", origenViaje);
         sesion.setAttribute("destinoViaje", destinoViaje);
-        sesion.setAttribute("fechaViaje", fechaViaje);
+
                 
                 
     	response.sendRedirect("buscarviajesadmin.jsp");	

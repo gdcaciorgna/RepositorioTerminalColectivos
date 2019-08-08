@@ -44,7 +44,7 @@ public class DataRuta {
 		return ruta;
 	}
 	
-	public Ruta getRuta(String origenViaje, String destinoViaje) 
+	public Ruta getByOrigenDestino(String origenViaje, String destinoViaje) 
 	{
 		Ruta ruta = new Ruta();
 		String sql= "select distinct e.cod_ruta,r.dias_sem\r\n" + 
