@@ -1,31 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-
-<%@include file="JSPFiles/includeimports.jsp" %>
-<meta charset="ISO-8859-1">
-<title>Registrar nuevo plan de viaje</title>
-
-
+<meta charset="UTF-8">
+<jsp:include page="JSPFiles/includeimports.jsp" />
+<title>Modificar Plan</title>
 </head>
 <body>
 <% 
 
 
-String origenViaje = (String) session.getAttribute("origenViaje");
-String destinoViaje = (String) session.getAttribute("destinoViaje");
-String patenteColectivoViaje = (String) session.getAttribute("patenteColectivoViaje");
-String usuarioChoferViaje = (String) session.getAttribute("usuarioChoferViaje");
-String precioString = (String) session.getAttribute("precioString");
+String origenPlanViejo = (String) session.getAttribute("origenPlanViejo");
+String destinoPlanViejo = (String) session.getAttribute("destinoPlanViejo");
+String patenteColectivoPlanViejo = (String) session.getAttribute("patenteColectivoPlanViejo");
+String usuarioChoferPlanViejo = (String) session.getAttribute("usuarioChoferPlanViejo");
+String precioStringPlanViejo = (String) session.getAttribute("precioStringPlanViejo");
+String fechaHoraStringPlanViejo =  (String) session.getAttribute("fechaHoraStringPlanViejo");
 
 
-if(origenViaje==null){origenViaje="";}
-if(destinoViaje==null){destinoViaje="";}
-if(patenteColectivoViaje==null){patenteColectivoViaje="";}
-if(usuarioChoferViaje==null){usuarioChoferViaje="";}
-if(precioString==null){precioString="";}
+
+
+if(origenPlanViejo==null){origenPlanViejo="";}
+if(destinoPlanViejo==null){destinoPlanViejo="";}
+if(patenteColectivoPlanViejo==null){patenteColectivoPlanViejo="";}
+if(usuarioChoferPlanViejo==null){usuarioChoferPlanViejo="";}
+if(precioStringPlanViejo==null){precioStringPlanViejo="";}
+if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";}
+
+
 
 %>
 
@@ -36,27 +39,37 @@ if(precioString==null){precioString="";}
 <%@ page import = "entities.Colectivo" %>
 
 
-
 <jsp:include page="JSPFiles/includemenu.jsp" />  
 
-<form action="RegistrarNuevoPlan" method = "post">
+<form action="EditarPlanServlet" method = "get">
 <div class="container login-container">
 <div class="row">
     
     <div class="col-sm">
        <div class="login-form-1 center-block">
-             <h3>Ingrese datos del nuevo plan</h3>
+             <h3>Ingrese los nuevos datos del plan a editar</h3>
+             <div class="alert alert-light" role="alert">
+			  <div class="text-center"><b>---------- Datos Actuales ----------</b></div> <br>
+			  <div class="text-justify">
+			  Fecha/Hora del plan: <b> <%= fechaHoraStringPlanViejo %> </b> <br>
+  			  Origen: <b><%= origenPlanViejo %></b> <br>
+  			  Destino: <b><%= destinoPlanViejo %></b> <br>
+ 			  Colectivo: <b><%= patenteColectivoPlanViejo %></b> <br>
+			  Chofer: <b><%= usuarioChoferPlanViejo %></b> <br>
+			  Precio: <b><%= precioStringPlanViejo %></b>
+			  </div>
+			  </div>
              
                
             <div class="form-group">
-                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy/mm/dd">
                    <div class="input-group-prepend">
 				   <div class="input-group-text"><i class="fas fa-calendar"></i></div>
 				   </div>
                    <input class="form-control" type="text" value="" readonly>
                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span> <!-- No tengo idea para que es el span pero es inevitable  -->
                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>              
-                <input type="hidden" name= fechaString id="dtp_input2" value="" /> 
+                <input type="hidden" name= fechaStringPlanNuevo id="dtp_input2" value="" /> 
                 </div>	
             </div>
       
@@ -69,19 +82,19 @@ if(precioString==null){precioString="";}
                     <input class="form-control" type="text" value="" readonly>
 					<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                 
-                <input type="hidden" name= horaString id="dtp_input3" value="" />
+                <input type="hidden" name= horaStringPlanNuevo id="dtp_input3" value="" />
                 
                 </div>
 				
             </div>
                
                <div class="form-group">
-      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="usuarioChoferViaje">
+      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="usuarioChoferPlanNuevo">
       <option>Chofer</option>
       <%@ page import="data.DataUsuario" %>
       <%@ page import="entities.Usuario" %>
        <%
-       	//Inicialización de variables
+       	//InicializaciÃ³n de variables
            DataUsuario dusu = new DataUsuario();
            ArrayList<Usuario> choferes = dusu.getAall();
            Iterator<Usuario> itr3 = choferes.iterator();
@@ -93,7 +106,7 @@ if(precioString==null){precioString="";}
  	chofer= itr3.next();
 	%>
 		
-	<option <% if(chofer.getUsuario().equals(usuarioChoferViaje)) { %> selected <% } %>> <%=chofer.getUsuario() %></option>
+	<option <% if(chofer.getUsuario().equals(usuarioChoferPlanViejo)) { %> selected <% } %>> <%=chofer.getUsuario() %></option>
 	<% } %>
       </select>
   	 </div> 
@@ -101,12 +114,12 @@ if(precioString==null){precioString="";}
   	 
   	 
   	  <div class="form-group">
-      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="patenteColectivoViaje">
+      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="patenteColectivoPlanNuevo">
       <option>Patente</option>
       <%@ page import="data.DataColectivo" %>
       <%@ page import="entities.Colectivo" %>
        <%
-       	//Inicialización de variables
+       	//InicializaciÃ³n de variables
            DataColectivo dcole= new DataColectivo();
            ArrayList<Colectivo> colectivos = dcole.getAll();
            Iterator<Colectivo> itr4 = colectivos.iterator();
@@ -118,7 +131,7 @@ if(precioString==null){precioString="";}
  	colectivo= itr4.next();
 	%>
 		
-	<option <% if(patenteColectivoViaje.equals(colectivo.getPatente())) {%> selected <% } %>> <%=colectivo.getPatente() %></option>
+	<option <% if(patenteColectivoPlanViejo.equals(colectivo.getPatente())) {%> selected <% } %>> <%=colectivo.getPatente() %></option>
 	<% } %>
     </select>
   	 </div> 
@@ -127,12 +140,12 @@ if(precioString==null){precioString="";}
                  <!-- Origen -->
     <div class="form-group">
 
-      <select class="custom-select" id="origenViaje" name="origenViaje">
+      <select class="custom-select" id="origenViaje" name="origenPlanNuevo">
       <option>Origen</option>
       <%@ page import="data.DataLocalidad" %>
       <%@ page import="entities.Localidad" %>
        <%
-       	//Inicialización de variables
+       	//InicializaciÃ³n de variables
            DataLocalidad dloc = new DataLocalidad();
            ArrayList<Localidad> localidades = dloc.getAll();
            Iterator<Localidad> itr1 = localidades.iterator();
@@ -143,7 +156,7 @@ if(precioString==null){precioString="";}
     while(itr1.hasNext()){
  	loc = itr1.next();
 	%>
-	<option <% if(loc.getNombre().equals(origenViaje)) { %> selected <% } %> > <%=loc.getNombre() %></option>
+	<option <% if(loc.getNombre().equals(origenPlanViejo)) { %> selected <% } %> > <%=loc.getNombre() %></option>
 	<% } %>
 
       
@@ -155,14 +168,14 @@ if(precioString==null){precioString="";}
     <!-- Destino -->
     <div class="form-group">
       
-      <select class="custom-select" id="destinoViaje"  name="destinoViaje">
+      <select class="custom-select" id="destinoViaje"  name="destinoPlanNuevo">
         <option>Destino</option>
     <%    
     Iterator<Localidad> itr2 = localidades.iterator();
     while(itr2.hasNext()){
  	loc = itr2.next();
 	%>
-	<option  <% if(loc.getNombre().equals(destinoViaje)) {%> selected <%}%>><%=loc.getNombre() %></option>
+	<option  <% if(loc.getNombre().equals(destinoPlanViejo)) {%> selected <%}%>><%=loc.getNombre() %></option>
 	<% } %>
      </select>
 
@@ -171,7 +184,7 @@ if(precioString==null){precioString="";}
 	           		 <div class="input-group-prepend">
 					 <div class="input-group-text"><i class="fas fa-dollar-sign"></i></div>
 					 </div>
-                     <input  type="text" class="form-control" name="precioString" placeholder="Precio" <%if (!precioString.equals("")) { %>  value= <%= precioString %> <% } %>  required/>
+                     <input  type="text" class="form-control" name="precioStringPlanNuevo" placeholder="Precio" <%if (!precioStringPlanViejo.equals("")) { %>  value= <%= precioStringPlanViejo %> <% } %>  required/>
                  </div>
                 
                
@@ -186,13 +199,13 @@ if(precioString==null){precioString="";}
 			{
 				if(mensajeRegistro.equals("OK"))
 				{ %>
-				<div class="alert alert-success text-center" role="alert">Felicitaciones: El Plan se ha registrado exitosamente </div>
+				<div class="alert alert-success text-center" role="alert">Felicitaciones: El Plan se ha modificado exitosamente </div>
 
 				<% 
 				} 
 				else if(mensajeRegistro.equals("Error1")) 
 				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: Hay campos vacíos</div>
+				<div class="alert alert-danger text-center" role="alert">Error: Hay campos vacÃ­os</div>
 				<% 
 				} 
 				else if(mensajeRegistro.equals("Error2")) 
@@ -212,7 +225,12 @@ if(precioString==null){precioString="";}
 				}
 				else if(mensajeRegistro.equals("Error5")) 
 				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: El campo <b>"precio"</b> no es un valor numérico</div>
+				<div class="alert alert-danger text-center" role="alert">Error: El campo <b>"precio"</b> no es un valor numÃ©rico</div>
+				<% 
+				}
+				else if(mensajeRegistro.equals("Error6")) 
+				{ %>
+				<div class="alert alert-danger text-center" role="alert">Error: Ya existe un plan para la fecha, hora, colectivo y chofer designado</div>
 				<% 
 				}
 			} 	
@@ -228,11 +246,31 @@ if(precioString==null){precioString="";}
     	 
 </div>
  
+ <!-- INICIO - SEPARAR FECHA Y HORA | NO SE PQ NO ME DEJA PASAR EL STRING DE FECHAHORA COMPLETO --> 
+<% 
+ String[] separador = fechaHoraStringPlanViejo.split(" ");
+ String fechaStringPlanViejo = separador[0];
+ String horaStringPlanViejo = separador[1];
+ %>
+ <!-- FIN - SEPARAR FECHA Y HORA --> 
+ 
+<!--  INICIO - DATOS DEL PLAN A MODIFICAR -->
+<input type="hidden" name="fechaStringPlanViejo" value= <%= fechaStringPlanViejo %> >
+<input type="hidden" name="horaStringPlanViejo" value= <%= horaStringPlanViejo %> >
+<input type="hidden" name="origenPlanViejo" value= <%= origenPlanViejo %> >
+<input type="hidden" name="destinoPlanViejo" value= <%= destinoPlanViejo %> >
+<input type="hidden" name="patenteColectivoPlanViejo" value= <%= patenteColectivoPlanViejo %> >
+
+
+
+<!--  FIN - DATOS DEL PLAN A MODIFICAR -->
+
+
  </form>
 <jsp:include page="JSPFiles/includefooter.jsp" />  
 
 
-<!-- Este script se debería realizar en un archivo js diferente para poder reutilizarlo en otras ocasiones -->
+<!-- Este script se deberÃ­a realizar en un archivo js diferente para poder reutilizarlo en otras ocasiones -->
 
 <script type="text/javascript">
 $('.form_date').datetimepicker({
@@ -261,5 +299,6 @@ $('.form_time').datetimepicker({
 </script>
 
 
+</body>
 </body>
 </html>

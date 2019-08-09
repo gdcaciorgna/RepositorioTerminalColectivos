@@ -16,16 +16,16 @@ import data.DataPlan;
 import entities.Plan;
 
 /**
- * Servlet implementation class EliminarPlanServlet
+ * Servlet implementation class RedireccionEditarPlanServlet
  */
-@WebServlet("/EliminarPlanServlet")
-public class EliminarPlanServlet extends HttpServlet {
+@WebServlet("/RedireccionEditarPlanServlet")
+public class RedireccionEditarPlanServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EliminarPlanServlet() {
+    public RedireccionEditarPlanServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,9 +36,8 @@ public class EliminarPlanServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		
+		HttpSession sesion = request.getSession();
 
-	HttpSession sesion = request.getSession();
 		
 		String JuntosfechaHoraString = request.getParameter("fechaHoraString"); //Me gustaría traer la fecha y hora todo junto, pero el string sólo trae la fecha ¡?¡?¡?¡
 		String fechaString = request.getParameter("fechaString");
@@ -48,16 +47,17 @@ public class EliminarPlanServlet extends HttpServlet {
 		
 		String codRutaViajeString = request.getParameter("codRutaViajeString");
 		String patenteColectivoViaje = request.getParameter("patenteColectivoViaje");
-		
+
+
 		DataPlan dplan = new DataPlan();
 		Plan plan = new Plan();
 		
 		
-        SimpleDateFormat formatFechaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat formatFechaHora1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date fechaHora = new Date();
         try {
 			
-        fechaHora = formatFechaHora.parse(fechaHoraString);
+        fechaHora = formatFechaHora1.parse(fechaHoraString);
 		
         } catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -69,23 +69,24 @@ public class EliminarPlanServlet extends HttpServlet {
 		
 		plan = dplan.getByFechaHoraRutaPatente(fechaHora, cod_ruta, patenteColectivoViaje);
 		
-		int planesEliminados = dplan.eliminarPlan(plan);
-		
-		//INICIO - LIMPIAR CAMPOS
-		sesion.setAttribute("origenViaje", null);
-		sesion.setAttribute("destinoViaje", null);
-		sesion.setAttribute("precioString", null);
-		sesion.setAttribute("usuarioChoferViaje", null);
-		sesion.setAttribute("patenteColectivoViaje", null);
-		sesion.setAttribute("fechaString", null);
-		sesion.setAttribute("horaString", null);
-		//FIN - LIMPIAR CAMPOS		
-		
-		sesion.setAttribute("planesEliminados", planesEliminados);
-		response.sendRedirect("buscarviajesadmin.jsp");	
-		
+        SimpleDateFormat formatFechaHora2 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String fechaHoraString2 = formatFechaHora2.format(fechaHora);
 
 
+		//INICIO - SETEAR VALORES ORIGINALES (ANTES DE CAMBIAR)
+        sesion.setAttribute("origenPlanViejo", plan.getOrigen());
+		sesion.setAttribute("destinoPlanViejo", plan.getDestino());
+		sesion.setAttribute("fechaHoraStringPlanViejo", fechaHoraString2);
+		sesion.setAttribute("patenteColectivoPlanViejo", plan.getColectivo().getPatente());
+		sesion.setAttribute("usuarioChoferPlanViejo", plan.getChofer().getUsuario());
+		sesion.setAttribute("precioStringPlanViejo",String.valueOf(plan.getPrecio()));
+        
+
+		//FIN - SETEAR VALORES ORIGINALES (ANTES DE CAMBIAR)
+		
+		
+		response.sendRedirect("plandeviaje.jsp");	
+		
 		
 	}
 

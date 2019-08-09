@@ -113,7 +113,7 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			   <td>   
 			   <div class="row">
 			   		<div class="col-auto">
-					   <form action="micuenta.jsp" method="post">
+					   <form action="RedireccionEditarPlanServlet" method="get">
 			
 					   <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
 					   <input type="hidden" value=<%= fecha %> name="fechaString"/>
@@ -125,7 +125,7 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			  		   </form> 
 			   		</div>
 			   		<div class="col-auto">
-					   <form action="EliminarPlanServlet" method="post">
+					   <form action="EliminarPlanServlet" method="get">
 					
 					   <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
 					   <input type="hidden" value=<%= fecha %> name="fechaString"/>
@@ -148,12 +148,12 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			 
 			</div>
 			
-			<% Integer planesAfectados = 0;%> 
-			<% planesAfectados = (Integer) session.getAttribute("planesAfectados");%>
-			<% if(session.getAttribute("planesAfectados")!=null) { %>
+			<% Integer planesEliminados = 0;%> 
+			<% planesEliminados = (Integer) session.getAttribute("planesEliminados");%>
+			<% if(session.getAttribute("planesEliminados")!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Viajes eliminados: <%= planesAfectados %>
+			Viajes eliminados: <%= planesEliminados %>
 			</div> 
 			<%}%>
         </div>

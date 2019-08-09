@@ -279,37 +279,55 @@ public class DataPlan {
 			return plan;
 		}
 	
-	/*public void editarPlan(Plan planViejo, Plan planNuevo)
+	public int editarPlan(Plan planViejo, Plan planNuevo)
 	{
 	PreparedStatement pstmt = null;
 	
-	String fechayHoraNueva = planNuevo.getFecha() + " " + planNuevo.getHora();
+	String sql = "UPDATE planes SET fecha_hora_plan = ?, patente = ?, cod_ruta = ?, precio= ?, usuario_chofer= ? WHERE fecha_hora_plan= ? AND patente= ? and cod_ruta= ?; ";
 	
-	String sql = "UPDATE planes SET fecha_hora_plan = ?, patente = ?, cod_ruta = ?, precio= ?, usuario_chofer= ? WHERE DATE(fecha_hora_plan)= ? AND DATE_FORMAT(fecha_hora_plan, '%H:%i') = ? AND patente= ? and cod_ruta= ?; ";
-	
+	int filasAfectadas = 0;
 	
 	try 
 	{
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-		pstmt.setString(1, fechayHoraNueva);
+		pstmt.setTimestamp(1, new Timestamp(planNuevo.getFechaHora().getTime()));
 		pstmt.setString(2, planNuevo.getColectivo().getPatente());
 		pstmt.setInt(3, planNuevo.getRuta().getCod_ruta());
 		pstmt.setDouble(4, planNuevo.getPrecio());
 		pstmt.setString(5, planNuevo.getChofer().getUsuario());
-		pstmt.setString(6, planViejo.getFecha());
-		pstmt.setString(7, planViejo.getHora());
-		pstmt.setString(8, planViejo.getColectivo().getPatente());
-		pstmt.setString(9, planViejo.getChofer().getUsuario()) ;
+		pstmt.setTimestamp(6, new Timestamp(planViejo.getFechaHora().getTime()));
+		pstmt.setString(7, planViejo.getColectivo().getPatente());
+		pstmt.setString(8, planViejo.getChofer().getUsuario()) ;
 
 
 
-	    pstmt.executeUpdate();
+	    filasAfectadas = pstmt.executeUpdate();
+	    		
 		
 		
-	}catch(SQLException e) { 
+	} catch(SQLException e) 
+	{
+		
 		e.printStackTrace();
+	}
+	finally 
+	{
+		try 
+		{
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) {e.printStackTrace();
+		
 		}
-	}*/
+			
+		
+	}
+	return filasAfectadas;
+	}
+	
 	
 	
 	public Integer eliminarPlan(Plan plan) 
@@ -399,6 +417,19 @@ public class DataPlan {
 			
 		} catch(SQLException e) {e.printStackTrace();}
 	}	
+	}
+	
+	public boolean validarPlanSinExistencia(Date fechaHoraViaje, int cod_ruta, String patente) 
+	{
+		Plan plan = new Plan();
+		
+		plan = this.getByFechaHoraRutaPatente(fechaHoraViaje, cod_ruta, patente);
+		
+		if(plan.getFechaHora()==null) 
+		{
+			return true;
+		}
+		else {return false;}
 	}
 
 }

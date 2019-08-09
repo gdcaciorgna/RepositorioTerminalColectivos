@@ -158,7 +158,10 @@ public class RegistrarNuevoPlan extends HttpServlet {
 			sesion.setAttribute("precioString", null);
 			sesion.setAttribute("usuarioChoferViaje", null);
 			sesion.setAttribute("patenteColectivoViaje", null);
+			sesion.setAttribute("fechaString", null);
+			sesion.setAttribute("horaString", null);
 			//FIN - LIMPIAR CAMPOS
+			
 		}
 		
 		
