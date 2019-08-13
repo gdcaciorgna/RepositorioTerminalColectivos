@@ -11,7 +11,8 @@
 </head>
 <body>
 
-
+	<% 	HttpSession sesion = request.getSession();
+		sesion.setAttribute("mensajeEditarUsuario", null);%>
 
    <%@ page import = "data.DataUsuario" %>
     <%@ page import = "java.util.*" %>
@@ -76,9 +77,9 @@
    </td>
    <td>
    
-   <form action="micuenta.jsp" method="post">
+   <form action="RedireccionEditarUsuarioSevlet" method="post">
    <input type="hidden" value=<%=usu.getUsuario()%> name="username"/>
-   <input type="hidden" value=<%=usu.getPassword() %> name="password"/>
+
    <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button></form> 
    <form action="BorrarCuentaServlet" method="post">
    <input type="hidden" value=<%=usu.getUsuario()%> name="username"/>

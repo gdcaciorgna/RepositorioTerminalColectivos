@@ -43,7 +43,7 @@ if(usuario!=null)
 
 
 <div class="container-fluid">
-		<h1>Editar datos de usuario</h1>
+		<h1>Editar datos de mi cuenta</h1>
 		<div class="row">
 		<div class="col-6">
 			

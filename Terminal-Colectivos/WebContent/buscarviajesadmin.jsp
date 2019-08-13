@@ -9,7 +9,34 @@
 </head>
 <body>
 
+
+<!-- INICIO - REDIRECCION A LOGIN --> 
+ <%@ page import = "entities.Usuario" %>
+<% Usuario usuario;%>
+ 
+<%
+String username="s/usuario", estado="s/estado"; 
+usuario = (Usuario) session.getAttribute("Usuario");  
+if(usuario!=null) 
+{
+	username = usuario.getUsuario(); 
+	estado = usuario.getEstado(); 
+}
+
+ if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
+	{   
+ 
+	String sitioweb = "http://localhost:8080/Terminal-Colectivos/"; 
+	response.sendRedirect(sitioweb+"login.jsp"); 
+	} 
+%>
+<!-- FIN - REDIRECCION A LOGIN -->
+
+
+
+
  <%@ page import = "java.util.*" %>
+ 
  <%@ page import = "java.text.SimpleDateFormat" %>
  
 <% 

@@ -267,8 +267,12 @@ public class DataUsuario implements Validar
 	{
 	PreparedStatement pstmt = null;
 	
-	String sql = "UPDATE usuarios SET nombre=?, apellido=?, email=?, cuil=?, rol=? WHERE usuario=?";
+	String sql = "UPDATE usuarios SET nombre=?, apellido=?, email=?, cuil=?, rol=?, estado=? WHERE usuario=?";
 	
+	if(usuario.getCuil()==null)
+	{
+		usuario.setCuil("");
+	}
 	
 	try 
 	{
@@ -278,7 +282,8 @@ public class DataUsuario implements Validar
 		pstmt.setString(3, usuario.getEmail());
 		pstmt.setString(4, usuario.getCuil());
 		pstmt.setString(5, usuario.getRol());
-		pstmt.setString(6, usuario.getUsuario());
+		pstmt.setString(6, usuario.getEstado());
+		pstmt.setString(7, usuario.getUsuario());
 	    pstmt.executeUpdate();
 		
 		

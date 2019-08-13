@@ -12,16 +12,16 @@ import data.DataUsuario;
 import entities.Usuario;
 
 /**
- * Servlet implementation class EditarUsuarioServlet
+ * Servlet implementation class RedireccionEditarUsuarioSevlet
  */
-@WebServlet("/EditarUsuarioServlet")
-public class EditarUsuarioServlet extends HttpServlet {
+@WebServlet("/RedireccionEditarUsuarioSevlet")
+public class RedireccionEditarUsuarioSevlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditarUsuarioServlet() {
+    public RedireccionEditarUsuarioSevlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,29 +33,19 @@ public class EditarUsuarioServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
-
 		
-		Usuario user;
-		DataUsuario datauser = new DataUsuario();
-		
-		sesion.setAttribute("mensajeEditarUsuario", null);
-
 		String username = request.getParameter("username");
+		DataUsuario dusu = new DataUsuario();
+		Usuario usu = new Usuario();
 		
-		user = datauser.getByUsuario(username);
+		usu = dusu.getByUsuario(username);
 		
-		user.setNombre(request.getParameter("nombre"));
-		user.setApellido(request.getParameter("apellido"));
-		user.setEmail(request.getParameter("email"));
-		user.setCuil(request.getParameter("cuil"));
-		user.setRol(request.getParameter("rol"));
-		user.setEstado(request.getParameter("estado"));
+		sesion.setAttribute("UsuarioAModificar", usu);
 		
-		datauser.editarUsuario(user);
-		sesion.setAttribute("UsuarioAModificar", user); //ESTA BIEN ESTO PARA REESCRIBIR LAS VARIABLES DE SESSION O PUEDO TRAER LOS DATOS DE LA BASE DE DATOS DIRECTAMENTE Y MOSTRARLAS EN EL FORMULARIO??
-		sesion.setAttribute("mensajeEditarUsuario", "¡El usuario ha sido modificado correctamente!");
 		response.sendRedirect("editarUsuario.jsp");
 		
+		
+	
 	}
 
 	/**
