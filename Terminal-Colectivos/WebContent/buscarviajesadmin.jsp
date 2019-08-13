@@ -5,7 +5,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <jsp:include page="JSPFiles/includeimports.jsp" />  
-<title>Reservar Viaje</title>
+<title>Buscar Viaje</title>
 </head>
 <body>
 
@@ -13,9 +13,8 @@
  <%@ page import = "java.text.SimpleDateFormat" %>
  
 <% 
-
-   HttpSession sesion = request.getSession();
-   sesion.setAttribute("PlanViejo", plan); 
+ 
+  
 
    
 String origenViaje = (String) session.getAttribute("origenViaje");
@@ -48,10 +47,12 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
     ArrayList<Plan> planes = dplan.getViajesDia(origenViaje, destinoViaje, fechaViajeDate);
     Iterator<Plan> itr = planes.iterator();
     Plan plan = null;
+    
+    
 	%>
 
 
-
+  
 
 
 
@@ -100,47 +101,41 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 				   SimpleDateFormat sdfHoraSeparado = new SimpleDateFormat("HH:mm");
 				   SimpleDateFormat sdfFechaHoraJunto = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-				   String fecha = sdfFechaSeparado.format(plan.getFechaHora());
-				   String hora = sdfHoraSeparado.format(plan.getFechaHora());
+				   String fechaString = sdfFechaSeparado.format(plan.getFechaHora());
+				   String horaString = sdfHoraSeparado.format(plan.getFechaHora());
 				   String fechaHoraString = sdfFechaHoraJunto.format(plan.getFechaHora());
 				   
 				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
-
 			    %>
 			    
 			   <td> <%= plan.getColectivo().getEmpresa().getNombre() %> </td>
 			   <td><%= plan.getOrigen() %></td>
 			   <td> <%= plan.getDestino() %>  </td>
-			   <td> <%= fecha %> </td>
-			   <td> <%= hora %> </td>
+			   <td> <%= fechaString %> </td>
+			   <td> <%= horaString %> </td>
 			   <td> <%= plan.getColectivo().getTipo_colectivo() %> </td>
 			   <td> <%= plan.getPrecio() %> </td>
 			   <td>   
 			   <div class="row">
 			   		<div class="col-auto">
 					   <form action="RedireccionEditarPlanServlet" method="get">
-			
-<%-- 				   <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
-					   <input type="hidden" value=<%= fecha %> name="fechaString"/>
-					   <input type="hidden" value=<%= hora %> name="horaString"/>
-					    <input type="hidden" value=<%= plan.getRuta().getCod_ruta()  %> name="codRutaViajeString"/>
-		   			   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
- --%>					   
- 
+					  
+					   <input type="hidden" value=<%= fechaString %> name="fechaViajeString"/>
+					   <input type="hidden" value=<%= horaString %> name="horaViajeString"/>
+					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViajeString">
+					   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViajeString"/>
+
 					   <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button>
 			  		   </form> 
 			   		</div>
 			   		<div class="col-auto">
 					   <form action="EliminarPlanServlet" method="get">
-					
-					   <%-- <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
-					   <input type="hidden" value=<%= fecha %> name="fechaString"/>
-					   <input type="hidden" value=<%= hora %> name="horaString"/>
-					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta()  %> name="codRutaViajeString"/>
-		   			   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/> 
-		   			   <input type="hidden" value=<%= plan %> name="PlanViejo"/>--%>
-		   			   
-		   			    
+					   
+					   <input type="hidden" value=<%= fechaString %> name="fechaViajeString"/>
+					   <input type="hidden" value=<%= horaString %> name="horaViajeString"/>
+					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViajeString">
+					   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViajeString"/>
+					  			    
 		   			   
 					   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 					   </form>

@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -43,12 +44,14 @@ public class EditarPlanServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 
+
 		HttpSession sesion = request.getSession();
 		
-		String localidadPrincipal = "ROSARIO";
-
-		Plan planViejo = (Plan) sesion.getAttribute("PlanViejo");
 		
+		String localidadPrincipal = "ROSARIO";
+		
+		Plan planViejo = (Plan) sesion.getAttribute("PlanViejo"); 
+		DataPlan dplan = new DataPlan();
 		
 		/*
 		String fechaStringPlanViejo = request.getParameter("fechaStringPlanViejo");
@@ -78,7 +81,6 @@ public class EditarPlanServlet extends HttpServlet {
      
 
 		DataRuta drut = new DataRuta();
-		DataPlan dplan = new DataPlan();
 		DataColectivo dcol = new DataColectivo();
 		DataUsuario dchof = new DataUsuario();
 		
@@ -181,7 +183,7 @@ public class EditarPlanServlet extends HttpServlet {
 			sesion.setAttribute("mensajeRegistro", "OK"); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
 			sesion.setAttribute("planesModificados", planesModificados); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
 
-			
+			sesion.setAttribute("PlanViejo", planNuevo);
 		}
 		
 		

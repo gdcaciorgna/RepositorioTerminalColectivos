@@ -252,7 +252,7 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";} */
 			} 	
 			%>
 			
-			
+			<a href="buscarviajesadmin.jsp">Volver al buscador de viajes</a>
 			
            </div>
                  

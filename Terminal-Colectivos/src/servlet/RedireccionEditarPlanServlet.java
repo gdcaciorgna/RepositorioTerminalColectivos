@@ -37,7 +37,38 @@ public class RedireccionEditarPlanServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
+		
+		String fechaViajeString = request.getParameter("fechaViajeString");
+		String horaViajeString = request.getParameter("horaViajeString");
+		String codRutaViajeString = request.getParameter("codRutaViajeString");
+		String patenteColectivoViajeString = request.getParameter("patenteColectivoViajeString");
+		
+		String fechaHoraViajeString = fechaViajeString + " " + horaViajeString;
+		
+	    SimpleDateFormat formatoFechaHora=new SimpleDateFormat("dd/MM/yyyy HH:mm");  
+		
+	    Date fechaHoraViaje = new Date();
+		DataPlan dplan = new DataPlan();
 
+	    
+		try {
+		
+		fechaHoraViaje = formatoFechaHora.parse(fechaHoraViajeString);
+		
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}  
+		
+		int codRutaViaje = Integer.parseInt(codRutaViajeString);
+		
+		
+
+		
+		Plan planViejo = dplan.getByFechaHoraRutaPatente(fechaHoraViaje, codRutaViaje, patenteColectivoViajeString);
+		
+		sesion.setAttribute("PlanViejo", planViejo);
+		
 
 		
 	/*	String JuntosfechaHoraString = request.getParameter("fechaHoraString"); //Me gustaría traer la fecha y hora todo junto, pero el string sólo trae la fecha ¡?¡?¡?¡
@@ -46,7 +77,6 @@ public class RedireccionEditarPlanServlet extends HttpServlet {
 		String codRutaViajeString = request.getParameter("codRutaViajeString");
 		String patenteColectivoViaje = request.getParameter("patenteColectivoViaje");*/
 
-		Plan planViejo =   (Plan) sesion.getAttribute("PlanViejo");
 		
 		
 		
@@ -86,6 +116,8 @@ public class RedireccionEditarPlanServlet extends HttpServlet {
 
 		//FIN - SETEAR VALORES ORIGINALES (ANTES DE CAMBIAR)
 		
+		
+
 		
 		response.sendRedirect("plandeviaje.jsp");	
 		
