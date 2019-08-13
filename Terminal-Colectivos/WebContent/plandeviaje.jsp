@@ -17,6 +17,7 @@
 <% 
 
 	HttpSession sesion = request.getSession();
+    
 	Plan planViejo = (Plan) sesion.getAttribute("PlanViejo");
 	
 	SimpleDateFormat formatoFechaHora = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -206,7 +207,7 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";} */
                
                 
                <div class="form-group">
-                     <input type="submit" class="btnSubmit" value="Registrar nuevo plan" />
+                     <input type="submit" class="btnSubmit" value="Confirmar cambios" />
                  </div>
                  
      
@@ -252,7 +253,7 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";} */
 			} 	
 			%>
 			
-			<a href="buscarviajesadmin.jsp">Volver al buscador de viajes</a>
+			<div class="text-center"><a href="buscarviajesadmin.jsp">Volver al buscador de viajes</a></div>
 			
            </div>
                  

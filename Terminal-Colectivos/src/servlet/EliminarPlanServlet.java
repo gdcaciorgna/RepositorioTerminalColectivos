@@ -40,14 +40,14 @@ public class EliminarPlanServlet extends HttpServlet {
 
 	HttpSession sesion = request.getSession();
 		
-		String JuntosfechaHoraString = request.getParameter("fechaHoraString"); //Me gustaría traer la fecha y hora todo junto, pero el string sólo trae la fecha ¡?¡?¡?¡
-		String fechaString = request.getParameter("fechaString");
-		String horaString = request.getParameter("horaString");
+	
+		String fechaString = request.getParameter("fechaViajeString");
+		String horaString = request.getParameter("horaViajeString");
 		
 		String fechaHoraString = fechaString + " " + horaString;
 		
 		String codRutaViajeString = request.getParameter("codRutaViajeString");
-		String patenteColectivoViaje = request.getParameter("patenteColectivoViaje");
+		String patenteColectivoViaje = request.getParameter("patenteColectivoViajeString");
 		
 		DataPlan dplan = new DataPlan();
 		Plan plan = new Plan();
@@ -72,17 +72,19 @@ public class EliminarPlanServlet extends HttpServlet {
 		int planesEliminados = dplan.eliminarPlan(plan);
 		
 		//INICIO - LIMPIAR CAMPOS
-		sesion.setAttribute("origenViaje", null);
-		sesion.setAttribute("destinoViaje", null);
-		sesion.setAttribute("precioString", null);
-		sesion.setAttribute("usuarioChoferViaje", null);
-		sesion.setAttribute("patenteColectivoViaje", null);
-		sesion.setAttribute("fechaString", null);
-		sesion.setAttribute("horaString", null);
+		/*
+		 * sesion.setAttribute("origenViaje", null); sesion.setAttribute("destinoViaje",
+		 * null); sesion.setAttribute("precioString", null);
+		 * sesion.setAttribute("usuarioChoferViaje", null);
+		 * sesion.setAttribute("patenteColectivoViaje", null);
+		 * sesion.setAttribute("fechaString", null); sesion.setAttribute("horaString",
+		 * null);
+		 */
 		//FIN - LIMPIAR CAMPOS		
-		
-		sesion.setAttribute("planesEliminados", planesEliminados);
+		sesion.setAttribute("planesEliminados", planesEliminados); 
+		sesion.setAttribute("planesEditados", null);
 		response.sendRedirect("buscarviajesadmin.jsp");	
+		
 		
 
 

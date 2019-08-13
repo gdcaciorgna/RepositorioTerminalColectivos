@@ -13,13 +13,13 @@
  <%@ page import = "java.text.SimpleDateFormat" %>
  
 <% 
- 
+HttpSession sesion = request.getSession();
   
-
+sesion.setAttribute("mensajeRegistro", null);
    
-String origenViaje = (String) session.getAttribute("origenViaje");
-String destinoViaje = (String) session.getAttribute("destinoViaje");
-java.util.Date fechaViajeDate = (Date) session.getAttribute("fechaViaje");
+String origenViaje = (String) sesion.getAttribute("origenViaje");
+String destinoViaje = (String) sesion.getAttribute("destinoViaje");
+java.util.Date fechaViajeDate = (Date) sesion.getAttribute("fechaViaje");
 String fechaViajeString = "-";
 
 
@@ -117,7 +117,7 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			   <td> <%= plan.getPrecio() %> </td>
 			   <td>   
 			   <div class="row">
-			   		<div class="col-auto">
+			   		<div class="col">
 					   <form action="RedireccionEditarPlanServlet" method="get">
 					  
 					   <input type="hidden" value=<%= fechaString %> name="fechaViajeString"/>
@@ -128,7 +128,7 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 					   <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button>
 			  		   </form> 
 			   		</div>
-			   		<div class="col-auto">
+			   		<div class="col">
 					   <form action="EliminarPlanServlet" method="get">
 					   
 					   <input type="hidden" value=<%= fechaString %> name="fechaViajeString"/>
@@ -151,6 +151,16 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			</table>
 			 
 			</div>
+			<% Integer planesEditados = 0;%> 
+			<% planesEditados = (Integer) session.getAttribute("planesEditados");%>
+			<% if(session.getAttribute("planesEditados")!=null) { %>
+			<br>
+			<div class="alert alert-warning" role="alert">
+			Viajes editados: <%= planesEditados %>
+			</div> 
+			<%}%>
+			
+			
 			
 			<% Integer planesEliminados = 0;%> 
 			<% planesEliminados = (Integer) session.getAttribute("planesEliminados");%>

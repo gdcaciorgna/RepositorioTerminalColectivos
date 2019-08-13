@@ -46,7 +46,7 @@ public class EditarPlanServlet extends HttpServlet {
 
 
 		HttpSession sesion = request.getSession();
-		
+		sesion.setAttribute("mensajeRegistro", null);
 		
 		String localidadPrincipal = "ROSARIO";
 		
@@ -178,10 +178,11 @@ public class EditarPlanServlet extends HttpServlet {
 			planNuevo.setChofer(choferNuevo);
 						
 	
-			int planesModificados = dplan.editarPlan(planViejo, planNuevo);
+			int planesEditados = dplan.editarPlan(planViejo, planNuevo);
 			
 			sesion.setAttribute("mensajeRegistro", "OK"); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
-			sesion.setAttribute("planesModificados", planesModificados); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
+			sesion.setAttribute("planesEditados", planesEditados); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
+			sesion.setAttribute("planesEliminados", null);
 
 			sesion.setAttribute("PlanViejo", planNuevo);
 		}

@@ -218,9 +218,10 @@ if(precioString==null){precioString="";}
 			} 	
 			%>
 			
-			
+				<div class="text-center"><a href="buscarviajesadmin.jsp">Volver al buscador de viajes</a></div>
 			
            </div>
+                		
                  
                  
          </div>
