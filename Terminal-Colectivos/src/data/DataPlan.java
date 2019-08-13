@@ -297,7 +297,7 @@ public class DataPlan {
 		pstmt.setString(5, planNuevo.getChofer().getUsuario());
 		pstmt.setTimestamp(6, new Timestamp(planViejo.getFechaHora().getTime()));
 		pstmt.setString(7, planViejo.getColectivo().getPatente());
-		pstmt.setString(8, planViejo.getChofer().getUsuario()) ;
+		pstmt.setInt(8, planViejo.getRuta().getCod_ruta()) ;
 
 
 

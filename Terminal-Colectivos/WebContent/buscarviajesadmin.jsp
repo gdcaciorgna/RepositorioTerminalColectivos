@@ -13,6 +13,11 @@
  <%@ page import = "java.text.SimpleDateFormat" %>
  
 <% 
+
+   HttpSession sesion = request.getSession();
+   sesion.setAttribute("PlanViejo", plan); 
+
+   
 String origenViaje = (String) session.getAttribute("origenViaje");
 String destinoViaje = (String) session.getAttribute("destinoViaje");
 java.util.Date fechaViajeDate = (Date) session.getAttribute("fechaViaje");
@@ -115,24 +120,28 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			   		<div class="col-auto">
 					   <form action="RedireccionEditarPlanServlet" method="get">
 			
-					   <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
+<%-- 				   <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
 					   <input type="hidden" value=<%= fecha %> name="fechaString"/>
 					   <input type="hidden" value=<%= hora %> name="horaString"/>
-			
-					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta()  %> name="codRutaViajeString"/>
+					    <input type="hidden" value=<%= plan.getRuta().getCod_ruta()  %> name="codRutaViajeString"/>
 		   			   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
+ --%>					   
+ 
 					   <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button>
 			  		   </form> 
 			   		</div>
 			   		<div class="col-auto">
 					   <form action="EliminarPlanServlet" method="get">
 					
-					   <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
+					   <%-- <input type="hidden" value=<%= fechaHoraString %> name="fechaHoraString"/>
 					   <input type="hidden" value=<%= fecha %> name="fechaString"/>
 					   <input type="hidden" value=<%= hora %> name="horaString"/>
-					   
 					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta()  %> name="codRutaViajeString"/>
-		   			   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
+		   			   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/> 
+		   			   <input type="hidden" value=<%= plan %> name="PlanViejo"/>--%>
+		   			   
+		   			    
+		   			   
 					   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 					   </form>
 			   		</div>

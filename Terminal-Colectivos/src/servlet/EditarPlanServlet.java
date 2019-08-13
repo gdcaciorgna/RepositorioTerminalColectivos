@@ -47,18 +47,17 @@ public class EditarPlanServlet extends HttpServlet {
 		
 		String localidadPrincipal = "ROSARIO";
 
+		Plan planViejo = (Plan) sesion.getAttribute("PlanViejo");
+		
+		
+		/*
 		String fechaStringPlanViejo = request.getParameter("fechaStringPlanViejo");
 		String horaStringPlanViejo = request.getParameter("horaStringPlanViejo");
 		String origenPlanViejo = request.getParameter("origenPlanViejo");
 		String destinoPlanViejo = request.getParameter("destinoPlanViejo");
 		String patenteColectivoPlanViejo = request.getParameter("patenteColectivoPlanViejo");
-		
-		
 		Plan planViejo = new Plan();
-		
-
-		
-
+		*/
 		
 		String origenPlanNuevo = request.getParameter("origenPlanNuevo");
 		String destinoPlanNuevo = request.getParameter("destinoPlanNuevo");
@@ -69,12 +68,12 @@ public class EditarPlanServlet extends HttpServlet {
 		String patenteColectivoPlanNuevo = request.getParameter("patenteColectivoPlanNuevo");
 		
 		
-		String fechaHoraStringPlanViejo = fechaStringPlanViejo + " " + horaStringPlanViejo;
+//		String fechaHoraStringPlanViejo = fechaStringPlanViejo + " " + horaStringPlanViejo;
 		String fechaHoraStringPlanNuevo = fechaStringPlanNuevo + " " + horaStringPlanNuevo;
         
-        SimpleDateFormat formatoPlanViejo = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		SimpleDateFormat formatoPlanNuevo = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
+		
 	
      
 
@@ -87,7 +86,6 @@ public class EditarPlanServlet extends HttpServlet {
 		Plan planNuevo = new Plan();
 		
 		Ruta rutNuevo = new Ruta();
-		Ruta rutViejo = new Ruta();
 
 		Colectivo coleNuevo = new Colectivo();
 		Usuario choferNuevo = new Usuario();
@@ -99,13 +97,12 @@ public class EditarPlanServlet extends HttpServlet {
 		precioStringPlanNuevo = planl.cambiarSeparador(precioStringPlanNuevo);
 		
 		Date fechaHoraPlanNuevo = new Date();
-        Date fechaHoraPlanViejo = new Date();
 
 		
 		try {
 		   
 			fechaHoraPlanNuevo = formatoPlanNuevo.parse(fechaHoraStringPlanNuevo);
-	        fechaHoraPlanViejo = formatoPlanViejo.parse(fechaHoraStringPlanViejo);
+//	        fechaHoraPlanViejo = formatoPlanViejo.parse(fechaHoraStringPlanViejo);
 
 			
 		} catch (ParseException e) {
@@ -160,8 +157,8 @@ public class EditarPlanServlet extends HttpServlet {
 			
 			
 			
-			rutViejo = drut.getByOrigenDestino(origenPlanViejo, destinoPlanViejo);
-			planViejo = dplan.getByFechaHoraRutaPatente(fechaHoraPlanViejo, rutViejo.getCod_ruta(), patenteColectivoPlanViejo);
+	/*		rutViejo = drut.getByOrigenDestino(origenPlanViejo, destinoPlanViejo);
+			planViejo = dplan.getByFechaHoraRutaPatente(fechaHoraPlanViejo, rutViejo.getCod_ruta(), patenteColectivoPlanViejo);*/
 			
 			
 			planNuevo.setFechaHora(fechaHoraPlanNuevo); 

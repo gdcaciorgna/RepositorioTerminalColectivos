@@ -38,22 +38,26 @@ public class RedireccionEditarPlanServlet extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 
+
 		
-		String JuntosfechaHoraString = request.getParameter("fechaHoraString"); //Me gustaría traer la fecha y hora todo junto, pero el string sólo trae la fecha ¡?¡?¡?¡
+	/*	String JuntosfechaHoraString = request.getParameter("fechaHoraString"); //Me gustaría traer la fecha y hora todo junto, pero el string sólo trae la fecha ¡?¡?¡?¡
 		String fechaString = request.getParameter("fechaString");
 		String horaString = request.getParameter("horaString");
-		
-		String fechaHoraString = fechaString + " " + horaString;
-		
 		String codRutaViajeString = request.getParameter("codRutaViajeString");
-		String patenteColectivoViaje = request.getParameter("patenteColectivoViaje");
+		String patenteColectivoViaje = request.getParameter("patenteColectivoViaje");*/
 
+		Plan planViejo =   (Plan) sesion.getAttribute("PlanViejo");
+		
+		
+		
 
+		
+		/*
 		DataPlan dplan = new DataPlan();
-		Plan plan = new Plan();
 		
 		
-        SimpleDateFormat formatFechaHora1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		SimpleDateFormat formatFechaHora1 = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date fechaHora = new Date();
         try {
 			
@@ -65,22 +69,20 @@ public class RedireccionEditarPlanServlet extends HttpServlet {
 		}
         
         int cod_ruta = Integer.parseInt(codRutaViajeString);
-       
+		       
 		
-		plan = dplan.getByFechaHoraRutaPatente(fechaHora, cod_ruta, patenteColectivoViaje);
+		plan = dplan.getByFechaHoraRutaPatente(plan.get, cod_ruta, patenteColectivoViaje);
 		
         SimpleDateFormat formatFechaHora2 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         String fechaHoraString2 = formatFechaHora2.format(fechaHora);
+        
+        String origenPrueba = plan.getOrigen();
+        String destinoPrueba = plan.getDestino();*/
+        
 
 
 		//INICIO - SETEAR VALORES ORIGINALES (ANTES DE CAMBIAR)
-        sesion.setAttribute("origenPlanViejo", plan.getOrigen());
-		sesion.setAttribute("destinoPlanViejo", plan.getDestino());
-		sesion.setAttribute("fechaHoraStringPlanViejo", fechaHoraString2);
-		sesion.setAttribute("patenteColectivoPlanViejo", plan.getColectivo().getPatente());
-		sesion.setAttribute("usuarioChoferPlanViejo", plan.getChofer().getUsuario());
-		sesion.setAttribute("precioStringPlanViejo",String.valueOf(plan.getPrecio()));
-        
+		        
 
 		//FIN - SETEAR VALORES ORIGINALES (ANTES DE CAMBIAR)
 		

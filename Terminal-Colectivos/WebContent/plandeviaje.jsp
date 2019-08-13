@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +9,27 @@
 <title>Modificar Plan</title>
 </head>
 <body>
+<%@ page import = "data.DataPlan" %>
+<%@ page import = "java.util.*" %>
+<%@ page import = "entities.*" %>
+<%@ page import = "java.text.SimpleDateFormat" %>
+
 <% 
 
+	HttpSession sesion = request.getSession();
+	Plan planViejo = (Plan) sesion.getAttribute("PlanViejo");
+	
+	SimpleDateFormat formatoFechaHora = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+	SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
+	SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
 
+	String fechaHoraPlanViejo = formatoFechaHora.format(planViejo.getFechaHora());
+	String fechaPlanViejo = formatoFecha.format(planViejo.getFechaHora());
+	String horaPlanViejo = formatoHora.format(planViejo.getFechaHora());
+
+	
+	
+/* 
 String origenPlanViejo = (String) session.getAttribute("origenPlanViejo");
 String destinoPlanViejo = (String) session.getAttribute("destinoPlanViejo");
 String patenteColectivoPlanViejo = (String) session.getAttribute("patenteColectivoPlanViejo");
@@ -26,22 +45,19 @@ if(destinoPlanViejo==null){destinoPlanViejo="";}
 if(patenteColectivoPlanViejo==null){patenteColectivoPlanViejo="";}
 if(usuarioChoferPlanViejo==null){usuarioChoferPlanViejo="";}
 if(precioStringPlanViejo==null){precioStringPlanViejo="";}
-if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";}
+if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";} */
 
 
 
 %>
 
 
-<%@ page import = "data.DataPlan" %>
-<%@ page import = "java.util.*" %>
-<%@ page import = "entities.Plan" %>
-<%@ page import = "entities.Colectivo" %>
+
 
 
 <jsp:include page="JSPFiles/includemenu.jsp" />  
 
-<form action="EditarPlanServlet" method = "get">
+<form action="EditarPlanServlet" method = "post">
 <div class="container login-container">
 <div class="row">
     
@@ -51,12 +67,12 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";}
              <div class="alert alert-light" role="alert">
 			  <div class="text-center"><b>---------- Datos Actuales ----------</b></div> <br>
 			  <div class="text-justify">
-			  Fecha/Hora del plan: <b> <%= fechaHoraStringPlanViejo %> </b> <br>
-  			  Origen: <b><%= origenPlanViejo %></b> <br>
-  			  Destino: <b><%= destinoPlanViejo %></b> <br>
- 			  Colectivo: <b><%= patenteColectivoPlanViejo %></b> <br>
-			  Chofer: <b><%= usuarioChoferPlanViejo %></b> <br>
-			  Precio: <b><%= precioStringPlanViejo %></b>
+			  Fecha/Hora del plan: <b> <%= fechaHoraPlanViejo %> </b> <br>
+  			  Origen: <b><%= planViejo.getOrigen() %></b> <br>
+  			  Destino: <b><%= planViejo.getDestino() %></b> <br>
+ 			  Colectivo: <b><%= planViejo.getColectivo().getPatente() %></b> <br>
+			  Chofer: <b><%= planViejo.getChofer().getUsuario() %></b> <br>
+			  Precio: <b><%= planViejo.getPrecio() %></b>
 			  </div>
 			  </div>
              
@@ -106,7 +122,7 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";}
  	chofer= itr3.next();
 	%>
 		
-	<option <% if(chofer.getUsuario().equals(usuarioChoferPlanViejo)) { %> selected <% } %>> <%=chofer.getUsuario() %></option>
+	<option <% if(chofer.getUsuario().equals(planViejo.getChofer().getUsuario())) { %> selected <% } %>> <%=chofer.getUsuario() %></option>
 	<% } %>
       </select>
   	 </div> 
@@ -131,7 +147,7 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";}
  	colectivo= itr4.next();
 	%>
 		
-	<option <% if(patenteColectivoPlanViejo.equals(colectivo.getPatente())) {%> selected <% } %>> <%=colectivo.getPatente() %></option>
+	<option <% if(colectivo.getPatente().equals(planViejo.getColectivo().getPatente())) {%> selected <% } %>> <%=colectivo.getPatente() %></option>
 	<% } %>
     </select>
   	 </div> 
@@ -156,7 +172,7 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";}
     while(itr1.hasNext()){
  	loc = itr1.next();
 	%>
-	<option <% if(loc.getNombre().equals(origenPlanViejo)) { %> selected <% } %> > <%=loc.getNombre() %></option>
+	<option <% if(planViejo.getOrigen().equals(loc.getNombre())) { %> selected <% } %> > <%=loc.getNombre() %></option>
 	<% } %>
 
       
@@ -175,7 +191,7 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";}
     while(itr2.hasNext()){
  	loc = itr2.next();
 	%>
-	<option  <% if(loc.getNombre().equals(destinoPlanViejo)) {%> selected <%}%>><%=loc.getNombre() %></option>
+	<option  <% if(planViejo.getDestino().equals(loc.getNombre())) {%> selected <%}%>><%=loc.getNombre() %></option>
 	<% } %>
      </select>
 
@@ -184,7 +200,7 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";}
 	           		 <div class="input-group-prepend">
 					 <div class="input-group-text"><i class="fas fa-dollar-sign"></i></div>
 					 </div>
-                     <input  type="text" class="form-control" name="precioStringPlanNuevo" placeholder="Precio" <%if (!precioStringPlanViejo.equals("")) { %>  value= <%= precioStringPlanViejo %> <% } %>  required/>
+                     <input  type="text" class="form-control" name="precioStringPlanNuevo" placeholder="Precio" value= <%= planViejo.getPrecio() %>  required/>
                  </div>
                 
                
@@ -246,22 +262,39 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";}
     	 
 </div>
  
- <!-- INICIO - SEPARAR FECHA Y HORA | NO SE PQ NO ME DEJA PASAR EL STRING DE FECHAHORA COMPLETO --> 
-<% 
- String[] separador = fechaHoraStringPlanViejo.split(" ");
- String fechaStringPlanViejo = separador[0];
- String horaStringPlanViejo = separador[1];
- %>
- <!-- FIN - SEPARAR FECHA Y HORA --> 
+
+ 
+ 
  
 <!--  INICIO - DATOS DEL PLAN A MODIFICAR -->
-<input type="hidden" name="fechaStringPlanViejo" value= <%= fechaStringPlanViejo %> >
+<%-- <input type="hidden" name="fechaStringPlanViejo" value= <%= fechaStringPlanViejo %> >
 <input type="hidden" name="horaStringPlanViejo" value= <%= horaStringPlanViejo %> >
 <input type="hidden" name="origenPlanViejo" value= <%= origenPlanViejo %> >
 <input type="hidden" name="destinoPlanViejo" value= <%= destinoPlanViejo %> >
 <input type="hidden" name="patenteColectivoPlanViejo" value= <%= patenteColectivoPlanViejo %> >
+ --%>
+ 
 
-
+<%--  <%
+ Plan planViejo = new Plan();
+ DataPlan dplan = new DataPlan();
+ 
+ SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+ Date fechaDate = null;
+ try {
+     fechaDate = formato.parse(fecha);
+ } 
+ catch (ParseException ex) 
+ {
+     System.out.println(ex);
+ }
+ return fechaDate;
+ 
+ planViejo = dplan.getByFechaHoraRutaPatente(fechaHoraViaje, cod_ruta, patente);
+ 
+ %> --%>
+ 
+ 
 
 <!--  FIN - DATOS DEL PLAN A MODIFICAR -->
 
