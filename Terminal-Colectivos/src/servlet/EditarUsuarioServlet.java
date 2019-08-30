@@ -39,6 +39,13 @@ public class EditarUsuarioServlet extends HttpServlet {
 		DataUsuario datauser = new DataUsuario();
 		
 		sesion.setAttribute("mensajeEditarUsuario", null);
+		
+		String cuil = request.getParameter("cuil");
+		
+		if(cuil==null) 
+		{
+			cuil = ""; 
+		}
 
 		String username = request.getParameter("username");
 		
@@ -47,7 +54,7 @@ public class EditarUsuarioServlet extends HttpServlet {
 		user.setNombre(request.getParameter("nombre"));
 		user.setApellido(request.getParameter("apellido"));
 		user.setEmail(request.getParameter("email"));
-		user.setCuil(request.getParameter("cuil"));
+		user.setCuil(cuil);
 		user.setRol(request.getParameter("rol"));
 		user.setEstado(request.getParameter("estado"));
 		

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import entities.Colectivo;
 import entities.Empresa_Colectivo;
-import entities.Usuario;
 
 public class DataColectivo {
 	

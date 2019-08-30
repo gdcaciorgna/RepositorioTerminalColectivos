@@ -52,8 +52,8 @@ else {fechaViajeDate = new Date();}
             <div class="container" style=" margin-top: 2%; margin-bottom: 2%;  ">
 			 <div class="container">
 			        <div class="table-wrapper">
-			                    <span class="float-left"><h4>Listado de <b>Viajes</b></h2></span>
-			                    <span class="float-right"><h5><%=fechaViajeString %> | <%=origenViaje %> <i class="fas fa-chevron-circle-right"></i> <%= destinoViaje %> </h5></span>
+			                    <span class="float-left"><h4>Listado de <b>Viajes</b></h4></span>
+			                    <span class="float-right"><h5> <%=fechaViajeString %> | <%=origenViaje %> <i class="fas fa-chevron-circle-right"></i> <%= destinoViaje %> </h5></span>
 			        </div> 
 		     </div>
 			           
@@ -111,25 +111,6 @@ else {fechaViajeDate = new Date();}
 <jsp:include page="JSPFiles/includebuscadorviajes.jsp" />  
 </form>
 
-
-<!-- Este script se debería realizar en un archivo js diferente para poder reutilizarlo en otras ocasiones -->
-
-
-<script type="text/javascript">
-$('.form_date').datetimepicker({
-    language:  'es',
-    weekStart: 1,
-    todayBtn:  1,
-	autoclose: 1,
-	todayHighlight: 1,
-	startView: 2,
-	minView: 2,
-	forceParse: 0,
-	format: 'dd/mm/yyyy'
-
-});
-
-</script>
 </div>
 
 </div>

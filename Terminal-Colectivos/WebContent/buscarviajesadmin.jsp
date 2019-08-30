@@ -211,24 +211,8 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 
 
 
-<!-- Este script se debería realizar en un archivo js diferente para poder reutilizarlo en otras ocasiones -->
 
 
-<script type="text/javascript">
-$('.form_date').datetimepicker({
-    language:  'es',
-    weekStart: 1,
-    todayBtn:  1,
-	autoclose: 1,
-	todayHighlight: 1,
-	startView: 2,
-	minView: 2, 
-	forceParse: 0,
-	format: 'dd/mm/yyyy'
-
-});
-
-</script>
 
 
 </div>

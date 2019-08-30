@@ -36,14 +36,27 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		
 
 		String username = request.getParameter("username");
+		String nombre = request.getParameter("nombre");
+		String apellido = request.getParameter("apellido");
+		String email = request.getParameter("email");
+		String cuil = request.getParameter("cuil");
+		String rol = request.getParameter("rol");
+		String passwordActual = request.getParameter("passwordActual");
+		String passwordNuevo = request.getParameter("passwordNuevo");
+		String passwordNuevoRep = request.getParameter("passwordNuevoRep");
+		
+		
+		
+		if(cuil == null) {cuil = "";}
+		if(rol == null) {rol = "cliente";}
 		
 		user = datauser.getByUsuario(username);
 		
-		user.setNombre(request.getParameter("nombre"));
-		user.setApellido(request.getParameter("apellido"));
-		user.setEmail(request.getParameter("email"));
-		user.setCuil(request.getParameter("cuil"));
-		user.setRol(request.getParameter("rol"));
+		user.setNombre(nombre);
+		user.setApellido(apellido);
+		user.setEmail(email);
+		user.setCuil(cuil);
+		user.setRol(rol);
 		
 		datauser.editarUsuario(user);
 		HttpSession sesion = request.getSession();

@@ -21,15 +21,15 @@
 
 <!-- INICIO - REDIRECCION A LOGIN --> 
 <%@ page import = "entities.Usuario" %>
-<% Usuario usuario;%>
+<% Usuario usuarioActual;%>
  
 <%
 String username="s/usuario", estado="s/estado"; 
-usuario = (Usuario) session.getAttribute("Usuario");  
-if(usuario!=null) 
+usuarioActual = (Usuario) session.getAttribute("Usuario");  
+if(usuarioActual!=null) 
 {
-	username = usuario.getUsuario(); 
-	estado = usuario.getEstado(); 
+	username = usuarioActual.getUsuario(); 
+	estado = usuarioActual.getEstado(); 
 }
 
  if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
@@ -41,39 +41,44 @@ if(usuario!=null)
 %>
 <!-- FIN - REDIRECCION A LOGIN -->
 
+<div class="container login-container">
+<div class="row">
+    
+    <div class="col-sm">
+       <div class="login-form-1 center-block">
+		<h3>Editar datos de mi cuenta</h3>
 
-<div class="container-fluid">
-		<h1>Editar datos de mi cuenta</h1>
-		<div class="row">
-		<div class="col-6">
 			
 			
 			<!--  -->
 			
-			<form action="EditarUsuarioServlet" method="post">
+			<form action="EditarMiUsuarioServlet" method="post">
 			  
-			  <input type="hidden" name="username" class="form-control" value=<%= usuario.getUsuario() %> hidden>
+			  <input type="hidden" name="username" class="form-control" value=<%= usuarioActual.getUsuario() %> hidden>
 			  
 			  <div class="form-group">
 			    <label>Nombre</label>
-			    <input type="text" name="nombre" class="form-control" value=<%= usuario.getNombre() %>>
+			    <input type="text" name="nombre" class="form-control" value=<%= usuarioActual.getNombre() %>>
 			  </div>
 			  
 			  <div class="form-group">
 			    <label>Apellido</label>
-			    <input type="text" name="apellido" class="form-control" value=<%= usuario.getApellido() %>>
+			    <input type="text" name="apellido" class="form-control" value=<%= usuarioActual.getApellido() %>>
 			  </div>
 			  
 			  <div class="form-group">
 			    <label>Email</label>
-			    <input type="email" name="email" class="form-control" value=<%= usuario.getEmail() %>>
+			    <input type="email" name="email" class="form-control" value=<%= usuarioActual.getEmail() %>>
 			  </div>
 			  
+			  <% if(!usuarioActual.getRol().equals("cliente")) {%>
 			  <div class="form-group">
 			    <label>CUIL</label>
-			    <input type="text" name="cuil" class="form-control" value=<%= usuario.getCuil() %>>
+			    <input type="text" name="cuil" class="form-control" value=<%= usuarioActual.getCuil() %>>
 			  </div>
+			  <%} %>
 			  
+			  <% if(usuarioActual.getRol().equals("admin")) { %>
 			  <div class="form-group">
 			    <label>Rol</label>
 			    <select name="rol" class="form-control">
@@ -82,9 +87,33 @@ if(usuario!=null)
 			      <option value="cliente">Cliente</option>
 			    </select>
 			  </div>
+			  <% } %>
 			  
-			  <button type="submit" class="btn btn-primary">Editar</button>
+      
+			
+				<div class="form-group">
+			    <label>Contraseña Actual</label>
+			    <input type="password" name="passwordActual" class="form-control">
+			 	</div>
+			  
+			  	<div class="form-group">
+			    <label>Nueva Contraseña</label>
+			    <input type="password" name="passwordNuevo" class="form-control">
+			  	</div>
+			  
+			    <div class="form-group">
+			    <label>Repetir Contraseña</label>
+			    <input type="password" name="passwordNuevoRep" class="form-control">
+			    </div>
+				    
+			 
+			  
+			  
+		 
+			<button type="submit" class="btn btn-primary">Confirmar Cambios</button>
 			</form>
+			
+			
 			
 			
 			<div class="card border-danger mb-3">
@@ -106,6 +135,7 @@ if(usuario!=null)
 			  </div>
 		</div>
 		</div>
+</div>
 </div>
 
 <!-- Modal -->

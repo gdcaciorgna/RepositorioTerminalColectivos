@@ -10,24 +10,7 @@
 <body>
 <jsp:include page="JSPFiles/includemenu.jsp" />  
 <script type="text/javascript" src="JavascriptFiles/datepickerEs.js"></script>
-<div>
- <%@ page import = "entities.Usuario" %>
- <%
- 	Usuario usuario = (Usuario) session.getAttribute("Usuario"); 
-  String nomUsuario = null;
-  String rol  = null;
- if(usuario!=null)
- 	{ 
- 	nomUsuario = usuario.getUsuario();
- 	rol = usuario.getRol();
- 	}
- %>
-	Usuario: <%=nomUsuario%>
-	Rol: <%=rol%>
 
-
-
-</div>
 
 
 <br>
@@ -71,21 +54,6 @@
 
 <jsp:include page="JSPFiles/includefooter.jsp" />  
 
-<script type="text/javascript">
-$('.form_date').datetimepicker({
-    language:  'es',
-    weekStart: 1,
-    todayBtn:  1,
-	autoclose: 1,
-	todayHighlight: 1,
-	startView: 2,
-	minView: 2,
-	forceParse: 0,
-	format: 'dd/mm/yyyy'
-
-});
-
-</script>
 
 </body>
 </html>
