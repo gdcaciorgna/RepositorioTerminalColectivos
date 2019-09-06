@@ -30,7 +30,7 @@ public class EliminarUsuarioServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-HttpSession sesion = request.getSession();
+		HttpSession sesion = request.getSession();
 		
 		
 		String username =  request.getParameter("username");
@@ -42,6 +42,8 @@ HttpSession sesion = request.getSession();
 		
 		if(redirigidocomoadmin.equals("True"))
 		{vof = true;}
+		else 
+		{vof=false;}				
 		
 		
 		UsuariosControlers usuCon = new UsuariosControlers();
@@ -53,7 +55,7 @@ HttpSession sesion = request.getSession();
 		if(mensaje.equals("OK")) 
 		{
 			
-			if(vof = false) //verifica si es redirigido desde micuenta.jsp -> Cierra sesion y redirige a bajasatisfactoria.jsp
+			if(vof == false) //verifica si es redirigido desde micuenta.jsp -> Cierra sesion y redirige a bajasatisfactoria.jsp
 			{
 			sesion.setAttribute("Usuario", null);
 			sesion.invalidate(); //CERRAR SESION
@@ -70,7 +72,7 @@ HttpSession sesion = request.getSession();
 		
 		else
         	 {
-				sesion.setAttribute("errorEliminarUsuario", "Hay campos vacíos");
+				sesion.setAttribute("errorEliminarUsuario", "La contraseña ingresada no es correcta.");
 				response.sendRedirect("micuenta.jsp");
         	 }	}
 

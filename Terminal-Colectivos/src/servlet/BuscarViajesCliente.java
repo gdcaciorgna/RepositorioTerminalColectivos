@@ -50,7 +50,10 @@ public class BuscarViajesCliente extends HttpServlet {
         sesion.setAttribute("destinoViaje", destinoViaje);
         sesion.setAttribute("fechaViaje", fechaDate);
 
-                
+        
+		sesion.setAttribute("planesEliminados", null); 
+		sesion.setAttribute("planesEditados", null);
+        
     	response.sendRedirect("buscarviajescliente.jsp");	
     	}
 

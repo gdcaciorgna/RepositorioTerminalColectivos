@@ -47,7 +47,7 @@ if(usuario!=null)
                  </div>
                <% if(rol.equals("admin")) { %>
                   <div class="form-group">
-                     <input type="text" class="form-control" name="cuil" placeholder="Cuil" value=""  required/>
+                     <input type="text" class="form-control" name="cuil" placeholder="Cuil" value="" />
                  </div>
                
                <div class="form-group">

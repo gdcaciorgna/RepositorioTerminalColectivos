@@ -200,7 +200,10 @@ if(usuarioActual!=null)
         
         
        
-        <form name="formBorrarMiCuenta" action="EliminarUsuarioSevlet" method="post">
+        <form name="formBorrarMiCuenta" action="EliminarUsuarioServlet" method="post">
+        
+	 	<input type="hidden" name="username" class="form-control" value=<%= usuarioActual.getUsername() %> hidden>
+           <input type="hidden" value="False" name="redirigidocomoadmin"/>
         
         <div class="form-group">
                

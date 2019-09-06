@@ -81,7 +81,7 @@
    <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
 
    <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button></form> 
-   <form action="EliminarUsuarioSevlet" method="post">
+   <form action="EliminarUsuarioServlet" method="post">
    <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
    <input type="hidden" value=<%=usu.getPassword() %> name="password"/>
    <input type="hidden" value="True" name="redirigidocomoadmin"/>

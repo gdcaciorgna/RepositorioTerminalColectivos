@@ -50,8 +50,13 @@ public class BuscarViajesAdmin extends HttpServlet {
         sesion.setAttribute("origenViaje", origenViaje);
         sesion.setAttribute("destinoViaje", destinoViaje);
         
-                
+        
+        
+		sesion.setAttribute("planesEliminados", null); 
+		sesion.setAttribute("planesEditados", null);
+
     	response.sendRedirect("buscarviajesadmin.jsp");	
+    	
 
 	
 	}

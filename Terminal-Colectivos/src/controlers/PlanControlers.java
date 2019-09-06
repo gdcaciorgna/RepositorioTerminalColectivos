@@ -38,13 +38,17 @@ public class PlanControlers {
 		DataPlan dplan = new DataPlan();
 		Ruta rutNuevo = new Ruta();
 		
+		DataRuta drut = new DataRuta();
+		
+		rutNuevo = drut.getByOrigenDestino(origenPlan, destinoPlan);
+		
 		FechaControlers fechaCon = new FechaControlers();
 		PlanLogic planL = new PlanLogic();
 		
 		String fechaHoraStringPlanNuevo =  fechaCon.unirFechaHora(fechaStringPlan, horaStringPlan);
 		Date fechaHoraPlanNuevo = fechaCon.yyyyMMddhhmmToDate(fechaHoraStringPlanNuevo);
-	
-						
+					
+		
 		if(origenPlan.equals("Origen") || destinoPlan.equals("Destino") || fechaStringPlan=="" || horaStringPlan=="" || precioStringPlan=="" || patenteColectivoPlan.equals("Patente") || usuarioChoferPlan.equals("Chofer")) 
 		{
 			mensajeRegistro = "Error1"; //Se deben completar todos los campos

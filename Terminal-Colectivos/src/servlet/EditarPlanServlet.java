@@ -64,17 +64,19 @@ public class EditarPlanServlet extends HttpServlet {
 		planNuevo = planCon.getPlan(origenPlanNuevo, destinoPlanNuevo, fechaStringPlanNuevo, horaStringPlanNuevo, precioStringPlanNuevo, usuarioChoferPlanNuevo, patenteColectivoPlanNuevo);
 	
 		planesEditados = planCon.editarPlan(planViejo, planNuevo);
+
+		sesion.setAttribute("PlanViejo", planNuevo);
+		sesion.setAttribute("planesEditados", planesEditados); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
+		sesion.setAttribute("planesEliminados", null);
+
 		
 		}		
 			
 			
-			sesion.setAttribute("mensajeRegistro", mensajeRegistro); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
-			sesion.setAttribute("planesEditados", planesEditados); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
+		sesion.setAttribute("mensajeRegistro", mensajeRegistro); 
 			
-			sesion.setAttribute("planesEliminados", null);
-			sesion.setAttribute("PlanViejo", planNuevo);
 			
-			response.sendRedirect("plandeviaje.jsp");
+		response.sendRedirect("plandeviaje.jsp");
 	
 	}
 

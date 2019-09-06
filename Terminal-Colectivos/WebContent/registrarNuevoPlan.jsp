@@ -71,7 +71,7 @@ if(precioString==null){precioString="";}
              
                
             <div class="form-group">
-                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                <div class="input-group date form_date " data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy/mm/dd">
                    <div class="input-group-prepend">
 				   <div class="input-group-text"><i class="fas fa-calendar"></i></div>
 				   </div>
