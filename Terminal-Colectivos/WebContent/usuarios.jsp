@@ -63,7 +63,7 @@
 	   usu = itr.next();
     %>
    <th scope="row"><%= cont %></th>
-   <td> <%= usu.getUsuario() %> </td>
+   <td> <%= usu.getUsername() %> </td>
    <td> <%= usu.getRol() %> </td>
    <td> <%= usu.getEmail() %> </td>
    <td>
@@ -78,11 +78,11 @@
    <td>
    
    <form action="RedireccionEditarUsuarioSevlet" method="post">
-   <input type="hidden" value=<%=usu.getUsuario()%> name="username"/>
+   <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
 
    <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button></form> 
    <form action="BorrarCuentaServlet" method="post">
-   <input type="hidden" value=<%=usu.getUsuario()%> name="username"/>
+   <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
    <input type="hidden" value=<%=usu.getPassword() %> name="password"/>
    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></form>
    </td>

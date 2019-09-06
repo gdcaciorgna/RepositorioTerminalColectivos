@@ -1,7 +1,7 @@
 package entities;
 
 public class Usuario {
-	private String usuario;
+	private String username;
 	private String nombre;
 	private String apellido;
 	private String email;
@@ -18,12 +18,15 @@ public class Usuario {
 	public void setCuil(String cuil) {
 		this.cuil = cuil;
 	}
-	public String getUsuario() {
-		return usuario;
+	
+	
+	public String getUsername() {
+		return username;
 	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	public void setUsername(String username) {
+		this.username = username;
 	}
+	
 	public String getPassword() {
 		return password;
 	}

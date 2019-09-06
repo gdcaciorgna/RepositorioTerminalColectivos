@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.DataUsuario;
+import controlers.UsuariosControlers;
 import entities.Usuario;
 
 /**
@@ -34,33 +34,22 @@ public class LoginServlet extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 
-		Usuario usuario = new Usuario();
-		DataUsuario dusu = new DataUsuario();
 		
 
-        boolean r;
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
+        UsuariosControlers usuCon = new UsuariosControlers();
         
+        	
+        Usuario usu = usuCon.loginUsuario(username, password);
+    	
+    	if(usu.getUsername()!=null)
+    	{
         
-        usuario.setUsuario((username));
-        usuario.setPassword(password);
-        
-       
-        
-        r= dusu.validarUsuarioyPassword(usuario);
- 
-        if(r==true)
-        {
-        	usuario = dusu.getByUsuario(username);
-            
-            String txtEstado = usuario.getEstado();
-        	sesion.setAttribute("usuario", username);
-        	sesion.setAttribute("rol", usuario.getRol());
-        	sesion.setAttribute("estado", txtEstado);
-        	sesion.setAttribute("Usuario", usuario);
-        	response.sendRedirect("index.jsp");	
+    	sesion.setAttribute("Usuario", usu);
+    	
+    	response.sendRedirect("index.jsp");	
 
             //redirijo a página con información de login exitoso
         	
@@ -68,7 +57,8 @@ public class LoginServlet extends HttpServlet {
     	 else 
     	 { 
  		 request.getSession().setAttribute("errorLogin", "Usuario y/o contraseña incorrecta");	
-		 response.sendRedirect("login.jsp");	
+		 
+ 		 response.sendRedirect("login.jsp");	
     	 }	
     		 	
     }				    

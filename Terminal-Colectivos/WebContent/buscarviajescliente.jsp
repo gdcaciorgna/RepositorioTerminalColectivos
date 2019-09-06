@@ -1,3 +1,4 @@
+<%@page import="controlers.FechaControlers"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -12,10 +13,13 @@
  <%@ page import = "java.text.SimpleDateFormat" %>
 
 <% 
-String origenViaje = (String) session.getAttribute("origenViaje");
-String destinoViaje = (String) session.getAttribute("destinoViaje");
-java.util.Date fechaViajeDate = (Date) session.getAttribute("fechaViaje");
+HttpSession sesion = request.getSession();
+
+String origenViaje = (String) sesion.getAttribute("origenViaje");
+String destinoViaje = (String) sesion.getAttribute("destinoViaje");
+java.util.Date fechaViajeDate = (Date) sesion.getAttribute("fechaViaje");
 String fechaViajeString = "-";
+FechaControlers fCon = new FechaControlers();
 
 
 if(origenViaje==null){origenViaje = "Cualquiera";}
@@ -23,8 +27,7 @@ if(destinoViaje==null){destinoViaje = "Cualquiera";}
 
 if(fechaViajeDate !=null)
 {
-	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
-	fechaViajeString = sdf1.format(fechaViajeDate);
+	fechaViajeString = fCon.dateToddMMyyyy(fechaViajeDate);
 }
 else {fechaViajeDate = new Date();}
 
@@ -74,19 +77,18 @@ else {fechaViajeDate = new Date();}
 			   while(itr.hasNext()){
 				   plan = itr.next();
 				   
-				   // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
+				// INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
 					 
-				   SimpleDateFormat sdfFechaSeparado = new SimpleDateFormat("dd/MM/yyyy");
-				   SimpleDateFormat sdfHoraSeparado = new SimpleDateFormat("HH:mm");
-
-				   String fecha = sdfFechaSeparado.format(plan.getFechaHora());
-				   String hora = sdfHoraSeparado.format(plan.getFechaHora());
+				   String fechaString = fCon.dateToddMMyyyy(plan.getFechaHora());
+				   String horaString = fCon.dateTohhmm(plan.getFechaHora());
+				   String fechaHoraString = fCon.dateToddMMyyyyhhmm(plan.getFechaHora());
+				   				   
 				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
 				   
 			    %>
 			   <td> <%= plan.getColectivo().getEmpresa().getNombre() %> </td>
-			   <td> <%= fecha %> </td>
-			   <td> <%= hora %> </td>
+			   <td> <%= fechaString %> </td>
+			   <td> <%= horaString %> </td>
 			   <td> <%= plan.getColectivo().getTipo_colectivo() %> </td>
 			   <td> <%= plan.getPrecio() %> </td>
 			   	   

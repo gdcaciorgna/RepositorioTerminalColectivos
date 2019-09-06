@@ -3,16 +3,15 @@ package data;
 import java.sql.*;
 import java.util.ArrayList;
 
-import entities.Localidad;
 import entities.Usuario;
 
 
 
 
-public class DataUsuario implements Validar 
+public class DataUsuario 
 {
 	
-	public Usuario getByUsuario(String usu) {
+	public Usuario getByUsername(String usu) {
 		Usuario usuario = null;
 		String sql = "select * from usuarios where usuario=?";
 		
@@ -47,7 +46,7 @@ public class DataUsuario implements Validar
 	}
 	
 
-	@Override
+
 	public boolean validarUsuarioyPassword(Usuario usuario, String password) {
 		boolean r = false;
 		ResultSet rs = null;
@@ -57,7 +56,7 @@ public class DataUsuario implements Validar
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usuario.getUsuario());
+			pstmt.setString(1, usuario.getUsername());
 			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
 			
@@ -86,8 +85,8 @@ public class DataUsuario implements Validar
 		
 	}
 	
-	@Override
-	public boolean validarUsuarioyPassword(Usuario usuario) {
+	
+	public boolean validarUsuarioyPassword(String username, String password) {
 		boolean r=false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -96,8 +95,8 @@ public class DataUsuario implements Validar
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usuario.getUsuario());
-			pstmt.setString(2, usuario.getPassword());
+			pstmt.setString(1, username);
+			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
 			
 			if(rs!=null && rs.next())
@@ -125,7 +124,7 @@ public class DataUsuario implements Validar
 		
 	}
 	
-	public boolean validarUsuarioInexistente (Usuario usuario) {
+	public boolean validarUsuarioInexistente (String username) {
 		boolean r=true;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -134,7 +133,7 @@ public class DataUsuario implements Validar
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, usuario.getUsuario());
+			pstmt.setString(1, username);
 			
 			rs = pstmt.executeQuery();
 			
@@ -173,7 +172,7 @@ public class DataUsuario implements Validar
 		{
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
 		
-			pstmt.setString(1, usuario.getUsuario());
+			pstmt.setString(1, usuario.getUsername());
 			
 			filasAfectadas = pstmt.executeUpdate();			
 			
@@ -245,7 +244,7 @@ public class DataUsuario implements Validar
 	{
 		Usuario usuario = new Usuario();
 		try {
-			usuario.setUsuario(rs.getString("usuario"));
+			usuario.setUsername(rs.getString("usuario"));
 			usuario.setNombre(rs.getString("nombre"));
 			usuario.setApellido(rs.getString("apellido"));
 			usuario.setRol(rs.getString("rol"));
@@ -283,7 +282,7 @@ public class DataUsuario implements Validar
 		pstmt.setString(4, usuario.getCuil());
 		pstmt.setString(5, usuario.getRol());
 		pstmt.setString(6, usuario.getEstado());
-		pstmt.setString(7, usuario.getUsuario());
+		pstmt.setString(7, usuario.getUsername());
 	    pstmt.executeUpdate();
 		
 		
@@ -313,7 +312,7 @@ public class DataUsuario implements Validar
 		pstmt.setString(3, usuario.getEmail());
 		pstmt.setString(4, usuario.getCuil());
 		pstmt.setString(5, usuario.getRol());
-		pstmt.setString(6, usuario.getUsuario());
+		pstmt.setString(6, usuario.getUsername());
 		pstmt.setString(7, usuario.getPassword());
 		pstmt.setString(8, "activo");
 		

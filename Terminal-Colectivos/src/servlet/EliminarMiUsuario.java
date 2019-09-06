@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,20 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.DataUsuario;
-import entities.Usuario;
+import controlers.UsuariosControlers;
 
 /**
- * Servlet implementation class BorrarCuentaServlet
+ * Servlet implementation class EliminarMiUsuario
  */
-@WebServlet("/BorrarCuentaServlet")
-public class BorrarCuentaServlet extends HttpServlet {
+@WebServlet("/EliminarMiUsuario")
+public class EliminarMiUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BorrarCuentaServlet() {
+    public EliminarMiUsuario() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,38 +30,22 @@ public class BorrarCuentaServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession sesion = request.getSession();
-
 		
-		Usuario usu;
-		DataUsuario dusu = new DataUsuario();
-		boolean testPassword;
+		
+		HttpSession sesion = request.getSession();
 		
 		
 		String username =  request.getParameter("username");
 		String password = request.getParameter("password");
 		
 		
-		usu = dusu.getByUsuario(username);
+		UsuariosControlers usuCon = new UsuariosControlers();
 		
-		testPassword= dusu.validarUsuarioyPassword(usu,password);
-		
-		if(testPassword) 
+		if(usuCon.eliminarMiUsuario(username, password))
 		{
-			
-
-			Integer filasAfectadas = dusu.eliminarUsuario(usu);
-			String url = request.getHeader("Referer"); //Obtiene el URL de la página que llamó al servlet (String)
-			if(url.contains("micuenta")) 
-			{
 			sesion.setAttribute("Usuario", null);
 			sesion.invalidate(); //CERRAR SESION
-			response.sendRedirect("bajasatisfactoria.jsp");		
-			} else if(url.contains("usuarios")) 
-			{
-			sesion.setAttribute("UsuariosAfectados", filasAfectadas);
-			response.sendRedirect("usuarios.jsp");	
-			}
+			response.sendRedirect("bajasatisfactoria.jsp");					
 
 		}
         	 else 
@@ -79,16 +61,13 @@ public class BorrarCuentaServlet extends HttpServlet {
  		        	{
 	 		        sesion.setAttribute("errorEliminarUsuario", "Contraseña incorrecta");
  		        	}
+        		 
     		 response.sendRedirect("micuenta.jsp");	
         		 
         		 
 
-        	 }				    
+        	 }
 	}
-		
-	
- 
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

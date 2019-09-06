@@ -65,11 +65,11 @@ if(usuario!=null)
                <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Registrarse" />
                  </div>
-              		<% String errorRegistro = (String)session.getAttribute("errorRegistro");%>
-			<% if(session.getAttribute("errorRegistro")!=null) { %>
+              		<% String mensajeRegistro = (String)session.getAttribute("mensajeRegistro");%>
+			<% if(session.getAttribute("mensajeRegistro")!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Error: <%= errorRegistro %>
+			Error: <%= mensajeRegistro %>
 			</div> 
 			<%}%>
 			  

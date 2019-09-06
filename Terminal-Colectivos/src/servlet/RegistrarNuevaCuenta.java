@@ -7,8 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import data.DataUsuario;
-import entities.Usuario;
+import javax.servlet.http.HttpSession;
+
+import controlers.UsuariosControlers;
 
 /**
  * Servlet implementation class RegistrarNuevaCuenta
@@ -30,66 +31,56 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
-
-		Usuario usuario = new Usuario();
-		DataUsuario dusu = new DataUsuario();
+		
+		HttpSession sesion = request.getSession();	
 
 		
-		String passrep= request.getParameter("passwordrep");
 		String username = request.getParameter("usuario");
+		String password = request.getParameter("password");
+		String passwordrep= request.getParameter("passwordrep");
+		String nombre = request.getParameter("nombre");
+		String apellido = request.getParameter("apellido");
+		String email = request.getParameter("email");
+		String cuil = request.getParameter("cuil");
+		String rol = request.getParameter("rol");
+		
+		String mensajeRegistro;
+		
+		UsuariosControlers usuCon = new UsuariosControlers(); 
+		
+		mensajeRegistro = usuCon.getMensajeRegistro(username, password, passwordrep);
+		
+			if(mensajeRegistro.equals("Error1")) 
+			{
+				sesion.setAttribute("mensajeRegistro", "El nombre de usuario esta en uso");
+				response.sendRedirect("registro.jsp");
+			}
+			
+			else if(mensajeRegistro.equals("Error2")) 
+			{
+				sesion.setAttribute("mensajeRegistro", "La contraseña debe contener 8 caracteres como minimo");
+				response.sendRedirect("registro.jsp");
+			}
+			
+			else if(mensajeRegistro.equals("Error3")) 
+			{
+				sesion.setAttribute("mensajeRegistro", "Las contraseñas no coinciden");
+				response.sendRedirect("registro.jsp");
+			}
+			
+			else if(mensajeRegistro.equals("OK")) 
+			{
+				usuCon.setUsuario(username, password, nombre, apellido, email, cuil, rol);
+		 		request.getSession().setAttribute("registroExitoso", "Te has registrado exitosamente!");	
+		 		response.sendRedirect("login.jsp");
+	
+			}
 		
 	
-	   boolean r=false;
-		usuario.setUsuario((username));
-		usuario.setPassword(request.getParameter("password"));
-		
-		if((dusu.validarUsuarioInexistente(usuario) == false)) {
-			
-			
-			 request.getSession().setAttribute("errorRegistro", "El nombre de usuario esta en uso");	
-			 
-			 }
-		
-			
-			 else if(usuario.getPassword().length()<8)
-       	 { 
-	 		 request.getSession().setAttribute("errorRegistro", "La contraseña debe contener 8 caracteres como minimo");	
-   		 	
-   		
-       	 }		
-			
-					 	else if(!usuario.getPassword().equals(passrep)) 
-			    	 { 
-				 		 request.getSession().setAttribute("errorRegistro", "Las contraseñas no coinciden");	
-			   		 
-			   		
-			       	 }	
-			
-								
-								else 
-						   	 { 
-									
-									usuario.setNombre(request.getParameter("nombre")); 
-									usuario.setApellido(request.getParameter("apellido")); 
-									usuario.setEmail(request.getParameter("email"));
-									usuario.setCuil(request.getParameter("cuil"));
-									usuario.setRol(request.getParameter("rol"));
-									
-									
-									dusu.ingresarUsuario( usuario);
-								
-							 		request.getSession().setAttribute("registroExitoso", "Te has registrado exitosamente!");	
-									
-									r=true;
-								}
-		if (r==true) {
-			response.sendRedirect("login.jsp");
 		}
-		else {response.sendRedirect("registro.jsp");	}
-	    
-								
-   	 }	
 		
+		
+	
 	
 	
 

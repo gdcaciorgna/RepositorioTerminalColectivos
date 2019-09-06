@@ -1,3 +1,4 @@
+<%@page import="controlers.FechaControlers"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -11,14 +12,20 @@
 <body>
 <!-- INICIO - REDIRECCION A LOGIN --> 
 <%@ page import = "entities.Usuario" %>
-<% Usuario usuario;%>
+<%
+Usuario usuario;
+%>
+ 
+ 
+ <!-- INICIO - REDIRECCION A LOGIN -->  
  
 <%
 String username="s/usuario", estado="s/estado"; 
 usuario = (Usuario) session.getAttribute("Usuario");  
+
 if(usuario!=null) 
 {
-	username = usuario.getUsuario(); 
+	username = usuario.getUsername(); 
 	estado = usuario.getEstado(); 
 }
 
@@ -29,7 +36,7 @@ if(usuario!=null)
 	response.sendRedirect(sitioweb+"login.jsp"); 
 	} 
 %>
-<!-- FIN - REDIRECCION A LOGIN -->
+<!-- FIN - REDIRECCION A LOGIN -->  
 
 <%@ page import = "data.DataPlan" %>
 <%@ page import = "java.util.*" %>
@@ -39,38 +46,20 @@ if(usuario!=null)
 <% 
 
 	HttpSession sesion = request.getSession();
+	FechaControlers fCon = new FechaControlers();
+
     
 	Plan planViejo = (Plan) sesion.getAttribute("PlanViejo");
 	
-	SimpleDateFormat formatoFechaHora = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-	SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
-	SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
-
-	String fechaHoraPlanViejo = formatoFechaHora.format(planViejo.getFechaHora());
-	String fechaPlanViejo = formatoFecha.format(planViejo.getFechaHora());
-	String horaPlanViejo = formatoHora.format(planViejo.getFechaHora());
+	 // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
+	 
+	   String fechaString = fCon.dateToddMMyyyy(planViejo.getFechaHora());
+	   String horaString = fCon.dateTohhmm(planViejo.getFechaHora());
+	   String fechaHoraString = fCon.dateToddMMyyyyhhmm(planViejo.getFechaHora());
+	   				   
+	   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
 
 	
-	
-/* 
-String origenPlanViejo = (String) session.getAttribute("origenPlanViejo");
-String destinoPlanViejo = (String) session.getAttribute("destinoPlanViejo");
-String patenteColectivoPlanViejo = (String) session.getAttribute("patenteColectivoPlanViejo");
-String usuarioChoferPlanViejo = (String) session.getAttribute("usuarioChoferPlanViejo");
-String precioStringPlanViejo = (String) session.getAttribute("precioStringPlanViejo");
-String fechaHoraStringPlanViejo =  (String) session.getAttribute("fechaHoraStringPlanViejo");
-
-
-
-
-if(origenPlanViejo==null){origenPlanViejo="";}
-if(destinoPlanViejo==null){destinoPlanViejo="";}
-if(patenteColectivoPlanViejo==null){patenteColectivoPlanViejo="";}
-if(usuarioChoferPlanViejo==null){usuarioChoferPlanViejo="";}
-if(precioStringPlanViejo==null){precioStringPlanViejo="";}
-if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";} */
-
-
 
 %>
 
@@ -90,11 +79,11 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";} */
              <div class="alert alert-light" role="alert">
 			  <div class="text-center"><b>---------- Datos Actuales ----------</b></div> <br>
 			  <div class="text-justify">
-			  Fecha/Hora del plan: <b> <%= fechaHoraPlanViejo %> </b> <br>
+			  Fecha/Hora del plan: <b> <%= fechaHoraString %> </b> <br>
   			  Origen: <b><%= planViejo.getOrigen() %></b> <br>
   			  Destino: <b><%= planViejo.getDestino() %></b> <br>
  			  Colectivo: <b><%= planViejo.getColectivo().getPatente() %></b> <br>
-			  Chofer: <b><%= planViejo.getChofer().getUsuario() %></b> <br>
+			  Chofer: <b><%= planViejo.getChofer().getUsername() %></b> <br>
 			  Precio: <b><%= planViejo.getPrecio() %></b>
 			  </div>
 			  </div>
@@ -145,7 +134,7 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";} */
  	chofer= itr3.next();
 	%>
 		
-	<option <% if(chofer.getUsuario().equals(planViejo.getChofer().getUsuario())) { %> selected <% } %>> <%=chofer.getUsuario() %></option>
+	<option <% if(chofer.getUsername().equals(planViejo.getChofer().getUsername())) { %> selected <% } %>> <%=chofer.getUsername() %></option>
 	<% } %>
       </select>
   	 </div> 
@@ -285,41 +274,6 @@ if(fechaHoraStringPlanViejo==null){fechaHoraStringPlanViejo="";} */
     	 
 </div>
  
-
- 
- 
- 
-<!--  INICIO - DATOS DEL PLAN A MODIFICAR -->
-<%-- <input type="hidden" name="fechaStringPlanViejo" value= <%= fechaStringPlanViejo %> >
-<input type="hidden" name="horaStringPlanViejo" value= <%= horaStringPlanViejo %> >
-<input type="hidden" name="origenPlanViejo" value= <%= origenPlanViejo %> >
-<input type="hidden" name="destinoPlanViejo" value= <%= destinoPlanViejo %> >
-<input type="hidden" name="patenteColectivoPlanViejo" value= <%= patenteColectivoPlanViejo %> >
- --%>
- 
-
-<%--  <%
- Plan planViejo = new Plan();
- DataPlan dplan = new DataPlan();
- 
- SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm");
- Date fechaDate = null;
- try {
-     fechaDate = formato.parse(fecha);
- } 
- catch (ParseException ex) 
- {
-     System.out.println(ex);
- }
- return fechaDate;
- 
- planViejo = dplan.getByFechaHoraRutaPatente(fechaHoraViaje, cod_ruta, patente);
- 
- %> --%>
- 
- 
-
-<!--  FIN - DATOS DEL PLAN A MODIFICAR -->
 
 
  </form>

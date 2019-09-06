@@ -12,8 +12,6 @@
 
 <title>Mi Cuenta</title>
 
-
-
 </head>
 <body>
 <jsp:include page="JSPFiles/includemenu.jsp" />  
@@ -28,7 +26,7 @@ String username="s/usuario", estado="s/estado";
 usuarioActual = (Usuario) session.getAttribute("Usuario");  
 if(usuarioActual!=null) 
 {
-	username = usuarioActual.getUsuario(); 
+	username = usuarioActual.getUsername(); 
 	estado = usuarioActual.getEstado(); 
 }
 
@@ -54,7 +52,7 @@ if(usuarioActual!=null)
 			
 			<form action="EditarMiUsuarioServlet" method="post">
 			  
-			  <input type="hidden" name="username" class="form-control" value=<%= usuarioActual.getUsuario() %> hidden>
+			  <input type="hidden" name="username" class="form-control" value=<%= usuarioActual.getUsername() %> hidden>
 			  
 			  <div class="form-group">
 			    <label>Nombre</label>
@@ -89,9 +87,12 @@ if(usuarioActual!=null)
 			  </div>
 			  <% } %>
 			  
-      
+			<button type="submit" class="btn btn-primary">Confirmar Cambios</button>
 			
-				<div class="form-group">
+			</form>
+			
+			
+				<!-- <div class="form-group">
 			    <label>Contraseña Actual</label>
 			    <input type="password" name="passwordActual" class="form-control">
 			 	</div>
@@ -104,19 +105,32 @@ if(usuarioActual!=null)
 			    <div class="form-group">
 			    <label>Repetir Contraseña</label>
 			    <input type="password" name="passwordNuevoRep" class="form-control">
-			    </div>
-				    
-			 
-			  
-			  
-		 
-			<button type="submit" class="btn btn-primary">Confirmar Cambios</button>
-			</form>
+			    </div>  
+
+				<button type="submit" class="btn btn-primary">Confirmar cambio de contraseña</button>  -->
 			
 			
+			<!-- INICIO - Botón - CAMBIAR CONTRASEÑA -->
+			<div class="card border-warning mb-3">
+			  <div class="card-header">Modificar Contraseña</div>
+			  <div class="card-body text-warning">
+			    	
+			        <button type="button" class="btn pull-right btn-warning btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter2">Modificar Contrasaeña</button>
+			    		<br>
+			    		<% String errorModificarPassword = (String)session.getAttribute("errorModificarPassword");%>
+						<% if(errorModificarPassword != null) { %>      
+			   			<div class="alert alert-warning" role="alert">
+						Error: <%= errorModificarPassword %>
+						</div> 
+						<% } %>
+						
+				</div>
+			  </div>
+			<!-- FIN - Botón - CAMBIAR CONTRASEÑA -->
 			
 			
-			<div class="card border-danger mb-3">
+			<!-- INICIO - Botón - ELIMINAR CUENTA -->
+			 <div class="card border-danger mb-3">
 			  <div class="card-header">Eliminar Cuenta</div>
 			  <div class="card-body text-danger">
 			    <h5 class="card-title">¡Cuidado!</h5>
@@ -133,12 +147,64 @@ if(usuarioActual!=null)
 						
 				</div>
 			  </div>
+			  <!--FIN - Botón - ELIMINAR CUENTA -->
+
 		</div>
 		</div>
 </div>
 </div>
 
-<!-- Modal -->
+  <!-- INICIO MODAL - MODIFICAR CONTRASEÑA -->
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter2Title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modificar Contraseña</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        
+       
+        <form name="formBorrarMiCuenta" action="EliminarMiUsuario" method="post">
+        <div class="form-group">
+	    <label>Contraseña Actual</label>
+	    <input type="password" name="passwordActual" class="form-control">
+	 	</div>
+	  
+	  	<div class="form-group">
+	    <label>Nueva Contraseña</label>
+	    <input type="password" name="password" class="form-control">
+	  	</div>
+	  
+	    <div class="form-group">
+	    <label>Repetir Contraseña</label>
+	    <input type="password" name="passwordRep" class="form-control">
+	    </div> 
+	    <input type="hidden" name="username" value=<%= username %> /> 
+	    
+	     
+	    </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>
+            <input type="submit" class="btn pull-right btn-warning" value="Modificar Contraseña" onClick="validarIgualdadPassword()"/>
+            
+            <div id="mensajeContraseniasNoCoinciden" class="alert alert-warning" role="alert"></div> 
+            
+            
+		</div> 
+    
+
+      </div>
+    </div>
+  </div>
+  <!-- FIN MODAL - MODIFICAR CONTRASEÑA -->
+  
+  <!-- INICIO MODAL - ELIMINAR CUENTA -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -180,6 +246,9 @@ if(usuarioActual!=null)
       </div>
     </div>
   </div>
+  <!-- FIN MODAL - ELIMINAR CUENTA -->
+ 
+
 
 <jsp:include page="JSPFiles/includefooter.jsp" />  
 

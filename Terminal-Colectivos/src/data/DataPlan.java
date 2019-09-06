@@ -241,7 +241,7 @@ public class DataPlan {
 		String usuario_chofer = rs.getString("pla.usuario_chofer");
 		
 		ruta = drut.getByRuta(cod_ruta);
-		chofer = dusu.getByUsuario(usuario_chofer);
+		chofer = dusu.getByUsername(usuario_chofer);
 		colectivo = dcol.getByPatente(patente);
 		
 		
@@ -294,7 +294,7 @@ public class DataPlan {
 		pstmt.setString(2, planNuevo.getColectivo().getPatente());
 		pstmt.setInt(3, planNuevo.getRuta().getCod_ruta());
 		pstmt.setDouble(4, planNuevo.getPrecio());
-		pstmt.setString(5, planNuevo.getChofer().getUsuario());
+		pstmt.setString(5, planNuevo.getChofer().getUsername());
 		pstmt.setTimestamp(6, new Timestamp(planViejo.getFechaHora().getTime()));
 		pstmt.setString(7, planViejo.getColectivo().getPatente());
 		pstmt.setInt(8, planViejo.getRuta().getCod_ruta()) ;
@@ -377,10 +377,11 @@ public class DataPlan {
 	
 	
 	
-	public void addPlan( Plan nuevoPlan)
+	public int addPlan( Plan nuevoPlan)
 	{
 	PreparedStatement pstmt = null;
-
+	
+	int filasAgregadas = 0;
 	
 	
 	String sql = "INSERT INTO  planes  (fecha_hora_plan , patente , cod_ruta, precio, usuario_chofer )VALUES (?,?,?,?,?) ";
@@ -393,15 +394,15 @@ public class DataPlan {
 		pstmt.setString(2, nuevoPlan.getColectivo().getPatente());
 		pstmt.setInt(3,nuevoPlan.getRuta().getCod_ruta());
 		pstmt.setDouble(4, nuevoPlan.getPrecio());
-		pstmt.setString(5, nuevoPlan.getChofer().getUsuario());
+		pstmt.setString(5, nuevoPlan.getChofer().getUsername());
 
 
 
-	    pstmt.executeUpdate();
+	    filasAgregadas = pstmt.executeUpdate();
 	    
 	    
 		
-}catch(SQLException e) {
+	}catch(SQLException e) {
 	e.printStackTrace();
 	}
 	
@@ -416,7 +417,12 @@ public class DataPlan {
 			
 			
 		} catch(SQLException e) {e.printStackTrace();}
+		
+		
 	}	
+	
+	return filasAgregadas;
+	
 	}
 	
 	public boolean validarPlanSinExistencia(Date fechaHoraViaje, int cod_ruta, String patente) 

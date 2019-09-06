@@ -20,7 +20,7 @@ String username="s/usuario", estado="s/estado";
 usuario = (Usuario) session.getAttribute("Usuario");  
 if(usuario!=null) 
 {
-	username = usuario.getUsuario(); 
+	username = usuario.getUsername(); 
 	estado = usuario.getEstado(); 
 }
 
@@ -34,13 +34,13 @@ if(usuario!=null)
 <!-- FIN - REDIRECCION A LOGIN -->
 
 <% 
+HttpSession sesion = request.getSession();
 
-
-String origenViaje = (String) session.getAttribute("origenViaje");
-String destinoViaje = (String) session.getAttribute("destinoViaje");
-String patenteColectivoViaje = (String) session.getAttribute("patenteColectivoViaje");
-String usuarioChoferViaje = (String) session.getAttribute("usuarioChoferViaje");
-String precioString = (String) session.getAttribute("precioString");
+String origenViaje = (String) sesion.getAttribute("origenViaje");
+String destinoViaje = (String) sesion.getAttribute("destinoViaje");
+String patenteColectivoViaje = (String) sesion.getAttribute("patenteColectivoViaje");
+String usuarioChoferViaje = (String) sesion.getAttribute("usuarioChoferViaje");
+String precioString = (String) sesion.getAttribute("precioString");
 
 
 if(origenViaje==null){origenViaje="";}
@@ -115,7 +115,7 @@ if(precioString==null){precioString="";}
  	chofer= itr3.next();
 	%>
 		
-	<option <% if(chofer.getUsuario().equals(usuarioChoferViaje)) { %> selected <% } %>> <%=chofer.getUsuario() %></option>
+	<option <% if(chofer.getUsername().equals(usuarioChoferViaje)) { %> selected <% } %>> <%=chofer.getUsername() %></option>
 	<% } %>
       </select>
   	 </div> 

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.DataUsuario;
+import controlers.UsuariosControlers;
 import entities.Usuario;
 
 /**
@@ -35,31 +35,25 @@ public class EditarUsuarioServlet extends HttpServlet {
 		HttpSession sesion = request.getSession();
 
 		
-		Usuario user;
-		DataUsuario datauser = new DataUsuario();
+		sesion.setAttribute("mensajeEditarUsuario", null); //limpia el atributo de la sesion
 		
-		sesion.setAttribute("mensajeEditarUsuario", null);
 		
-		String cuil = request.getParameter("cuil");
-		
-		if(cuil==null) 
-		{
-			cuil = ""; 
-		}
-
 		String username = request.getParameter("username");
+		String nombre = request.getParameter("nombre");
+		String apellido = request.getParameter("apellido");
+		String email = request.getParameter("email");
+		String cuil = request.getParameter("cuil");
+		String rol = request.getParameter("rol");
+		String estado = request.getParameter("estado");
 		
-		user = datauser.getByUsuario(username);
+		UsuariosControlers usuCon = new UsuariosControlers();
 		
-		user.setNombre(request.getParameter("nombre"));
-		user.setApellido(request.getParameter("apellido"));
-		user.setEmail(request.getParameter("email"));
-		user.setCuil(cuil);
-		user.setRol(request.getParameter("rol"));
-		user.setEstado(request.getParameter("estado"));
+		//falta modificar contraseña y validar campos
 		
-		datauser.editarUsuario(user);
-		sesion.setAttribute("UsuarioAModificar", user); //ESTA BIEN ESTO PARA REESCRIBIR LAS VARIABLES DE SESSION O PUEDO TRAER LOS DATOS DE LA BASE DE DATOS DIRECTAMENTE Y MOSTRARLAS EN EL FORMULARIO??
+		Usuario user = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado);
+		
+		
+		sesion.setAttribute("UsuarioAModificar", user); 
 		sesion.setAttribute("mensajeEditarUsuario", "¡El usuario ha sido modificado correctamente!");
 		response.sendRedirect("editarUsuario.jsp");
 		

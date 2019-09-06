@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.DataUsuario;
+import controlers.UsuariosControlers;
 import entities.Usuario;
 
 /**
@@ -35,10 +35,10 @@ public class RedireccionEditarUsuarioSevlet extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		
 		String username = request.getParameter("username");
-		DataUsuario dusu = new DataUsuario();
-		Usuario usu = new Usuario();
 		
-		usu = dusu.getByUsuario(username);
+		UsuariosControlers usuCon = new UsuariosControlers();
+		
+		Usuario usu = usuCon.getByUsername(username);
 		
 		sesion.setAttribute("UsuarioAModificar", usu);
 		

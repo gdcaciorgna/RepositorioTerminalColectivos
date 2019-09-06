@@ -38,7 +38,7 @@ String username="s/usuario", estado="s/estado";
 usuarioActual = (Usuario) session.getAttribute("Usuario");  
 if(usuarioActual!=null) 
 {
-	username = usuarioActual.getUsuario(); 
+	username = usuarioActual.getUsername(); 
 	estado = usuarioActual.getEstado(); 
 }
 
@@ -58,14 +58,14 @@ if(usuarioActual!=null)
     <div class="col-sm">
        <div class="login-form-1 center-block">
 
-       <h3>Editar datos de <%=usuarioModificar.getUsuario()%></h3>
+       <h3>Editar datos de <%=usuarioModificar.getUsername() %></h3>
 			
 			
 			<!--  -->
 			
 			<form action="EditarUsuarioServlet" method="post">
 			  
-			  <input type="hidden" name="username" class="form-control" value=<%= usuarioModificar.getUsuario() %> hidden>
+			  <input type="hidden" name="username" class="form-control" value=<%= usuarioModificar.getUsername() %> hidden>
 			  
 			  <div class="form-group">
 			    <label>Nombre</label>

@@ -1,3 +1,4 @@
+<%@page import="controlers.FechaControlers"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -19,7 +20,7 @@ String username="s/usuario", estado="s/estado";
 usuario = (Usuario) session.getAttribute("Usuario");  
 if(usuario!=null) 
 {
-	username = usuario.getUsuario(); 
+	username = usuario.getUsername(); 
 	estado = usuario.getEstado(); 
 }
 
@@ -48,18 +49,23 @@ String origenViaje = (String) sesion.getAttribute("origenViaje");
 String destinoViaje = (String) sesion.getAttribute("destinoViaje");
 java.util.Date fechaViajeDate = (Date) sesion.getAttribute("fechaViaje");
 String fechaViajeString = "-";
+FechaControlers fCon = new FechaControlers();
+
 
 
 if(origenViaje==null){origenViaje = "Cualquiera";}
 if(destinoViaje==null){destinoViaje = "Cualquiera";}
 
-if(fechaViajeDate !=null)
-	{
-		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
-		fechaViajeString = sdf1.format(fechaViajeDate);
-	
-	}
-else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le asigna el día actual
+
+if(fechaViajeDate != null)
+{
+	fechaViajeString = fCon.dateToddMMyyyyhhmm(fechaViajeDate);
+}
+else
+{
+	fechaViajeDate = new Date(); //En el caso que el viaje sea nulo, se le asigna el día actual
+}
+
 %>
 
 
@@ -93,7 +99,7 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
             <div class="container" style=" margin-top: 2%; margin-bottom: 2%;  ">
 			 <div class="container">
 			        <div class="table-wrapper">
-			                    <span class="float-left"><h4>Listado de <b>Viajes</b></h2></span>
+			                    <span class="float-left"><h4>Listado de <b>Viajes</b></h4></span>
  								<span class="float-right">
  								<a href="registrarNuevoPlan.jsp"> <button type="button" class="btn btn-info add-new">  <i class="fa fa-plus"></i> Nuevo Plan de Viaje</button></a>
  								</span>			                    
@@ -119,19 +125,16 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			   <tr>
 			   <% 
 			   
-			   while(itr.hasNext()){
+			   while(itr.hasNext())
+			   {
 				   plan = itr.next();
 				   
 				   // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
 				 
-				   SimpleDateFormat sdfFechaSeparado = new SimpleDateFormat("dd/MM/yyyy");
-				   SimpleDateFormat sdfHoraSeparado = new SimpleDateFormat("HH:mm");
-				   SimpleDateFormat sdfFechaHoraJunto = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-				   String fechaString = sdfFechaSeparado.format(plan.getFechaHora());
-				   String horaString = sdfHoraSeparado.format(plan.getFechaHora());
-				   String fechaHoraString = sdfFechaHoraJunto.format(plan.getFechaHora());
-				   
+				   String fechaString = fCon.dateToddMMyyyy(plan.getFechaHora());
+				   String horaString = fCon.dateTohhmm(plan.getFechaHora());
+				   String fechaHoraString = fCon.dateToddMMyyyyhhmm(plan.getFechaHora());
+				   				   
 				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
 			    %>
 			    
@@ -171,8 +174,7 @@ else {fechaViajeDate = new Date();} //En el caso que el viaje sea nulo, se le as
 			   </td>   	   
 			   </tr>
 		
-			 <% 
-			 } %> 
+			 <%  } %> 
 			    
 			  </tbody>
 			</table>

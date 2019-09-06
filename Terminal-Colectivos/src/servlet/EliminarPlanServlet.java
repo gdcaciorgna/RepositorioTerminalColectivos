@@ -1,9 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.DataPlan;
-import entities.Plan;
+import controlers.PlanControlers;
 
 /**
  * Servlet implementation class EliminarPlanServlet
@@ -42,51 +38,19 @@ public class EliminarPlanServlet extends HttpServlet {
 		
 	
 		String fechaString = request.getParameter("fechaViajeString");
-		String horaString = request.getParameter("horaViajeString");
-		
-		String fechaHoraString = fechaString + " " + horaString;
-		
+		String horaString = request.getParameter("horaViajeString");		
 		String codRutaViajeString = request.getParameter("codRutaViajeString");
 		String patenteColectivoViaje = request.getParameter("patenteColectivoViajeString");
 		
-		DataPlan dplan = new DataPlan();
-		Plan plan = new Plan();
+		int planesEliminados = 0;
 		
-		
-        SimpleDateFormat formatFechaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Date fechaHora = new Date();
-        try {
-			
-        fechaHora = formatFechaHora.parse(fechaHoraString);
-		
-        } catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        int cod_ruta = Integer.parseInt(codRutaViajeString);
-       
-		
-		plan = dplan.getByFechaHoraRutaPatente(fechaHora, cod_ruta, patenteColectivoViaje);
-		
-		int planesEliminados = dplan.eliminarPlan(plan);
-		
-		//INICIO - LIMPIAR CAMPOS
-		/*
-		 * sesion.setAttribute("origenViaje", null); sesion.setAttribute("destinoViaje",
-		 * null); sesion.setAttribute("precioString", null);
-		 * sesion.setAttribute("usuarioChoferViaje", null);
-		 * sesion.setAttribute("patenteColectivoViaje", null);
-		 * sesion.setAttribute("fechaString", null); sesion.setAttribute("horaString",
-		 * null);
-		 */
-		//FIN - LIMPIAR CAMPOS		
+		PlanControlers planCon = new PlanControlers();
+		planesEliminados = planCon.eliminarPlan(fechaString, horaString, codRutaViajeString, patenteColectivoViaje);
+
+	
 		sesion.setAttribute("planesEliminados", planesEliminados); 
 		sesion.setAttribute("planesEditados", null);
 		response.sendRedirect("buscarviajesadmin.jsp");	
-		
-		
-
 
 		
 	}
