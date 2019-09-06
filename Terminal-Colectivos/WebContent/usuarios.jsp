@@ -81,9 +81,10 @@
    <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
 
    <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button></form> 
-   <form action="BorrarCuentaServlet" method="post">
+   <form action="EliminarUsuarioSevlet" method="post">
    <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
    <input type="hidden" value=<%=usu.getPassword() %> name="password"/>
+   <input type="hidden" value="True" name="redirigidocomoadmin"/>
    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button></form>
    </td>
    
@@ -100,11 +101,11 @@
 </div>
 
 <% Integer filasAfectadas = 0;%> 
-<% filasAfectadas = (Integer) session.getAttribute("UsuariosAfectados");%>
+<% filasAfectadas = (Integer) sesion.getAttribute("UsuariosAfectados");%>
 <% if(filasAfectadas != null) { %>
 <br>
 <div class="alert alert-danger" role="alert">
-Filas Afectadas: <%= filasAfectadas %>
+Filas Eliminadas: <%= filasAfectadas %>
 </div> 
 <%}%>
 

@@ -35,7 +35,7 @@ usuarioModificar = (Usuario) sesion.getAttribute("UsuarioAModificar");
 Usuario usuarioActual;
 
 String username="s/usuario", estado="s/estado"; 
-usuarioActual = (Usuario) session.getAttribute("Usuario");  
+usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");  
 if(usuarioActual!=null) 
 {
 	username = usuarioActual.getUsername(); 
@@ -85,47 +85,79 @@ if(usuarioActual!=null)
 			  <% if(usuarioModificar.getRol().equals("chofer")) { %>
 			  <div class="form-group">
 			    <label>CUIL</label>
-			    <input type="text" name="cuil" class="form-control" value=<%= usuarioModificar.getCuil() %>>
+			    <input type="text" name="cuil" class="form-control" value=<% if(usuarioModificar.getCuil() != null)  { %> <%= usuarioModificar.getCuil() %> <% } else { %> <%= "" %> <% } %> >
 			  </div>
 			  <% } %>
 			  
 			  <div class="form-group">
 			    <label>Rol</label>
 			    <select name="rol" class="form-control">
-			      <option value="admin"> Administrador</option>
-			      <option value="chofer">Chofer</option>
-			      <option value="cliente">Cliente</option>
+			      <option value="admin" <% if(usuarioModificar.getRol().equals("admin")) { %> selected <% } %>> Administrador</option>
+			      <option value="chofer" <% if(usuarioModificar.getRol().equals("chofer")) { %> selected <% } %>>Chofer</option>
+			      <option value="cliente" <% if(usuarioModificar.getRol().equals("cliente")) { %> selected <% } %>>Cliente</option>
 			    </select>
 			  </div>
 			  
 			  <div class="form-group">
 			    <label>Estado</label>
 			    <select name="estado" class="form-control">
-			      <option value="activo"> Activo</option>
-			      <option value="eliminado">Eliminado</option>
+			      <option value="activo" <% if(usuarioModificar.getEstado().equals("activo")) { %> selected <% } %>> Activo</option>
+			      <option value="eliminado" <% if(usuarioModificar.getEstado().equals("eliminado")) { %> selected <% } %>>Eliminado</option>
 			    </select>
 			  </div>
 			  
 			  <button type="submit" class="btn btn-primary">Confirmar cambios</button>
 			
 			  
+			
+			  
 			</form>
 			
-			  <% String mensajeEditarUsuario = (String)session.getAttribute("mensajeEditarUsuario");%>
-			<% if(session.getAttribute("mensajeEditarUsuario")!=null) { %>
-			<br>
+		<!-- INICIO - Mensaje de Error -->	
+		<br>	
+		
+		
+		<% String mensaje = null; %>
+		
+		<% if(sesion.getAttribute("MensajeUsuarioAEditar") != null) 
+		{ mensaje = (String) sesion.getAttribute("MensajeUsuarioAEditar"); 
+			
+			if(mensaje.equals("OK")) 
+			{ %>
 			<div class="text-center alert alert-success" role="alert">
-			<%= mensajeEditarUsuario %>
+			¡Felicitaciones: Se ha modificado el usuario de manera correcta!
 			</div> 
-			<%}%>
+			<% } else { %>
+			
+			
+			<% if(mensaje.equals("Error2")) { %>
+			<div class="text-center alert alert-danger" role="alert">
+			Error: La nueva contraseña debe contener 8 caracteres como minimo
+			</div>
+			<% } else if(mensaje.equals("Error3")) { %>
+			<div class="text-center alert alert-danger" role="alert">
+			Error: Las contraseñas no coinciden
+			</div>
+			<% 
+			} else 
+			if(mensaje.equals("Error4")) { %>
+			<div class="text-center alert alert-danger" role="alert">
+			Error: La contraseña actual ingresada no es correcta
+			</div>
+			<% } } } %>
+			
+			 
+		<!-- FIN - Mensaje de Error -->
 			
         </div>
    
   </div>
+   
     
  
 </div>
 </div>
+
 
 
 <jsp:include page="JSPFiles/includefooter.jsp" />  

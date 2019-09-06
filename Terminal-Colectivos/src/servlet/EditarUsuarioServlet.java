@@ -35,7 +35,7 @@ public class EditarUsuarioServlet extends HttpServlet {
 		HttpSession sesion = request.getSession();
 
 		
-		sesion.setAttribute("mensajeEditarUsuario", null); //limpia el atributo de la sesion
+		sesion.setAttribute("MensajeUsuarioAEditar", null); //limpia el atributo de la sesion
 		
 		
 		String username = request.getParameter("username");
@@ -60,12 +60,7 @@ public class EditarUsuarioServlet extends HttpServlet {
 		}
 		
 		
-		sesion.setAttribute("MensajeUsuarioAEditar", mensaje); 
-		
-		response.sendRedirect("micuenta.jsp");
-		
-		
-		sesion.setAttribute("mensajeEditarUsuario", "¡El usuario ha sido modificado correctamente!");
+		sesion.setAttribute("MensajeUsuarioAEditar", mensaje); 		
 		response.sendRedirect("editarUsuario.jsp");
 		
 	}

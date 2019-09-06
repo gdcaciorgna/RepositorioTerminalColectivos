@@ -5,9 +5,9 @@ public class UsuarioLogic {
 	
 
 	
-	public String setRolActivo (String rolInicial) 
+	public String setRolCliente (String rolInicial) 
 	{
-		String rolFinal="activo";
+		String rolFinal="cliente";
 		
 		if(rolInicial != null) 
 		{
@@ -19,6 +19,55 @@ public class UsuarioLogic {
 		
 	}
 	
+	public String setEstadoActivo (String estadoInicial) 
+	{
+		String estadoFinal="activo";
+		
+		if(estadoFinal != null) 
+		{
+			estadoFinal = estadoInicial;
+		}
+		
+		return estadoFinal;
+		
+		
+	}
+	
+	public String setPasswordActualNull (String passwordActual) 
+	{
+			
+		if(passwordActual == "") 
+		{
+			passwordActual = null;
+		}
+		
+		return passwordActual;
+		
+	}
+	
+	public String setPasswordNuevoNull (String passwordNuevo) 
+	{
+			
+		if(passwordNuevo == "") 
+		{
+			passwordNuevo = null;
+		}
+		
+		return passwordNuevo;
+		
+	}
+	
+	public String setPasswordNuevoRepNull (String passwordNuevoRep) 
+	{
+			
+		if(passwordNuevoRep == "") 
+		{
+			passwordNuevoRep = null;
+		}
+		
+		return passwordNuevoRep;
+		
+	}
 	
 
 }

@@ -7,15 +7,16 @@
 <meta charset="utf-8">
 <jsp:include page="JSPFiles/includeimports.jsp" />
 
-<script type="text/javascript" src="js/validarIgualdadPassword.js"></script>
 
 
 <title>Mi Cuenta</title>
 
 </head>
 <body>
+<script type="text/javascript" src="js/validarIgualdadPassword.js"></script>
 <jsp:include page="JSPFiles/includemenu.jsp" />  
 
+<% HttpSession sesion = request.getSession(); %>
 
 <!-- INICIO - REDIRECCION A LOGIN --> 
 <%@ page import = "entities.Usuario" %>
@@ -23,7 +24,7 @@
  
 <%
 String username="s/usuario", estado="s/estado"; 
-usuarioActual = (Usuario) session.getAttribute("Usuario");  
+usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");  
 if(usuarioActual!=null) 
 {
 	username = usuarioActual.getUsername(); 
@@ -72,7 +73,7 @@ if(usuarioActual!=null)
 			  <% if(!usuarioActual.getRol().equals("cliente")) {%>
 			  <div class="form-group">
 			    <label>CUIL</label>
-			    <input type="text" name="cuil" class="form-control" value=<%= usuarioActual.getCuil() %>>
+			    <input type="text" name="cuil" class="form-control" value=<% if(usuarioActual.getCuil() != null)  { %> <%= usuarioActual.getCuil() %> <% } else { %> <%= "" %> <% } %> >
 			  </div>
 			  <%} %>
 			  
@@ -80,9 +81,9 @@ if(usuarioActual!=null)
 			  <div class="form-group">
 			    <label>Rol</label>
 			    <select name="rol" class="form-control">
-			      <option value="admin"> Administrador</option>
-			      <option value="chofer">Chofer</option>
-			      <option value="cliente">Cliente</option>
+			      <option value="admin" <% if(usuarioActual.getRol().equals("Administrador")) { %> selected <% } %>> Administrador</option>
+			      <option value="chofer" <% if(usuarioActual.getRol().equals("Chofer")) { %> selected <% } %>>Chofer</option>
+			      <option value="cliente"<% if(usuarioActual.getRol().equals("Cliente")) { %> selected <% } %>>Cliente</option>
 			    </select>
 			  </div>
 			  <% } %>
@@ -117,10 +118,46 @@ if(usuarioActual!=null)
 		
 		
 		</form>
-		<br>
-		<br>
-
+		
+	<!-- INICIO - Mensaje de Error -->	
+		
+		<% String mensaje = ""; %>
+		
+		<% if(sesion.getAttribute("MensajeMiUsuarioAEditar") != null) 
+		{ mensaje = (String) sesion.getAttribute("MensajeMiUsuarioAEditar"); 
 			
+			if(mensaje.equals("OK")) 
+			{ %>
+			<div class="text-center alert alert-success" role="alert">
+			Felicitaciones: ¡Se ha logrado modificar el usuario de manera satisfactoria!
+			</div> 
+			<% } else { %>
+			
+			
+			<% if(mensaje.equals("Error2")) { %>
+			<div class="text-center alert alert-danger" role="alert">
+			Error: La nueva contraseña debe contener 8 caracteres como minimo
+			</div>
+			<% } else if(mensaje.equals("Error3")) { %>
+			<div class="text-center alert alert-danger" role="alert">
+			Error: Las contraseñas no coinciden
+			</div>
+			<% 
+			} else 
+			if(mensaje.equals("Error4")) { %>
+			<div class="text-center alert alert-danger" role="alert">
+			Error: La contraseña actual ingresada no es correcta
+			</div>
+			<% } } } %>
+			
+			 
+		<!-- FIN - Mensaje de Error -->
+		
+		
+		<br>
+		<br>
+		
+		
 			
 			<!-- INICIO - Botón - ELIMINAR CUENTA -->
 			 <div class="card border-danger mb-3">
@@ -131,7 +168,7 @@ if(usuarioActual!=null)
 			    	
 			        <button type="button" class="btn pull-right btn-danger btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter">Eliminar Cuenta</button>
 			    		<br>
-			    		<% String error = (String)session.getAttribute("errorEliminarUsuario");%>
+			    		<% String error = (String)sesion.getAttribute("errorEliminarUsuario");%>
 						<% if(error != null) { %>      
 			   			<div class="alert alert-danger" role="alert">
 						Error: <%= error %>
@@ -163,19 +200,18 @@ if(usuarioActual!=null)
         
         
        
-        <form name="formBorrarMiCuenta" action="BorrarCuentaServlet" method="post">
+        <form name="formBorrarMiCuenta" action="EliminarUsuarioSevlet" method="post">
         
         <div class="form-group">
                
                  <label class="p-2" for="exampleFormControlInput1">Para que podamos dar de baja tu cuenta, es necesario que escribas tu contraseña:</label>
            
-                 <input type="password" class="form-control" name="password" placeholder="Ingresar contraseña..." value="" />
+                 <input type="password" class="form-control" name="password" placeholder="Ingresar contraseña..." />
     	</div>
          
         <div class="form-group">
-            <input type="password" class="form-control" name="passwordrep" placeholder="Repetir contraseña..." value="" />            
+            <input type="password" class="form-control" name="passwordrep" placeholder="Repetir contraseña..."  />            
         </div>
-            <input type="hidden" name="username" value=<%= username %> /> 
         </form>
       </div>
       <div class="modal-footer">

@@ -11,16 +11,16 @@ import javax.servlet.http.HttpSession;
 import controlers.UsuariosControlers;
 
 /**
- * Servlet implementation class EliminarMiUsuario
+ * Servlet implementation class EliminarUsuarioServlet
  */
-@WebServlet("/EliminarMiUsuario")
-public class EliminarMiUsuario extends HttpServlet {
+@WebServlet("/EliminarUsuarioServlet")
+public class EliminarUsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EliminarMiUsuario() {
+    public EliminarUsuarioServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,44 +30,49 @@ public class EliminarMiUsuario extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		
-		HttpSession sesion = request.getSession();
+HttpSession sesion = request.getSession();
 		
 		
 		String username =  request.getParameter("username");
 		String password = request.getParameter("password");
+		String redirigidocomoadmin = request.getParameter("redirigidocomoadmin");
+
+		boolean vof = false;
+		
+		
+		if(redirigidocomoadmin.equals("True"))
+		{vof = true;}
 		
 		
 		UsuariosControlers usuCon = new UsuariosControlers();
 		
-		if(usuCon.eliminarMiUsuario(username, password))
+		String mensaje = usuCon.getMensajeEliminarUsuario(username, password);
+		
+		int filasEliminadas = usuCon.eliminarUsuario(username, password);
+		
+		if(mensaje.equals("OK")) 
 		{
+			
+			if(vof = false) //verifica si es redirigido desde micuenta.jsp -> Cierra sesion y redirige a bajasatisfactoria.jsp
+			{
 			sesion.setAttribute("Usuario", null);
 			sesion.invalidate(); //CERRAR SESION
-			response.sendRedirect("bajasatisfactoria.jsp");					
+			response.sendRedirect("bajasatisfactoria.jsp");
+			}
+			
+			else //verifica si es redirigido desde usuarios.jsp -> redirige a usuarios.jsp
+			{
+				sesion.setAttribute("UsuariosAfectados", filasEliminadas);
+				response.sendRedirect("usuarios.jsp");
 
+			}
 		}
-        	 else 
-        	 { 
-		        	
-		        	
-        		 if (username.isEmpty() || password.isEmpty()) 
-        		 	{ 
- 		        	//lógica para falta de datos
- 		        	sesion.setAttribute("errorEliminarUsuario", "Hay campos vacíos");
- 		        	}
- 		        	else 
- 		        	{
-	 		        sesion.setAttribute("errorEliminarUsuario", "Contraseña incorrecta");
- 		        	}
-        		 
-    		 response.sendRedirect("micuenta.jsp");	
-        		 
-        		 
-
-        	 }
-	}
+		
+		else
+        	 {
+				sesion.setAttribute("errorEliminarUsuario", "Hay campos vacíos");
+				response.sendRedirect("micuenta.jsp");
+        	 }	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

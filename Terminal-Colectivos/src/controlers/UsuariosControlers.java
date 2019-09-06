@@ -7,13 +7,13 @@ import logic.UsuarioLogic;
 public class UsuariosControlers {
 	
 	
-	public boolean eliminarMiUsuario(String username, String password)
+	public int eliminarUsuario(String username, String password)
 	{
 		Usuario usu;
 		DataUsuario dusu = new DataUsuario();
 		
 		boolean testPassword;
-		boolean vof = false;
+		int filasEliminadas = 0;
 		
 		
 		usu = dusu.getByUsername(username);
@@ -23,12 +23,12 @@ public class UsuariosControlers {
 		if(testPassword) 
 		{
 
-			dusu.eliminarUsuario(usu);
-			vof = true;
+			filasEliminadas = dusu.eliminarUsuario(usu);
+			
 			
 		}
 		
-		return vof;
+		return filasEliminadas;
 		
 	}
 	
@@ -37,8 +37,8 @@ public class UsuariosControlers {
 	{
 		UsuarioLogic usuLog = new UsuarioLogic();
 		
-		cuil = usuLog.setNullCuil(cuil); //se puede evitar?
-		rol = usuLog.setNullRol(rol); //se puede evitar?
+		rol = usuLog.setRolCliente(rol);
+		estado = usuLog.setEstadoActivo(estado);
 		
 		DataUsuario datauser = new DataUsuario();
 		Usuario usuNuevo = new Usuario();
@@ -123,26 +123,20 @@ public class UsuariosControlers {
 	{
 		DataUsuario dusu = new DataUsuario();
 		
-		String mensaje = "OK";
-			    			
-		if((dusu.validarUsuarioInexistente(username) == false))
-		{
-			mensaje = "Error1";  // "El nombre de usuario esta en uso");				 
-		}
-			
+		String mensaje = "OK";			
 				
-		else if(passwordNuevo.length()<8)
+		if(passwordNuevo.length()<8)
 		{			
 			mensaje = "Error2";  // "La nueva contraseña debe contener 8 caracteres como minimo");		
 	    }	
 		
 		else if(!passwordNuevo.equals(passwordNuevoRep)) 
 		{ 
-			mensaje = "Error 3"; //"Las contraseñas no coinciden");	
+			mensaje = "Error3"; //"Las contraseñas no coinciden");	
 		 
 	   	}
 		
-		if(dusu.validarUsuarioyPassword(username, passwordActual)) 
+		if(!dusu.validarUsuarioyPassword(username, passwordActual)) 
 		{
 			mensaje = "Error4"; //"La contraseña actual ingresada no es correcta"
 		}
@@ -173,6 +167,31 @@ public class UsuariosControlers {
 		return usuario;
 	
 		
+	}
+	
+	public String getMensajeEliminarUsuario(String username, String password) 
+	{
+		
+		DataUsuario dusu = new DataUsuario();
+		String mensaje = "OK";
+		
+		
+		if(!dusu.validarUsuarioyPassword(username, password)) //En caso de no haber ingresado password correctamente, 
+		{
+				        	
+        		 if (username.isEmpty() || password.isEmpty()) 
+        		 	{ 
+ 		        	//lógica para falta de datos
+ 		        	mensaje =  "Hay campos vacíos";
+ 		        	}
+ 		        	else 
+ 		        	{
+	 		        mensaje = "Contraseña incorrecta";
+ 		        	}
+        		 
+        }
+		
+		return mensaje;
 	}
 	
 	

@@ -9,7 +9,7 @@
 </head>
 <body>
  <%@ page import = "entities.Usuario" %>
- <% Usuario usuario = (Usuario) session.getAttribute("Usuario"); 
+ <% Usuario usuario = (Usuario) session.getAttribute("usuarioActual"); 
  String rol  = "cliente";
 if(usuario!=null)
 	{ 

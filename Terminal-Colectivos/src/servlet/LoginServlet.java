@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
     	if(usu.getUsername()!=null)
     	{
         
-    	sesion.setAttribute("Usuario", usu);
+    	sesion.setAttribute("usuarioActual", usu);
     	
     	response.sendRedirect("index.jsp");	
 

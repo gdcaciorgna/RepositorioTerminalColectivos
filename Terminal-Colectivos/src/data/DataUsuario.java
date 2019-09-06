@@ -266,38 +266,27 @@ public class DataUsuario
 	{
 	PreparedStatement pstmt = null;
 	
-	String sqlSinPasswordSinEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, rol=?, WHERE usuario=?";
-	String sqlConPasswordSinEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, rol=?, password = ?, WHERE usuario=?";
-	String sqlSinPasswordConEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, rol=?, estado=?, WHERE usuario=?";
-	String sqlConPasswordConEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, rol=?, password = ?, estado=?, WHERE usuario=?";
+	String sqlSinPasswordConEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, estado=?, rol=? WHERE usuario=?";
+	String sqlConPasswordConEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?,  estado=?, rol=?,   password = ?WHERE usuario=?";
 
 	try 
 	{
-		if(usu.getPassword() == null && usu.getEstado() == null ) //sin password ni estado
-		{
-			pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlSinPasswordSinEstado);
-			pstmt.setString(6, usu.getUsername());
-		}
+	
 		
-		else if(usu.getPassword() != null && usu.getEstado() == null ) //con password sin estado
-		{
-			pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlConPasswordSinEstado);
-			pstmt.setString(6, usu.getPassword());
-			pstmt.setString(7, usu.getUsername());
-		}
 		
-		else if(usu.getPassword() == null && usu.getEstado() != null ) //sin password con estado
+		if(usu.getPassword() == null && usu.getEstado() != null ) //sin password con estado
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlSinPasswordConEstado);
-			pstmt.setString(6, usu.getEstado());
+		
+		
 			pstmt.setString(7, usu.getUsername());
 		}
 		
 		else if(usu.getPassword() != null && usu.getEstado() != null ) //con password con estado
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlConPasswordConEstado);
-			pstmt.setString(6, usu.getPassword());
-			pstmt.setString(7, usu.getEstado());
+			
+			pstmt.setString(7, usu.getPassword());
 			pstmt.setString(8, usu.getUsername());
 		}
 		
@@ -305,7 +294,8 @@ public class DataUsuario
 		pstmt.setString(2, usu.getApellido());
 		pstmt.setString(3, usu.getEmail());
 		pstmt.setString(4, usu.getCuil());
-		pstmt.setString(5, usu.getRol());
+		pstmt.setString(5, usu.getEstado());
+		pstmt.setString(6, usu.getRol());
 		
 	    pstmt.executeUpdate();
 		

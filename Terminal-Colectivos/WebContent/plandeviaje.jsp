@@ -21,7 +21,7 @@ Usuario usuario;
  
 <%
 String username="s/usuario", estado="s/estado"; 
-usuario = (Usuario) session.getAttribute("Usuario");  
+usuario = (Usuario) session.getAttribute("usuarioActual");  
 
 if(usuario!=null) 
 {

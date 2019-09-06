@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.UsuariosControlers;
 import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class EditarMiUsuarioServlet
@@ -33,6 +34,8 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
+		
+		sesion.setAttribute("MensajeMiUsuarioAEditar", null);
 
 		String username = request.getParameter("username");
 		String nombre = request.getParameter("nombre");
@@ -40,26 +43,37 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String cuil = request.getParameter("cuil");
 		String rol = request.getParameter("rol");
-		String estado = null;
+		String estado = "activo";
 		String passwordActual = request.getParameter("passwordActual");
 		String passwordNuevo = request.getParameter("passwordNuevo");
 		String passwordNuevoRep = request.getParameter("passwordNuevoRep");
 		
 		UsuariosControlers usuCon = new UsuariosControlers();
 		
-		String mensaje = usuCon.getMensajeEditarUsuario(username, passwordActual, passwordNuevo, passwordNuevoRep);
+		
+		String mensaje = "OK";
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		passwordActual = usuLog.setPasswordActualNull(passwordActual);
+		passwordNuevo = usuLog.setPasswordNuevoNull(passwordNuevo);
+		passwordNuevoRep = usuLog.setPasswordNuevoRepNull(passwordNuevoRep);
+
+		if(passwordActual != null || passwordNuevo != null || passwordNuevoRep != null ) {
+		mensaje = usuCon.getMensajeEditarUsuario(username, passwordActual, passwordNuevo, passwordNuevoRep);
+		}
 		
 		Usuario usu = new Usuario();
 		
+		
 		if(mensaje.equals("OK")) 
 		{
-			usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, passwordActual, passwordNuevo, passwordNuevoRep);
-			sesion.setAttribute("UsuarioAModificar", usu); 
+			usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, passwordActual, passwordNuevo, passwordNuevoRep);
+			sesion.setAttribute("usuarioActual", usu); 
 		
 		}
 		
 		
-		sesion.setAttribute("MensajeUsuarioAEditar", mensaje); 
+		sesion.setAttribute("MensajeMiUsuarioAEditar", mensaje); 
 		
 		response.sendRedirect("micuenta.jsp");
 		

@@ -2,7 +2,8 @@
     pageEncoding="ISO-8859-1"%>
 
 <%@ page import = "entities.Usuario" %>
-<% Usuario usuario = (Usuario) session.getAttribute("Usuario"); %>
+<% HttpSession sesion = request.getSession(); %>
+<% Usuario usuario = (Usuario) sesion.getAttribute("usuarioActual"); %>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
