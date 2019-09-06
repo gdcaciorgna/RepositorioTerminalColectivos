@@ -48,12 +48,23 @@ public class EditarUsuarioServlet extends HttpServlet {
 		
 		UsuariosControlers usuCon = new UsuariosControlers();
 		
-		//falta modificar contraseña y validar campos
+		String mensaje = "OK"; //NO ES NECESARIO VALIDAR DATOS
 		
-		Usuario user = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado);
+		Usuario usu = new Usuario();
+		
+		if(mensaje.equals("OK")) 
+		{
+			usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, null, null, null);
+			sesion.setAttribute("UsuarioAModificar", usu); 
+		
+		}
 		
 		
-		sesion.setAttribute("UsuarioAModificar", user); 
+		sesion.setAttribute("MensajeUsuarioAEditar", mensaje); 
+		
+		response.sendRedirect("micuenta.jsp");
+		
+		
 		sesion.setAttribute("mensajeEditarUsuario", "¡El usuario ha sido modificado correctamente!");
 		response.sendRedirect("editarUsuario.jsp");
 		

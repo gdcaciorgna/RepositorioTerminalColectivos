@@ -87,46 +87,39 @@ if(usuarioActual!=null)
 			  </div>
 			  <% } %>
 			  
-			<button type="submit" class="btn btn-primary">Confirmar Cambios</button>
-			
-			</form>
-			
-			
-				<!-- <div class="form-group">
-			    <label>Contraseña Actual</label>
-			    <input type="password" name="passwordActual" class="form-control">
-			 	</div>
-			  
-			  	<div class="form-group">
-			    <label>Nueva Contraseña</label>
-			    <input type="password" name="passwordNuevo" class="form-control">
-			  	</div>
-			  
-			    <div class="form-group">
-			    <label>Repetir Contraseña</label>
-			    <input type="password" name="passwordNuevoRep" class="form-control">
-			    </div>  
+		<div class="collapse" id="collapseExample">
+		<div class="card card-body">
+		<div class="form-group">
+	    <label>Contraseña Actual</label>
+	    <input type="password" name="passwordActual" class="form-control">
+	 	</div>
+	  
+	  	<div class="form-group">
+	    <label>Nueva Contraseña</label>
+	    <input type="password" name="passwordNuevo" class="form-control">
+	  	</div>
+	  
+	    <div class="form-group">
+	    <label>Repetir Contraseña</label>
+	    <input type="password" name="passwordNuevoRep" class="form-control">
+	    </div> 
+		</div>
+		</div>
+		
+		<p>
+	
+		<button type="submit" class="btn btn-primary">Confirmar Cambios</button> 
+		
+	  	<a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+	  	Modificar Contraseña
+	  	</a>
+		</p>
+		
+		
+		</form>
+		<br>
+		<br>
 
-				<button type="submit" class="btn btn-primary">Confirmar cambio de contraseña</button>  -->
-			
-			
-			<!-- INICIO - Botón - CAMBIAR CONTRASEÑA -->
-			<div class="card border-warning mb-3">
-			  <div class="card-header">Modificar Contraseña</div>
-			  <div class="card-body text-warning">
-			    	
-			        <button type="button" class="btn pull-right btn-warning btn-lg btn-block" data-toggle="modal" data-target="#exampleModalCenter2">Modificar Contrasaeña</button>
-			    		<br>
-			    		<% String errorModificarPassword = (String)session.getAttribute("errorModificarPassword");%>
-						<% if(errorModificarPassword != null) { %>      
-			   			<div class="alert alert-warning" role="alert">
-						Error: <%= errorModificarPassword %>
-						</div> 
-						<% } %>
-						
-				</div>
-			  </div>
-			<!-- FIN - Botón - CAMBIAR CONTRASEÑA -->
 			
 			
 			<!-- INICIO - Botón - ELIMINAR CUENTA -->
@@ -154,55 +147,7 @@ if(usuarioActual!=null)
 </div>
 </div>
 
-  <!-- INICIO MODAL - MODIFICAR CONTRASEÑA -->
-<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter2Title" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modificar Contraseña</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-        
-       
-        <form name="formBorrarMiCuenta" action="EliminarMiUsuario" method="post">
-        <div class="form-group">
-	    <label>Contraseña Actual</label>
-	    <input type="password" name="passwordActual" class="form-control">
-	 	</div>
-	  
-	  	<div class="form-group">
-	    <label>Nueva Contraseña</label>
-	    <input type="password" name="password" class="form-control">
-	  	</div>
-	  
-	    <div class="form-group">
-	    <label>Repetir Contraseña</label>
-	    <input type="password" name="passwordRep" class="form-control">
-	    </div> 
-	    <input type="hidden" name="username" value=<%= username %> /> 
-	    
-	     
-	    </form>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class = "btn btn-secondary" data-dismiss="modal">Volver</button>
-            <input type="submit" class="btn pull-right btn-warning" value="Modificar Contraseña" onClick="validarIgualdadPassword()"/>
-            
-            <div id="mensajeContraseniasNoCoinciden" class="alert alert-warning" role="alert"></div> 
-            
-            
-		</div> 
-    
 
-      </div>
-    </div>
-  </div>
-  <!-- FIN MODAL - MODIFICAR CONTRASEÑA -->
   
   <!-- INICIO MODAL - ELIMINAR CUENTA -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
