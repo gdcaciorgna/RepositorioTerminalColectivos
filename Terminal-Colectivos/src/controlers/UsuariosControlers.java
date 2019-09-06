@@ -6,6 +6,7 @@ import logic.UsuarioLogic;
 
 public class UsuariosControlers {
 	
+	
 	public boolean eliminarMiUsuario(String username, String password)
 	{
 		Usuario usu;
@@ -32,55 +33,32 @@ public class UsuariosControlers {
 	}
 	
 	
-	public Usuario editarMiUsuario(String username, String nombre, String apellido, String email, String cuil, String rol, String passwordActual, String passwordNuevo, String passwordNuevoRep)
+	public Usuario editarUsuario(String username, String nombre, String apellido, String email, String cuil, String rol, String estado, String passwordActual, String passwordNuevo, String passwordNuevoRep)
 	{
 		UsuarioLogic usuLog = new UsuarioLogic();
 		
-		cuil = usuLog.setNullCuil(cuil);
-		rol = usuLog.setNullRol(rol);
+		cuil = usuLog.setNullCuil(cuil); //se puede evitar?
+		rol = usuLog.setNullRol(rol); //se puede evitar?
 		
 		DataUsuario datauser = new DataUsuario();
-		Usuario user;
+		Usuario usuNuevo = new Usuario();
+				
+		usuNuevo.setUsername(username);
+		usuNuevo.setNombre(nombre);
+		usuNuevo.setApellido(apellido);
+		usuNuevo.setEmail(email);
+		usuNuevo.setPassword(passwordNuevo);
+		usuNuevo.setCuil(cuil);
+		usuNuevo.setRol(rol);
+		usuNuevo.setEstado(estado);
 		
-		user = datauser.getByUsername(username);
 		
-		user.setNombre(nombre);
-		user.setApellido(apellido);
-		user.setEmail(email);
-		user.setCuil(cuil);
-		user.setRol(rol);
+		datauser.editarUsuario(usuNuevo);	
+
 		
-		//FALTA MANEJO DE CONTRASEÑA
-		
-		datauser.editarUsuario(user);
-		
-		return user; 
+		return usuNuevo; 
  
 	}
-	
-	public Usuario editarUsuario(String username, String nombre, String apellido, String email, String cuil, String rol, String estado)
-	{
-		
-		
-		UsuarioLogic usuLog = new UsuarioLogic();
-		cuil = usuLog.setNullCuil(cuil);
-
-		Usuario user;
-		DataUsuario datauser = new DataUsuario();
-		
-		user = datauser.getByUsername(username);
-		user.setNombre(nombre);
-		user.setApellido(apellido);
-		user.setEmail(email);
-		user.setCuil(cuil);
-		user.setRol(rol);
-		user.setEstado(estado);
-		
-		datauser.editarUsuario(user);
-		
-		return user;
-	}
-	
 	
 	
 	public Usuario loginUsuario(String username, String password) 
@@ -110,59 +88,66 @@ public class UsuariosControlers {
         return usu;
 	}
 	
+	
+	
 	public String getMensajeRegistro(String username, String password, String passwordrep) 
 	{
 		DataUsuario dusu = new DataUsuario();
 		
-		String mensajeRegistro = "OK";
+		String mensaje = "OK";
 			    
 			
 		if((dusu.validarUsuarioInexistente(username) == false))
 		{
-			mensajeRegistro = "Error1";  // "El nombre de usuario esta en uso");				 
+			mensaje = "Error1";  // "El nombre de usuario esta en uso");				 
 		}
 			
 				
 		else if(password.length()<8)
 		{			
-			mensajeRegistro = "Error2";  // "La contraseña debe contener 8 caracteres como minimo");		
+			mensaje = "Error2";  // "La contraseña debe contener 8 caracteres como minimo");		
 	    }	
 		
 		else if(!password.equals(passwordrep)) 
 		{ 
-			mensajeRegistro = "Error 3"; //"Las contraseñas no coinciden");	
+			mensaje = "Error 3"; //"Las contraseñas no coinciden");	
 		 
 	   	}
 		
-		return mensajeRegistro;						
+		return mensaje;						
 							
 
 	}
 	
-	public String getMensajeEditarUsuario(String username, String password, String passwordrep) 
+	public String getMensajeEditarUsuario(String username, String passwordActual, String passwordNuevo, String passwordNuevoRep) 
 	{
 		DataUsuario dusu = new DataUsuario();
 		
-		String mensajeRegistro = "OK";
+		String mensaje = "OK";
 			    			
 		if((dusu.validarUsuarioInexistente(username) == false))
 		{
-			mensajeRegistro = "Error1";  // "El nombre de usuario esta en uso");				 
+			mensaje = "Error1";  // "El nombre de usuario esta en uso");				 
 		}
 			
 				
-		else if(password.length()<8)
+		else if(passwordNuevo.length()<8)
 		{			
-			mensajeRegistro = "Error2";  // "La contraseña debe contener 8 caracteres como minimo");		
+			mensaje = "Error2";  // "La nueva contraseña debe contener 8 caracteres como minimo");		
 	    }	
 		
-		else if(password.equals(passwordrep)) 
+		else if(!passwordNuevo.equals(passwordNuevoRep)) 
 		{ 
-			mensajeRegistro = "Error 3"; //"Las contraseñas no coinciden");	
+			mensaje = "Error 3"; //"Las contraseñas no coinciden");	
 		 
 	   	}
 		
-		return mensajeRegistro;						
+		if(dusu.validarUsuarioyPassword(username, passwordActual)) 
+		{
+			mensaje = "Error4"; //"La contraseña actual ingresada no es correcta"
+		}
+		
+		return mensaje;						
 							
 
 	}

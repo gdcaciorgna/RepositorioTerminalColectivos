@@ -262,36 +262,77 @@ public class DataUsuario
 	
 	}
 	
-	public void editarUsuario(Usuario usuario)
+	public void editarUsuario(Usuario usu)
 	{
 	PreparedStatement pstmt = null;
 	
-	String sql = "UPDATE usuarios SET nombre=?, apellido=?, email=?, cuil=?, rol=?, estado=? WHERE usuario=?";
-	
-	if(usuario.getCuil()==null)
-	{
-		usuario.setCuil("");
-	}
-	
+	String sqlSinPasswordSinEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, rol=?, WHERE usuario=?";
+	String sqlConPasswordSinEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, rol=?, password = ?, WHERE usuario=?";
+	String sqlSinPasswordConEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, rol=?, estado=?, WHERE usuario=?";
+	String sqlConPasswordConEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, rol=?, password = ?, estado=?, WHERE usuario=?";
+
 	try 
 	{
-		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-		pstmt.setString(1, usuario.getNombre());
-		pstmt.setString(2, usuario.getApellido());
-		pstmt.setString(3, usuario.getEmail());
-		pstmt.setString(4, usuario.getCuil());
-		pstmt.setString(5, usuario.getRol());
-		pstmt.setString(6, usuario.getEstado());
-		pstmt.setString(7, usuario.getUsername());
+		if(usu.getPassword() == null && usu.getEstado() == null ) //sin password ni estado
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlSinPasswordSinEstado);
+			pstmt.setString(6, usu.getUsername());
+		}
+		
+		else if(usu.getPassword() != null && usu.getEstado() == null ) //con password sin estado
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlConPasswordSinEstado);
+			pstmt.setString(6, usu.getPassword());
+			pstmt.setString(7, usu.getUsername());
+		}
+		
+		else if(usu.getPassword() == null && usu.getEstado() != null ) //sin password con estado
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlSinPasswordConEstado);
+			pstmt.setString(6, usu.getEstado());
+			pstmt.setString(7, usu.getUsername());
+		}
+		
+		else if(usu.getPassword() != null && usu.getEstado() != null ) //con password con estado
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlConPasswordConEstado);
+			pstmt.setString(6, usu.getPassword());
+			pstmt.setString(7, usu.getEstado());
+			pstmt.setString(8, usu.getUsername());
+		}
+		
+		pstmt.setString(1, usu.getNombre());
+		pstmt.setString(2, usu.getApellido());
+		pstmt.setString(3, usu.getEmail());
+		pstmt.setString(4, usu.getCuil());
+		pstmt.setString(5, usu.getRol());
+		
 	    pstmt.executeUpdate();
 		
 		
-	}catch(SQLException e) { 
-		e.printStackTrace();
-		}
 	}
+	catch(SQLException e) 
+	{ 
+		e.printStackTrace();
+	}
+	finally 
+	{
+			try 
+			{
+				
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();}
+	}	
 	
+	}
 
+	
+	
+	
 	public void ingresarUsuario(Usuario usuario)
 	{
 	PreparedStatement pstmt = null;

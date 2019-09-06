@@ -40,17 +40,27 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String cuil = request.getParameter("cuil");
 		String rol = request.getParameter("rol");
+		String estado = null;
 		String passwordActual = request.getParameter("passwordActual");
 		String passwordNuevo = request.getParameter("passwordNuevo");
 		String passwordNuevoRep = request.getParameter("passwordNuevoRep");
 		
 		UsuariosControlers usuCon = new UsuariosControlers();
 		
-		Usuario usu = usuCon.editarMiUsuario(username, nombre, apellido, email, cuil, rol, passwordActual, passwordNuevo, passwordNuevoRep);
+		String mensaje = usuCon.getMensajeEditarUsuario(username, passwordActual, passwordNuevo, passwordNuevoRep);
+		
+		Usuario usu = new Usuario();
+		
+		if(mensaje.equals("OK")) 
+		{
+			usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, passwordActual, passwordNuevo, passwordNuevoRep);
+			sesion.setAttribute("UsuarioAModificar", usu); 
+		
+		}
 		
 		
+		sesion.setAttribute("MensajeUsuarioAEditar", mensaje); 
 		
-		sesion.setAttribute("UsuarioAModificar", usu); 
 		response.sendRedirect("micuenta.jsp");
 		
 	}
