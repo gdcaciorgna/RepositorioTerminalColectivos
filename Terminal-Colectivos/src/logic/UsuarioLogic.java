@@ -3,23 +3,11 @@ package logic;
 
 public class UsuarioLogic {
 	
-	public String setNullCuil(String cuilInicial) 
-	{
-		String cuilFinal="";
-		
-		if(cuilInicial!=null) 
-		{
-			cuilFinal=cuilInicial;
-		}
-		
-		return cuilFinal;
-		
-		
-	}
+
 	
-	public String setNullRol (String rolInicial) 
+	public String setRolActivo (String rolInicial) 
 	{
-		String rolFinal="";
+		String rolFinal="activo";
 		
 		if(rolInicial != null) 
 		{
