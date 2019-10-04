@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controlers.UsuariosControlers;
+import util.Emailer;
 
 /**
  * Servlet implementation class RegistrarNuevaCuenta
@@ -71,6 +72,9 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 			else if(mensajeRegistro.equals("OK")) 
 			{
 				usuCon.setUsuario(username, password, nombre, apellido, email, cuil, rol);
+				
+				Emailer.getInstance().send(email, "¡Bienvenido a nuestro sitio web!", "Bienvenido" + nombre + " " +  apellido + " a nuestra plataforma digital de reserva y compra de pasajes. ¡Que tengas siempre un buen viaje! :) " );
+				
 		 		request.getSession().setAttribute("registroExitoso", "Te has registrado exitosamente!");	
 		 		response.sendRedirect("login.jsp");
 	
