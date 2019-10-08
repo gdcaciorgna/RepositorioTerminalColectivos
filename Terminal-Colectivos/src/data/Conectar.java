@@ -10,7 +10,7 @@ public class Conectar {
 	private String port = "3306";
 	private String user ="root";
 	private String pass="root";
-	private String db= "db_terminal_colectivos";
+	private String db= "db_terminal";
 	private Connection conn = null;
 	private int conectados = 0;
 	
