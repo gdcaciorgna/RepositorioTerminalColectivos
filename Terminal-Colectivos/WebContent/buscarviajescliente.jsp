@@ -68,6 +68,7 @@ else {fechaViajeDate = new Date();}
 			      <th>Hora de Salida</th>
 			      <th>Tipo de Servicio</th>
 			      <th>Precio</th>
+			      <th></th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -91,6 +92,18 @@ else {fechaViajeDate = new Date();}
 			   <td> <%= horaString %> </td>
 			   <td> <%= plan.getColectivo().getTipo_colectivo() %> </td>
 			   <td> <%= plan.getPrecio() %> </td>
+			   <td> 
+			   
+			   <form action="RedireccionReservarViaje" method="post">
+					   <input type="hidden" value=<%= fechaString %> name="fechaViajeString"/>
+					   <input type="hidden" value=<%= horaString %> name="horaViajeString"/>
+					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViajeString">
+					   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViajeString"/>
+				   
+				   <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i></button>
+			   </form> 
+				
+			    </td>
 			   	   
 			   </tr>
 		

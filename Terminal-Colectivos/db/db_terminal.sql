@@ -1,15 +1,15 @@
-CREATE DATABASE  IF NOT EXISTS `db_terminal` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
+CREATE DATABASE  IF NOT EXISTS `db_terminal` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_terminal`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_terminal
 -- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Server version	8.0.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,13 +23,13 @@ USE `db_terminal`;
 
 DROP TABLE IF EXISTS `colectivos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `colectivos` (
-  `patente` varchar(45) COLLATE utf8_bin NOT NULL,
+  `patente` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `id_empresa_colectivo` int(11) DEFAULT NULL,
   `capacidad` int(11) DEFAULT NULL,
-  `estado` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `tipo_colectivo` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `estado` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `tipo_colectivo` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`patente`),
   KEY `id_empresa_colectivo_idx` (`id_empresa_colectivo`),
   CONSTRAINT `id_empresa_colectivo` FOREIGN KEY (`id_empresa_colectivo`) REFERENCES `empresas_colectivos` (`id_empresa_colectivo`)
@@ -52,10 +52,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `companias_tarjetas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `companias_tarjetas` (
   `cod_compania` int(11) NOT NULL,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`cod_compania`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -76,10 +76,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `empresas_colectivos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `empresas_colectivos` (
   `id_empresa_colectivo` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id_empresa_colectivo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -100,7 +100,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `escalas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `escalas` (
   `cod_ruta` int(11) NOT NULL,
   `orden` int(11) NOT NULL,
@@ -127,11 +127,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `localidades`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `localidades` (
   `id_localidad` int(11) NOT NULL,
   `id_provincia` int(11) DEFAULT NULL,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `cod_postal` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_localidad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -153,11 +153,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pasajeros`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `pasajeros` (
   `dni` int(11) NOT NULL,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `apellido` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `apellido` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -178,11 +178,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pasajeros_reservas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `pasajeros_reservas` (
   `dni` int(11) NOT NULL,
   `fecha_res` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `usuario` varchar(45) COLLATE utf8_bin NOT NULL,
+  `usuario` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `asiento` int(11) DEFAULT NULL,
   PRIMARY KEY (`dni`,`fecha_res`,`usuario`),
   KEY `fecha_res_idx` (`fecha_res`),
@@ -209,13 +209,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `planes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `planes` (
   `fecha_hora_plan` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `patente` varchar(45) COLLATE utf8_bin NOT NULL,
+  `patente` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `cod_ruta` int(11) NOT NULL,
   `precio` double DEFAULT NULL,
-  `usuario_chofer` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `usuario_chofer` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`fecha_hora_plan`,`cod_ruta`,`patente`),
   KEY `plan_ruta_idx` (`cod_ruta`),
   KEY `patente_colectivo_idx` (`patente`),
@@ -242,12 +242,12 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `planes_reservas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `planes_reservas` (
   `fecha_res` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `fecha_hora_plan` timestamp NOT NULL,
-  `patente` varchar(45) COLLATE utf8_bin NOT NULL,
-  `usuario_reserva` varchar(45) COLLATE utf8_bin NOT NULL,
+  `patente` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `usuario_reserva` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `cod_ruta` int(11) NOT NULL,
   PRIMARY KEY (`fecha_res`,`fecha_hora_plan`,`patente`,`usuario_reserva`,`cod_ruta`),
   KEY `usuario_res_idx` (`usuario_reserva`),
@@ -276,10 +276,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `provincias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `provincias` (
   `id_provincia` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id_provincia`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -300,15 +300,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `reservas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `reservas` (
   `fecha_res` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `usuario` varchar(45) COLLATE utf8_bin NOT NULL,
+  `usuario` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `cant_pas` int(11) DEFAULT NULL,
   `fecha_canc` timestamp NULL DEFAULT NULL,
   `cod_compania` int(11) DEFAULT NULL,
   `nro_tarjeta` int(11) DEFAULT NULL,
-  `fecha_pago` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`fecha_res`,`usuario`),
   KEY `usuario_reserva_idx` (`usuario`),
   KEY `compania_reserva_idx` (`cod_compania`),
@@ -323,7 +322,7 @@ CREATE TABLE `reservas` (
 
 LOCK TABLES `reservas` WRITE;
 /*!40000 ALTER TABLE `reservas` DISABLE KEYS */;
-INSERT INTO `reservas` VALUES ('2019-01-01 03:00:00','gdcaciorgna',4,NULL,2,123856112,'2019-10-05 03:00:00'),('2019-07-10 03:00:00','admin',4,NULL,1,1251283,NULL);
+INSERT INTO `reservas` VALUES ('2019-01-01 03:00:00','gdcaciorgna',4,NULL,2,123856112),('2019-07-10 03:00:00','admin',4,NULL,1,1251283);
 /*!40000 ALTER TABLE `reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,10 +332,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `rutas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `rutas` (
   `cod_ruta` int(11) NOT NULL AUTO_INCREMENT,
-  `dias_sem` varchar(300) COLLATE utf8_bin DEFAULT NULL,
+  `dias_sem` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`cod_ruta`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -357,7 +356,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `terminales`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `terminales` (
   `cod_terminal` int(11) NOT NULL AUTO_INCREMENT,
   `id_localidad` int(11) DEFAULT NULL,
@@ -381,16 +380,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `usuarios` (
-  `usuario` varchar(45) COLLATE utf8_bin NOT NULL,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `apellido` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `rol` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `email` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `password` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `cuil` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `estado` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `usuario` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `apellido` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `rol` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `email` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `password` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `cuil` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `estado` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -401,7 +400,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES ('Usuario','UsuarioNombre','UsuarioApellido','cliente','usuario@hotmail.com','123456789',NULL,'activo'),('admin','AdminModificado','AdminModificado','admin','admin@hotmail.com','admin','','activo'),('admin2','Administrador2NomMod23','Administrador2ApeMod2','cliente','admin2@hotmail.com','admin123456',NULL,'activo'),('argarciaprado','Adriana Modificado','Garcia','admin','argarciapradomodificado@hotmail.com','123456789',NULL,'activo'),('cristianoronaldo','Cristiano','Ronaldo','chofer','crisronaldo@hotmail.com','123456789','20164755182','activo'),('fede123','fede','caciorgna','admin','qrwfgf@hotmail.com','123456789',NULL,'activo'),('federico','Federico','Caciorgna','chofer','f_caciorgna@hotmail.com','123456','12451231623','activo'),('gdcaciorgna','Gerardo Mod','Caciorgna','admin','gdcaciorgna@hotmail.com','123456',NULL,'activo'),('joaquinvilchez','Joaquin','Vilchez','admin','joaquinvilchez@hotmail.com','123456','','eliminado'),('lionelmessi','Lionel','Messi','admin','lionelmessi@hotmail.com','123456789','26027491673','activo'),('manubassi','Manuel','Bassi','admin','asdga@hotmail.com','123456789','','activo'),('neymarjr','Neymar','Junior','chofer','neymarjr@hotmail.com','123456789','20154825643','activo'),('osopratto','Lucas','Pratto','chofer','elosoprattogoleador@hotmail.com','123456789','10468254831','activo');
+INSERT INTO `usuarios` VALUES ('Usuario','UsuarioNombre','UsuarioApellido','cliente','usuario@hotmail.com','123456789',NULL,'activo'),('admin','AdminModificado','AdminModificado','admin','admin@hotmail.com','admin','','activo'),('admin2','Administrador2NomMod23','Administrador2ApeMod2','cliente','admin2@hotmail.com','admin123456',NULL,'activo'),('argarciaprado','Adriana Modificado','Garcia','admin','argarciapradomodificado@hotmail.com','123456789',NULL,'activo'),('clienteprueba','cliente','prueba','cliente','0592@hotmail.es','123456789',NULL,'activo'),('cristianoronaldo','Cristiano','Ronaldo','chofer','crisronaldo@hotmail.com','123456789','20164755182','activo'),('duilito','Cliente2','Duilio','cliente','gdecaciorgna@gmail.com','123456789',NULL,'activo'),('fede123','fede','caciorgna','admin','qrwfgf@hotmail.com','123456789',NULL,'activo'),('federico','Federico','Caciorgna','chofer','f_caciorgna@hotmail.com','123456','12451231623','activo'),('gdcaciorgna','Gerardo Mod','Caciorgna','admin','gdcaciorgna@hotmail.com','123456',NULL,'activo'),('joaquinvilchez','Joaquin','Vilchez','admin','joaquinvilchez@hotmail.com','123456','','eliminado'),('lionelmessi','Lionel','Messi','admin','lionelmessi@hotmail.com','123456789','26027491673','activo'),('manubassi','Manuel','Bassi','admin','asdga@hotmail.com','123456789','','activo'),('neymarjr','Neymar','Junior','chofer','neymarjr@hotmail.com','123456789','20154825643','activo'),('osopratto','Lucas','Pratto','chofer','elosoprattogoleador@hotmail.com','123456789','10468254831','activo');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -414,4 +413,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-07 23:47:19
+-- Dump completed on 2019-10-25 17:01:35
