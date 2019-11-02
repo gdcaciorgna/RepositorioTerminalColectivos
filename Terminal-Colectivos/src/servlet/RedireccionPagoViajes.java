@@ -1,12 +1,17 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import controlers.ABMPasajero;
+import entities.Pasajero;
 
 /**
  * Servlet implementation class RedireccionPagoViajes
@@ -29,8 +34,37 @@ public class RedireccionPagoViajes extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		HttpSession sesion= request.getSession();
-	
+		HttpSession sesion = request.getSession();
+		
+		int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
+		
+		ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
+		
+		//FORMA UN POCO RARA DE TRAER LOS DATOS, pero funciona
+		for(int i = 1; i<=cantPasajeros; i++)
+		{
+			Pasajero pasajero = new Pasajero();
+			String nombre =  request.getParameter("nombre"+i);
+			String apellido =  request.getParameter("apellido"+i);
+			int dni = Integer.parseInt(request.getParameter(("dni"+i)));
+
+			
+			pasajero.setDni(dni);
+			pasajero.setNombre(nombre);
+			pasajero.setApellido(apellido);
+			
+			pasajeros.add(pasajero);
+			
+			
+			ABMPasajero abmPasajero = new ABMPasajero();
+			abmPasajero.AddPasajero(pasajero);
+			
+		
+		}
+		
+		response.sendRedirect("pagarViaje.jsp");
+
+		
 
 	}
 
