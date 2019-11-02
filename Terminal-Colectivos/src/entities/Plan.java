@@ -59,6 +59,7 @@ public class Plan {
 	public void setChofer(Usuario chofer) {
 		this.chofer = chofer;
 	}
+
 	
 	
 	

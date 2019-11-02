@@ -1,31 +1,25 @@
-<%@page import="data.DataReservaPlan"%>
-<%@page import="data.DataPlan"%>
-<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-
 <%@include file="JSPFiles/includeimports.jsp" %>
 
-
-<title>Reservar Viaje</title>
+<meta charset="ISO-8859-1">
+<title>Definir pasajeros para el viaje</title>
 </head>
 <body>
+	
 
 <!-- INICIO - REDIRECCION A LOGIN --> 
 <%@ page import = "controlers.FechaControlers" %>
 <%@ page import = "entities.*" %>
-<%@ page import = "logic.PlanLogic" %>
 <%@ page import = "java.text.SimpleDateFormat" %>
 
 
 <%
 Usuario usuario;
 FechaControlers fCon = new FechaControlers(); 
-PlanLogic planl = new PlanLogic();
 
 %>
 
@@ -52,15 +46,7 @@ if(usuario!=null)
 HttpSession sesion = request.getSession();
 
 Plan viajeSeleccionado = (Plan) sesion.getAttribute("ViajeSeleccionado");
-
-ArrayList<Plan_Reserva> planes_reservas = new ArrayList<Plan_Reserva>();
-
-DataReservaPlan dresplan = new DataReservaPlan();
-
-planes_reservas = dresplan.getReservasPlan(viajeSeleccionado);
-
-int cantAsientosDisponibles = planl.calcularAsientosDisponibles(viajeSeleccionado, planes_reservas );
-
+int cantidadPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
 
 // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
 
@@ -74,60 +60,78 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 
 
 
+<%@ page import = "entities.Plan" %>
+
 
 <jsp:include page="JSPFiles/includemenu.jsp" />  
-
-
 <div class="container login-container">
 <div class="row">
     
     <div class="col-sm">
        <div class="login-form-1 center-block">
-             <h1>Reservar Viaje</h1>
+             <h1>Definir pasajeros</h1>
              
              <hr>
              
-             <div class="alert alert-light" role="alert">
-			 <div class="text-center text-justify"><b>---------- Datos del viaje ----------</b></div> <br>
+            <div class="alert alert-light" role="alert">
+			<div class="text-center text-justify"><b>---------- Datos del viaje ----------</b></div> <br>
 			 
 			 
 			 
 			  Fecha y hora del viaje: <b> <%= fechaHoraString %> </b> <br>
   			  Origen: <b><%= viajeSeleccionado.getOrigen() %></b> <br>
   			  Destino: <b><%= viajeSeleccionado.getDestino() %></b> <br>
- 			  Empresa: <b><%= viajeSeleccionado.getColectivo().getEmpresa().getNombre() %></b> <br>
-			  Precio: <b>$ <%= viajeSeleccionado.getPrecio() %></b> <br>
-			  Asientos Disponibles: <b><%= cantAsientosDisponibles  %></b> <br> <!-- SE DEBERÁ UTILIZAR UNA FUNCION PARA RESTAR CAPACIDAD TOTAL CON VIAJES VENDIDOS  -->
+ 			  Empresa: <b><%= viajeSeleccionado.getColectivo().getEmpresa().getNombre() %></b> 
+ 			  <hr>
+			  Precio por Boleto: <b>$ <%= viajeSeleccionado.getPrecio() %></b> <br>
+			  Cantidad de pasajeros: <b><%= cantidadPasajeros %></b> <br> <!-- SE DEBERÁ UTILIZAR UNA FUNCION PARA RESTAR CAPACIDAD TOTAL CON VIAJES VENDIDOS  -->
+			  Total: <b>$ <%= cantidadPasajeros*viajeSeleccionado.getPrecio() %></b> 
+			  <hr>
 			  
-			  
-			 
-			  </div>
-             <form action="RedireccionDefinirPasajeros" method = "post">
+			</div>
+            <form action="RedireccionPagoViajes" method = "post">
             
-              <div class="form-group row">
-              	<label for="cantidadPasajeros" class="col-sm-4 col-form-label">Cantidad de pasajeros: </label>
+            <% for(int i=1; i<=cantidadPasajeros; i++) { %>
+            
+            <div class="card bg-light" style="max-width: 24rem;">
+  			<div class="card-header">Pasajero n° <%=i %> </div>
+  			<div class="card-body">
+  			
+  			<div class="form-group row">
+              	<label for="cantidadPasajeros" class="col-sm-4 col-form-label">DNI </label>
              		<div class="col-sm-8">
-			    		<select name="cantidadPasajeros" id="cantidadPasajeros" class="form-control">
-					     
-					     <%
-					     for(int i=1; (i<= cantAsientosDisponibles) && (i<=10); i++) // SE DEBERÁ UTILIZAR UNA FUNCION PARA RESTAR CAPACIDAD TOTAL CON VIAJES VENDIDOS
-					     {
-					     
-					     %>
-					     <option value="<%= i %>"><%= i %></option> 
-					     <% 
-					     } 
-					     %>
-					    </select>
+			    		<input type="text" class="form-control" name="dni<%=i %>" id="dni<%=i %>" >
 					 </div>
 		 	</div>
 		 	
+  			<div class="form-group row">
+              	<label for="cantidadPasajeros" class="col-sm-4 col-form-label">Nombre </label>
+             		<div class="col-sm-8">
+			    		<input type="text" class="form-control" name="nombre<%=i %>" id="nombre<%=i %>" >
+					 </div>
+		 	</div>
 		 	
-		 	<div class="row justify-content-center">
+		 	<div class="form-group row">
+              	<label for="cantidadPasajeros" class="col-sm-4 col-form-label">Apellido </label>
+             		<div class="col-sm-8">
+			    		<input type="text" class="form-control" name="apellido<%=i %>" id="apellido<%=i %>" >
+					</div>
+		 	</div>
+		 	
+
+
+  			</div>
+			</div>
+			
+			<br>
+            
+            <% } %>
+		    
+		    <div class="row justify-content-center">
 			
 			<button type="submit" class="btn btn-primary">Avanzar</button>
 			</div>
-					  
+		    
 		    </form>
 		 
 
@@ -138,8 +142,5 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 </div>
 
 <jsp:include page="JSPFiles/includefooter.jsp" />  
-
-
-
 </body>
 </html>
