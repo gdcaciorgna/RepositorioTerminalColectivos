@@ -9,7 +9,7 @@ public class Reserva {
 	private int cant_pas;
 	private Date fecha_canc;
 	private Compania_Tarjeta compania_tarjeta;
-	private int nro_tarjeta;
+	private String nro_tarjeta;
 	
 	
 	public Date getFecha_res() {
@@ -42,10 +42,10 @@ public class Reserva {
 	public void setCompania_tarjeta(Compania_Tarjeta compania_tarjeta) {
 		this.compania_tarjeta = compania_tarjeta;
 	}
-	public int getNro_tarjeta() {
+	public String getNro_tarjeta() {
 		return nro_tarjeta;
 	}
-	public void setNro_tarjeta(int nro_tarjeta) {
+	public void setNro_tarjeta(String nro_tarjeta) {
 		this.nro_tarjeta = nro_tarjeta;
 	}
 	

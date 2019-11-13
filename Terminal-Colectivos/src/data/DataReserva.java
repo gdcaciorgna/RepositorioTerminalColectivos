@@ -11,6 +11,61 @@ import entities.Usuario;
 
 public class DataReserva {
 	
+	
+	public  void agregarReserva(Reserva reserva, int codCompania, String fechaHoraString) {
+		
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = "INSERT INTO reservas (fecha_res, usuario, cant_pas, fecha_canc, cod_compania, nro_tarjeta) VALUES (?,?,?,?,?,?) ";
+		
+		
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			pstmt.setString(1, fechaHoraString);
+			pstmt.setString(2, reserva.getUsuario().getUsername());
+			pstmt.setInt(3, reserva.getCant_pas());
+			pstmt.setString(4, null);
+			pstmt.setInt(5, reserva.getCant_pas());
+			pstmt.setString(6, reserva.getNro_tarjeta());
+		
+			
+		    pstmt.executeUpdate();
+			
+			
+		}catch(SQLException e) { e.printStackTrace();}
+		
+		finally 
+		{
+			try 
+			{
+				
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();}
+		}	
+		
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+	
+	
+	
 	public Reserva getByFechaUsuario(Date fecha_res, String username)
 	{
 		Usuario usuario_reserva = new Usuario();
@@ -63,7 +118,7 @@ public class DataReserva {
 				res.setFecha_canc(fecha_cancelacion);
 				res.setCompania_tarjeta(compania_tarjeta);
 				res.setUsuario(usuario_reserva);
-				res.setNro_tarjeta(rs.getInt("nro_tarjeta"));
+				res.setNro_tarjeta(("nro_tarjeta"));
 				
 				
 				
