@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controlers.ABMPasajero;
 import controlers.ABReserva;
 import entities.Usuario;
+import entities.Plan;
 import entities.Reserva;
 
 /**
@@ -36,21 +38,28 @@ public class RegistrarNuevaReserva extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();	
-		int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
+		
 		Reserva res= new Reserva();
-		Usuario usuario= (Usuario)sesion.getAttribute("usuarioActual");
-		res.setUsuario(usuario);
-		res.setCant_pas(cantPasajeros);
+		
 		res.setNro_tarjeta( request.getParameter("nro_tarjeta") );
-		String compania= request.getParameter("compania");
+	
 		
-		ABReserva creserva= new ABReserva();
-		creserva.setReserva(res, compania);
+		if( (res.getNro_tarjeta().length())== 16) {
+			Plan planSelec = (Plan) sesion.getAttribute("ViajeSeleccionado");
+			int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
+			Usuario usuario= (Usuario)sesion.getAttribute("usuarioActual");
+			res.setUsuario(usuario);
+			res.setCant_pas(cantPasajeros);
+			String compania= request.getParameter("compania");
+			
+			ABReserva creserva= new ABReserva();
+			creserva.setReserva(res, compania, planSelec);
 		
-		request.getSession().setAttribute("registroExitoso", "Tu compra se ha realizado con exito!");	
- 		response.sendRedirect("login.jsp");
-		
-		
+		request.getSession().setAttribute("reservaExitosa", "Tu compra se ha realizado con exito!");	
+ 		response.sendRedirect("misReservas.jsp");}
+		else {
+ 		request.getSession().setAttribute("errorTarjeta", "Los numeros de la tajeta no son correctos");	
+ 		response.sendRedirect("pagarviaje.jsp");}
 		
 		
 		

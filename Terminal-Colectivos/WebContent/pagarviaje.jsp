@@ -81,9 +81,9 @@ int cantidadPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
             <div class="form-group" >
                 <label for="compa">Compania de la tarjeta:</label>
                <select name=compania>
-                    <option value="Visa">Visa</option>
-                    <option value="Cabal">Cabal </option>
-                    <option value="Maestro">Maestro</option>
+                    <option value="Banco Santander Rio">Visa</option>
+                    <option value="Banco Macro">Cabal </option>
+                    <option value="Banco Credicop">Maestro</option>
                     
                     
                 </select>
@@ -123,6 +123,13 @@ int cantidadPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
             <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Confirmar pago" />
                  </div>
+          	<% String errorTarjeta = (String)session.getAttribute("errorTarjeta");%>
+			<% if(session.getAttribute("errorTarjeta")!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= errorTarjeta %>
+			</div> 
+			<%}%>
           
     
  

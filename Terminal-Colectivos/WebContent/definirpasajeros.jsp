@@ -130,6 +130,7 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 		    <div class="row justify-content-center">
 			
 			<button type="submit" class="btn btn-primary">Avanzar</button>
+			
 			</div>
 		    
 		    </form>

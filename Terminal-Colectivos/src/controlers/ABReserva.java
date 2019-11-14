@@ -2,11 +2,14 @@ package controlers;
 
 
 
-import java.util.Calendar;
+
+
+import java.util.Date;
 
 import data.DataCompaniaTarjeta;
 import data.DataReserva;
-
+import data.DataReservaPlan;
+import entities.Plan;
 import entities.Reserva;
 
 
@@ -16,24 +19,24 @@ public class ABReserva {
 	
 
 	
-	public void setReserva(Reserva reserva, String compania) 
+	public void setReserva(Reserva reserva, String compania, Plan planSelec) 
 	{
 		
+	
 		
 		
-		
-		
-		if( (reserva.getNro_tarjeta().length())== 16) {
+	
 			
 		DataCompaniaTarjeta dcomp=new DataCompaniaTarjeta();
 		int codigo= dcomp.getCodigo(compania);
 		DataReserva dres= new DataReserva();
-		Calendar fecha= Calendar.getInstance();
-		FechaControlers fec =new FechaControlers();
-		String fechaHoraString= fec.fechaActual(fecha);
 		
-		dres.agregarReserva(reserva, codigo , fechaHoraString);
-		}
+		FechaControlers fec =new FechaControlers();
+		Date fechaHoraActual= new Date();
+		Date fechaHoraPlan= planSelec.getFechaHora();
+		DataReservaPlan drplan= new DataReservaPlan();
+		dres.agregarReserva(reserva, codigo, fechaHoraActual);
+		drplan.agregarReserva(reserva, planSelec , fechaHoraActual,fechaHoraPlan );
 		
 	
 		

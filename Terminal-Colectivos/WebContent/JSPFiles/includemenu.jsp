@@ -26,7 +26,7 @@
       else { rol= "visitante" ;} %>
       <% if(!rol.equals("visitante")) {  %>
    <li class="nav-item">
-      <a class="nav-link" href="#"><i class="fas fa-suitcase"></i> Mis Reservas</a> <!-- Disponible para clientes, choferes y admin -->
+      <a class="nav-link" href="misReservas.jsp"><i class="fas fa-suitcase"></i> Mis Reservas</a> <!-- Disponible para clientes, choferes y admin -->
       </li>
     	<% } %>
     	    

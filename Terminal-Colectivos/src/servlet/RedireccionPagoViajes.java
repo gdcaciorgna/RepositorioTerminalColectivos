@@ -54,10 +54,11 @@ public class RedireccionPagoViajes extends HttpServlet {
 			pasajero.setApellido(apellido);
 			
 			pasajeros.add(pasajero);
-			
-			
 			ABMPasajero abmPasajero = new ABMPasajero();
 			abmPasajero.AddPasajero(pasajero);
+			
+			
+			
 			
 		
 		}

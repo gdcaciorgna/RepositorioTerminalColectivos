@@ -1,4 +1,5 @@
 <%@page import="controlers.FechaControlers"%>
+<%@page import="data.DataReserva"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -13,50 +14,51 @@
  <%@ page import = "java.text.SimpleDateFormat" %>
 
 <% 
-HttpSession sesion = request.getSession();
 
-String origenViaje = (String) sesion.getAttribute("origenViaje");
-String destinoViaje = (String) sesion.getAttribute("destinoViaje");
-java.util.Date fechaViajeDate = (Date) sesion.getAttribute("fechaViaje");
 String fechaViajeString = "-";
 FechaControlers fCon = new FechaControlers();
 
 
-if(origenViaje==null){origenViaje = "Cualquiera";}
-if(destinoViaje==null){destinoViaje = "Cualquiera";}
 
-if(fechaViajeDate !=null)
-{
-	fechaViajeString = fCon.dateToddMMyyyy(fechaViajeDate);
-}
-else {fechaViajeDate = new Date();}
+
+%>
+ <%@ page import = "entities.Usuario" %>
+<% Usuario usuario= new Usuario();%>
+ 
+<%
+
+usuario = (Usuario) session.getAttribute("usuarioActual");  
 
 %>
 
-
-<%@ page import = "data.DataPlan" %>
+<%@ page import = "data.DataReservaPlan" %>
     <%@ page import = "java.util.*" %>
-    <%@ page import = "entities.Plan" %>
+    <%@ page import = "entities.Plan_Reserva" %>
+     <%@ page import = "entities.Plan" %>
+      <%@ page import = "entities.Reserva" %>
     <% 
     //Inicialización de variables
-    DataPlan dplan = new DataPlan();
-    ArrayList<Plan> planes = dplan.getViajesDia(origenViaje, destinoViaje, fechaViajeDate);
-    Iterator<Plan> itr = planes.iterator();
-    Plan plan = null;
     
+    DataReservaPlan dres = new DataReservaPlan();
+    
+    
+    ArrayList<Plan_Reserva> reservas = dres.getReservasxUsuario(usuario);
+    Iterator<Plan_Reserva> itr = reservas.iterator();
+    Plan_Reserva reserva = null;
+  
     %>
 
 <jsp:include page="JSPFiles/includemenu.jsp" />  
 
-<div class="row">
+
 
 <!--Grid column-->
         <div class="col-sm-7 mb-4">
             <div class="container" style=" margin-top: 2%; margin-bottom: 2%;  ">
 			 <div class="container">
 			        <div class="table-wrapper">
-			                    <span class="float-left"><h4>Listado de <b>Viajes</b></h4></span>
-			                    <span class="float-right"><h5> <%=fechaViajeString %> | <%=origenViaje %> <i class="fas fa-chevron-circle-right"></i> <%= destinoViaje %> </h5></span>
+			                    <span class="float-left"><h4> Mis <b>Reservas</b></h4></span>
+			                  
 			        </div> 
 		     </div>
 			           
@@ -67,7 +69,8 @@ else {fechaViajeDate = new Date();}
 			      <th>Fecha de Salida</th>
 			      <th>Hora de Salida</th>
 			      <th>Tipo de Servicio</th>
-			      <th>Precio</th>
+			      <th>Cantidad de Pasajeros</th>
+			      
 			      <th></th>
 			    </tr>
 			  </thead>
@@ -76,14 +79,17 @@ else {fechaViajeDate = new Date();}
 			   <% 
 			   
 			   while(itr.hasNext()){
-				   plan = itr.next();
+				   reserva = itr.next();
+				   Plan plan=new Plan();
+				    plan= reserva.getPlan();
+				    Reserva res= new Reserva();
+				    res= reserva.getReserva();
 				   
 				// INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
-					 
-				   String fechaString = fCon.dateToddMMyyyy(plan.getFechaHora());
+					  String fechaString = fCon.dateToddMMyyyy(plan.getFechaHora());
 				   String horaString = fCon.dateTohhmm(plan.getFechaHora());
-				   String fechaHoraString = fCon.dateToddMMyyyyhhmm(plan.getFechaHora());
-				   				   
+				   String fechaHoraString = fCon.dateToddMMyyyyhhmm(plan.getFechaHora());		
+				   
 				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
 				   
 			    %>
@@ -91,16 +97,16 @@ else {fechaViajeDate = new Date();}
 			   <td> <%= fechaString %> </td>
 			   <td> <%= horaString %> </td>
 			   <td> <%= plan.getColectivo().getTipo_colectivo() %> </td>
-			   <td> <%= plan.getPrecio() %> </td>
+			   <td> <%= res.getCant_pas() %> </td>
 			   <td> 
 			   
 			   <form action="RedireccionReservarViaje" method="post">
-					   <input type="hidden" value=<%= fechaString %> name="fechaViajeString"/>
-					   <input type="hidden" value=<%= horaString %> name="horaViajeString"/>
-					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViajeString">
+					   <input type="hidden" value=<%= res.getFecha_res() %> name="fechaHoraReserva"/>
+					   <input type="hidden" value=<%= plan.getFechaHora() %> name="fechaHoraViaje"/>
+					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViaje">
 					   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViajeString"/>
-				   
-				   <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i></button>
+				       
+				   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 			   </form> 
 				
 			    </td>
@@ -116,19 +122,19 @@ else {fechaViajeDate = new Date();}
 			</div>
         </div>
         <!--Grid column-->
+			<% String reservaExitosa = (String)session.getAttribute("reservaExitosa");%>
+			<% if(session.getAttribute("reservaExitosa")!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			Felicitaciones: <%= reservaExitosa %>
+			</div> 
+			<%}%>
+			
+		
 
 
 
 
-<div class="col-sm-5">
-
-<form action="BuscarViajesCliente" method="post" class="text-center border border-light p-5">
-<jsp:include page="JSPFiles/includebuscadorviajes.jsp" />  
-</form>
-
-</div>
-
-</div>
 
 
 <jsp:include page="JSPFiles/includefooter.jsp" />

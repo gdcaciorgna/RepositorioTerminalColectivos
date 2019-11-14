@@ -32,7 +32,7 @@ public class PlanLogic {
 		for(Plan_Reserva plan_reserva : plan_reservas) {
 		    
 			
-				cantAsientosReservados++;
+				cantAsientosReservados= cantAsientosReservados + plan_reserva.getReserva().getCant_pas();
 			
 		}
 		

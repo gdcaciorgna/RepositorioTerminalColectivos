@@ -2,17 +2,23 @@ package data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 
+import controlers.FechaControlers;
+
 import entities.Compania_Tarjeta;
+
 import entities.Reserva;
+
 import entities.Usuario;
 
 public class DataReserva {
 	
 	
-	public  void agregarReserva(Reserva reserva, int codCompania, String fechaHoraString) {
+	public  void agregarReserva(Reserva reserva, int codCompania, Date fechaHoraActual) {
 		
 		
 		PreparedStatement pstmt = null;
@@ -24,11 +30,11 @@ public class DataReserva {
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setString(1, fechaHoraString);
+			pstmt.setTimestamp(1, new Timestamp(fechaHoraActual.getTime()));
 			pstmt.setString(2, reserva.getUsuario().getUsername());
 			pstmt.setInt(3, reserva.getCant_pas());
 			pstmt.setString(4, null);
-			pstmt.setInt(5, reserva.getCant_pas());
+			pstmt.setInt(5, codCompania);
 			pstmt.setString(6, reserva.getNro_tarjeta());
 		
 			
@@ -52,9 +58,96 @@ public class DataReserva {
 		
 		}
 		
+	public ArrayList<Reserva> getReservasxUsuario(Usuario usu)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Reserva> reservas = new ArrayList<>();
+		Reserva reserva = new Reserva();
+		String sql = "select * from reservas where usuario=?";
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			pstmt.setString(1, usu.getUsername());
+			
+			rs = pstmt.executeQuery(sql);
+			if(rs!=null) 
+			{
+				while(rs.next()) 
+				{
+					
+					reserva = setReserva(rs);
+					reservas.add(reserva);
+					
+
+				}
+			}
+		}
+		catch(SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				e.printStackTrace();
+			} 
+		}
+		return reservas;
+
+	}	
+		
+	private Reserva setReserva(ResultSet rs) 
+	{
+		Reserva reserva=new Reserva();
+		 Usuario usu = new Usuario();
+		Compania_Tarjeta comp= new Compania_Tarjeta();
+		 DataUsuario dusu = new DataUsuario();
+		DataCompaniaTarjeta dcomp= new DataCompaniaTarjeta();
+		 FechaControlers fec= new FechaControlers();
+	
+			
+	try {
 		
 		
+		String fecRes = rs.getString("fecha_res");
+		String usuario = rs.getString("usuario");
+		int cant_pas= rs.getInt("cant_pas");
+		String fecCan = rs.getString("fecha_can");
+		int cod_comp = rs.getInt("cod_compania");
+		String nroTar = rs.getString("nro_tarjeta");
+		Date fechaRes= fec.yyyyMMddhhmmToDate(fecRes);
+		Date fechaCan= fec.yyyyMMddhhmmToDate(fecCan);
+		usu= dusu.getByUsername(usuario);
+		comp = dcomp.getById(cod_comp);
 		
+		
+		reserva.setCant_pas(cant_pas);
+		reserva.setCompania_tarjeta(comp);
+		reserva.setUsuario(usu);
+		reserva.setFecha_canc(fechaCan);
+		reserva.setFecha_res(fechaRes);
+		reserva.setNro_tarjeta(nroTar);
+  
+		
+
+		
+					
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+			
+			return reserva;}
 		
 		
 		

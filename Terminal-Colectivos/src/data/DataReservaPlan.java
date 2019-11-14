@@ -4,21 +4,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import controlers.FechaControlers;
 import entities.Plan;
 import entities.Plan_Reserva;
 import entities.Reserva;
+import entities.Usuario;
 
 public class DataReservaPlan {
 	
-	private String sqlReservasdeunPlan = "SELECT pl.fecha_hora_plan, pl.cod_ruta, pl.patente, re.fecha_res, re.usuario, re.cant_pas, pl.precio, pl.usuario_chofer, re.fecha_canc, re.cod_compania, re.nro_tarjeta, pas.dni    \r\n" + 
+	private String sqlReservasdeunPlan = "SELECT DISTINCT pl.fecha_hora_plan, pl.cod_ruta, pl.patente, re.fecha_res, re.usuario, re.cant_pas, pl.precio, pl.usuario_chofer, re.fecha_canc, re.cod_compania, re.nro_tarjeta  \r\n" + 
 			"FROM reservas re \r\n" + 
 			"inner join planes_reservas pr on re.fecha_res = pr.fecha_res and re.usuario = pr.usuario_reserva \r\n" + 
 			"inner join planes pl on pl.fecha_hora_plan = pr.fecha_hora_plan and pr.cod_ruta = pl.cod_ruta and pr.patente = pl.patente \r\n" + 
 			"inner join pasajeros_reservas pasres on pasres.fecha_res = re.fecha_res and pasres.usuario = re.usuario \r\n" + 
-			"inner join pasajeros pas on pas.dni = pasres.dni \r\n" + 
 			"where pr.fecha_hora_plan = ? and pr.patente = ? and pr.cod_ruta = ? ";	
 
 	
@@ -108,6 +111,142 @@ public class DataReservaPlan {
 		return planes_reservas;
 
 	}
+	
+	
+	
+	public ArrayList<Plan_Reserva> getReservasxUsuario(Usuario usu)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Plan_Reserva> reservas = new ArrayList<>();
+		Plan_Reserva reserva = new Plan_Reserva();
+		String sql = "select * from planes_reservas where usuario_reserva=?";
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			pstmt.setString(1, usu.getUsername());
+			
+			rs = pstmt.executeQuery();
+			
+				while(rs.next()) 
+				{
+					
+					reserva = setPlanReserva(rs);
+					reservas.add(reserva);
+					
+
+				}
+			
+		}
+		catch(SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				e.printStackTrace();
+			} 
+		}
+		return reservas;
+
+	}	
+	
+	
+	private Plan_Reserva setPlanReserva(ResultSet rs) 
+	{   
+		
+		Plan_Reserva planRes= new Plan_Reserva();
+		Plan plan= new Plan();
+		Reserva reserva=new Reserva();
+		DataPlan dplan= new DataPlan();
+		 FechaControlers fec= new FechaControlers();
+	    DataReserva dres= new DataReserva();
+			
+	try {
+		String fecPlan=(rs.getString("fecha_hora_plan"));
+		Date fechaPlan=fec.fechaConGuion(fecPlan);
+		String patente= rs.getString("patente");
+		int codRuta=rs.getInt("cod_ruta");
+		plan=dplan.getByFechaHoraRutaPatente(fechaPlan, codRuta, patente);
+		String fecRes = rs.getString("fecha_res");
+		String username = rs.getString("usuario_reserva");
+		Date fechaRes= fec.fechaConGuion(fecRes);
+		reserva=dres.getByFechaUsuario( fechaRes,  username);
+		planRes.setReserva(reserva);
+		planRes.setPlan(plan);
+		
+		
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+			
+			return planRes;}
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public  void agregarReserva(Reserva reserva,Plan planSelec, Date fechaHoraRes,Date fechaHoraPlan) {
+		
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = "INSERT INTO planes_reservas (fecha_res, fecha_hora_plan, patente, usuario_reserva,  cod_ruta) VALUES (?,?,?,?,?) ";
+		
+		
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			pstmt.setTimestamp(1, new Timestamp(fechaHoraRes.getTime()));
+			pstmt.setTimestamp(2, new Timestamp(fechaHoraPlan.getTime()));
+			pstmt.setString(3, planSelec.getColectivo().getPatente());
+			pstmt.setString(4, reserva.getUsuario().getUsername());
+			pstmt.setInt(5, planSelec.getRuta().getCod_ruta());
+		
+			
+		    pstmt.executeUpdate();
+			
+			
+ 		}catch(SQLException e) { e.printStackTrace();}
+		
+		finally 
+		{
+			try 
+			{
+				
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();}
+		}}}
+	
+	
+	
+	
+	
+	
 
 
-}
