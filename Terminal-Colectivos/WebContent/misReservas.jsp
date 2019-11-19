@@ -107,14 +107,6 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 			   <td> 
 			   
 			   
-				   <form action="RedireccionVerReserva" method="post">
-						   <input type="hidden" value=<%= res.getFecha_res() %> name="fechaHoraReserva"/>
-						   <input type="hidden" value=<%= plan.getFechaHora() %> name="fechaHoraViaje"/>
-						   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViaje">
-						   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViajeString"/>
-					       
-					   <button type="submit" class="btn btn-info"><i class="fas fa-info"></i></button>
-				   </form>
 				   
 				   <form action="RedireccionCancelarViaje" method="post">
 						   <input type="hidden" value=<%= res.getFecha_res() %> name="fechaHoraReserva"/>
