@@ -100,14 +100,14 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
   			<div class="form-group row">
               	<label for="cantidadPasajeros" class="col-sm-4 col-form-label">DNI </label>
              		<div class="col-sm-8">
-			    		<input type="text" class="form-control" name="dni<%=i %>" id="dni<%=i %>" >
+			    		<input type="number" class="form-control" name="dni<%=i %>" id="dni<%=i %>" >
 					 </div>
 		 	</div>
 		 	
   			<div class="form-group row">
               	<label for="cantidadPasajeros" class="col-sm-4 col-form-label">Nombre </label>
              		<div class="col-sm-8">
-			    		<input type="text" class="form-control" name="nombre<%=i %>" id="nombre<%=i %>" >
+			    		<input type="text" class="form-control"  name="nombre<%=i %>" id="nombre<%=i %>" >
 					 </div>
 		 	</div>
 		 	

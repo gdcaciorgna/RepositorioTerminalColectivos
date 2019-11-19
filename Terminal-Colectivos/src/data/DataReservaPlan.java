@@ -4,8 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -206,7 +204,7 @@ public class DataReservaPlan {
 	
 	
 	
-	public  void agregarReserva(Reserva reserva,Plan planSelec, Date fechaHoraRes,Date fechaHoraPlan) {
+	public  void agregarReservaPlan(Plan_Reserva planReserva) {
 		
 		
 		PreparedStatement pstmt = null;
@@ -218,11 +216,11 @@ public class DataReservaPlan {
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setTimestamp(1, new Timestamp(fechaHoraRes.getTime()));
-			pstmt.setTimestamp(2, new Timestamp(fechaHoraPlan.getTime()));
-			pstmt.setString(3, planSelec.getColectivo().getPatente());
-			pstmt.setString(4, reserva.getUsuario().getUsername());
-			pstmt.setInt(5, planSelec.getRuta().getCod_ruta());
+			pstmt.setTimestamp(1, new Timestamp(planReserva.getReserva().getFecha_res().getTime()));
+			pstmt.setTimestamp(2, new Timestamp(planReserva.getPlan().getFechaHora().getTime()));
+			pstmt.setString(3, planReserva.getPlan().getColectivo().getPatente());
+			pstmt.setString(4, planReserva.getReserva().getUsuario().getUsername());
+			pstmt.setInt(5, planReserva.getPlan().getRuta().getCod_ruta());
 		
 			
 		    pstmt.executeUpdate();

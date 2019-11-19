@@ -54,14 +54,17 @@ public class RedireccionPagoViajes extends HttpServlet {
 			pasajero.setApellido(apellido);
 			
 			pasajeros.add(pasajero);
-			ABMPasajero abmPasajero = new ABMPasajero();
-			abmPasajero.AddPasajero(pasajero);
+			
+			
+			//ABMPasajero abmPasajero = new ABMPasajero();
+			//abmPasajero.AddPasajero(pasajero);
 			
 			
 			
 			
 		
 		}
+		sesion.setAttribute("pasajerosViaje", pasajeros); // Guarda los pasajeros del viaje en la sesion del usuario
 		
 		response.sendRedirect("pagarviaje.jsp");
 

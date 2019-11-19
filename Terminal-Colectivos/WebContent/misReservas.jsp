@@ -7,7 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <jsp:include page="JSPFiles/includeimports.jsp" />  
-<title>Reservar Viaje</title>
+<title>Mis Reservas</title>
 </head>
 <body>
 
@@ -68,6 +68,8 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 			      <th>Empresa</th>
 			      <th>Fecha de Salida</th>
 			      <th>Hora de Salida</th>
+			      <th>Origen</th>
+			      <th>Destino</th>
 			      <th>Tipo de Servicio</th>
 			      <th>Cantidad de Pasajeros</th>
 			      
@@ -85,8 +87,8 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 				    Reserva res= new Reserva();
 				    res= reserva.getReserva();
 				   
-				// INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
-					  String fechaString = fCon.dateToddMMyyyy(plan.getFechaHora());
+				   // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
+				   String fechaString = fCon.dateToddMMyyyy(plan.getFechaHora());
 				   String horaString = fCon.dateTohhmm(plan.getFechaHora());
 				   String fechaHoraString = fCon.dateToddMMyyyyhhmm(plan.getFechaHora());		
 				   
@@ -96,18 +98,36 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 			   <td> <%= plan.getColectivo().getEmpresa().getNombre() %> </td>
 			   <td> <%= fechaString %> </td>
 			   <td> <%= horaString %> </td>
+			   <td> <%= plan.getOrigen()  %> </td>
+			   <td> <%= plan.getDestino()  %> </td>
 			   <td> <%= plan.getColectivo().getTipo_colectivo() %> </td>
 			   <td> <%= res.getCant_pas() %> </td>
+
+			   
 			   <td> 
 			   
-			   <form action="RedireccionReservarViaje" method="post">
-					   <input type="hidden" value=<%= res.getFecha_res() %> name="fechaHoraReserva"/>
-					   <input type="hidden" value=<%= plan.getFechaHora() %> name="fechaHoraViaje"/>
-					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViaje">
-					   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViajeString"/>
-				       
-				   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-			   </form> 
+			   
+				   <form action="RedireccionVerReserva" method="post">
+						   <input type="hidden" value=<%= res.getFecha_res() %> name="fechaHoraReserva"/>
+						   <input type="hidden" value=<%= plan.getFechaHora() %> name="fechaHoraViaje"/>
+						   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViaje">
+						   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViajeString"/>
+					       
+					   <button type="submit" class="btn btn-info"><i class="fas fa-info"></i></button>
+				   </form>
+				   
+				   <form action="RedireccionCancelarViaje" method="post">
+						   <input type="hidden" value=<%= res.getFecha_res() %> name="fechaHoraReserva"/>
+						   <input type="hidden" value=<%= plan.getFechaHora() %> name="fechaHoraViaje"/>
+						   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViaje">
+						   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViajeString"/>
+					       
+					   <button type="submit" class="btn btn-danger"><i class="fas fa-window-close"></i></button>
+				   </form> 
+				   
+				   
+				   
+				  
 				
 			    </td>
 			   	   

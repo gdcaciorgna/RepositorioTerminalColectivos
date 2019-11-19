@@ -3,6 +3,8 @@ package data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import entities.Pasajero;
 
 public class DataPasajero {
@@ -48,41 +50,47 @@ public class DataPasajero {
 
 	}
 	
-	
-	public void addPasajero(Pasajero pasajero)
+	public void addPasajero(Pasajero pasajero) 
 	{
-	
-		PreparedStatement pstmt = null;
-	
 		String sql = "INSERT INTO pasajeros (dni, nombre, apellido) VALUES (?,?,?) ";
-	
-	
-	try 
-	{
-		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-		pstmt.setInt(1, pasajero.getDni());
-		pstmt.setString(2, pasajero.getNombre());
-		pstmt.setString(3, pasajero.getApellido());
+
 		
-	    pstmt.executeUpdate();
+		PreparedStatement pstmt = null;
 		
-	    
-		
-	}catch(SQLException e) { e.printStackTrace();}
 	
-	finally 
-	{
 		try 
 		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			pstmt.setInt(1, pasajero.getDni());
+			pstmt.setString(2, pasajero.getNombre());
+			pstmt.setString(3, pasajero.getApellido());
 			
-			if(pstmt!=null) {pstmt.close();}
-			Conectar.getInstancia().releasedConn();
+		    pstmt.executeUpdate();
 			
+		    
 			
-			
-		} catch(SQLException e) {e.printStackTrace();}
-	}	
+		}catch(SQLException e) { e.printStackTrace();}
+		
+		finally 
+		{
+			try 
+			{
+				
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();}
+		}	
 
 
+	
+
+	}
+	
+	
+	public void addPasajeros(ArrayList<Pasajero> pasajeros)
+	{
 	}
 }

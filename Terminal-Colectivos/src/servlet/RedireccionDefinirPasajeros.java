@@ -28,8 +28,11 @@ public class RedireccionDefinirPasajeros extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		HttpSession sesion= request.getSession();
+		
 		String cantidadPasajerosString = request.getParameter("cantidadPasajeros");
+		
 		
 		int cantidadPasajeros = Integer.parseInt(cantidadPasajerosString);
 		

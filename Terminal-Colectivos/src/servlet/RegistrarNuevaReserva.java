@@ -1,7 +1,8 @@
 package servlet;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controlers.ABMPasajero;
-import controlers.ABReserva;
 import entities.Usuario;
+import entities.Pasajero;
 import entities.Plan;
+import entities.Plan_Reserva;
 import entities.Reserva;
 
 /**
@@ -37,26 +39,40 @@ public class RegistrarNuevaReserva extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		HttpSession sesion = request.getSession();	
+		HttpSession sesion = request.getSession();
 		
+		Plan_Reserva planres = new Plan_Reserva();
 		Reserva res= new Reserva();
+		Date diaActual = new Date();
 		
-		res.setNro_tarjeta( request.getParameter("nro_tarjeta") );
+		String nroTarjeta = request.getParameter("nro_tarjeta");
 	
 		
-		if( (res.getNro_tarjeta().length())== 16) {
-			Plan planSelec = (Plan) sesion.getAttribute("ViajeSeleccionado");
-			int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
-			Usuario usuario= (Usuario)sesion.getAttribute("usuarioActual");
-			res.setUsuario(usuario);
-			res.setCant_pas(cantPasajeros);
-			String compania= request.getParameter("compania");
+		if( nroTarjeta.length() == 16) {
 			
-			ABReserva creserva= new ABReserva();
-			creserva.setReserva(res, compania, planSelec);
-		
-		request.getSession().setAttribute("reservaExitosa", "Tu compra se ha realizado con exito!");	
- 		response.sendRedirect("misReservas.jsp");}
+			Plan viajeSeleccionado = (Plan) sesion.getAttribute("ViajeSeleccionado");
+			
+			int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
+			
+			Usuario usuarioActual = (Usuario)sesion.getAttribute("usuarioActual");
+			
+			String codCompaniaString=  request.getParameter("codCompania");
+			
+			int codCompania = Integer.parseInt(codCompaniaString);
+			
+			@SuppressWarnings("unchecked")
+			ArrayList<Pasajero> pasajeros = (ArrayList<Pasajero>) sesion.getAttribute("pasajerosViaje");
+			
+			ABMPasajero abmPas = new ABMPasajero();
+			
+			
+			abmPas.registrarReserva(pasajeros, nroTarjeta, viajeSeleccionado, cantPasajeros, usuarioActual, codCompania);
+			
+			request.getSession().setAttribute("reservaExitosa", "Tu compra se ha realizado con exito!");	
+	 		response.sendRedirect("misReservas.jsp");
+
+			
+			}
 		else {
  		request.getSession().setAttribute("errorTarjeta", "Los numeros de la tajeta no son correctos");	
  		response.sendRedirect("pagarviaje.jsp");}

@@ -1,3 +1,4 @@
+<%@page import="controlers.ABMPasajero"%>
 <%@page import="data.DataReservaPlan"%>
 <%@page import="data.DataPlan"%>
 <%@page import="java.util.ArrayList"%>
@@ -26,7 +27,6 @@
 Usuario usuario;
 FechaControlers fCon = new FechaControlers(); 
 PlanLogic planl = new PlanLogic();
-
 %>
 
 
@@ -52,6 +52,8 @@ if(usuario!=null)
 HttpSession sesion = request.getSession();
 
 Plan viajeSeleccionado = (Plan) sesion.getAttribute("ViajeSeleccionado");
+
+
 
 ArrayList<Plan_Reserva> planes_reservas = new ArrayList<Plan_Reserva>();
 

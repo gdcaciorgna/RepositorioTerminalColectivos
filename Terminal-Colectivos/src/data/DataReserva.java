@@ -18,7 +18,7 @@ import entities.Usuario;
 public class DataReserva {
 	
 	
-	public  void agregarReserva(Reserva reserva, int codCompania, Date fechaHoraActual) {
+	public  void agregarReserva(Reserva reserva) {
 		
 		
 		PreparedStatement pstmt = null;
@@ -30,11 +30,11 @@ public class DataReserva {
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
-			pstmt.setTimestamp(1, new Timestamp(fechaHoraActual.getTime()));
+			pstmt.setTimestamp(1, new Timestamp(reserva.getFecha_res().getTime()));
 			pstmt.setString(2, reserva.getUsuario().getUsername());
 			pstmt.setInt(3, reserva.getCant_pas());
 			pstmt.setString(4, null);
-			pstmt.setInt(5, codCompania);
+			pstmt.setInt(5, reserva.getCompania_tarjeta().getCod_compania());
 			pstmt.setString(6, reserva.getNro_tarjeta());
 		
 			

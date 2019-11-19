@@ -60,7 +60,7 @@ public class DataLocalidad {
 		ResultSet rs = null;
 		
 		String sql = "SELECT * FROM localidades loc INNER JOIN provincias prov ON loc.id_provincia=prov.id_provincia where prov.nombre = 'Santa Fe' order by loc.nombre asc";
-		ArrayList<Localidad> localidades = new ArrayList<>();
+		ArrayList<Localidad> localidades = new ArrayList<Localidad>();
 		try 
 		{
 			stmt = Conectar.getInstancia().getConn().createStatement();

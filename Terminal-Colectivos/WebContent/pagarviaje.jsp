@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -47,13 +48,28 @@ HttpSession sesion = request.getSession();
 Plan viajeSeleccionado = (Plan) sesion.getAttribute("ViajeSeleccionado");
 int cantidadPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
 
-
+Date diaActual = new Date();
 
 %>
 
 
+	<%@ page import = "data.DataCompaniaTarjeta" %>
+    <%@ page import = "entities.Compania_Tarjeta" %>
+    <%@ page import = "java.util.*" %>
+    
+    
+    <% 
+    //Inicialización de variables
+    DataCompaniaTarjeta dCompaniaTarjeta = new DataCompaniaTarjeta();
+    ArrayList<Compania_Tarjeta> companiasTarjetas = dCompaniaTarjeta.getAll();
+    Iterator<Compania_Tarjeta> itr = companiasTarjetas.iterator();
+    Compania_Tarjeta companiaTarjeta = null;
+    
+    
+	%>
 
-<%@ page import = "entities.Plan" %>
+
+
 
 
 <jsp:include page="JSPFiles/includemenu.jsp" />  
@@ -78,15 +94,20 @@ int cantidadPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
                 <label for="cvv">CVV</label>
                 <input type="text" class="form-control" name="cvv">
             </div>
+            
             <div class="form-group" >
                 <label for="compa">Compania de la tarjeta:</label>
-               <select name=compania>
-                    <option value="Banco Santander Rio">Visa</option>
-                    <option value="Banco Macro">Cabal </option>
-                    <option value="Banco Credicop">Maestro</option>
-                    
-                    
+                <select name="codCompania">
+                
+                    <%    
+				    while(itr.hasNext()){
+				 	companiaTarjeta = itr.next();
+					%>
+					<option value="<%=companiaTarjeta.getCod_compania()%>"> <%=companiaTarjeta.getNombre() %></option>
+					<% } %>
+                                   
                 </select>
+            
             </div>
            
            
@@ -107,12 +128,20 @@ int cantidadPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
                     <option value="12">Diciembre</option>
                 </select>
                 <select>
-                    <option value="16"> 2019</option>
-                    <option value="17"> 2020</option>
-                    <option value="18"> 2021</option>
-                    <option value="19"> 2024</option>
-                    <option value="20"> 2025</option>
-                    <option value="21"> 2026</option>
+                <% 
+                
+                Calendar cal= Calendar.getInstance();
+				int anioActual= cal.get(Calendar.YEAR);
+				
+                for(int i=0; i<10; i++) 
+                { %>
+                
+             
+                
+                    <option value="<%= anioActual+i  %>"> <%= anioActual+i %> </option>
+                                       
+                <% } %>
+                    
                 </select>
                 
             </div>
