@@ -47,6 +47,32 @@ public class FechaControlers {
 		
 	}
 	
+	
+	public Date ddMMyyyyHHmmssToDate(String fechaHoraString) 
+	{
+		Date fechaDate = new Date();
+		try {
+			   
+			SimpleDateFormat formatter=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  	
+
+			fechaDate = formatter.parse(fechaHoraString);
+			
+			return fechaDate;
+
+		} 
+		
+		catch (ParseException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+		
+		
+		
+		
+		
+	}
+	
+	
 	public Date yyyyMMddToDate(String yyyymmdd)
 	{	
 		Date fechaDate = new Date();
@@ -123,10 +149,29 @@ public class FechaControlers {
 		return fechaHoraString;
 	}
 	
+	public String dateToHHmmss(Date fecha) 
+	{
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");  
+        String fechaHoraString = dateFormat.format(fecha);  
+		
+		return fechaHoraString;
+	}
+	
+	
 	public String dateToddMMyyyyhhmm(Date fecha) 
 	{
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");  
+        String fechaHoraString = dateFormat.format(fecha);  
+		
+		return fechaHoraString;
+	}
+	
+	public String dateToddMMyyyyhhmmss(Date fecha) 
+	{
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
         String fechaHoraString = dateFormat.format(fecha);  
 		
 		return fechaHoraString;

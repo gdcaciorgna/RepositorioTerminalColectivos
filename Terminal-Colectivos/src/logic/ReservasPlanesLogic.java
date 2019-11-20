@@ -62,7 +62,7 @@ public class ReservasPlanesLogic {
 		double importeADevolver = 0;
 		
 		Date fechaActual = new Date();
-		Date fechaLimite = this.SumaRestarFecha(planRes.getPlan().getFechaHora(), -15, "DAYS"); //Devuelve la fecha a partir
+		Date fechaLimite = this.SumaRestarFecha(planRes.getPlan().getFechaHora(), -7, "DAYS"); //Devuelve la fecha a partir
 		
 		if(fechaActual.compareTo(fechaLimite)<0) 
 		{	

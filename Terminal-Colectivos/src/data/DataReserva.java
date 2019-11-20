@@ -191,13 +191,14 @@ public class DataReserva {
 				
 				//INICIO - MANEJO DE FECHAS 
 				
-				Timestamp fecha_reserva_timestamp = rs.getTimestamp("fecha_res");
-				Date fecha_reserva = new Date(fecha_reserva_timestamp.getTime());
+				Date fecha_reserva = new Date(rs.getTimestamp("fecha_res").getTime());
 				
+				Timestamp fecha_cancelacionTimestamp = rs.getTimestamp("fecha_canc");
+				Date fecha_cancelacion = null;
 				
-				Timestamp fecha_cancelacion_timestamp = rs.getTimestamp("fecha_res");
-				Date fecha_cancelacion = new Date(fecha_cancelacion_timestamp.getTime());
-
+				if(fecha_cancelacionTimestamp!=null) {
+				 fecha_cancelacion =  new Date(fecha_cancelacionTimestamp.getTime()); 				
+				}
 				//FIN - MANEJO DE FECHAS 
 				
 				
@@ -256,7 +257,6 @@ public class DataReserva {
 		
 		String sql = "update reservas SET fecha_canc = ?  "
 				+ "where usuario = ? and fecha_res = ?;";
-		//tal vez existe alguna manera de realizar lo mismo, evitando quitar el foreing key check
 		
 		try 
 		{
@@ -295,6 +295,57 @@ public class DataReserva {
 			
 			
 		}
+	}
+	
+	public void limpiarAsientos(Reserva reserva) 
+	{
+		String sql = "UPDATE pasajeros_reservas pasres INNER JOIN\r\n" + 
+				"	reservas res\r\n" + 
+				"    on res.fecha_res = pasres.fecha_res and pasres.usuario = res.usuario\r\n" + 
+				"    \r\n" + 
+				"SET pasres.asiento = null\r\n" + 
+				"WHERE res.fecha_res = ? and res.usuario = ?";
+		
+		PreparedStatement pstmt = null;
+		
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			
+			Date fechaReserva = reserva.getFecha_res();
+		
+			pstmt.setTimestamp(1, new Timestamp(fechaReserva.getTime()));
+			pstmt.setString(2, reserva.getUsuario().getUsername());
+			
+			
+			pstmt.executeUpdate();			
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();
+			
+			}
+			
+			
+			
+		}
+		
+		
 	}
 	
 

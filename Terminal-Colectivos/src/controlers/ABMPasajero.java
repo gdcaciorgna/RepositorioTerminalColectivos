@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import data.DataCompaniaTarjeta;
-import data.DataEmpresa_Colectivo;
 import data.DataPasajero;
 import data.DataPasajeroReserva;
-import data.DataPlan;
 import data.DataReserva;
 import data.DataReservaPlan;
 import entities.Compania_Tarjeta;
-import entities.Empresa_Colectivo;
 import entities.Pasajero;
 import entities.Pasajero_Reserva;
 import entities.Plan;

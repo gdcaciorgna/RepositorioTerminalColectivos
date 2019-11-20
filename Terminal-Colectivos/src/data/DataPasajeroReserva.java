@@ -1,5 +1,6 @@
 package data;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -106,31 +107,32 @@ public class DataPasajeroReserva {
 		ResultSet rs = null;
 		String sql = "SELECT * FROM pasajeros_reservas pasres \r\n" + 
 				"INNER JOIN pasajeros pas  on pas.dni=pasres.dni \r\n" + 
-				" where fecha_res = ? and usuario = ? ";
+				" where pasres.fecha_res = ? and pasres.usuario = ? ";
 		ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
 		try 
 		{
+			java.util.Date fechaHoraReserva = reserva.getFecha_res();
+			
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql) ;
 			
-			pstmt.setTimestamp(1, new Timestamp(reserva.getFecha_res().getTime()));
+			pstmt.setTimestamp(1, new Timestamp(fechaHoraReserva.getTime()));
 			pstmt.setString(2, reserva.getUsuario().getUsername());
 			
 			
 			rs = pstmt.executeQuery();
 			
-			if(rs!=null) 
-			{
+			
 				while(rs.next()) 
 				{
 					Pasajero pasajero = new Pasajero();
 					
-					pasajero.setDni(rs.getInt("dni"));
+					pasajero.setDni(rs.getInt("pasres.dni"));
 					pasajero.setNombre(rs.getString("nombre"));
 					pasajero.setApellido(rs.getString("apellido"));
 					pasajeros.add(pasajero);
 					
 				}
-			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			

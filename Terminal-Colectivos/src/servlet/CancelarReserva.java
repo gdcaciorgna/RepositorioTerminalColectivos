@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data.DataReserva;
 import entities.Reserva;
 
 /**
@@ -44,8 +43,11 @@ public class CancelarReserva extends HttpServlet {
 		
 		double importeADevolver = (double) sesion.getAttribute("importeADevolver");
 		
-		DataReserva dRes = new DataReserva();
-		dRes.cancelarReserva(reservaACancelar); //Envio solo la reserva a cancelar. No hace falta el plan
+		
+		controlers.CancelarReserva cancelarReserva = new controlers.CancelarReserva();
+		
+		cancelarReserva.cancelarReserva(reservaACancelar);
+		
 		
 		
 		sesion.setAttribute("MensajeCancelarReserva", "Reserva cancelada con éxito. Se devolvió un total de $"+ importeADevolver + " pesos a la cuenta de la compañía " + reservaACancelar.getCompania_tarjeta().getNombre() + " a nombre de " + reservaACancelar.getUsuario().getNombre() + " " + reservaACancelar.getUsuario().getApellido()  );

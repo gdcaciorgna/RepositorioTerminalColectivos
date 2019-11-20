@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,8 +14,6 @@ import controlers.ABMPasajero;
 import entities.Usuario;
 import entities.Pasajero;
 import entities.Plan;
-import entities.Plan_Reserva;
-import entities.Reserva;
 
 /**
  * Servlet implementation class RegistrarNuevaReserva
@@ -41,9 +38,6 @@ public class RegistrarNuevaReserva extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
-		Plan_Reserva planres = new Plan_Reserva();
-		Reserva res= new Reserva();
-		Date diaActual = new Date();
 		
 		String nroTarjeta = request.getParameter("nro_tarjeta");
 	

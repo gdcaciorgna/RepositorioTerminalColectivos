@@ -36,9 +36,9 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
     DataReservaPlan dres = new DataReservaPlan();
     
     
-    ArrayList<Plan_Reserva> reservas = dres.getReservasxUsuario(usuario);
-    Iterator<Plan_Reserva> itr = reservas.iterator();
-    Plan_Reserva reserva = null;
+    ArrayList<Plan_Reserva> planes_reservas = dres.getReservasxUsuario(usuario);
+    Iterator<Plan_Reserva> itr = planes_reservas.iterator();
+    Plan_Reserva planReserva = null;
     
     
     FechaControlers fCon = new FechaControlers();
@@ -81,32 +81,27 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 			   <% 
 			   
 			   while(itr.hasNext()){
-				   reserva = itr.next();
-				   Plan plan=new Plan();
-				    plan= reserva.getPlan();
-				    Reserva res= new Reserva();
-				    res= reserva.getReserva();
-				   
+				   planReserva = itr.next();
 				   // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
 				   
-				   String fechaPlanString = fCon.dateToddMMyyyy(plan.getFechaHora());
-				   String horaPlanString = fCon.dateTohhmm(plan.getFechaHora());
-				   String fechaHoraPlanString = fCon.dateToddMMyyyyhhmm(plan.getFechaHora());		
+				   String fechaPlanString = fCon.dateToddMMyyyy(planReserva.getPlan().getFechaHora());
+				   String horaPlanString = fCon.dateTohhmm(planReserva.getPlan().getFechaHora());
+				   String fechaHoraPlanString = fCon.dateToddMMyyyyhhmm(planReserva.getPlan().getFechaHora());		
 				   
 				   
-				   String fechaReservaString = fCon.dateToddMMyyyy(reserva.getReserva().getFecha_res());
-				   String horaReservaString = fCon.dateTohhmm(reserva.getReserva().getFecha_res());
-				   String fechaHoraReservaString = fCon.dateToddMMyyyyhhmm(reserva.getReserva().getFecha_res());		
+				   String fechaReservaString = fCon.dateToddMMyyyy(planReserva.getReserva().getFecha_res());
+				   String horaReservaString = fCon.dateToHHmmss(planReserva.getReserva().getFecha_res());
+				   String fechaHoraReservaString = fCon.dateToddMMyyyyhhmmss(planReserva.getReserva().getFecha_res());		
 				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
 				   
 			    %>
-			   <td> <%= plan.getColectivo().getEmpresa().getNombre() %> </td>
+			   <td> <%= planReserva.getPlan().getColectivo().getEmpresa().getNombre() %> </td>
 			   <td> <%= fechaPlanString %> </td>
 			   <td> <%= horaPlanString %> </td>
-			   <td> <%= plan.getOrigen()  %> </td>
-			   <td> <%= plan.getDestino()  %> </td>
-			   <td> <%= plan.getColectivo().getTipo_colectivo() %> </td>
-			   <td> <%= res.getCant_pas() %> </td>
+			   <td> <%= planReserva.getPlan().getOrigen()  %> </td>
+			   <td> <%= planReserva.getPlan().getDestino()  %> </td>
+			   <td> <%= planReserva.getPlan().getColectivo().getTipo_colectivo() %> </td>
+			   <td> <%= planReserva.getReserva().getCant_pas() %> </td>
 
 			   
 			   <td> 
@@ -120,9 +115,9 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 						   <input type="hidden" value=<%= fechaPlanString %> name="fechaViaje"/>
 						   <input type="hidden" value=<%= horaPlanString %> name="horaViaje"/>
 						   
-						   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
-						   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViaje">
-						   <input type="hidden" value=<%= res.getUsuario().getUsername() %> name="UsernameReserva">
+						   <input type="hidden" value=<%= planReserva.getPlan().getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
+						   <input type="hidden" value=<%= planReserva.getPlan().getRuta().getCod_ruta() %> name="codRutaViaje">
+						   <input type="hidden" value=<%= planReserva.getReserva().getUsuario().getUsername() %> name="UsernameReserva">
 					       
 					   <button type="submit" class="btn btn-danger"><i class="fas fa-window-close"></i></button>
 				   </form> 
