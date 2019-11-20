@@ -68,7 +68,8 @@ public class RegistrarNuevaReserva extends HttpServlet {
 			
 			abmPas.registrarReserva(pasajeros, nroTarjeta, viajeSeleccionado, cantPasajeros, usuarioActual, codCompania);
 			
-			request.getSession().setAttribute("reservaExitosa", "Tu compra se ha realizado con exito!");	
+			sesion.setAttribute("reservaExitosa", "Tu compra se ha realizado con exito!");
+			sesion.setAttribute("MensajeCancelarReserva", null);
 	 		response.sendRedirect("misReservas.jsp");
 
 			

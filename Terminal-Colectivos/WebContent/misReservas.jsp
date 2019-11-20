@@ -13,15 +13,9 @@
 
  <%@ page import = "java.text.SimpleDateFormat" %>
 
-<% 
-
-String fechaViajeString = "-";
-FechaControlers fCon = new FechaControlers();
 
 
 
-
-%>
  <%@ page import = "entities.Usuario" %>
 <% Usuario usuario= new Usuario();%>
  
@@ -45,6 +39,12 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
     ArrayList<Plan_Reserva> reservas = dres.getReservasxUsuario(usuario);
     Iterator<Plan_Reserva> itr = reservas.iterator();
     Plan_Reserva reserva = null;
+    
+    
+    FechaControlers fCon = new FechaControlers();
+	
+ 
+
   
     %>
 
@@ -88,16 +88,21 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 				    res= reserva.getReserva();
 				   
 				   // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
-				   String fechaString = fCon.dateToddMMyyyy(plan.getFechaHora());
-				   String horaString = fCon.dateTohhmm(plan.getFechaHora());
-				   String fechaHoraString = fCon.dateToddMMyyyyhhmm(plan.getFechaHora());		
 				   
+				   String fechaPlanString = fCon.dateToddMMyyyy(plan.getFechaHora());
+				   String horaPlanString = fCon.dateTohhmm(plan.getFechaHora());
+				   String fechaHoraPlanString = fCon.dateToddMMyyyyhhmm(plan.getFechaHora());		
+				   
+				   
+				   String fechaReservaString = fCon.dateToddMMyyyy(reserva.getReserva().getFecha_res());
+				   String horaReservaString = fCon.dateTohhmm(reserva.getReserva().getFecha_res());
+				   String fechaHoraReservaString = fCon.dateToddMMyyyyhhmm(reserva.getReserva().getFecha_res());		
 				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
 				   
 			    %>
 			   <td> <%= plan.getColectivo().getEmpresa().getNombre() %> </td>
-			   <td> <%= fechaString %> </td>
-			   <td> <%= horaString %> </td>
+			   <td> <%= fechaPlanString %> </td>
+			   <td> <%= horaPlanString %> </td>
 			   <td> <%= plan.getOrigen()  %> </td>
 			   <td> <%= plan.getDestino()  %> </td>
 			   <td> <%= plan.getColectivo().getTipo_colectivo() %> </td>
@@ -108,11 +113,16 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 			   
 			   
 				   
-				   <form action="RedireccionCancelarViaje" method="post">
-						   <input type="hidden" value=<%= res.getFecha_res() %> name="fechaHoraReserva"/>
-						   <input type="hidden" value=<%= plan.getFechaHora() %> name="fechaHoraViaje"/>
+				   <form action="RedireccionCancelarReserva" method="post">
+						   <input type="hidden" value=<%= fechaReservaString %> name="fechaReserva"/>
+						   <input type="hidden" value=<%= horaReservaString %> name="horaReserva"/>
+						   
+						   <input type="hidden" value=<%= fechaPlanString %> name="fechaViaje"/>
+						   <input type="hidden" value=<%= horaPlanString %> name="horaViaje"/>
+						   
+						   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
 						   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViaje">
-						   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViajeString"/>
+						   <input type="hidden" value=<%= res.getUsuario().getUsername() %> name="UsernameReserva">
 					       
 					   <button type="submit" class="btn btn-danger"><i class="fas fa-window-close"></i></button>
 				   </form> 
@@ -139,6 +149,14 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 			<br>
 			<div class="alert alert-success" role="alert">
 			Felicitaciones: <%= reservaExitosa %>
+			</div> 
+			<%}%>
+			
+				<% String MensajeCancelarReserva = (String)session.getAttribute("MensajeCancelarReserva");%>
+			<% if(session.getAttribute("MensajeCancelarReserva")!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			Felicitaciones: <%= MensajeCancelarReserva %>
 			</div> 
 			<%}%>
 			

@@ -4,8 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+
+import entities.Pasajero;
 import entities.Pasajero_Reserva;
 import entities.Plan;
+import entities.Reserva;
 
 public class DataPasajeroReserva {
 	
@@ -95,8 +99,59 @@ public class DataPasajeroReserva {
 		return ultimoAsiento+1;
 
 	}
+	
+	public ArrayList<Pasajero> getPasajerosxReserva(Reserva reserva)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM pasajeros_reservas pasres \r\n" + 
+				"INNER JOIN pasajeros pas  on pas.dni=pasres.dni \r\n" + 
+				" where fecha_res = ? and usuario = ? ";
+		ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql) ;
+			
+			pstmt.setTimestamp(1, new Timestamp(reserva.getFecha_res().getTime()));
+			pstmt.setString(2, reserva.getUsuario().getUsername());
+			
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs!=null) 
+			{
+				while(rs.next()) 
+				{
+					Pasajero pasajero = new Pasajero();
+					
+					pasajero.setDni(rs.getInt("dni"));
+					pasajero.setNombre(rs.getString("nombre"));
+					pasajero.setApellido(rs.getString("apellido"));
+					pasajeros.add(pasajero);
+					
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				e.printStackTrace();
+			} 
+		}
 		
+	return pasajeros;	
+	}
 }
+		
+
 	
 	
 	

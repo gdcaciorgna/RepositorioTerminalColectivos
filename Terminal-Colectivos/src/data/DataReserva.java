@@ -57,6 +57,8 @@ public class DataReserva {
 		}	
 		
 		}
+	
+	
 		
 	public ArrayList<Reserva> getReservasxUsuario(Usuario usu)
 	{
@@ -246,6 +248,53 @@ public class DataReserva {
 
 		
 		
+	}
+	
+	public void cancelarReserva(Reserva reserva) 
+	{
+		PreparedStatement pstmt = null;
+		
+		String sql = "update reservas SET fecha_canc = ?  "
+				+ "where usuario = ? and fecha_res = ?;";
+		//tal vez existe alguna manera de realizar lo mismo, evitando quitar el foreing key check
+		
+		try 
+		{
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+			
+			Date fechaReserva = reserva.getFecha_res();
+			Date fechaCancelacion = reserva.getFecha_canc();
+		
+			pstmt.setTimestamp(1, new Timestamp(fechaCancelacion.getTime()));
+			pstmt.setString(2, reserva.getUsuario().getUsername());
+			pstmt.setTimestamp(3, new Timestamp(fechaReserva.getTime()));
+			
+			
+			pstmt.executeUpdate();			
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(pstmt!=null) {pstmt.close();}
+				Conectar.getInstancia().releasedConn();
+				
+				
+				
+			} catch(SQLException e) {e.printStackTrace();
+			
+			}
+			
+			
+			
+		}
 	}
 	
 
