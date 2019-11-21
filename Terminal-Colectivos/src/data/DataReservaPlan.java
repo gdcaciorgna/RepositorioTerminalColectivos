@@ -120,7 +120,7 @@ public class DataReservaPlan {
 		Plan_Reserva reserva = new Plan_Reserva();
 		String sql = "select * from planes_reservas planres \r\n" + 
 				"inner join reservas res\r\n" + 
-				"where usuario_reserva= ? and (fecha_canc is null)\r\n" + 
+				"where usuario_reserva= ? and res.fecha_res=planres.fecha_res and (fecha_canc is null)\r\n" + 
 				"order by fecha_hora_plan";
 		
 		try 

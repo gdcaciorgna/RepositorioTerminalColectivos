@@ -7,8 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import entities.Compania_Tarjeta;
-import entities.Localidad;
-import entities.Provincia;
 
 public class DataCompaniaTarjeta {
 	

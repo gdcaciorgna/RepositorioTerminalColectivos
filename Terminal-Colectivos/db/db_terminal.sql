@@ -168,7 +168,7 @@ CREATE TABLE `pasajeros` (
 
 LOCK TABLES `pasajeros` WRITE;
 /*!40000 ALTER TABLE `pasajeros` DISABLE KEYS */;
-INSERT INTO `pasajeros` VALUES (12345,'Pasajero de cliente 1','Apellidodepasajero1'),(151237,'Mauro','Camillato'),(1231238,'SADIA','IJSADI'),(1231241,'Admin','admin'),(1324798,'Marce','Gallardito'),(1923814,'Adriana','Garcia'),(2193816,'Valentino','Camillato'),(9182398,'Matias','Biscay'),(9812938,'Ayrton','Leites'),(12312389,'Marcelito','Gallardo'),(12351273,'Pasajero de cliente 2','apellidodepasajero2'),(12391283,'Amadeo','Carrizo'),(12398139,'Marcelo','Gallardo'),(12839147,'Marcelo','Gallardo'),(16121205,'Walter','Caciorgna'),(16575205,'Adriana','García'),(19128391,'Matías','Biscay'),(19231283,'David','Trezeguet'),(19238193,'Lucas','Alario'),(38884376,'Gerardo','Caciorgna'),(39468245,'Gino','Camillato'),(39487648,'Leandro','Zoch'),(43123512,'Federico','Caciorgna'),(123123981,'Admin','1231'),(123218378,'Sebastián','Driussi'),(123718937,'Peluca','Martinez'),(123981239,'Matías','Biscay'),(129831938,'Marce','Galladios'),(912839123,'Hernan','Bujan'),(1283192389,'Luis','Suarez');
+INSERT INTO `pasajeros` VALUES (1238914,'Federico','Caciorgna'),(12381923,'Federico','Caciorgna'),(19238137,'Walter','Caciorgna'),(38884376,'Gerardo','Caciorgna'),(138921839,'Adriana','Garcia'),(182392319,'asodkods','aksdos'),(1238912839,'Federico','Caciorgna'),(2138129128,'Federico','Caciorgna');
 /*!40000 ALTER TABLE `pasajeros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,9 +187,8 @@ CREATE TABLE `pasajeros_reservas` (
   PRIMARY KEY (`dni`,`fecha_res`,`usuario`),
   KEY `fecha_res_idx` (`fecha_res`),
   KEY `usuario_reserva_idx` (`usuario`),
-  CONSTRAINT `dni_pasajero` FOREIGN KEY (`dni`) REFERENCES `pasajeros` (`dni`),
-  CONSTRAINT `fecha_res` FOREIGN KEY (`fecha_res`) REFERENCES `reservas` (`fecha_res`),
-  CONSTRAINT `usuario_reserva_pasajero` FOREIGN KEY (`usuario`) REFERENCES `reservas` (`usuario`)
+  CONSTRAINT `dni_pasajero` FOREIGN KEY (`dni`) REFERENCES `pasajeros` (`dni`) ON UPDATE CASCADE,
+  CONSTRAINT `usuario_reserva_pasajero` FOREIGN KEY (`usuario`) REFERENCES `reservas` (`usuario`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -199,7 +198,7 @@ CREATE TABLE `pasajeros_reservas` (
 
 LOCK TABLES `pasajeros_reservas` WRITE;
 /*!40000 ALTER TABLE `pasajeros_reservas` DISABLE KEYS */;
-INSERT INTO `pasajeros_reservas` VALUES (1231238,'2019-11-19 00:52:22','admin',1),(1324798,'2019-11-19 00:26:10','mgallardo',1),(1923814,'2019-11-19 01:17:34','admin',3),(12312389,'2019-11-19 00:20:19','mgallardo',1),(12391283,'2019-11-19 01:17:34','admin',4),(16121205,'2019-01-01 03:00:00','gdcaciorgna',31),(16121205,'2019-07-10 03:00:00','admin',1),(16121205,'2019-11-19 01:17:34','admin',2),(16575205,'2019-01-01 03:00:00','gdcaciorgna',32),(16575205,'2019-07-10 03:00:00','admin',2),(19128391,'2019-11-19 00:53:53','admin',2),(19238193,'2019-11-19 00:04:11','mgallardo',0),(38884376,'2019-01-01 03:00:00','gdcaciorgna',33),(38884376,'2019-07-10 03:00:00','admin',3),(38884376,'2019-11-19 01:17:34','admin',1),(39468245,'2019-07-28 03:00:00','duilito',5),(39487648,'2019-07-28 03:00:00','duilito',6),(43123512,'2019-01-01 03:00:00','gdcaciorgna',34),(43123512,'2019-07-10 03:00:00','admin',4),(123218378,'2019-11-19 00:04:11','mgallardo',0),(123981239,'2019-11-18 23:59:23','mgallardo',0),(1283192389,'2019-11-19 00:08:17','mgallardo',0);
+INSERT INTO `pasajeros_reservas` VALUES (1238914,'2019-11-21 06:51:27','admin',NULL),(12381923,'2019-11-20 23:23:33','admin',NULL),(19238137,'2019-11-20 23:23:33','admin',NULL),(38884376,'2019-11-20 23:23:33','admin',NULL),(38884376,'2019-11-20 23:56:36','duilito',NULL),(38884376,'2019-11-20 23:56:50','duilito',NULL),(38884376,'2019-11-21 06:51:27','admin',NULL),(138921839,'2019-11-20 23:23:33','admin',NULL),(182392319,'2019-11-20 23:56:36','duilito',NULL),(1238912839,'2019-11-20 23:48:05','admin',NULL),(2138129128,'2019-11-20 23:51:59','duilito',1);
 /*!40000 ALTER TABLE `pasajeros_reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +231,7 @@ CREATE TABLE `planes` (
 
 LOCK TABLES `planes` WRITE;
 /*!40000 ALTER TABLE `planes` DISABLE KEYS */;
-INSERT INTO `planes` VALUES ('2019-01-07 03:30:00','AGW-351',1,1515,'osopratto'),('2019-01-08 23:20:00','AGW-351',1,2500.54,'lionelmessi'),('2019-01-14 10:30:00','ANX-123',2,12314,'federico'),('2019-01-15 13:30:00','AYE-152',1,1500.5,'lionelmessi'),('2019-01-29 16:45:00','AGW-351',1,2500,'lionelmessi'),('2019-08-10 02:35:00','AGW-351',1,1037,'lionelmessi'),('2019-08-30 18:45:00','AYE-152',2,1500.5,'cristianoronaldo'),('2019-09-08 13:30:00','ANX-123',2,1239,'neymarjr'),('2019-11-19 21:00:00','AGW-351',1,500,'cristianoronaldo'),('2020-01-01 16:30:00','ABC-123',1,523,'lionelmessi'),('2020-01-01 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-01 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-02 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-02 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-03 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-03 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-04 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-04 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-05 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-05 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-06 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-06 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-07 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-07 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-07-20 17:26:00','YEM-194',1,1342,'federico');
+INSERT INTO `planes` VALUES ('2019-01-07 03:30:00','AGW-351',1,1515,'osopratto'),('2019-01-08 23:20:00','AGW-351',1,2500.54,'lionelmessi'),('2019-01-14 10:30:00','ANX-123',2,12314,'federico'),('2019-01-15 13:30:00','AYE-152',1,1500.5,'lionelmessi'),('2019-01-29 16:45:00','AGW-351',1,2500,'lionelmessi'),('2019-08-10 02:35:00','AGW-351',1,1037,'lionelmessi'),('2019-08-30 18:45:00','AYE-152',2,1500.5,'cristianoronaldo'),('2019-09-08 13:30:00','ANX-123',2,1239,'neymarjr'),('2019-11-19 21:00:00','AGW-351',1,500,'cristianoronaldo'),('2019-11-25 21:00:00','AGW-351',2,600,'neymarjr'),('2020-01-01 16:30:00','ABC-123',1,523,'lionelmessi'),('2020-01-01 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-01 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-02 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-02 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-03 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-03 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-04 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-04 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-05 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-05 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-06 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-06 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-07 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-07 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-07-20 17:26:00','YEM-194',1,1342,'federico');
 /*!40000 ALTER TABLE `planes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,10 +252,10 @@ CREATE TABLE `planes_reservas` (
   KEY `usuario_res_idx` (`usuario_reserva`),
   KEY `ruta_plan_idx` (`cod_ruta`),
   KEY `patente_plan_idx` (`patente`),
-  CONSTRAINT `fecha_reserva` FOREIGN KEY (`fecha_res`) REFERENCES `reservas` (`fecha_res`),
-  CONSTRAINT `patente_plan` FOREIGN KEY (`patente`) REFERENCES `planes` (`patente`),
-  CONSTRAINT `ruta_plan` FOREIGN KEY (`cod_ruta`) REFERENCES `planes` (`cod_ruta`),
-  CONSTRAINT `usuario_res` FOREIGN KEY (`usuario_reserva`) REFERENCES `usuarios` (`usuario`)
+  CONSTRAINT `fecha_reserva` FOREIGN KEY (`fecha_res`) REFERENCES `reservas` (`fecha_res`) ON UPDATE CASCADE,
+  CONSTRAINT `patente_plan` FOREIGN KEY (`patente`) REFERENCES `planes` (`patente`) ON UPDATE CASCADE,
+  CONSTRAINT `ruta_plan` FOREIGN KEY (`cod_ruta`) REFERENCES `planes` (`cod_ruta`) ON UPDATE CASCADE,
+  CONSTRAINT `usuario_res` FOREIGN KEY (`usuario_reserva`) REFERENCES `usuarios` (`usuario`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -266,7 +265,7 @@ CREATE TABLE `planes_reservas` (
 
 LOCK TABLES `planes_reservas` WRITE;
 /*!40000 ALTER TABLE `planes_reservas` DISABLE KEYS */;
-INSERT INTO `planes_reservas` VALUES ('2019-07-10 03:00:00','2020-01-02 19:00:00','ABC-123','admin',1),('2019-07-28 03:00:00','2020-01-02 19:00:00','ABC-123','duilito',1),('2019-11-18 23:52:42','2020-01-01 16:30:00','ABC-123','mgallardo',1),('2019-11-18 23:59:23','2020-01-01 16:30:00','ABC-123','mgallardo',1),('2019-11-19 00:04:11','2020-01-01 16:30:00','ABC-123','mgallardo',1),('2019-11-19 00:08:17','2020-01-01 16:30:00','ABC-123','mgallardo',1),('2019-11-19 00:14:19','2020-01-01 19:00:00','ABC-123','mgallardo',1),('2019-11-19 00:16:45','2020-01-01 19:00:00','ABC-123','mgallardo',1),('2019-11-19 00:20:19','2020-01-01 16:30:00','ABC-123','mgallardo',1),('2019-11-19 00:21:31','2020-01-01 16:30:00','ABC-123','mgallardo',1),('2019-11-19 00:26:10','2020-01-01 19:00:00','ABC-123','mgallardo',1),('2019-11-19 00:31:37','2020-01-02 19:00:00','ABC-123','mgallardo',1),('2019-11-19 00:34:43','2020-01-01 16:30:00','ABC-123','admin',1),('2019-11-19 00:52:22','2020-01-04 19:00:00','ABC-123','admin',1),('2019-11-19 00:53:53','2020-01-04 19:00:00','ABC-123','admin',1),('2019-11-19 01:17:34','2019-11-19 21:00:00','AGW-351','admin',1),('2019-01-01 03:00:00','2020-01-01 23:00:00','ABC-123','gdcaciorgna',2),('2019-11-19 00:09:40','2020-01-01 23:00:00','ABC-123','mgallardo',2),('2019-11-19 00:28:47','2020-01-04 23:00:00','ABC-123','mgallardo',2),('2019-11-19 00:45:11','2020-01-02 23:00:00','ABC-123','admin',2),('2019-11-19 00:49:47','2020-01-01 23:00:00','ABC-123','admin',2);
+INSERT INTO `planes_reservas` VALUES ('2019-11-20 23:48:05','2020-01-03 19:00:00','ABC-123','admin',1),('2019-11-20 23:56:36','2020-01-03 19:00:00','ABC-123','duilito',1),('2019-11-21 06:51:27','2020-01-01 16:30:00','ABC-123','admin',1),('2019-11-20 22:12:39','2019-11-25 21:00:00','AGW-351','admin',2),('2019-11-20 23:51:59','2020-01-01 23:00:00','ABC-123','duilito',2),('2019-11-21 05:59:08','2020-01-02 23:00:00','ABC-123','duilito',2);
 /*!40000 ALTER TABLE `planes_reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,8 +310,8 @@ CREATE TABLE `reservas` (
   PRIMARY KEY (`fecha_res`,`usuario`),
   KEY `usuario_reserva_idx` (`usuario`),
   KEY `compania_reserva_idx` (`cod_compania`),
-  CONSTRAINT `compania_reserva` FOREIGN KEY (`cod_compania`) REFERENCES `companias_tarjetas` (`cod_compania`),
-  CONSTRAINT `usuario_reserva` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`usuario`)
+  CONSTRAINT `compania_reserva` FOREIGN KEY (`cod_compania`) REFERENCES `companias_tarjetas` (`cod_compania`) ON UPDATE CASCADE,
+  CONSTRAINT `usuario_reserva` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`usuario`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -322,7 +321,7 @@ CREATE TABLE `reservas` (
 
 LOCK TABLES `reservas` WRITE;
 /*!40000 ALTER TABLE `reservas` DISABLE KEYS */;
-INSERT INTO `reservas` VALUES ('2019-01-01 03:00:00','gdcaciorgna',4,NULL,2,'123856112'),('2019-07-10 03:00:00','admin',4,NULL,1,'1251283'),('2019-07-28 03:00:00','duilito',2,NULL,2,'454884'),('2019-11-18 23:52:42','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-18 23:59:23','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-19 00:04:11','mgallardo',2,NULL,1,'1234567891234567'),('2019-11-19 00:08:17','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-19 00:09:40','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-19 00:14:19','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-19 00:16:45','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-19 00:20:19','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-19 00:21:31','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-19 00:26:10','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-19 00:28:47','mgallardo',1,NULL,1,'1234567891234567'),('2019-11-19 00:31:37','mgallardo',2,NULL,1,'1234567891234567'),('2019-11-19 00:34:43','admin',1,NULL,1,'1234567891234567'),('2019-11-19 00:45:11','admin',1,NULL,1,'1234567891234567'),('2019-11-19 00:49:47','admin',1,NULL,1,'1234567891234567'),('2019-11-19 00:52:22','admin',1,NULL,1,'1234567891234567'),('2019-11-19 00:53:53','admin',1,NULL,2,'1234567891234567'),('2019-11-19 01:17:34','admin',4,NULL,3,'1234567891234567');
+INSERT INTO `reservas` VALUES ('2019-11-20 22:12:39','admin',4,'2019-11-20 22:12:40',1,'1645172645361928'),('2019-11-20 23:48:05','admin',1,'2019-11-20 23:48:05',1,'1847184718273947'),('2019-11-20 23:51:59','duilito',1,NULL,1,'1234567891234567'),('2019-11-20 23:56:36','duilito',2,'2019-11-20 23:56:36',1,'1234567891234567'),('2019-11-21 05:59:08','duilito',1,'2019-11-21 05:59:09',1,'1234567891234567'),('2019-11-21 06:51:27','admin',2,'2019-11-21 06:51:27',1,'1234567891234567');
 /*!40000 ALTER TABLE `reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -400,7 +399,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES ('Usuario','UsuarioNombre','UsuarioApellido','cliente','usuario@hotmail.com','123456789',NULL,'activo'),('admin','AdminModificado','AdminModificado','admin','admin@hotmail.com','admin','','activo'),('admin2','Administrador2NomMod23','Administrador2ApeMod2','cliente','admin2@hotmail.com','admin123456',NULL,'activo'),('argarciaprado','Adriana Modificado','Garcia','admin','argarciapradomodificado@hotmail.com','123456789',NULL,'activo'),('cliente','Cliente','ApellidoCliente','cliente','cliente123@hotmail.com','123456789',NULL,'activo'),('clienteprueba','cliente','prueba','cliente','0592@hotmail.es','123456789',NULL,'activo'),('cristianoronaldo','Cristiano','Ronaldo','chofer','crisronaldo@hotmail.com','123456789','20164755182','activo'),('duilito','Cliente2','Duilio','cliente','gdecaciorgna@gmail.com','123456789',NULL,'activo'),('fede123','fede','caciorgna','admin','qrwfgf@hotmail.com','123456789',NULL,'activo'),('federico','Federico','Caciorgna','chofer','f_caciorgna@hotmail.com','123456','12451231623','activo'),('gdcaciorgna','Gerardo Mod','Caciorgna','admin','gdcaciorgna@hotmail.com','123456',NULL,'activo'),('joaquinvilchez','Joaquin','Vilchez','admin','joaquinvilchez@hotmail.com','123456','','eliminado'),('lionelmessi','Lionel','Messi','admin','lionelmessi@hotmail.com','123456789','26027491673','activo'),('manubassi','Manuel','Bassi','admin','asdga@hotmail.com','123456789','','activo'),('mgallardo','Marcelo','Gallardo','cliente','mgallardo@hotmail.com','123456789',NULL,'activo'),('neymarjr','Neymar','Junior','chofer','neymarjr@hotmail.com','123456789','20154825643','activo'),('osopratto','Lucas','Pratto','chofer','elosoprattogoleador@hotmail.com','123456789','10468254831','activo');
+INSERT INTO `usuarios` VALUES ('Usuario','UsuarioNombre','UsuarioApellido','cliente','usuario@hotmail.com','123456789',NULL,'activo'),('admin','Admin','Admin','admin','admin@hotmail.com','admin','','activo'),('admin2','Administrador2NomMod23','Administrador2ApeMod2','cliente','admin2@hotmail.com','admin123456',NULL,'activo'),('argarciaprado','Adriana Modificado','Garcia','admin','argarciapradomodificado@hotmail.com','123456789',NULL,'activo'),('cliente','Cliente','ApellidoCliente','cliente','cliente123@hotmail.com','123456789',NULL,'activo'),('clienteprueba','cliente','prueba','cliente','0592@hotmail.es','123456789',NULL,'activo'),('cristianoronaldo','Cristiano','Ronaldo','chofer','crisronaldo@hotmail.com','123456789','20164755182','activo'),('duilito','Cliente2','Duilio','cliente','gdecaciorgna@gmail.com','123456789',NULL,'activo'),('fede123','fede','caciorgna','admin','qrwfgf@hotmail.com','123456789',NULL,'activo'),('federico','Federico','Caciorgna','chofer','f_caciorgna@hotmail.com','123456','12451231623','activo'),('gdcaciorgna','Gerardo Mod','Caciorgna','admin','gdcaciorgna@hotmail.com','123456',NULL,'activo'),('joaquinvilchez','Joaquin','Vilchez','admin','joaquinvilchez@hotmail.com','123456','','eliminado'),('lionelmessi','Lionel','Messi','admin','lionelmessi@hotmail.com','123456789','26027491673','activo'),('manubassi','Manuel','Bassi','admin','asdga@hotmail.com','123456789','','activo'),('mgallardo','Marcelo','Gallardo','cliente','mgallardo@hotmail.com','123456789',NULL,'activo'),('neymarjr','Neymar','Junior','chofer','neymarjr@hotmail.com','123456789','20154825643','activo'),('osopratto','Lucas','Pratto','chofer','elosoprattogoleador@hotmail.com','123456789','10468254831','activo');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -413,4 +412,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-18 23:07:44
+-- Dump completed on 2019-11-21  3:54:01

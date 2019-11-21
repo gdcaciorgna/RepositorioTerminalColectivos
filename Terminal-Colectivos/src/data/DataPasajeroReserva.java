@@ -107,7 +107,8 @@ public class DataPasajeroReserva {
 		ResultSet rs = null;
 		String sql = "SELECT * FROM pasajeros_reservas pasres \r\n" + 
 				"INNER JOIN pasajeros pas  on pas.dni=pasres.dni \r\n" + 
-				" where pasres.fecha_res = ? and pasres.usuario = ? ";
+				"INNER JOIN reservas res on res.fecha_res = pasres.fecha_res and res.usuario= pasres.usuario\r\n" +  
+				" where pasres.fecha_res = ? and pasres.usuario = ? and (res.fecha_canc is null)";
 		ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
 		try 
 		{
