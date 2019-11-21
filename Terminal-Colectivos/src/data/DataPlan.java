@@ -70,6 +70,8 @@ public class DataPlan {
 
 	}
 	
+	
+	
 	public ArrayList<Plan> getViajesDia(String origen, String destino, Date fechaViaje)
 	{
 		

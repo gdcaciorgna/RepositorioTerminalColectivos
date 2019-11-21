@@ -161,42 +161,84 @@ public class DataReservaPlan {
 	}	
 	
 	
-	private Plan_Reserva setPlanReserva(ResultSet rs) 
-	{   
+
 		
-		Plan_Reserva planRes= new Plan_Reserva();
-		Plan plan= new Plan();
-		Reserva reserva=new Reserva();
-		DataPlan dplan= new DataPlan();
-		 FechaControlers fec= new FechaControlers();
-	    DataReserva dres= new DataReserva();
-			
-	try {
-		String fecPlan=(rs.getString("fecha_hora_plan"));
-		Date fechaPlan=fec.fechaConGuion(fecPlan);
-		String patente= rs.getString("patente");
-		int codRuta=rs.getInt("cod_ruta");
-		plan=dplan.getByFechaHoraRutaPatente(fechaPlan, codRuta, patente);
-		
-		String fecRes = rs.getString("fecha_res");
-		String username = rs.getString("usuario_reserva");
-		Date fechaRes= fec.fechaConGuion(fecRes);
-		reserva=dres.getByFechaUsuario( fechaRes,  username);
-		
-		planRes.setReserva(reserva);
-		planRes.setPlan(plan);
-		
+	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario chofer)
+	{
 		
 			
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		String sql= "SELECT * FROM planes_reservas pr\r\n" + 
+				"INNER JOIN planes p on p.fecha_hora_plan = pr.fecha_hora_plan and p.cod_ruta = pr.cod_ruta and p.patente = pr.patente "
+				+ " where usuario_chofer = ? ";
+		
+		ArrayList<Plan_Reserva> planes_reservas = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Plan_Reserva plan_reserva = new Plan_Reserva();
+	
+		
+		try 
+		{
+			
+				pstmt = Conectar.getInstancia().getConn().prepareStatement(sql); //Origen y destino sin especificar	
+				pstmt.setString(1, chofer.getUsername());
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs!=null) 
+			{
+				while(rs.next()) 
+				{
+					
+					Plan plan= new Plan();
+					Reserva reserva=new Reserva();
+					DataPlan dplan= new DataPlan();
+					 FechaControlers fec= new FechaControlers();
+				    DataReserva dres= new DataReserva();
+						
+				
+					String fecPlan=(rs.getString("p.fecha_hora_plan"));
+					Date fechaPlan=fec.fechaConGuion(fecPlan);
+					String patente= rs.getString("p.patente");
+					int codRuta=rs.getInt("p.cod_ruta");
+					plan=dplan.getByFechaHoraRutaPatente(fechaPlan, codRuta, patente);
+					
+					String fecRes = rs.getString("pr.fecha_res");
+					String username = rs.getString("pr.usuario_reserva");
+					Date fechaRes= fec.fechaConGuion(fecRes);
+					reserva=dres.getByFechaUsuario( fechaRes,  username);
+					
+					plan_reserva.setReserva(reserva);
+					plan_reserva.setPlan(plan);
+
+					planes_reservas.add(plan_reserva);
+
+				}
+									
+				
+				
 			}
-	
-			
-			return planRes;}
+		}
+		catch(SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				e.printStackTrace();
+			} 
+		}
+		return planes_reservas;
 		
-	
+		
+	}
 	
 	
 	
@@ -273,7 +315,46 @@ public class DataReservaPlan {
 				
 				
 			} catch(SQLException e) {e.printStackTrace();}
-		}}}
+		}
+		
+	}
+	
+	private Plan_Reserva setPlanReserva(ResultSet rs) 
+	{   
+		
+		Plan_Reserva planRes= new Plan_Reserva();
+		Plan plan= new Plan();
+		Reserva reserva=new Reserva();
+		DataPlan dplan= new DataPlan();
+		 FechaControlers fec= new FechaControlers();
+	    DataReserva dres= new DataReserva();
+			
+	try {
+		String fecPlan=(rs.getString("fecha_hora_plan"));
+		Date fechaPlan=fec.fechaConGuion(fecPlan);
+		String patente= rs.getString("patente");
+		int codRuta=rs.getInt("cod_ruta");
+		plan=dplan.getByFechaHoraRutaPatente(fechaPlan, codRuta, patente);
+		
+		String fecRes = rs.getString("fecha_res");
+		String username = rs.getString("usuario_reserva");
+		Date fechaRes= fec.fechaConGuion(fecRes);
+		reserva=dres.getByFechaUsuario( fechaRes,  username);
+		
+		planRes.setReserva(reserva);
+		planRes.setPlan(plan);
+		
+		
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+			
+			return planRes;}
+	
+}
 	
 	
 	

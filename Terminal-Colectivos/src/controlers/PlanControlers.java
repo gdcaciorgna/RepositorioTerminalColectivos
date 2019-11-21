@@ -5,10 +5,12 @@ import java.util.Date;
 
 import data.DataColectivo;
 import data.DataPlan;
+import data.DataReservaPlan;
 import data.DataRuta;
 import data.DataUsuario;
 import entities.Colectivo;
 import entities.Plan;
+import entities.Plan_Reserva;
 import entities.Ruta;
 import entities.Usuario;
 import logic.PlanLogic;

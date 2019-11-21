@@ -26,20 +26,33 @@ public class PlanLogic {
 	
 	public int calcularAsientosDisponibles(Plan plan, ArrayList<Plan_Reserva> plan_reservas) 
 	{
-		int cantAsientosReservados = 0;
+		
+		 
+		int cantAsientosReservados = this.calcularAsientosReservados(plan, plan_reservas);
 		int cantAsientosDisponibles;
 		
-		for(Plan_Reserva plan_reserva : plan_reservas) {
-		    
-			
-				cantAsientosReservados= cantAsientosReservados + plan_reserva.getReserva().getCant_pas();
-			
-		}
-		
-		cantAsientosDisponibles = plan.getColectivo().getCapacidad() -  cantAsientosReservados;
+		cantAsientosDisponibles = plan.getColectivo().getCapacidad() - cantAsientosReservados;
 		
 		return cantAsientosDisponibles;
 		
+		
+	}
+	
+	public int calcularAsientosReservados(Plan plan, ArrayList<Plan_Reserva> plan_reservas) 
+	{
+		
+		int cantAsientosReservados = 0;
+		
+		for(Plan_Reserva plan_reserva : plan_reservas) {
+		    
+				if(plan_reserva.getReserva().getFecha_canc() ==null) 
+				{
+				cantAsientosReservados= cantAsientosReservados + plan_reserva.getReserva().getCant_pas();
+				}
+			
+		}
+				
+		return cantAsientosReservados;
 	}
 
 }

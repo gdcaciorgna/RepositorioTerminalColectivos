@@ -47,7 +47,7 @@
         </li>
         <% } else if(rol.equals("chofer")) { %>      
 		<li class="nav-item">
-        <a class="nav-link" href="buscarviajeschofer.jsp" ><i class="fas fa-bus"></i> Viajes Asignados </a> <!-- Planes de Viaje (Administradores) / Viajes asignados (Chofer) / Viajes (Cliente) -> Redirección a la misma página pero con distinto nombre dependiendo del rol -->
+        <a class="nav-link" href="buscarviajechofer.jsp" ><i class="fas fa-bus"></i> Viajes Asignados </a> <!-- Planes de Viaje (Administradores) / Viajes asignados (Chofer) / Viajes (Cliente) -> Redirección a la misma página pero con distinto nombre dependiendo del rol -->
         </li>        
         <% } else if(rol.equals("cliente")) { %>
         <li class="nav-item">

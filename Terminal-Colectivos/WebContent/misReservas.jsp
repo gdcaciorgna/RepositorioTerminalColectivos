@@ -11,12 +11,12 @@
 </head>
 <body>
 
- <%@ page import = "java.text.SimpleDateFormat" %>
+<%@ page import = "java.text.SimpleDateFormat" %>
 
 
 
 
- <%@ page import = "entities.Usuario" %>
+<%@ page import = "entities.Usuario" %>
 <% Usuario usuario= new Usuario();%>
  
 <%
@@ -121,13 +121,9 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 					       
 					   <button type="submit" class="btn btn-danger"><i class="fas fa-window-close"></i></button>
 				   </form> 
-				   
-				   
-				   
-				  
+		  
 				
-			    </td>
-			   	   
+			    </td>	   	   
 			   </tr>
 		
 			 <% 
@@ -138,6 +134,8 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 			 
 			</div>
         </div>
+        
+        
         <!--Grid column-->
 			<% String reservaExitosa = (String)session.getAttribute("reservaExitosa");%>
 			<% if(session.getAttribute("reservaExitosa")!=null) { %>
