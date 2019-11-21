@@ -145,6 +145,11 @@ if(usuarioActual!=null)
 			Error: La contraseña actual ingresada no es correcta
 			</div>
 			<% } } } %>
+			<% 
+              session.setAttribute("OK",null);
+              session.setAttribute("Error2",null);
+              session.setAttribute("Error3",null);
+              session.setAttribute("Error4",null);%>
 			
 			 
 		<!-- FIN - Mensaje de Error -->

@@ -16,7 +16,8 @@ if(usuario!=null)
 	rol = usuario.getRol();
 	}
  %>
-
+<% 
+session.setAttribute("errorLogin",null);%>
 
 <jsp:include page="JSPFiles/includemenu.jsp" />  
 
@@ -73,6 +74,8 @@ if(usuario!=null)
 			</div> 
 			<%}%>
 			  
+			  <% session.setAttribute("mensajeRegistro",null);%>
+              
              </form>
          </div>
        

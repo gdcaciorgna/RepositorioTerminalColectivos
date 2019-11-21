@@ -50,8 +50,8 @@ public class CancelarReserva extends HttpServlet {
 		
 		
 		
-		sesion.setAttribute("MensajeCancelarReserva", "Reserva cancelada con éxito. Se devolvió un total de $"+ importeADevolver + " pesos a la cuenta de la compañía " + reservaACancelar.getCompania_tarjeta().getNombre() + " a nombre de " + reservaACancelar.getUsuario().getNombre() + " " + reservaACancelar.getUsuario().getApellido()  );
-		sesion.setAttribute("reservaExitosa", null);
+		sesion.setAttribute("MensajeCancelarReserva", "Reserva cancelada con éxito. Se devolvió un total de $"+ importeADevolver + " pesos a la cuenta de la compañía " + reservaACancelar.getCompania_tarjeta().getNombre()    );
+		
 		
 		response.sendRedirect("misReservas.jsp");
 		

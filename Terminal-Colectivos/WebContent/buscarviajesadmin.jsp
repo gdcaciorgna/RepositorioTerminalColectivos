@@ -200,6 +200,10 @@ else
 			</div> 
 			<%}%>
         </div>
+        <% 
+              session.setAttribute("planesEliminados",null);
+              session.setAttribute("planesEditados",null);
+             %>
         <!--Grid column-->
 
 

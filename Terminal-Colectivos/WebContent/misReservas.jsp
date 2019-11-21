@@ -152,10 +152,8 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 			Felicitaciones: <%= MensajeCancelarReserva %>
 			</div> 
 			<%}%>
-			
-		
-
-
+           <% session.setAttribute("reservaExitosa",null);
+           session.setAttribute("MensajeCancelarReserva",null);%>
 
 
 
