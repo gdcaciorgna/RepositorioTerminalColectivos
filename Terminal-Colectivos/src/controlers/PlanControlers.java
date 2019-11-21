@@ -1,5 +1,6 @@
 package controlers;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import data.DataColectivo;
@@ -21,11 +22,10 @@ public class PlanControlers {
 		int planesEditados = 0;
 			
 		DataPlan dplan = new DataPlan();			
-
 		planesEditados = dplan.editarPlan(planViejo, planNuevo);
-		
+	
 		return planesEditados;
-		
+	
 		
 	}
 	
@@ -177,6 +177,14 @@ public class PlanControlers {
 		planesAgregados = dplan.addPlan(planNuevo);
 		
 		return planesAgregados;
+	}
+	
+	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario chofer)
+	{
+		DataReservaPlan  dplan_reserva = new DataReservaPlan();
+		return dplan_reserva.getViajesxChofer(chofer);
+		
+		
 	}
 	
 }
