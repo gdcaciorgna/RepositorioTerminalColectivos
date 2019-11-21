@@ -130,7 +130,17 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 		    <div class="row justify-content-center">
 			
 			<button type="submit" class="btn btn-primary">Avanzar</button>
-			
+			</div>
+			<div>
+			<% String mensajePasajeros = (String)session.getAttribute("mensajePasajeros");%>
+			<% if(session.getAttribute("mensajePasajeros")!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= mensajePasajeros%>
+			</div> 
+			<%}%>
+			<% 
+               session.setAttribute("mensajePasajeros",null);%>
 			</div>
 		    
 		    </form>

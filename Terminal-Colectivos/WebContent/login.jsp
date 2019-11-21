@@ -48,8 +48,12 @@
 			Error: <%= errorLogin %>
 			</div> 
 			<%}%>
-			</div>
-         
+		
+       
+       
+        <% session.setAttribute("registroExitoso",null);
+              session.setAttribute("errorLogin",null);%>
+              
              </form>
          </div>
        

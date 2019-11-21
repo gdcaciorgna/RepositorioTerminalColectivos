@@ -31,7 +31,7 @@ public class PlanControlers {
 	
 	public String getMensajeRegistro(String origenPlan,String destinoPlan,String fechaStringPlan,String horaStringPlan,String precioStringPlan,String usuarioChoferPlan,String patenteColectivoPlan)
 	{
-		String localidadPrincipal = "ROSARIO"; //Localidad principal de la terminal
+		String localidadPrincipal = "VENADO TUERTO"; //Localidad principal de la terminal
 		
 		String mensajeRegistro = "OK";
 		
@@ -57,7 +57,7 @@ public class PlanControlers {
 		else if(! origenPlan.equals(localidadPrincipal) && !destinoPlan.equals(localidadPrincipal)) 
 		{
 		
-			mensajeRegistro = "Error2"; //El origen o el destino debe ser Rosario
+			mensajeRegistro = "Error2"; //El origen o el destino debe ser Venado Tuerto
 		}	
 		
 		else if(origenPlan.equals(destinoPlan)) 

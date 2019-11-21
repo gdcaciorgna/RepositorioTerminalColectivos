@@ -11,7 +11,8 @@
 <jsp:include page="JSPFiles/includemenu.jsp" />  
 <script type="text/javascript" src="JavascriptFiles/datepickerEs.js"></script>
 
-
+<% 
+session.setAttribute("errorLogin",null);%>
 
 <br>
 

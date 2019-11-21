@@ -160,7 +160,8 @@ Date diaActual = new Date();
 			</div> 
 			<%}%>
           
-    
+    <% 
+session.setAttribute("errorTarjeta",null);%>
  
 		 </form>
 			</div>

@@ -239,6 +239,13 @@ if(precioString==null){precioString="";}
 				}
 			} 	
 			%>
+			<% 
+              session.setAttribute("OK",null);
+              session.setAttribute("Error2",null);
+              session.setAttribute("Error3",null);
+              session.setAttribute("Error4",null);
+              session.setAttribute("Error5",null);
+              session.setAttribute("Error1",null);%>
 			
 				<div class="text-center"><a href="buscarviajesadmin.jsp">Volver al buscador de viajes</a></div>
 			

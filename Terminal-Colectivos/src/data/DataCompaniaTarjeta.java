@@ -53,43 +53,6 @@ public class DataCompaniaTarjeta {
 		
 	}
 	
-	public int getCodigo(String nom_compania) {
-	
-	int codigoComp=0;
-	String sql = "SELECT * FROM companias_tarjetas where nombre = ?";
-			
-	
-	PreparedStatement pstmt=null;
-	ResultSet rs=null;
-	try {
-		pstmt=Conectar.getInstancia().getConn().prepareStatement(sql);
-		pstmt.setString(1, nom_compania);
-		rs=pstmt.executeQuery();	
-		
-		//INICIO - Código sin aplicar herencia
-		if(rs!=null && rs.next()) 
-	{
-			
-			codigoComp=rs.getInt("cod_compania");
-			
-	}
-		//FIN - Código sin aplicar herencia
-		
-	} 
-	catch (SQLException e) {
-		e.printStackTrace();
-	}finally {
-		try {
-			if(rs!=null) {rs.close();}
-			if(pstmt!=null) {pstmt.close();}
-			Conectar.getInstancia().releasedConn();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	return codigoComp;
-	}
 	
 	
 public Compania_Tarjeta getById(int cod_compania) {

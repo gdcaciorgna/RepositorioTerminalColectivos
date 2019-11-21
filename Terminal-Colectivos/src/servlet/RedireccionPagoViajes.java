@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.ABMPasajero;
 import entities.Pasajero;
+import logic.PasajeroLogic;
 
 /**
  * Servlet implementation class RedireccionPagoViajes
@@ -37,16 +38,19 @@ public class RedireccionPagoViajes extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		
 		int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
-		
+		int cont=0;
 		ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
 		
 		//FORMA UN POCO RARA DE TRAER LOS DATOS, pero funciona
+		PasajeroLogic pas= new PasajeroLogic();
 		for(int i = 1; i<=cantPasajeros; i++)
 		{
 			Pasajero pasajero = new Pasajero();
 			String nombre =  request.getParameter("nombre"+i);
 			String apellido =  request.getParameter("apellido"+i);
-			int dni = Integer.parseInt(request.getParameter(("dni"+i)));
+			String dniString=request.getParameter(("dni"+i).trim());
+			if (pas.esNumero(dniString)) {
+			int dni = Integer.parseInt(request.getParameter(("dni"+i).trim()));
 
 			
 			pasajero.setDni(dni);
@@ -54,20 +58,25 @@ public class RedireccionPagoViajes extends HttpServlet {
 			pasajero.setApellido(apellido);
 			
 			pasajeros.add(pasajero);
+			cont++;
+			}
+			else {
+				sesion.setAttribute("mensajePasajeros", "Alguno/os  DNI ingresados  son invalidos");
+				response.sendRedirect("definirpasajeros.jsp");
+			}
 			
-			
-			//ABMPasajero abmPasajero = new ABMPasajero();
-			//abmPasajero.AddPasajero(pasajero);
+		
 			
 			
 			
 			
 		
 		}
+		if(cont==cantPasajeros) {
 		sesion.setAttribute("pasajerosViaje", pasajeros); // Guarda los pasajeros del viaje en la sesion del usuario
 		
-		response.sendRedirect("pagarviaje.jsp");
-
+		response.sendRedirect("pagarviaje.jsp");}
+		
 		
 
 	}

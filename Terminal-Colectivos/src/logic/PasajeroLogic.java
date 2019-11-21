@@ -20,8 +20,19 @@ public class PasajeroLogic {
 		
 	}
 	
+	 public  boolean esNumero(String cadena) {
 
-	
+	        boolean resultado;
+
+	        try {
+	            Integer.parseInt(cadena);
+	            resultado = true;
+	        } catch (NumberFormatException excepcion) {
+	            resultado = false;
+	        }
+
+	        return resultado;
+	    }
 	
 
 }
