@@ -1,3 +1,5 @@
+<%@page import="entities.Pasajero_Reserva"%>
+<%@page import="data.DataPasajeroReserva"%>
 <%@page import="data.DataReservaPlan"%>
 <%@page import="entities.Plan_Reserva"%>
 <%@page import="logic.PlanLogic"%>
@@ -22,22 +24,6 @@ HttpSession sesion = request.getSession();
 Plan planSeleccionado = (Plan) sesion.getAttribute("planSeleccionado");
 
 
-/* String origenViaje = (String) sesion.getAttribute("origenViaje");
-String destinoViaje = (String) sesion.getAttribute("destinoViaje");
-java.util.Date fechaViajeDate = (Date) sesion.getAttribute("fechaViaje");
-String fechaViajeString = "-";
-FechaControlers fCon = new FechaControlers();
-
-
-if(origenViaje==null){origenViaje = "Cualquiera";}
-if(destinoViaje==null){destinoViaje = "Cualquiera";}
-
-if(fechaViajeDate !=null)
-{
-	fechaViajeString = fCon.dateToddMMyyyy(fechaViajeDate);
-}
-else {fechaViajeDate = new Date();}
- */
 
 
 String username="s/usuario", estado="s/estado"; 
@@ -59,7 +45,7 @@ if(usuarioActual!=null)
 
 <% String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.getApellido(); %>
 
-<title>Próximos viajes para el chofer <%= nombreApellidoChofer %></title>
+<title>Información del viaje seleccionado</title>
 </head>
 <body>
 
@@ -69,91 +55,89 @@ if(usuarioActual!=null)
     <%@ page import = "entities.Plan" %>
     <% 
     //Inicialización de variables
-    DataReservaPlan dplan = new DataReservaPlan();
-    ArrayList<Plan_Reserva> planes_reservas = dplan.getReservasPlan(planSeleccionado);
-    Iterator<Plan_Reserva> itr = planes_reservas.iterator();
-    Plan_Reserva plan_reserva = null;
+    DataPasajeroReserva dPasRes = new DataPasajeroReserva();
+    ArrayList<Pasajero_Reserva> pasajeros_reservas = dPasRes.getPasajerosxPlan(planSeleccionado);
+    Iterator<Pasajero_Reserva> itr = pasajeros_reservas.iterator();
+    Pasajero_Reserva pasajero_reserva = null;
+    
+    
+	 // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
+	 FechaControlers fCon = new FechaControlers();
+
+	   String fechaString = fCon.dateToddMMyyyy(planSeleccionado.getFechaHora());
+	   String horaString = fCon.dateTohhmm(planSeleccionado.getFechaHora());
+	   String fechaHoraString = fCon.dateToddMMyyyyhhmm(planSeleccionado.getFechaHora());
+	   				   
+	   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
     
     %>
     
-    <% 
-    PlanLogic plogic = new PlanLogic();
-    
-    %>
 
 <jsp:include page="JSPFiles/includemenu.jsp" />  
+	<br>
+	<br>
+	<div class="container">
+  	<div class="row">
+
+    <div class="col-sm">
+    <div class="alert alert-info" role="alert">
+		
+	<div class="text-center"><b>---------- Datos del viaje ----------</b></div> 
+	
+	<div class="text-justify">
+	Fecha/Hora del viaje: <b> <%= fechaHoraString %> </b> <br>
+	Origen: <b><%= planSeleccionado.getOrigen() %></b> <br>
+	Destino: <b><%= planSeleccionado.getDestino() %></b> <br>
+	Colectivo: <b><%= planSeleccionado.getColectivo().getPatente() %></b> <br>
+	Chofer: <b><%= planSeleccionado.getChofer().getUsername() %></b> <br>
+	Precio: <b><%= planSeleccionado.getPrecio() %></b>
+	</div>
+	
+	</div>
+    </div>
+   
+  	</div>
+	</div>
+	<br>
+	<hr>
+	
 
 <div class="row">
-
 
 <!--Grid column-->
             <div class="container" style=" margin-top: 2%; margin-bottom: 2%;  ">
 			 <div class="container">
-			        <div class="table-wrapper">
-			        <span class="float-left"><h4> Informacion de Viaje <b><%= nombreApellidoChofer %></b></h4></span>
-			        </div> 
+	         <div class="table-wrapper">
+	         <span class="float-left"><h4> Informacion de viaje seleccionado</h4></span>
+	         </div> 
 		     </div>
-			           
+			<br>
+			<hr>
+			<br>           
 			<table class="table table-striped">
 			  <thead class="thead-dark">
 			    <tr>
-			      <th>Empresa</th>
-			      <th>Fecha de Salida</th>
-			      <th>Hora de Salida</th>
-			      <th>Origen</th>
-			      <th>Destino</th>
-			      <th>Asientos reservados</th>
-			      <th>Capacidad colectivo</th>
-			      <th></th>
+			     
+			      <th>Nombre</th>
+			      <th>Apellido</th>
+			      <th>DNI</th>
+			      <th>Asiento</th>
+			      
 			    </tr>
 			  </thead>
 			  <tbody>
 			  <tr>
 			   <%  
 			   while(itr.hasNext()){
-				   plan_reserva = itr.next();
-				   // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
-				   
-				   String fechaPlanString = fCon.dateToddMMyyyy(plan_reserva.getPlan().getFechaHora());
-				   String horaPlanString = fCon.dateTohhmm(plan_reserva.getPlan().getFechaHora());
-				   String fechaHoraPlanString = fCon.dateToddMMyyyyhhmm(plan_reserva.getPlan().getFechaHora());		
-				   
-				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
-				   
+				   pasajero_reserva = itr.next();
+							   
 
-				   
 			    %>
-			   <td> <%= plan_reserva.getPlan().getColectivo().getEmpresa().getNombre() %> </td>
-			   <td> <%= fechaPlanString %> </td>
-			   <td> <%= horaPlanString %> </td>
-			   <td> <%= plan_reserva.getPlan().getOrigen()  %> </td>
-			   <td> <%= plan_reserva.getPlan().getDestino()  %> </td>
-			   <td> <%= plogic.calcularAsientosReservados(plan_reserva.getPlan(), planes_reservas) %> </td>
-			   <td> <%= plan_reserva.getPlan().getColectivo().getCapacidad()%> </td>
-
-			   
-			   <td> 
-			   
-			   
-				   
-				   <form action="VerInformacionViaje" method="post">
-						   
-						   <input type="hidden" value=<%= fechaPlanString %> name="fechaViaje"/>
-						   <input type="hidden" value=<%= horaPlanString %> name="horaViaje"/>
-						   
-						   <input type="hidden" value=<%= plan_reserva.getPlan().getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
-						   <input type="hidden" value=<%= plan_reserva.getPlan().getRuta().getCod_ruta() %> name="codRutaViaje">
-						   <input type="hidden" value=<%= plan_reserva.getPlan().getChofer().getUsername() %> name="choferViaje">
-					       
-					   <button type="submit" class="btn btn-info"><i class="fa fa-bars"></i></button>
-				   </form> 
-				   
-				   
-				   
-				  
-				
-			    </td>
-			   	   
+			   <td> <%= pasajero_reserva.getPasajero().getNombre() %> </td>
+			   <td> <%= pasajero_reserva.getPasajero().getApellido() %> </td>
+			   <td> <%= pasajero_reserva.getPasajero().getDni() %> </td>
+			   <td> <%= pasajero_reserva.getAsiento()  %> </td>
+					   	   
 			   </tr>
 		
 			 <% 

@@ -8,8 +8,11 @@ import entities.Plan;
 import entities.Plan_Reserva;
 import entities.Reserva;
 
-public class PlanReservaControlers {public Plan_Reserva getReservaPlanbyClavesPrimarias(String fechaHoraReserva, String fechaHoraViaje, String patenteColectivoViaje, int codRutaViaje, String UsernameReserva) 
-{
+public class PlanReservaControlers {
+	
+	
+	public Plan_Reserva getReservaPlanbyClavesPrimarias(String fechaHoraReserva, String fechaHoraViaje, String patenteColectivoViaje, int codRutaViaje, String UsernameReserva) 
+	{
 	Reserva reserva = new Reserva();
 	DataReserva dres = new DataReserva();
 	DataPlan dplan = new DataPlan();
@@ -35,7 +38,9 @@ public class PlanReservaControlers {public Plan_Reserva getReservaPlanbyClavesPr
 	return planReserva;
 	
 	
-}
+	}
+	
+
 
 
 }

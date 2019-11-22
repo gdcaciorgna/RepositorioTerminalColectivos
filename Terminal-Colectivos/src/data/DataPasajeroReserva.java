@@ -15,6 +15,8 @@ import entities.Reserva;
 public class DataPasajeroReserva {
 	
 	
+	
+	
 	public void agregarPasajeroReserva(Pasajero_Reserva pasajero_reserva) 
 	{
 		PreparedStatement pstmt = null;
@@ -152,6 +154,86 @@ public class DataPasajeroReserva {
 		
 	return pasajeros;	
 	}
+	
+	public ArrayList<Pasajero_Reserva> getPasajerosxPlan (Plan plan)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT DISTINCT pasres.dni, pasres.fecha_res, pasres.usuario , pasres.asiento\r\n" + 
+				"FROM planes_reservas planres\r\n" + 
+				"INNER JOIN reservas r on r.fecha_res = planres.fecha_res and r.usuario= planres.usuario_reserva\r\n" + 
+				"INNER JOIN planes p on p.cod_ruta=planres.cod_ruta and p.patente=planres.patente and p.fecha_hora_plan= planres.fecha_hora_plan\r\n" + 
+				"INNER JOIN pasajeros_reservas  pasres on planres.fecha_res = r.fecha_res and pasres.usuario = planres.usuario_reserva\r\n" + 
+				"INNER JOIN pasajeros pas on pas.dni=pasres.dni\r\n" + 
+				"WHERE (r.fecha_canc is null) and (asiento is not null) \r\n" + 
+				"and p.fecha_hora_plan = ? and p.cod_ruta= ? and p.patente= ? "
+				+ "ORDER BY pasres.asiento";
+		
+		
+		ArrayList<Pasajero_Reserva> pasajeros_reservas = new ArrayList<Pasajero_Reserva>();
+		
+		
+		try 
+		{
+
+			
+			pstmt = Conectar.getInstancia().getConn().prepareStatement(sql) ;
+			
+			pstmt.setTimestamp(1, new Timestamp(plan.getFechaHora().getTime()));
+			pstmt.setInt(2, plan.getRuta().getCod_ruta());
+			pstmt.setString(3, plan.getColectivo().getPatente());
+			
+			
+			rs = pstmt.executeQuery();
+			
+			
+				while(rs.next()) 
+				{
+					Pasajero_Reserva pasajero_reserva = new Pasajero_Reserva();
+					
+					Reserva reserva = new Reserva();
+					Pasajero pasajero = new Pasajero();
+					
+					DataReserva dRes = new DataReserva();
+					DataPasajero dPas = new DataPasajero();
+					
+					Date fechaReserva = new Date(rs.getTimestamp("pasres.fecha_res").getTime());
+					String usuario = rs.getString("pasres.usuario");
+					
+					int dni = rs.getInt("pasres.dni");
+					
+					reserva = dRes.getByFechaUsuario(fechaReserva, usuario);
+					pasajero = dPas.getByDni(dni);
+					
+					
+					pasajero_reserva.setPasajero(pasajero);
+					pasajero_reserva.setReserva(reserva);
+					pasajero_reserva.setAsiento(rs.getInt("pasres.asiento"));
+					
+					pasajeros_reservas.add(pasajero_reserva);							
+				}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				e.printStackTrace();
+			} 
+		}
+		
+	return pasajeros_reservas;	
+	}
+	
+	
+	
 }
 		
 

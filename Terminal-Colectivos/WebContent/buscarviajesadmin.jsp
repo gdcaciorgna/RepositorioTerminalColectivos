@@ -169,6 +169,19 @@ else
 		   			   
 					   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
 					   </form>
+					   
+				   	   <form action="RedireccionInfoViaje" method="post">
+					   
+					   <input type="hidden" value=<%= fechaString %> name="fechaViaje"/>
+					   <input type="hidden" value=<%= horaString %> name="horaViaje"/>
+					   
+					   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
+					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViaje">
+					   <input type="hidden" value=<%= plan.getChofer().getUsername() %> name="choferViaje">
+					   <button type="submit" class="btn btn-info"><i class="fa fa-bars"></i></button>
+			   		   </form> 
+					   
+					   
 			   		</div>
 			   </div>
 			   </td>   	   
