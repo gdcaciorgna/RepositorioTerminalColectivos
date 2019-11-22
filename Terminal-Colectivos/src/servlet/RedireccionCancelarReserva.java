@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controlers.CancelarReserva;
+import controlers.PlanReservaControlers;
 import data.DataReservaPlan;
 import entities.Plan_Reserva;
 
@@ -55,11 +56,11 @@ public class RedireccionCancelarReserva extends HttpServlet {
 		
 		CancelarReserva cancelarReserva = new CancelarReserva();
 		
-		DataReservaPlan dResPlan = new DataReservaPlan();
+		PlanReservaControlers cResPlan = new PlanReservaControlers();
 		
 		
 		
-		Plan_Reserva planReserva =  dResPlan.getReservaPlanbyClavesPrimarias(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva);
+		Plan_Reserva planReserva =  cResPlan.getReservaPlanbyClavesPrimarias(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva);
 
 		
 		double importeADevolver = cancelarReserva.getImporteADevolver(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva ); //la funcion cancelarReserva devuelve el dinero a devolver. Solo se devolvera el importe total si se cancela la reserva al menos una semana antes. Caso contrario solo se devuelve el 20% 

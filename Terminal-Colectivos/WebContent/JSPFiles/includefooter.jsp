@@ -39,7 +39,7 @@
   <!-- Footer Elements -->
 
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3"><span class="font-weight-bold"><i class="fas fa-at"></i> Autores: Gino Camilatto y Gerardo Caciorgna </span>
+  <div class="footer-copyright text-center py-3"><span class="font-weight-bold"><i class="fas fa-at"></i> Autores: Gino Camillato y Gerardo Caciorgna </span>
   </div>
   <!-- Copyright -->
 

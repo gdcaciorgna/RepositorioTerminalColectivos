@@ -19,7 +19,10 @@
 <% 
 HttpSession sesion = request.getSession();
 
-String origenViaje = (String) sesion.getAttribute("origenViaje");
+Plan planSeleccionado = (Plan) sesion.getAttribute("planSeleccionado");
+
+
+/* String origenViaje = (String) sesion.getAttribute("origenViaje");
 String destinoViaje = (String) sesion.getAttribute("destinoViaje");
 java.util.Date fechaViajeDate = (Date) sesion.getAttribute("fechaViaje");
 String fechaViajeString = "-";
@@ -34,7 +37,7 @@ if(fechaViajeDate !=null)
 	fechaViajeString = fCon.dateToddMMyyyy(fechaViajeDate);
 }
 else {fechaViajeDate = new Date();}
-
+ */
 
 
 String username="s/usuario", estado="s/estado"; 
@@ -67,7 +70,7 @@ if(usuarioActual!=null)
     <% 
     //Inicialización de variables
     DataReservaPlan dplan = new DataReservaPlan();
-    ArrayList<Plan_Reserva> planes_reservas = dplan.getViajesxChofer(usuarioActual);
+    ArrayList<Plan_Reserva> planes_reservas = dplan.getReservasPlan(planSeleccionado);
     Iterator<Plan_Reserva> itr = planes_reservas.iterator();
     Plan_Reserva plan_reserva = null;
     
@@ -87,7 +90,7 @@ if(usuarioActual!=null)
             <div class="container" style=" margin-top: 2%; margin-bottom: 2%;  ">
 			 <div class="container">
 			        <div class="table-wrapper">
-			        <span class="float-left"><h4> Viajes para el chofer <b><%= nombreApellidoChofer %></b></h4></span>
+			        <span class="float-left"><h4> Informacion de Viaje <b><%= nombreApellidoChofer %></b></h4></span>
 			        </div> 
 		     </div>
 			           
@@ -133,7 +136,7 @@ if(usuarioActual!=null)
 			   
 			   
 				   
-				   <form action="RedireccionInfoViaje" method="post">
+				   <form action="VerInformacionViaje" method="post">
 						   
 						   <input type="hidden" value=<%= fechaPlanString %> name="fechaViaje"/>
 						   <input type="hidden" value=<%= horaPlanString %> name="horaViaje"/>

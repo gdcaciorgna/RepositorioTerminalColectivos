@@ -167,9 +167,9 @@ public class DataReservaPlan {
 	{
 		
 			
-		String sql= "SELECT * FROM planes_reservas pr\r\n" + 
+		String sql= "SELECT DISTINCT * FROM planes_reservas pr\r\n" + 
 				"INNER JOIN planes p on p.fecha_hora_plan = pr.fecha_hora_plan and p.cod_ruta = pr.cod_ruta and p.patente = pr.patente "
-				+ " where usuario_chofer = ? ";
+				+ " where usuario_reserva = ? ";
 		
 		ArrayList<Plan_Reserva> planes_reservas = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -243,34 +243,6 @@ public class DataReservaPlan {
 	
 	
 	
-	public Plan_Reserva getReservaPlanbyClavesPrimarias(String fechaHoraReserva, String fechaHoraViaje, String patenteColectivoViaje, int codRutaViaje, String UsernameReserva) 
-	{
-		Reserva reserva = new Reserva();
-		DataReserva dres = new DataReserva();
-		DataPlan dplan = new DataPlan();
-		Plan plan = new Plan();
-		
-		FechaControlers fCon = new FechaControlers();
-		
-		Date fechaHoraReservaDate = fCon.ddMMyyyyHHmmssToDate(fechaHoraReserva);
-		
-		Date fechaHoraViajeDate = fCon.ddMMyyyyHHmmToDate(fechaHoraViaje);
-		
-		reserva = dres.getByFechaUsuario(fechaHoraReservaDate, UsernameReserva);
-		
-		plan = dplan.getByFechaHoraRutaPatente(fechaHoraViajeDate, codRutaViaje, patenteColectivoViaje);
-		
-		
-		Plan_Reserva planReserva = new Plan_Reserva();
-		planReserva.setPlan(plan);
-		planReserva.setReserva(reserva);
-		
-		
-		
-		return planReserva;
-		
-		
-	}
 	
 	
 	

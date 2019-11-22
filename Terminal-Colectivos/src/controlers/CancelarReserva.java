@@ -26,11 +26,11 @@ public class CancelarReserva {
 	
 	{
 		
-		DataReservaPlan dResPlan = new DataReservaPlan();
+		PlanReservaControlers conResPlan = new PlanReservaControlers();
 		Plan_Reserva reservaPlan= new Plan_Reserva();
 		ReservasPlanesLogic resPlanLog = new ReservasPlanesLogic();
 		
-		reservaPlan = dResPlan.getReservaPlanbyClavesPrimarias(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva);
+		reservaPlan = conResPlan.getReservaPlanbyClavesPrimarias(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva);
 				
 		double importeADevolver = resPlanLog.getImporteADevolver(reservaPlan);
 				
