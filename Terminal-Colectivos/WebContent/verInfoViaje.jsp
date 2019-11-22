@@ -122,6 +122,7 @@ if(usuarioActual!=null)
 			      <th>Apellido</th>
 			      <th>DNI</th>
 			      <th>Asiento</th>
+			      <th>Usuario que reservó</th>
 			      
 			    </tr>
 			  </thead>
@@ -137,6 +138,7 @@ if(usuarioActual!=null)
 			   <td> <%= pasajero_reserva.getPasajero().getApellido() %> </td>
 			   <td> <%= pasajero_reserva.getPasajero().getDni() %> </td>
 			   <td> <%= pasajero_reserva.getAsiento()  %> </td>
+			   <td> <%= pasajero_reserva.getReserva().getUsuario().getUsername() %> </td>
 					   	   
 			   </tr>
 		

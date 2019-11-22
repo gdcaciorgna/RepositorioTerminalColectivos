@@ -168,7 +168,6 @@ CREATE TABLE `pasajeros` (
 
 LOCK TABLES `pasajeros` WRITE;
 /*!40000 ALTER TABLE `pasajeros` DISABLE KEYS */;
-INSERT INTO `pasajeros` VALUES (1238914,'Federico','Caciorgna'),(12381923,'Federico','Caciorgna'),(19238137,'Walter','Caciorgna'),(38884376,'Gerardo','Caciorgna'),(138921839,'Adriana','Garcia'),(182392319,'asodkods','aksdos'),(1238912839,'Federico','Caciorgna'),(2138129128,'Federico','Caciorgna');
 /*!40000 ALTER TABLE `pasajeros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,7 +197,6 @@ CREATE TABLE `pasajeros_reservas` (
 
 LOCK TABLES `pasajeros_reservas` WRITE;
 /*!40000 ALTER TABLE `pasajeros_reservas` DISABLE KEYS */;
-INSERT INTO `pasajeros_reservas` VALUES (1238914,'2019-11-21 06:51:27','admin',NULL),(12381923,'2019-11-20 23:23:33','admin',NULL),(19238137,'2019-11-20 23:23:33','admin',NULL),(38884376,'2019-11-20 23:23:33','admin',NULL),(38884376,'2019-11-20 23:56:36','duilito',NULL),(38884376,'2019-11-20 23:56:50','duilito',NULL),(38884376,'2019-11-21 06:51:27','admin',NULL),(138921839,'2019-11-20 23:23:33','admin',NULL),(182392319,'2019-11-20 23:56:36','duilito',NULL),(1238912839,'2019-11-20 23:48:05','admin',NULL),(2138129128,'2019-11-20 23:51:59','duilito',1);
 /*!40000 ALTER TABLE `pasajeros_reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +263,6 @@ CREATE TABLE `planes_reservas` (
 
 LOCK TABLES `planes_reservas` WRITE;
 /*!40000 ALTER TABLE `planes_reservas` DISABLE KEYS */;
-INSERT INTO `planes_reservas` VALUES ('2019-11-20 23:48:05','2020-01-03 19:00:00','ABC-123','admin',1),('2019-11-20 23:56:36','2020-01-03 19:00:00','ABC-123','duilito',1),('2019-11-21 06:51:27','2020-01-01 16:30:00','ABC-123','admin',1),('2019-11-20 22:12:39','2019-11-25 21:00:00','AGW-351','admin',2),('2019-11-20 23:51:59','2020-01-01 23:00:00','ABC-123','duilito',2),('2019-11-21 05:59:08','2020-01-02 23:00:00','ABC-123','duilito',2);
 /*!40000 ALTER TABLE `planes_reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,7 +318,6 @@ CREATE TABLE `reservas` (
 
 LOCK TABLES `reservas` WRITE;
 /*!40000 ALTER TABLE `reservas` DISABLE KEYS */;
-INSERT INTO `reservas` VALUES ('2019-11-20 22:12:39','admin',4,'2019-11-20 22:12:40',1,'1645172645361928'),('2019-11-20 23:48:05','admin',1,'2019-11-20 23:48:05',1,'1847184718273947'),('2019-11-20 23:51:59','duilito',1,NULL,1,'1234567891234567'),('2019-11-20 23:56:36','duilito',2,'2019-11-20 23:56:36',1,'1234567891234567'),('2019-11-21 05:59:08','duilito',1,'2019-11-21 05:59:09',1,'1234567891234567'),('2019-11-21 06:51:27','admin',2,'2019-11-21 06:51:27',1,'1234567891234567');
 /*!40000 ALTER TABLE `reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-21  3:54:01
+-- Dump completed on 2019-11-22 18:04:10
