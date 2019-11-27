@@ -50,7 +50,8 @@ public class EliminarPlanServlet extends HttpServlet {
 	
 		sesion.setAttribute("planesEliminados", planesEliminados); 
 		sesion.setAttribute("planesEditados", null);
-		response.sendRedirect("buscarviajesadmin.jsp");	
+		request.getRequestDispatcher("/WEB-INF/buscarviajesadmin.jsp").forward(request, response);		
+
 
 		
 	}

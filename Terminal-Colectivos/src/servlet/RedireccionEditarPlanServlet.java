@@ -49,8 +49,7 @@ public class RedireccionEditarPlanServlet extends HttpServlet {
 		
 		sesion.setAttribute("PlanViejo", planViejo);
 			
-		response.sendRedirect("plandeviaje.jsp");	
-		
+		 request.getRequestDispatcher("/WEB-INF/plandeviaje.jsp").forward(request, response);		
 		
 	}
 

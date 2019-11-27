@@ -64,13 +64,16 @@ public class RegistrarNuevaReserva extends HttpServlet {
 			
 			sesion.setAttribute("reservaExitosa", "Tu compra se ha realizado con exito!");
 			sesion.setAttribute("MensajeCancelarReserva", null);
-	 		response.sendRedirect("misReservas.jsp");
+			request.getRequestDispatcher("/WEB-INF/misReservas.jsp").forward(request, response);		
 
 			
 			}
 		else {
  		request.getSession().setAttribute("errorTarjeta", "Los numeros de la tajeta no son correctos");	
- 		response.sendRedirect("pagarviaje.jsp");}
+ 		
+		request.getRequestDispatcher("/WEB-INF/pagarviaje.jsp").forward(request, response);	
+		}	
+
 		
 		
 		

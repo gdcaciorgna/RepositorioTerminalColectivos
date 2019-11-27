@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<jsp:include page="JSPFiles/includeimports.jsp" />  
+<jsp:include page="/JSPFiles/includeimports.jsp" />  
 <title>Reservar Viaje</title>
 </head>
 <body>
@@ -46,7 +46,7 @@ else {fechaViajeDate = new Date();}
     
     %>
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 
 <div class="row">
 
@@ -123,7 +123,7 @@ else {fechaViajeDate = new Date();}
 <div class="col-sm-5">
 
 <form action="BuscarViajesCliente" method="post" class="text-center border border-light p-5">
-<jsp:include page="JSPFiles/includebuscadorviajes.jsp" />  
+<jsp:include page="/JSPFiles/includebuscadorviajes.jsp" />  
 </form>
 
 </div>
@@ -131,6 +131,6 @@ else {fechaViajeDate = new Date();}
 </div>
 
 
-<jsp:include page="JSPFiles/includefooter.jsp" />
+<jsp:include page="/JSPFiles/includefooter.jsp" />
 </body>
 </html>

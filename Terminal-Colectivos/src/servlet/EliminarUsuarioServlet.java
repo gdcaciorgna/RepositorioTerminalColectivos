@@ -59,13 +59,16 @@ public class EliminarUsuarioServlet extends HttpServlet {
 			{
 			sesion.setAttribute("Usuario", null);
 			sesion.invalidate(); //CERRAR SESION
-			response.sendRedirect("bajasatisfactoria.jsp");
+			request.getRequestDispatcher("/WEB-INF/bajasatisfactoria.jsp").forward(request, response);		
+
 			}
 			
 			else //verifica si es redirigido desde usuarios.jsp -> redirige a usuarios.jsp
 			{
 				sesion.setAttribute("UsuariosAfectados", filasEliminadas);
-				response.sendRedirect("usuarios.jsp");
+				
+				request.getRequestDispatcher("/WEB-INF/usuarios.jsp").forward(request, response);		
+
 
 			}
 		}
@@ -73,7 +76,8 @@ public class EliminarUsuarioServlet extends HttpServlet {
 		else
         	 {
 				sesion.setAttribute("errorEliminarUsuario", "La contraseña ingresada no es correcta.");
-				response.sendRedirect("micuenta.jsp");
+				request.getRequestDispatcher("/WEB-INF/micuenta.jsp").forward(request, response);		
+
         	 }	}
 
 	/**

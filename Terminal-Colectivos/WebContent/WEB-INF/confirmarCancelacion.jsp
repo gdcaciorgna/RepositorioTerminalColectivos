@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<jsp:include page="JSPFiles/includeimports.jsp" />  
+<jsp:include page="/JSPFiles/includeimports.jsp" />  
 
 <title>Cancelar Reserva</title>
 </head>
@@ -45,7 +45,7 @@
 	
 	%>
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 
 
 <form action="CancelarReserva" method = "post">
@@ -88,7 +88,7 @@
             
 			<div class="row">
 				<div class="col">
-				<div class="text-center"><a href="misReservas.jsp">Volver a mis reservas</a></div>
+				<div class="text-center"><a href="MisReservas">Volver a mis reservas</a></div>
 				</div>
 				
 				<div class="col">

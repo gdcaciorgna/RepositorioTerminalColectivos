@@ -3,13 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="JSPFiles/includeimports.jsp" />  
+<jsp:include page="/JSPFiles/includeimports.jsp" />  
 
 <meta charset="ISO-8859-1">
 <title>Baja Satisfactoria</title>
 </head>
 <body>
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 <br>
 <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
   <div class="card-header">¡Adiós!</div>

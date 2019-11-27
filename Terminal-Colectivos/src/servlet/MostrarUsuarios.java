@@ -6,19 +6,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class RedireccionDefinirPasajeros
+ * Servlet implementation class MostrarUsuarios
  */
-@WebServlet("/RedireccionDefinirPasajeros")
-public class RedireccionDefinirPasajeros extends HttpServlet {
+@WebServlet("/MostrarUsuarios")
+public class MostrarUsuarios extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RedireccionDefinirPasajeros() {
+    public MostrarUsuarios() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,19 +27,7 @@ public class RedireccionDefinirPasajeros extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		HttpSession sesion= request.getSession();
-		
-		String cantidadPasajerosString = request.getParameter("cantidadPasajeros");
-		
-		
-		int cantidadPasajeros = Integer.parseInt(cantidadPasajerosString);
-		
-		sesion.setAttribute("cantidadPasajeros", cantidadPasajeros);
-		
-		request.getRequestDispatcher("/WEB-INF/definirpasajeros.jsp").forward(request, response);
-		
-	}
+		 request.getRequestDispatcher("/WEB-INF/usuarios.jsp").forward(request, response);	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

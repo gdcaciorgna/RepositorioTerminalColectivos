@@ -5,33 +5,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<jsp:include page="JSPFiles/includeimports.jsp" />  
+<jsp:include page="/JSPFiles/includeimports.jsp" />  
 <title>Buscar Viaje</title>
 </head>
 <body>
 
-
-<!-- INICIO - REDIRECCION A LOGIN --> 
- <%@ page import = "entities.Usuario" %>
-<% Usuario usuario;%>
- 
-<%
-String username="s/usuario", estado="s/estado"; 
-usuario = (Usuario) session.getAttribute("usuarioActual");  
-if(usuario!=null) 
-{
-	username = usuario.getUsername(); 
-	estado = usuario.getEstado(); 
-}
-
- if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
-	{   
- 
-	String sitioweb = "http://localhost:8080/Terminal-Colectivos/"; 
-	response.sendRedirect(sitioweb+"login.jsp"); 
-	} 
-%>
-<!-- FIN - REDIRECCION A LOGIN -->
 
 
 
@@ -90,7 +68,7 @@ else
 
 
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 
 <div class="row">
 
@@ -101,7 +79,7 @@ else
 			        <div class="table-wrapper">
 			                    <span class="float-left"><h4>Listado de <b>Viajes</b></h4></span>
  								<span class="float-right">
- 								<a href="registrarNuevoPlan.jsp"> <button type="button" class="btn btn-info add-new">  <i class="fa fa-plus"></i> Nuevo Plan de Viaje</button></a>
+ 								<a href="RedireccionNuevoPlan"> <button type="button" class="btn btn-info add-new">  <i class="fa fa-plus"></i> Nuevo Plan de Viaje</button></a>
  								</span>			                    
 			        </div> 
 			        <br>
@@ -224,7 +202,7 @@ else
 
 <div class="col-sm-5">
 <form action="BuscarViajesAdmin" method="post" class="text-center border border-light p-5">
-<jsp:include page="JSPFiles/includebuscadorviajes.jsp" />  
+<jsp:include page="/JSPFiles/includebuscadorviajes.jsp" />  
 </form>
 
 
@@ -239,6 +217,6 @@ else
 </div>
 
 
-<jsp:include page="JSPFiles/includefooter.jsp" />
+<jsp:include page="/JSPFiles/includefooter.jsp" />
 </body>
 </html>

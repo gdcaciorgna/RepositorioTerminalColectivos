@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<jsp:include page="JSPFiles/includeimports.jsp" />  
+<jsp:include page="/JSPFiles/includeimports.jsp" />  
 <title>Mis Reservas</title>
 </head>
 <body>
@@ -48,7 +48,7 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
   
     %>
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 
 
 
@@ -158,6 +158,6 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 
 
 
-<jsp:include page="JSPFiles/includefooter.jsp" />
+<jsp:include page="/JSPFiles/includefooter.jsp" />
 </body>
 </html>

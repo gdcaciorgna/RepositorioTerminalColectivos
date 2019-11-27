@@ -75,8 +75,7 @@ public class EditarPlanServlet extends HttpServlet {
 			
 		sesion.setAttribute("mensajeRegistro", mensajeRegistro); 
 			
-			
-		response.sendRedirect("plandeviaje.jsp");
+		request.getRequestDispatcher("/WEB-INF/plandeviaje.jsp").forward(request, response);		
 	
 	}
 

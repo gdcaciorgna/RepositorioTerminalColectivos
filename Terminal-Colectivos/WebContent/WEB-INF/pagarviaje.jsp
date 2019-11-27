@@ -4,17 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="JSPFiles/includeimports.jsp" %>
+<%@include file="/JSPFiles/includeimports.jsp" %>
 
 <meta charset="ISO-8859-1">
 <title>Pago de Reserva</title>
 </head>
 <body>
 	
-<!-- INICIO - REDIRECCION A LOGIN --> 
 <%@ page import = "controlers.FechaControlers" %>
 <%@ page import = "entities.*" %>
-<%@ page import = "java.text.SimpleDateFormat" %>
 
 
 <%
@@ -23,24 +21,6 @@ FechaControlers fCon = new FechaControlers();
 
 %>
 
-
-<%
-String username="s/usuario", estado="s/estado"; 
-usuario = (Usuario) session.getAttribute("usuarioActual");  
-if(usuario!=null) 
-{
-	username = usuario.getUsername(); 
-	estado = usuario.getEstado(); 
-}
-
-if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
-	{   
- 
-	String sitioweb = "http://localhost:8080/Terminal-Colectivos/"; 
-	response.sendRedirect(sitioweb+"login.jsp"); 
-	} 
-%>
-<!-- FIN - REDIRECCION A LOGIN -->
 
 <% 
 HttpSession sesion = request.getSession();
@@ -72,7 +52,7 @@ Date diaActual = new Date();
 
 
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 
        <div class="login-form-1 center-block">
              <h1>Datos de la tarjeta:</h1>
@@ -170,6 +150,6 @@ session.setAttribute("errorTarjeta",null);%>
 
 
 
-<jsp:include page="JSPFiles/includefooter.jsp" />  
+<jsp:include page="/JSPFiles/includefooter.jsp" />  
 </body>
 </html>

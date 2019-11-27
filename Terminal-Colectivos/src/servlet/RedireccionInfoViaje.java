@@ -45,8 +45,8 @@ public class RedireccionInfoViaje extends HttpServlet {
 		planSeleccionado = planCon.getPlanByFechaHoraCodRutaPatente(fechaViajeString, horaViajeString, codRutaViajeString, patenteColectivoViajeString);
 		
 		sesion.setAttribute("planSeleccionado", planSeleccionado);
-		response.sendRedirect("verInfoViaje.jsp");
-		
+		request.getRequestDispatcher("/WEB-INF/verInfoViaje.jsp").forward(request, response);
+
 		
 	}
 

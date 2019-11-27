@@ -70,8 +70,8 @@ public class RedireccionCancelarReserva extends HttpServlet {
 		sesion.setAttribute("importeADevolver", importeADevolver);
 		sesion.setAttribute("reservaACancelar", planReserva.getReserva());
 
-		
-		response.sendRedirect("confirmarCancelacion.jsp");
+		request.getRequestDispatcher("/WEB-INF/confirmarCancelacion.jsp").forward(request, response);		
+
 
 		
 	}

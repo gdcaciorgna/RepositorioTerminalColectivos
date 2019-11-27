@@ -75,7 +75,7 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		
 		sesion.setAttribute("MensajeMiUsuarioAEditar", mensaje); 
 		
-		response.sendRedirect("micuenta.jsp");
+		 request.getRequestDispatcher("/WEB-INF/micuenta.jsp").forward(request, response);		
 		
 	}
 

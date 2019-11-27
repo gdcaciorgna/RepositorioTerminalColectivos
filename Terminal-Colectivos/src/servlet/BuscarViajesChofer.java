@@ -13,16 +13,16 @@ import javax.servlet.http.HttpSession;
 import controlers.FechaControlers;
 
 /**
- * Servlet implementation class BuscarViajesCliente
+ * Servlet implementation class BuscarViajesChofer
  */
-@WebServlet("/BuscarViajesCliente")
-public class BuscarViajesCliente extends HttpServlet {
+@WebServlet("/BuscarViajesChofer")
+public class BuscarViajesChofer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BuscarViajesCliente() {
+    public BuscarViajesChofer() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,10 +32,8 @@ public class BuscarViajesCliente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		
 		HttpSession sesion = request.getSession();			
-		
+
 		FechaControlers fechaCon = new FechaControlers();
 
 		
@@ -55,24 +53,26 @@ public class BuscarViajesCliente extends HttpServlet {
 
 		}
 		
+		fechaString = fechaCon.dateToddMMyyyy(fechaActual);
+
 		
-				
-		Date fechaDate = new Date();	
+		
+		Date fechaDate = new Date();
 		
 		fechaDate = fechaCon.yyyyMMddToDate(fechaString);
 		
+        sesion.setAttribute("fechaViaje", fechaDate);
         sesion.setAttribute("origenViaje", origenViaje);
         sesion.setAttribute("destinoViaje", destinoViaje);
-        sesion.setAttribute("fechaViaje", fechaDate);
+        
+        
+        
+		
 
-        
+        request.getRequestDispatcher("/WEB-INF/buscarviajeschofer.jsp").forward(request, response);
+		
 	
-        
-    //	response.sendRedirect("buscarviajescliente.jsp");	
-        request.getRequestDispatcher("/WEB-INF/buscarviajescliente.jsp").forward(request, response);
- 
-        
-    	}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

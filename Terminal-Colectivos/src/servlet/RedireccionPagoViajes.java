@@ -62,7 +62,8 @@ public class RedireccionPagoViajes extends HttpServlet {
 			}
 			else {
 				sesion.setAttribute("mensajePasajeros", "Alguno/os  DNI ingresados  son invalidos");
-				response.sendRedirect("definirpasajeros.jsp");
+				request.getRequestDispatcher("/WEB-INF/definirpasajeros.jsp").forward(request, response);		
+
 			}
 			
 		
@@ -75,7 +76,8 @@ public class RedireccionPagoViajes extends HttpServlet {
 		if(cont==cantPasajeros) {
 		sesion.setAttribute("pasajerosViaje", pasajeros); // Guarda los pasajeros del viaje en la sesion del usuario
 		
-		response.sendRedirect("pagarviaje.jsp");}
+		request.getRequestDispatcher("/WEB-INF/pagarviaje.jsp").forward(request, response);		
+		}
 		
 		
 

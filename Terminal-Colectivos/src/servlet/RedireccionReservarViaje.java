@@ -46,7 +46,7 @@ public class RedireccionReservarViaje extends HttpServlet {
 		
 		sesion.setAttribute("ViajeSeleccionado", viajeSeleccionado);
 			
-		response.sendRedirect("reservarviaje.jsp");		
+		request.getRequestDispatcher("/WEB-INF/reservarviaje.jsp").forward(request, response);
 		
 	}
 

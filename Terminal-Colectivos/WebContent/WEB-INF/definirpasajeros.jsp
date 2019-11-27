@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="JSPFiles/includeimports.jsp" %>
+<%@include file="/JSPFiles/includeimports.jsp" %>
 
 <meta charset="ISO-8859-1">
 <title>Definir pasajeros para el viaje</title>
@@ -11,36 +11,15 @@
 <body>
 	
 
-<!-- INICIO - REDIRECCION A LOGIN --> 
 <%@ page import = "controlers.FechaControlers" %>
-<%@ page import = "entities.*" %>
-<%@ page import = "java.text.SimpleDateFormat" %>
 
 
 <%
-Usuario usuario;
 FechaControlers fCon = new FechaControlers(); 
 
 %>
 
 
-<%
-String username="s/usuario", estado="s/estado"; 
-usuario = (Usuario) session.getAttribute("usuarioActual");  
-if(usuario!=null) 
-{
-	username = usuario.getUsername(); 
-	estado = usuario.getEstado(); 
-}
-
- if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
-	{   
- 
-	String sitioweb = "http://localhost:8080/Terminal-Colectivos/"; 
-	response.sendRedirect(sitioweb+"login.jsp"); 
-	} 
-%>
-<!-- FIN - REDIRECCION A LOGIN -->
 
 <% 
 HttpSession sesion = request.getSession();
@@ -63,7 +42,7 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 <%@ page import = "entities.Plan" %>
 
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 <div class="container login-container">
 <div class="row">
     
@@ -152,6 +131,6 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 </div> 
 </div>
 
-<jsp:include page="JSPFiles/includefooter.jsp" />  
+<jsp:include page="/JSPFiles/includefooter.jsp" />  
 </body>
 </html>

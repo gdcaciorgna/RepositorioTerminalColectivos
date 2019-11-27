@@ -9,7 +9,7 @@
 <head>
 <meta charset="ISO-8859-1">
 
-<%@include file="JSPFiles/includeimports.jsp" %>
+<%@include file="/JSPFiles/includeimports.jsp" %>
 
 
 <title>Reservar Viaje</title>
@@ -77,7 +77,7 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 
 
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 
 
 <div class="container login-container">
@@ -139,7 +139,7 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 </div> 
 </div>
 
-<jsp:include page="JSPFiles/includefooter.jsp" />  
+<jsp:include page="/JSPFiles/includefooter.jsp" />  
 
 
 

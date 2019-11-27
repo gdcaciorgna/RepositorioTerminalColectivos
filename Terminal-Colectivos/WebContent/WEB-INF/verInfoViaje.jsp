@@ -9,11 +9,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<jsp:include page="JSPFiles/includeimports.jsp" />  
+<jsp:include page="/JSPFiles/includeimports.jsp" />  
 
-<!-- INICIO - REDIRECCION A LOGIN --> 
 <%@ page import = "entities.Usuario" %>
-<%@ page import = "java.text.SimpleDateFormat" %>
 
 
 <% Usuario usuarioActual;%>
@@ -23,27 +21,11 @@ HttpSession sesion = request.getSession();
 
 Plan planSeleccionado = (Plan) sesion.getAttribute("planSeleccionado");
 
-
-
-
-String username="s/usuario", estado="s/estado"; 
 usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");  
-if(usuarioActual!=null) 
-{
-	username = usuarioActual.getUsername(); 
-	estado = usuarioActual.getEstado(); 
-}
 
- if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
-	{   
- 
-	String sitioweb = "http://localhost:8080/Terminal-Colectivos/"; 
-	response.sendRedirect(sitioweb+"login.jsp"); 
-	} 
+String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.getApellido(); 
+
 %>
-<!-- FIN - REDIRECCION A LOGIN -->
-
-<% String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.getApellido(); %>
 
 <title>Información del viaje seleccionado</title>
 </head>
@@ -73,7 +55,7 @@ if(usuarioActual!=null)
     %>
     
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 	<br>
 	<br>
 	<div class="container">
@@ -156,6 +138,6 @@ if(usuarioActual!=null)
 </div>
 
 
-<jsp:include page="JSPFiles/includefooter.jsp" />
+<jsp:include page="/JSPFiles/includefooter.jsp" />
 </body>
 </html>

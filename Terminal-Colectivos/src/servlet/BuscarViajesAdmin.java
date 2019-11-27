@@ -34,16 +34,28 @@ public class BuscarViajesAdmin extends HttpServlet {
 		// TODO Auto-generated method stub
 			
 		HttpSession sesion = request.getSession();			
-			
-			
+
+		FechaControlers fechaCon = new FechaControlers();
+
 		
-        String origenViaje = request.getParameter("origenViaje");
-        String destinoViaje = request.getParameter("destinoViaje");
-		String fechaString = request.getParameter("fechaString");
+		String origenViaje = "Cualquiera";
+		String destinoViaje = "Cualquiera";
+		
+		Date fechaActual = new Date();
+		String fechaString = fechaCon.dateToddMMyyyy(fechaActual);
+		
+	
+			
+		if(request.getParameter("origenViaje")!=null && request.getParameter("origenViaje")!=null && request.getParameter("fechaString")!=null ) 
+		{
+	        origenViaje = request.getParameter("origenViaje");
+	        destinoViaje = request.getParameter("destinoViaje");
+			fechaString = request.getParameter("fechaString");
+
+		}
 		
 		Date fechaDate = new Date();
 		
-		FechaControlers fechaCon = new FechaControlers();
 		fechaDate = fechaCon.yyyyMMddToDate(fechaString);
 		
         sesion.setAttribute("fechaViaje", fechaDate);
@@ -54,8 +66,9 @@ public class BuscarViajesAdmin extends HttpServlet {
         
 		
 
-    	response.sendRedirect("buscarviajesadmin.jsp");	
-    	
+    	//response.sendRedirect("buscarviajesadmin.jsp");	
+        request.getRequestDispatcher("/WEB-INF/buscarviajesadmin.jsp").forward(request, response);
+
 
 	
 	}

@@ -42,8 +42,8 @@ public class RedireccionEditarUsuarioSevlet extends HttpServlet {
 		
 		sesion.setAttribute("UsuarioAModificar", usu);
 		
-		response.sendRedirect("editarUsuario.jsp");
-		
+		request.getRequestDispatcher("/WEB-INF/editarUsuario.jsp").forward(request, response);		
+
 		
 	
 	}

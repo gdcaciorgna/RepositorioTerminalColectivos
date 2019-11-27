@@ -84,8 +84,8 @@ public class RegistrarNuevoPlan extends HttpServlet {
 			
 		
 		
-		
-		 response.sendRedirect("registrarNuevoPlan.jsp");
+		 request.getRequestDispatcher("/WEB-INF/registrarNuevoPlan.jsp").forward(request, response);		
+
 
 		
 	}

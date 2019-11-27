@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<jsp:include page="JSPFiles/includeimports.jsp" />
+<jsp:include page="/JSPFiles/includeimports.jsp" />
 
 <script type="text/javascript" src="js/validarIgualdadPassword.js"></script>
 
@@ -17,7 +17,7 @@
 <body>
 
 
-<jsp:include page="JSPFiles/includemenu.jsp" />  
+<jsp:include page="/JSPFiles/includemenu.jsp" />  
 
 
 <%@ page import = "entities.Usuario" %>
@@ -30,26 +30,6 @@ usuarioModificar = (Usuario) sesion.getAttribute("UsuarioAModificar");
 
 %>
 
-<!-- INICIO - REDIRECCION A LOGIN -->
-<%
-Usuario usuarioActual;
-
-String username="s/usuario", estado="s/estado"; 
-usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");  
-if(usuarioActual!=null) 
-{
-	username = usuarioActual.getUsername(); 
-	estado = usuarioActual.getEstado(); 
-}
-
- if(username.equals("s/usuario") || estado.equals("s/estado") || !estado.equals("activo")) 
-	{   
- 
-	String sitioweb = "http://localhost:8080/Terminal-Colectivos/"; 
-	response.sendRedirect(sitioweb+"login.jsp"); 
-	} 
-%>
-<!-- FIN - REDIRECCION A LOGIN -->
 
 
 <div class="container login-container">
@@ -165,7 +145,7 @@ if(usuarioActual!=null)
 
 
 
-<jsp:include page="JSPFiles/includefooter.jsp" />  
+<jsp:include page="/JSPFiles/includefooter.jsp" />  
 
 </body>
 </html>

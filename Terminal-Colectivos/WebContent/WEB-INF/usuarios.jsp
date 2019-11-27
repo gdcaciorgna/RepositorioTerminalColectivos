@@ -4,7 +4,7 @@
 <html>
 <head>
 
-<jsp:include page="JSPFiles/includeimports.jsp" />
+<jsp:include page="/JSPFiles/includeimports.jsp" />
  
 <meta charset="ISO-8859-1">
 <title>Usuarios</title>
@@ -28,7 +28,7 @@
 
 <% Usuario usuario;%>
 
-<jsp:include page="JSPFiles/includemenu.jsp" /> 
+<jsp:include page="/JSPFiles/includemenu.jsp" /> 
 
 
 <div class="container" style=" margin-top: 2%; margin-bottom: 2%;  ">
@@ -109,7 +109,7 @@ Filas Eliminadas: <%= filasAfectadas %>
 </div> 
 <%}%>
 
-<jsp:include page="JSPFiles/includefooter.jsp" />  
+<jsp:include page="/JSPFiles/includefooter.jsp" />  
 
 </body>
 </html>
