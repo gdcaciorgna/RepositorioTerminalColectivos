@@ -5,10 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entities.Ruta;
+import util.AppDataException;
 
 public class DataRuta {
 	
-	public Ruta getByRuta(int cod_ruta) 
+	public Ruta getByRuta(int cod_ruta) throws AppDataException 
 	{
 		Ruta ruta = new Ruta();
 		String sql= "SELECT * FROM rutas WHERE cod_ruta=?";
@@ -29,22 +30,25 @@ public class DataRuta {
 		}
 			//FIN - Código sin aplicar herencia
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(rs!=null) {rs.close();}
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar recuperar ruta en base de datos");
 		}
+		
+		try {
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+		} catch (SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+		}
+	
 		
 		return ruta;
 	}
 	
-	public Ruta getByOrigenDestino(String origenViaje, String destinoViaje) 
+	public Ruta getByOrigenDestino(String origenViaje, String destinoViaje) throws AppDataException 
 	{
 		Ruta ruta = new Ruta();
 		String sql= "select distinct e.cod_ruta,r.dias_sem\r\n" + 
@@ -81,17 +85,19 @@ public class DataRuta {
 		}
 			//FIN - Código sin aplicar herencia
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(rs!=null) {rs.close();}
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar recuperar ruta por origen y destino");
 		}
+		try {
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+		} catch (SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+		}
+	
 		
 		return ruta;
 	}

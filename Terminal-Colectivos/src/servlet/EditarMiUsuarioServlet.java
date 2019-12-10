@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,7 +61,12 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		passwordNuevoRep = usuLog.setPasswordNuevoRepNull(passwordNuevoRep);
 
 		if(passwordActual != null || passwordNuevo != null || passwordNuevoRep != null ) {
-		mensaje = usuCon.getMensajeEditarUsuario(username, passwordActual, passwordNuevo, passwordNuevoRep);
+		try {
+			mensaje = usuCon.getMensajeEditarUsuario(username, passwordActual, passwordNuevo, passwordNuevoRep);
+		} catch (SQLException e) {
+		
+			throw;
+		}
 		}
 		
 		Usuario usu = new Usuario();

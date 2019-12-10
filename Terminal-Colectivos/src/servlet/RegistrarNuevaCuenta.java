@@ -49,7 +49,9 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		
 		UsuariosControlers usuCon = new UsuariosControlers(); 
 		
-		mensajeRegistro = usuCon.getMensajeRegistro(username, password, passwordrep);
+		try {
+			mensajeRegistro = usuCon.getMensajeRegistro(username, password, passwordrep);
+		
 		
 			if(mensajeRegistro.equals("Error1")) 
 			{
@@ -79,9 +81,18 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		 		response.sendRedirect("login.jsp");
 	
 			}
+		} 
+		catch (Exception e) {
+			
+			sesion.setAttribute("mensajeRegistro", e.getMessage());	
+			
+			
+		}
 		
 	
 		}
+	
+		
 		
 		
 	

@@ -12,6 +12,7 @@ import entities.Plan;
 import entities.Plan_Reserva;
 import entities.Reserva;
 import entities.Usuario;
+import util.AppDataException;
 
 public class DataReservaPlan {
 	
@@ -23,7 +24,7 @@ public class DataReservaPlan {
 			"where pr.fecha_hora_plan = ? and pr.patente = ? and pr.cod_ruta = ? ";	
 
 	
-	public ArrayList<Plan_Reserva> getReservasPlan(Plan planElegido)
+	public ArrayList<Plan_Reserva> getReservasPlan(Plan planElegido) throws AppDataException
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -91,20 +92,19 @@ public class DataReservaPlan {
 		}
 		catch(SQLException e) 
 		{
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al intentar recuperar reservas para el plan elegido");
 		}
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				if(rs!=null) rs.close();
-				if(pstmt!=null) pstmt.close();
-				Conectar.getInstancia().releasedConn();
-			} catch(SQLException e) 
-			{
-				e.printStackTrace();
-			} 
-		}
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			Conectar.getInstancia().releasedConn();
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+		} 
+		
 		
 		return planes_reservas;
 
@@ -112,7 +112,7 @@ public class DataReservaPlan {
 	
 	
 	
-	public ArrayList<Plan_Reserva> getReservasxUsuario(Usuario usu)
+	public ArrayList<Plan_Reserva> getReservasxUsuario(Usuario usu) throws AppDataException
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -142,20 +142,19 @@ public class DataReservaPlan {
 		}
 		catch(SQLException e) 
 		{
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al intentar recuperar reservas para el usuario seleccionado la base de datos");
 		}
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				if(rs!=null) rs.close();
-				if(pstmt!=null) pstmt.close();
-				Conectar.getInstancia().releasedConn();
-			} catch(SQLException e) 
-			{
-				e.printStackTrace();
-			} 
-		}
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			Conectar.getInstancia().releasedConn();
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+		} 
+		
 		return reservas;
 
 	}	
@@ -163,7 +162,7 @@ public class DataReservaPlan {
 	
 
 		
-	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario chofer)
+	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario chofer) throws AppDataException
 	{
 		
 			
@@ -221,20 +220,19 @@ public class DataReservaPlan {
 		}
 		catch(SQLException e) 
 		{
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al intentar recuperar viajes por chofer en la base de datos");
 		}
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				if(rs!=null) rs.close();
-				if(pstmt!=null) pstmt.close();
-				Conectar.getInstancia().releasedConn();
-			} catch(SQLException e) 
-			{
-				e.printStackTrace();
-			} 
-		}
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			Conectar.getInstancia().releasedConn();
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+		} 
+		
 		return planes_reservas;
 		
 		
@@ -252,7 +250,7 @@ public class DataReservaPlan {
 	
 	
 	
-	public  void agregarReservaPlan(Plan_Reserva planReserva) {
+	public  void agregarReservaPlan(Plan_Reserva planReserva) throws AppDataException {
 		
 		
 		PreparedStatement pstmt = null;
@@ -274,24 +272,29 @@ public class DataReservaPlan {
 		    pstmt.executeUpdate();
 			
 			
- 		}catch(SQLException e) { e.printStackTrace();}
+ 		}catch(SQLException e) 
+		{ 
+ 			throw new AppDataException(e, "Error al intentar ingresar una nueva reserva para el plan seleccionado en base de datos");
+ 		}
 		
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();}
+			
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
 		}
+	
 		
 	}
 	
-	private Plan_Reserva setPlanReserva(ResultSet rs) 
+	private Plan_Reserva setPlanReserva(ResultSet rs) throws AppDataException 
 	{   
 		
 		Plan_Reserva planRes= new Plan_Reserva();
@@ -320,7 +323,7 @@ public class DataReservaPlan {
 			
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new AppDataException(e, "Error al intentar recuperar plan reserva en la base de datos");
 			}
 	
 			

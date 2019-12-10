@@ -5,10 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entities.Provincia;
+import util.AppDataException;
 
 public class DataProvincia {
 	
-	public Provincia getById_Provincia(int id_provincia) {
+	public Provincia getById_Provincia(int id_provincia) throws AppDataException {
 		Provincia provincia = new Provincia();
 		String sql = "SELECT * FROM provincias where id_provincia = ?";
 				
@@ -30,14 +31,17 @@ public class DataProvincia {
 			//FIN - Código sin aplicar herencia
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
+			throw new AppDataException(e, "Error obtener provincia de la base de datos.");
+
+
 		}finally {
 			try {
 				if(rs!=null) {rs.close();}
 				if(pstmt!=null) {pstmt.close();}
 				Conectar.getInstancia().releasedConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new AppDataException(e, "Error al cerrar la base de datos.");
 			}
 		}
 		

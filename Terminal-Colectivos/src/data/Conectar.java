@@ -2,6 +2,8 @@ package data;
 
 import java.sql.*;
 
+import util.AppDataException;
+
 public class Conectar {
 	
 
@@ -28,7 +30,8 @@ public class Conectar {
 			
 		} catch(ClassNotFoundException e) 
 		{
-			e.printStackTrace();
+			new AppDataException(e, "Error en el driver de mysql connector");
+
 		}
 	}
 	
@@ -43,24 +46,25 @@ public class Conectar {
 	
 	//FIN SINGLETON
 	
-	public Connection getConn() 
+	public Connection getConn() throws SQLException, AppDataException 
 	{
 		try {
 		
 		if(conn==null || conn.isClosed()) 
 		{
 			conn = DriverManager.getConnection("jdbc:mysql://"+ host + ":"+ port+"/" + db , user, pass);
-			
+
 		}
 		
 		} catch (SQLException e) 
-		{			e.printStackTrace();
+		{			
+			throw new AppDataException(e, "Error al conectar con la base de datos");
 		}
 		conectados++;
 		return conn;
 	}
 	
-	public void releasedConn() 
+	public void releasedConn() throws AppDataException 
 	{
 		conectados--;
 		try 
@@ -71,7 +75,9 @@ public class Conectar {
 			}
 		} catch(SQLException e) 
 		{
-			e.printStackTrace();
+			if(e.getMessage()==null) {
+			throw new AppDataException(e, "Error al desconectar usuario de la base de datos");
+			}
 		}
 	}
 	

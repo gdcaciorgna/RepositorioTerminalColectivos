@@ -16,11 +16,13 @@
 	<%@ page import = "java.util.*" %>
 
 	<%@ page import = "entities.*" %>
-	<%@ page import = "data.DataPasajeroReserva" %>
+	<%@ page import = "controlers.CancelarReserva" %>
 	
 	<% Usuario usuario= new Usuario();%>
 	<% Reserva reservaACancelar= new Reserva();%>
-	<% DataPasajeroReserva dPasRes = new DataPasajeroReserva(); %>
+	<% CancelarReserva cancelarReserva = new CancelarReserva(); %>
+	
+	
 	
  
 	<%
@@ -29,7 +31,7 @@
 	reservaACancelar = (Reserva) session.getAttribute("reservaACancelar"); 
 	double importeADevolver = (double) session.getAttribute("importeADevolver");
 	
-	ArrayList<Pasajero> pasajeros = dPasRes.getPasajerosxReserva(reservaACancelar);
+	ArrayList<Pasajero> pasajeros =   dPasRes.getPasajerosxReserva(reservaACancelar);
 	
 	
 	

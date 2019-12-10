@@ -2,7 +2,6 @@ package controlers;
 
 
 import data.DataReserva;
-import data.DataReservaPlan;
 import entities.Plan_Reserva;
 import entities.Reserva;
 import logic.ReservasPlanesLogic;
@@ -46,6 +45,7 @@ public class CancelarReserva {
 		dreserva.limpiarAsientos(reservaACancelar);
 		
 	}
+	
 	
 	
 	

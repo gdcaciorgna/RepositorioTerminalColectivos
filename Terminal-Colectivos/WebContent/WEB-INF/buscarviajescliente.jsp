@@ -1,3 +1,4 @@
+<%@page import="controlers.BuscarViajes"%>
 <%@page import="controlers.FechaControlers"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -39,8 +40,25 @@ else {fechaViajeDate = new Date();}
     <%@ page import = "entities.Plan" %>
     <% 
     //Inicialización de variables
-    DataPlan dplan = new DataPlan();
-    ArrayList<Plan> planes = dplan.getViajesDia(origenViaje, destinoViaje, fechaViajeDate);
+    
+    
+    
+    BuscarViajes buscador = new BuscarViajes();
+    ArrayList<Plan> planes = new ArrayList<Plan>();
+    
+    String manejoDeError = null;
+
+    
+    try
+    {
+    	planes = buscador.getViajesxCliente(origenViaje, destinoViaje, fechaViajeDate);
+    }
+    catch(Exception e)
+    {
+    	manejoDeError = e.getMessage();
+
+    }
+    		
     Iterator<Plan> itr = planes.iterator();
     Plan plan = null;
     
@@ -130,6 +148,14 @@ else {fechaViajeDate = new Date();}
 
 </div>
 
+<div class="row">
+<% if(manejoDeError!=null) { %>
+	<br>
+	<div class="alert alert-danger" role="alert">
+	Error: <%= manejoDeError %>
+	</div> 
+	<%}%>
+</div>
 
 <jsp:include page="/JSPFiles/includefooter.jsp" />
 </body>

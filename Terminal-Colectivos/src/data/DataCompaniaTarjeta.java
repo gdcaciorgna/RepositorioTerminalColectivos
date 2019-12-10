@@ -7,10 +7,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import entities.Compania_Tarjeta;
+import util.AppDataException;
 
 public class DataCompaniaTarjeta {
 	
-	public ArrayList<Compania_Tarjeta> getAll()
+	public ArrayList<Compania_Tarjeta> getAll() throws AppDataException
 	{
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -33,10 +34,10 @@ public class DataCompaniaTarjeta {
 					companiasTarjetas.add(companiaTarjeta);				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+ 			throw new AppDataException(e, "Error al intentar recuperar todas las companias de tarjetas en la base de datos");
+
 			
-		} finally
-		{
+		} 
 			try 
 			{
 				if(rs!=null) rs.close();
@@ -44,9 +45,10 @@ public class DataCompaniaTarjeta {
 				Conectar.getInstancia().releasedConn();
 			} catch(SQLException e) 
 			{
-				e.printStackTrace();
+	 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
+
 			} 
-		}
+		
 		
 	return companiasTarjetas;
 
@@ -55,7 +57,7 @@ public class DataCompaniaTarjeta {
 	
 	
 	
-public Compania_Tarjeta getById(int cod_compania) {
+public Compania_Tarjeta getById(int cod_compania) throws AppDataException {
 		Compania_Tarjeta compania_tarjeta = new Compania_Tarjeta();
 		String sql = "SELECT * FROM companias_tarjetas where cod_compania = ?";
 				
@@ -76,24 +78,20 @@ public Compania_Tarjeta getById(int cod_compania) {
 		}
 			//FIN - Código sin aplicar herencia
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
+		} catch (SQLException e) 
+		{
+ 			throw new AppDataException(e, "Error al intentar recuperar compania de tarjeta de la base de datos");
+
+		}
 			try {
 				if(rs!=null) {rs.close();}
 				if(pstmt!=null) {pstmt.close();}
 				Conectar.getInstancia().releasedConn();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			} catch (SQLException e) 
+			{
+	 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
 			}
-		}
+		
 		
 		return compania_tarjeta;
 	}}
-
-	
-	
-	
-	
-		
-

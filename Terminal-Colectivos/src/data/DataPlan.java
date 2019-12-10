@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.Date;
 
 import entities.*;
+import util.AppDataException;
 
 public class DataPlan {
 	
@@ -26,7 +27,7 @@ public class DataPlan {
 			"INNER JOIN localidades loc ON loc.id_localidad=ter.id_localidad\r\n" + 
 			"where esc.orden=1) ldr ON pla.fecha_hora_plan = ldr.fecha_hora_plan\r\n";	
 
-	public ArrayList<Plan> getAll()
+	public ArrayList<Plan> getAll() throws AppDataException
 	{
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -52,7 +53,7 @@ public class DataPlan {
 		}
 		catch(SQLException e) 
 		{
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al recuperar todos los viajes de la base de datos.");
 		}
 		finally 
 		{
@@ -63,7 +64,7 @@ public class DataPlan {
 				Conectar.getInstancia().releasedConn();
 			} catch(SQLException e) 
 			{
-				e.printStackTrace();
+				throw new AppDataException(e, "Error al intentar cerrar la base de datos.");
 			} 
 		}
 		return planes;
@@ -72,7 +73,7 @@ public class DataPlan {
 	
 	
 	
-	public ArrayList<Plan> getViajesDia(String origen, String destino, Date fechaViaje)
+	public ArrayList<Plan> getViajesDia(String origen, String destino, Date fechaViaje) throws AppDataException
 	{
 		
 			
@@ -144,27 +145,26 @@ public class DataPlan {
 		}
 		catch(SQLException e) 
 		{
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al recuperar viajes del día");
 		}
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				if(rs!=null) rs.close();
-				if(pstmt!=null) pstmt.close();
-				Conectar.getInstancia().releasedConn();
-			} catch(SQLException e) 
-			{
-				e.printStackTrace();
-			} 
-		}
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			Conectar.getInstancia().releasedConn();
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos.");
+		} 
+		
 		return planes;
 		
 		
 	}
 		
 	
-	public Plan getByFechaHoraRutaPatente(Date fechaHoraViaje, int cod_ruta, String patente)
+	public Plan getByFechaHoraRutaPatente(Date fechaHoraViaje, int cod_ruta, String patente) throws AppDataException
 	{
 		
 			
@@ -200,7 +200,8 @@ public class DataPlan {
 		
 		catch(SQLException e) 
 		{
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al recuperar plan de viaje de la base de datos.");
+
 		}
 		
 		finally 
@@ -212,7 +213,8 @@ public class DataPlan {
 				Conectar.getInstancia().releasedConn();
 			} catch(SQLException e) 
 			{
-				e.printStackTrace();
+				throw new AppDataException(e, "Error al intentar cerrar la base de datos.");
+
 			} 
 		}
 		return plan;
@@ -222,7 +224,7 @@ public class DataPlan {
 	
 	
 	
-	private Plan setPlan(ResultSet rs) 
+	private Plan setPlan(ResultSet rs) throws AppDataException 
 	{
 		 Plan plan = new Plan();
 		 Colectivo colectivo = new Colectivo();
@@ -274,14 +276,14 @@ public class DataPlan {
 			
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new AppDataException(e, "Error al intentar recuperar plan de viaje de la base de datos.");
 			}
 	
 			
 			return plan;
 		}
 	
-	public int editarPlan(Plan planViejo, Plan planNuevo)
+	public int editarPlan(Plan planViejo, Plan planNuevo) throws AppDataException
 	{
 	PreparedStatement pstmt = null;
 	
@@ -310,7 +312,7 @@ public class DataPlan {
 	} catch(SQLException e) 
 	{
 		
-		e.printStackTrace();
+		throw new AppDataException(e, "Error al intentar editar plan de viaje en la base de datos.");
 	}
 	finally 
 	{
@@ -321,8 +323,9 @@ public class DataPlan {
 			
 			
 			
-		} catch(SQLException e) {e.printStackTrace();
-		
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos.");		
 		}
 			
 		
@@ -332,7 +335,7 @@ public class DataPlan {
 	
 	
 	
-	public Integer eliminarPlan(Plan plan) 
+	public Integer eliminarPlan(Plan plan) throws AppDataException 
 	{
 		PreparedStatement pstmt = null;
 		String sql = "DELETE from planes where fecha_hora_plan = ? and cod_ruta = ?  and patente = ? ";
@@ -354,24 +357,26 @@ public class DataPlan {
 		} catch(SQLException e) 
 		{
 			
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al intentar eliminar el plan de viaje de la base de datos.");
+
 		}
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();
-			
-			}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
 			
 			
 			
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos.");
+		
 		}
+			
+			
+			
+		
 		return filasAfectadas;
 		
 	}
@@ -379,7 +384,7 @@ public class DataPlan {
 	
 	
 	
-	public int addPlan( Plan nuevoPlan)
+	public int addPlan( Plan nuevoPlan) throws AppDataException
 	{
 	PreparedStatement pstmt = null;
 	
@@ -404,12 +409,13 @@ public class DataPlan {
 	    
 	    
 		
-	}catch(SQLException e) {
-	e.printStackTrace();
+	}catch(SQLException e) 
+	{
+		throw new AppDataException(e, "Error al intentar insertar un nuevo plan de viajes en la base de datos.");
+
 	}
 	
-	finally 
-	{
+	
 		try 
 		{
 			
@@ -418,16 +424,20 @@ public class DataPlan {
 			
 			
 			
-		} catch(SQLException e) {e.printStackTrace();}
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos.");
+
+		}
 		
 		
-	}	
+		
 	
 	return filasAgregadas;
 	
 	}
 	
-	public boolean validarPlanSinExistencia(Date fechaHoraViaje, int cod_ruta, String patente) 
+	public boolean validarPlanSinExistencia(Date fechaHoraViaje, int cod_ruta, String patente) throws AppDataException 
 	{
 		Plan plan = new Plan();
 		

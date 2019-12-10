@@ -2,10 +2,11 @@ package logic;
 
 import data.DataPasajero;
 import entities.Pasajero;
+import util.AppDataException;
 
 public class PasajeroLogic {
 	
-	public boolean validarPasajeroInexistente(int dni) 
+	public boolean validarPasajeroInexistente(int dni) throws AppDataException 
 	{
 		
 		DataPasajero dpas = new DataPasajero();

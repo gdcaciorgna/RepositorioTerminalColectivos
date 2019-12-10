@@ -5,11 +5,12 @@ import java.util.ArrayList;
 
 import entities.Localidad;
 import entities.Provincia;
+import util.AppDataException;
 
 public class DataLocalidad {
 	
 	
-	public Localidad getById_Localidad(int id_localidad) 
+	public Localidad getById_Localidad(int id_localidad) throws AppDataException 
 	{
 		Localidad localidad = new Localidad();
 		Provincia provincia = new Provincia();
@@ -38,14 +39,16 @@ public class DataLocalidad {
 			//FIN - Código sin aplicar herencia
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
+			throw new AppDataException(e, "Error al recuperar las localidades");
+		}
+		finally {
 			try {
 				if(rs!=null) {rs.close();}
 				if(pstmt!=null) {pstmt.close();}
 				Conectar.getInstancia().releasedConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new AppDataException(e, "Error al cerrar la base de datos.");
+
 			}
 		}
 		
@@ -54,7 +57,7 @@ public class DataLocalidad {
 	}
 	
 	
-	public ArrayList<Localidad> getAll()
+	public ArrayList<Localidad> getAll() throws AppDataException
 	{
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -73,28 +76,31 @@ public class DataLocalidad {
 					localidades.add(localidad);
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			
-		} finally
+		} catch (SQLException e) 
+		
 		{
-			try 
-			{
-				if(rs!=null) rs.close();
-				if(stmt!=null) stmt.close();
-				Conectar.getInstancia().releasedConn();
-			} catch(SQLException e) 
-			{
-				e.printStackTrace();
-			} 
+			throw new AppDataException(e, "Error al recuperar localidades de la base de datos");
+			
+			
 		}
+		
+		try 
+		{
+			if(rs!=null) rs.close();
+			if(stmt!=null) stmt.close();
+			Conectar.getInstancia().releasedConn();
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al cerrar la base de datos.");
+		} 
+		
 		
 	return localidades;
 	}
 	
 	
 		
-	private Localidad setLocalidad(ResultSet rs) 
+	private Localidad setLocalidad(ResultSet rs) throws AppDataException 
 	{
 		Provincia provincia = new Provincia();
 		Localidad localidad = new Localidad();
@@ -109,7 +115,8 @@ public class DataLocalidad {
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al recuperar localidades de la base de datos.");
+
 		}
 		
 		return localidad;

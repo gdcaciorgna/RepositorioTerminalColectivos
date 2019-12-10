@@ -49,12 +49,11 @@ session.setAttribute("errorLogin",null);%>
 </div>
 
 </div>
+
 </div>
 
-
-
+<!--Cómo hago para manejar un error en toda una JSP? -->
 <jsp:include page="JSPFiles/includefooter.jsp" />  
-
-
+  
 </body>
 </html>

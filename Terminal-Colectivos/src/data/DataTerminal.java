@@ -6,12 +6,13 @@ import java.sql.SQLException;
 
 import entities.Localidad;
 import entities.Terminal;
+import util.AppDataException;
 
 
 public class DataTerminal {
 	
 	
-	public Terminal getByCod_Terminal(int cod_terminal) {
+	public Terminal getByCod_Terminal(int cod_terminal) throws AppDataException {
 		Terminal terminal = new Terminal();
 		Localidad localidad = new Localidad();
 		String sql = "SELECT * FROM terminales";
@@ -42,17 +43,18 @@ public class DataTerminal {
 		}
 			//FIN - Código sin aplicar herencia
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(rs!=null) {rs.close();}
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar recuperar terminal en la base de datos");		}
+		try {
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+		} catch (SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
 		}
+		
 		
 		return terminal;
 	}

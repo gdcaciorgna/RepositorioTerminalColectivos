@@ -55,7 +55,24 @@ else
     <% 
     //Inicialización de variables
     DataPlan dplan = new DataPlan();
-    ArrayList<Plan> planes = dplan.getViajesDia(origenViaje, destinoViaje, fechaViajeDate);
+   
+    ArrayList<Plan> planes = new ArrayList<Plan>();
+    
+    
+    String manejoDeError = null;
+    
+    
+    try
+    {
+    	planes = dplan.getViajesDia(origenViaje, destinoViaje, fechaViajeDate);
+    }
+    
+    catch(Exception e)
+    {
+    	manejoDeError = e.getMessage();
+    }
+    
+    
     Iterator<Plan> itr = planes.iterator();
     Plan plan = null;
     
@@ -190,6 +207,15 @@ else
 			Viajes eliminados: <%= planesEliminados %>
 			</div> 
 			<%}%>
+			
+			
+			<% if(manejoDeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= manejoDeError %>
+			</div> 
+			<%}%>
+			
         </div>
         <% 
               session.setAttribute("planesEliminados",null);

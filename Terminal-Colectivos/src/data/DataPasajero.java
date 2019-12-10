@@ -3,13 +3,13 @@ package data;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import entities.Pasajero;
+import util.AppDataException;
 
 public class DataPasajero {
 	
-	public Pasajero getByDni(int dni) {
+	public Pasajero getByDni(int dni) throws AppDataException {
 		Pasajero pasajero = new Pasajero();
 		String sql = "SELECT * FROM pasajeros where dni = ?";
 				
@@ -30,27 +30,29 @@ public class DataPasajero {
 		}
 			//FIN - Código sin aplicar herencia
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		finally 
+		} catch (SQLException e) 
 		{
-			try 
-			{
-				if(rs!=null) {rs.close();}
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();}
-		}	
+ 			throw new AppDataException(e, "Error al intentar recuperar pasajero de la base de datos");
+
+		}
 		
+		try 
+		{
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+		} catch(SQLException e) 
+		{
+ 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
+
+		}
+	
 		return pasajero;
 
 	}
 	
-	public void addPasajero(Pasajero pasajero) 
+	public void addPasajero(Pasajero pasajero) throws AppDataException 
 	{
 		String sql = "INSERT INTO pasajeros (dni, nombre, apellido) VALUES (?,?,?) ";
 
@@ -69,20 +71,26 @@ public class DataPasajero {
 			
 		    
 			
-		}catch(SQLException e) { e.printStackTrace();}
-		
-		finally 
+		}catch(SQLException e) 
 		{
-			try 
-			{
-				
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();}
-		}	
+ 			throw new AppDataException(e, "Error al intentar ingresar pasajero a la base de datos");
+		}
+		
+		
+		try 
+		{
+			
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) 
+		{
+ 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
+
+		}
+			
 
 
 	
@@ -90,7 +98,5 @@ public class DataPasajero {
 	}
 	
 	
-	public void addPasajeros(ArrayList<Pasajero> pasajeros)
-	{
-	}
+	
 }

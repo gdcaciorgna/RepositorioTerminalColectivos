@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
+        try {
         UsuariosControlers usuCon = new UsuariosControlers();
         
         	
@@ -57,9 +58,17 @@ public class LoginServlet extends HttpServlet {
     	 else 
     	 { 
  		 request.getSession().setAttribute("errorLogin", "Usuario y/o contraseña incorrecta");	
-		 
- 		 response.sendRedirect("login.jsp");	
     	 }	
+        } 
+        
+        catch(Exception e) 
+        {
+        	request.getSession().setAttribute("errorLogin", e.getMessage());
+        	response.sendRedirect("login.jsp");
+
+        }
+        
+        
     		 	
     }				    
 	

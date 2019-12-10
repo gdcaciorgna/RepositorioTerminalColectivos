@@ -16,6 +16,7 @@ import entities.Plan_Reserva;
 import entities.Reserva;
 import entities.Usuario;
 import logic.PasajeroLogic;
+import util.AppDataException;
 
 public class ABMPasajero {
 	
@@ -48,8 +49,11 @@ public class ABMPasajero {
 		
 	}
 	
-	public void registrarReserva(ArrayList<Pasajero> pasajeros, String nroTarjeta, Plan viajeSeleccionado, int cantidadPasajeros, Usuario usuarioActual, int codCompania) 
+	public void registrarReserva(ArrayList<Pasajero> pasajeros, String nroTarjeta, Plan viajeSeleccionado, int cantidadPasajeros, Usuario usuarioActual, int codCompania) throws AppDataException 
 	{
+		try 
+		{
+		
 		Compania_Tarjeta companiaTarjeta = new Compania_Tarjeta();
 		DataCompaniaTarjeta dCompaniaTarjeta = new DataCompaniaTarjeta();
 		companiaTarjeta = dCompaniaTarjeta.getById(codCompania);
@@ -109,7 +113,10 @@ public class ABMPasajero {
 		
 		
 		
-		
+		}catch(Exception e) 
+		{
+			throw e;
+		}	
 		
 		
 		

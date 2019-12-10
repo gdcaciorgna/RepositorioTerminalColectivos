@@ -11,13 +11,14 @@ import entities.Pasajero;
 import entities.Pasajero_Reserva;
 import entities.Plan;
 import entities.Reserva;
+import util.AppDataException;
 
 public class DataPasajeroReserva {
 	
 	
 	
 	
-	public void agregarPasajeroReserva(Pasajero_Reserva pasajero_reserva) 
+	public void agregarPasajeroReserva(Pasajero_Reserva pasajero_reserva) throws AppDataException 
 	{
 		PreparedStatement pstmt = null;
 		
@@ -36,9 +37,10 @@ public class DataPasajeroReserva {
 		    pstmt.executeUpdate();
 			
 			
- 		}catch(SQLException e) { 
- 			e.printStackTrace();
- 			}
+ 		}catch(SQLException e) 
+		{ 
+ 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
+ 		}
 		
 		finally 
 		{
@@ -48,11 +50,14 @@ public class DataPasajeroReserva {
 				if(pstmt!=null) {pstmt.close();}
 				Conectar.getInstancia().releasedConn();
 				
-			} catch(SQLException e) {e.printStackTrace();}
+			} catch(SQLException e) 
+			{
+	 			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+			}
 		}
 	}
 	
-	public int getUltimoAsientoxPlan(Plan plan) 
+	public int getUltimoAsientoxPlan(Plan plan) throws AppDataException 
 	{
 		PreparedStatement pstmt = null;
 		
@@ -84,26 +89,29 @@ public class DataPasajeroReserva {
 		    	ultimoAsiento = rs.getInt(4) ;
 		    }
 			
- 		}catch(SQLException e) { 
- 			e.printStackTrace();
+ 		}catch(SQLException e) 
+			{ 
+ 				throw new AppDataException(e, "Error al intentar obtener el último asiento asignado al plan");
  			}
 		
-		finally 
-		{
-			try 
+					try 
 			{
 				if(rs!=null) {rs.close();}
 				if(pstmt!=null) {pstmt.close();}
 				Conectar.getInstancia().releasedConn();
 				
-			} catch(SQLException e) {e.printStackTrace();}
-		}
+			} catch(SQLException e) 
+			{
+	 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
+
+			}
+		
 		
 		return ultimoAsiento+1;
 
 	}
 	
-	public ArrayList<Pasajero> getPasajerosxReserva(Reserva reserva)
+	public ArrayList<Pasajero> getPasajerosxReserva(Reserva reserva) throws AppDataException
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -136,8 +144,9 @@ public class DataPasajeroReserva {
 					
 				}
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException e) 
+		{
+ 			throw new AppDataException(e, "Error al intentar obtener pasajeros para la reserva indicada");
 			
 		} finally
 		{
@@ -148,14 +157,14 @@ public class DataPasajeroReserva {
 				Conectar.getInstancia().releasedConn();
 			} catch(SQLException e) 
 			{
-				e.printStackTrace();
+	 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
 			} 
 		}
 		
 	return pasajeros;	
 	}
 	
-	public ArrayList<Pasajero_Reserva> getPasajerosxPlan (Plan plan)
+	public ArrayList<Pasajero_Reserva> getPasajerosxPlan (Plan plan) throws AppDataException
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -214,7 +223,7 @@ public class DataPasajeroReserva {
 				}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+ 			throw new AppDataException(e, "Error al intentar recuperar pasajeros para el plan seleccionado");
 			
 		} finally
 		{
@@ -225,7 +234,7 @@ public class DataPasajeroReserva {
 				Conectar.getInstancia().releasedConn();
 			} catch(SQLException e) 
 			{
-				e.printStackTrace();
+	 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
 			} 
 		}
 		

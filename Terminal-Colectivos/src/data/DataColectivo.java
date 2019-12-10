@@ -8,10 +8,11 @@ import java.util.ArrayList;
 
 import entities.Colectivo;
 import entities.Empresa_Colectivo;
+import util.AppDataException;
 
 public class DataColectivo {
 	
-	public Colectivo getByPatente(String patente) 
+	public Colectivo getByPatente(String patente) throws AppDataException, SQLException 
 	{
 		Colectivo colectivo = new Colectivo();
 		String sql = "select * from colectivos where patente=?";
@@ -29,22 +30,28 @@ public class DataColectivo {
 				colectivo = setColectivo(rs);							
 		}
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(rs!=null) {rs.close();}
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (SQLException e) 
+		{
+ 			throw new AppDataException(e, "Error al intentar recuperar colectivo");
+
 		}
+	
+		
+		try {
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+		} 
+		catch (SQLException e) 
+		{
+ 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
+		}
+		
 		
 		return colectivo;
 	} 
 	
-	private Colectivo setColectivo(ResultSet rs) 
+	private Colectivo setColectivo(ResultSet rs) throws AppDataException 
 	{
 		DataEmpresa_Colectivo demp = new DataEmpresa_Colectivo()
 ;		Empresa_Colectivo empresa= new Empresa_Colectivo();
@@ -63,14 +70,15 @@ public class DataColectivo {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+ 			throw new AppDataException(e, "Error al intentar recuperar colectivo de la base de datos");
+
 		}
 		
 		return colectivo;
 
 	}
 	
-	public ArrayList <Colectivo> getAll()
+	public ArrayList <Colectivo> getAll() throws AppDataException
 	{
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -89,11 +97,10 @@ public class DataColectivo {
 					colectivos.add(colec);
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			
-		} finally
+		} catch (SQLException e) 
 		{
+ 			throw new AppDataException(e, "Error al intentar recuperar todos los colectivos");	
+		} 
 			try 
 			{
 				if(rs!=null) rs.close();
@@ -101,9 +108,10 @@ public class DataColectivo {
 				Conectar.getInstancia().releasedConn();
 			} catch(SQLException e) 
 			{
-				e.printStackTrace();
+	 			throw new AppDataException(e, "Error al intentar ingresar reserva de pasajero a la base de datos");
+
 			} 
-		}
+		
 		
 	return colectivos;	
 	}

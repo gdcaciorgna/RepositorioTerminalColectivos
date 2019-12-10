@@ -14,11 +14,12 @@ import entities.Compania_Tarjeta;
 import entities.Reserva;
 
 import entities.Usuario;
+import util.AppDataException;
 
 public class DataReserva {
 	
 	
-	public  void agregarReserva(Reserva reserva) {
+	public  void agregarReserva(Reserva reserva) throws AppDataException {
 		
 		
 		PreparedStatement pstmt = null;
@@ -41,26 +42,31 @@ public class DataReserva {
 		    pstmt.executeUpdate();
 			
 			
-		}catch(SQLException e) { e.printStackTrace();}
+		}catch(SQLException e) 
+		{ 
+ 			throw new AppDataException(e, "Error al intentar ingresar reserva a la base de datos");
+		}
 		
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();}
+			
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+		}
 		}	
 		
-		}
+		
 	
 	
 		
-	public ArrayList<Reserva> getReservasxUsuario(Usuario usu)
+	public ArrayList<Reserva> getReservasxUsuario(Usuario usu) throws AppDataException
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -88,25 +94,25 @@ public class DataReserva {
 		}
 		catch(SQLException e) 
 		{
-			e.printStackTrace();
+ 			throw new AppDataException(e, "Error al intentar obtener reservas del usuairo seleccionado en la base de datos");
+
 		}
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				if(rs!=null) rs.close();
-				if(pstmt!=null) pstmt.close();
-				Conectar.getInstancia().releasedConn();
-			} catch(SQLException e) 
-			{
-				e.printStackTrace();
-			} 
-		}
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			Conectar.getInstancia().releasedConn();
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+		} 
+		
 		return reservas;
 
 	}	
 		
-	private Reserva setReserva(ResultSet rs) 
+	private Reserva setReserva(ResultSet rs) throws AppDataException 
 	{
 		Reserva reserva=new Reserva();
 		 Usuario usu = new Usuario();
@@ -145,7 +151,8 @@ public class DataReserva {
 			
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+	 			throw new AppDataException(e, "Error al intentar recuperar reserva en la base de datos");
+
 			}
 	
 			
@@ -161,7 +168,7 @@ public class DataReserva {
 	
 	
 	
-	public Reserva getByFechaUsuario(Date fecha_res, String username)
+	public Reserva getByFechaUsuario(Date fecha_res, String username) throws AppDataException
 	{
 		Usuario usuario_reserva = new Usuario();
 		Compania_Tarjeta compania_tarjeta = new Compania_Tarjeta();
@@ -232,15 +239,10 @@ public class DataReserva {
 			
 			try {
 				pstmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
 				rs.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new AppDataException(e, "Error al intentar cerrar la base de datos");
 			}
 			
 		}
@@ -251,7 +253,7 @@ public class DataReserva {
 		
 	}
 	
-	public void cancelarReserva(Reserva reserva) 
+	public void cancelarReserva(Reserva reserva) throws AppDataException 
 	{
 		PreparedStatement pstmt = null;
 		
@@ -277,27 +279,28 @@ public class DataReserva {
 		} catch(SQLException e) 
 		{
 			
-			e.printStackTrace();
+ 			throw new AppDataException(e, "Error al intentar cancelar reserva en base de datos");
+
 		}
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();
-			
-			}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
 			
 			
 			
+		} catch(SQLException e) 
+		{
+ 			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
 		}
+			
+			
+			
+		
 	}
 	
-	public void limpiarAsientos(Reserva reserva) 
+	public void limpiarAsientos(Reserva reserva) throws AppDataException 
 	{
 		String sql = "UPDATE pasajeros_reservas pasres INNER JOIN\r\n" + 
 				"	reservas res\r\n" + 
@@ -326,24 +329,24 @@ public class DataReserva {
 		} catch(SQLException e) 
 		{
 			
-			e.printStackTrace();
+ 			throw new AppDataException(e, "Error al intentar limpiar asientos en la base de datos");
 		}
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();
-			
-			}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
 			
 			
 			
+		} catch(SQLException e) 
+		{
+ 			throw new AppDataException(e, "Error al intentar cerrar la base de datos");		
 		}
+			
+			
+			
+		
 		
 		
 	}

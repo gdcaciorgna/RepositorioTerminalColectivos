@@ -1,13 +1,16 @@
 package controlers;
 
+import java.sql.SQLException;
+
 import data.DataUsuario;
 import entities.Usuario;
 import logic.UsuarioLogic;
+import util.AppDataException;
 
 public class UsuariosControlers {
 	
 	
-	public int eliminarUsuario(String username, String password)
+	public int eliminarUsuario(String username, String password) throws AppDataException
 	{
 		Usuario usu;
 		DataUsuario dusu = new DataUsuario();
@@ -33,7 +36,7 @@ public class UsuariosControlers {
 	}
 	
 	
-	public Usuario editarUsuario(String username, String nombre, String apellido, String email, String cuil, String rol, String estado, String passwordActual, String passwordNuevo, String passwordNuevoRep)
+	public Usuario editarUsuario(String username, String nombre, String apellido, String email, String cuil, String rol, String estado, String passwordActual, String passwordNuevo, String passwordNuevoRep) throws AppDataException
 	{
 		UsuarioLogic usuLog = new UsuarioLogic();
 		
@@ -61,7 +64,7 @@ public class UsuariosControlers {
 	}
 	
 	
-	public Usuario loginUsuario(String username, String password) 
+	public Usuario loginUsuario(String username, String password) throws Exception
 	{
 		DataUsuario dusu = new DataUsuario();
 		Usuario usu = new Usuario();
@@ -69,7 +72,7 @@ public class UsuariosControlers {
         
         if(dusu.validarUsuarioyPassword(username, password)==true)
         {
-        	usu = dusu.getByUsername(username);
+        	usu = this.getByUsername(username);
    	        	
         }
         
@@ -78,7 +81,7 @@ public class UsuariosControlers {
 
 	}
 	
-	public Usuario getByUsername(String username) 
+	public Usuario getByUsername(String username) throws Exception
 	{
 		DataUsuario dusu = new DataUsuario();
 		Usuario usu = new Usuario();
@@ -90,7 +93,7 @@ public class UsuariosControlers {
 	
 	
 	
-	public String getMensajeRegistro(String username, String password, String passwordrep) 
+	public String getMensajeRegistro(String username, String password, String passwordrep) throws Exception 
 	{
 		DataUsuario dusu = new DataUsuario();
 		
@@ -119,7 +122,7 @@ public class UsuariosControlers {
 
 	}
 	
-	public String getMensajeEditarUsuario(String username, String passwordActual, String passwordNuevo, String passwordNuevoRep) 
+	public String getMensajeEditarUsuario(String username, String passwordActual, String passwordNuevo, String passwordNuevoRep) throws SQLException, AppDataException 
 	{
 		DataUsuario dusu = new DataUsuario();
 		
@@ -146,7 +149,7 @@ public class UsuariosControlers {
 
 	}
 	
-	public Usuario setUsuario(String username, String password, String nombre, String apellido, String email, String cuil, String rol) 
+	public Usuario setUsuario(String username, String password, String nombre, String apellido, String email, String cuil, String rol) throws AppDataException 
 	{
 		Usuario usuario = new Usuario();
 		DataUsuario dusu = new DataUsuario();
@@ -169,7 +172,7 @@ public class UsuariosControlers {
 		
 	}
 	
-	public String getMensajeEliminarUsuario(String username, String password) 
+	public String getMensajeEliminarUsuario(String username, String password) throws SQLException, AppDataException 
 	{
 		
 		DataUsuario dusu = new DataUsuario();

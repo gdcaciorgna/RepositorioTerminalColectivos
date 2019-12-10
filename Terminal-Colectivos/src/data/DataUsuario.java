@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import entities.Usuario;
+import util.AppDataException;
 
 
 
@@ -11,7 +12,7 @@ import entities.Usuario;
 public class DataUsuario 
 {
 	
-	public Usuario getByUsername(String usu) {
+	public Usuario getByUsername(String usu) throws AppDataException {
 		Usuario usuario = null;
 		String sql = "select * from usuarios where usuario=?";
 		
@@ -31,14 +32,16 @@ public class DataUsuario
 			//FIN - Código sin aplicar herencia
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
+			throw new AppDataException(e, "Error al obtener el usuario de la bd.");
+		
 		}finally {
 			try {
 				if(rs!=null) {rs.close();}
 				if(pstmt!=null) {pstmt.close();}
 				Conectar.getInstancia().releasedConn();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new AppDataException(e, "Error al cerrar la base de datos.");
 			}
 		}
 		
@@ -47,7 +50,7 @@ public class DataUsuario
 	
 
 
-	public boolean validarUsuarioyPassword(Usuario usuario, String password) {
+	public boolean validarUsuarioyPassword(Usuario usuario, String password) throws AppDataException {
 		boolean r = false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -65,19 +68,23 @@ public class DataUsuario
 				r=true;
 				
 			}
-		}catch(SQLException e) { e.printStackTrace();}
-		finally 
+		}catch(SQLException e) 
+		{ 
+			throw new AppDataException(e, "Error al intentar validar usuario y contraseña en base de datos");		}
+		
+		try 
 		{
-			try 
-			{
-				if(rs!=null) {rs.close();}
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) {e.printStackTrace();}
-		}	
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+		}
+			
 
 		
 
@@ -86,7 +93,7 @@ public class DataUsuario
 	}
 	
 	
-	public boolean validarUsuarioyPassword(String username, String password) {
+	public boolean validarUsuarioyPassword(String username, String password) throws SQLException, AppDataException {
 		boolean r=false;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -104,27 +111,50 @@ public class DataUsuario
 				r=true;
 				
 			}
-		}catch(SQLException e) { e.printStackTrace();}
-		finally 
+		}
+		
+		catch(SQLException e) 
 		{
+			if(e.getMessage()==null) {
+			throw new AppDataException(e, "Error en base de datos al validar usuario y password");
+			}
+			else 
+			{
+				throw e;
+			}
+		}
+		
+		catch(AppDataException e) 
+		{
+			throw e;
+		}
+		
+		
+			
+			
 			try 
 			{
-				if(rs!=null) {rs.close();}
+				if(rs!=null) {
+					rs.close();
+					}
 				if(pstmt!=null) {pstmt.close();}
 				Conectar.getInstancia().releasedConn();
 				
 				
 				
-			} catch(SQLException e) {e.printStackTrace();}
-		}	
-
+			} catch(SQLException e) 
+			{
+				throw e;
+			}
 		
+
 
 		return r;
 		
 	}
 	
-	public boolean validarUsuarioInexistente (String username) {
+	public boolean validarUsuarioInexistente (String username) throws Exception {
+		
 		boolean r=true;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -142,7 +172,11 @@ public class DataUsuario
 				r=false;
 				
 			}
-		}catch(SQLException e) { e.printStackTrace();}
+		}
+		catch(SQLException e) 
+		{ 
+			throw new AppDataException(e, "Error en base de datos al validar usuario inexistente");
+		}
 		finally 
 		{
 			try 
@@ -153,7 +187,10 @@ public class DataUsuario
 				
 				
 				
-			} catch(SQLException e) {e.printStackTrace();}
+			} catch(SQLException e) 
+			{
+				throw new AppDataException(e, "Error al cerrar la base de datos");
+			}
 		}	
 
 		
@@ -162,7 +199,7 @@ public class DataUsuario
 		
 	}
 	
-	public Integer eliminarUsuario(Usuario usuario) 
+	public Integer eliminarUsuario(Usuario usuario) throws AppDataException 
 	{
 		PreparedStatement pstmt = null;
 		String sql = "update usuarios set estado = 'eliminado' where usuario = ?";
@@ -180,8 +217,8 @@ public class DataUsuario
 			
 		} catch(SQLException e) 
 		{
-			
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al intentar eliminar usuario en la base de datos");
+
 		}
 		finally 
 		{
@@ -192,7 +229,9 @@ public class DataUsuario
 				
 				
 				
-			} catch(SQLException e) {e.printStackTrace();
+			} catch(SQLException e) 
+			{
+				throw new AppDataException(e, "Error al intentar cerrar la base de datos");
 			
 			}
 			
@@ -203,7 +242,7 @@ public class DataUsuario
 		
 	}
 	
-	public ArrayList <Usuario> getAll()
+	public ArrayList <Usuario> getAll() throws AppDataException
 	{
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -222,7 +261,7 @@ public class DataUsuario
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppDataException(e, "Error recuperar usuarios.");
 			
 		} finally
 		{
@@ -233,14 +272,15 @@ public class DataUsuario
 				Conectar.getInstancia().releasedConn();
 			} catch(SQLException e) 
 			{
-				e.printStackTrace();
+				throw new AppDataException(e, "Error al cerrar la base de datos.");
+
 			} 
 		}
 		
 	return usuarios;	
 	}
 	
-	private Usuario setUsuario(ResultSet rs)
+	private Usuario setUsuario(ResultSet rs) throws AppDataException
 	{
 		Usuario usuario = new Usuario();
 		try {
@@ -255,14 +295,15 @@ public class DataUsuario
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new AppDataException(e, "Error al recuperar usuario de la base de datos.");
+
 		}
 		
 		return usuario;
 	
 	}
 	
-	public void editarUsuario(Usuario usu)
+	public void editarUsuario(Usuario usu) throws AppDataException
 	{
 	PreparedStatement pstmt = null;
 	
@@ -303,10 +344,9 @@ public class DataUsuario
 	}
 	catch(SQLException e) 
 	{ 
-		e.printStackTrace();
+		throw new AppDataException(e, "Error al intentar editar usuario en la base de datos");
 	}
-	finally 
-	{
+	
 			try 
 			{
 				
@@ -315,15 +355,19 @@ public class DataUsuario
 				
 				
 				
-			} catch(SQLException e) {e.printStackTrace();}
+			} catch(SQLException e) 
+			{
+				throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+
+			}
 	}	
 	
-	}
+	
 
 	
 	
 	
-	public void ingresarUsuario(Usuario usuario)
+	public void ingresarUsuario(Usuario usuario) throws AppDataException
 	{
 	PreparedStatement pstmt = null;
 	
@@ -350,7 +394,11 @@ public class DataUsuario
 	    pstmt.executeUpdate();
 		
 		
-	}catch(SQLException e) { e.printStackTrace();}
+	}catch(SQLException e) 
+	{ 
+		throw new AppDataException(e, "Error al intentar registrar usuario en la base de datos");
+
+	}
 	
 	finally 
 	{
@@ -362,45 +410,33 @@ public class DataUsuario
 			
 			
 			
-		} catch(SQLException e) {e.printStackTrace();}
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+
+		}
 	}	
 	
 	}
-	public ArrayList <Usuario> getAall()
-	{
-		Statement stmt = null;
-		ResultSet rs = null;
-		String sql = "select * from usuarios where rol='chofer'";
-		ArrayList<Usuario> choferes = new ArrayList<>();
-		try 
-		{
-			stmt = Conectar.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery(sql);
-			if(rs!=null) 
-			{
-				while(rs.next()) 
-				{
-					Usuario chofer = setUsuario(rs);
-					
-					choferes.add(chofer);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			
-		} finally
-		{
-			try 
-			{
-				if(rs!=null) rs.close();
-				if(stmt!=null) stmt.close();
-				Conectar.getInstancia().releasedConn();
-			} catch(SQLException e) 
-			{
-				e.printStackTrace();
-			} 
-		}
-		
-	return choferes;	
-	}
+	/*
+	 * public ArrayList <Usuario> getAall() throws AppDataException { Statement stmt
+	 * = null; ResultSet rs = null; String sql =
+	 * "select * from usuarios where rol='chofer'"; ArrayList<Usuario> choferes =
+	 * new ArrayList<>(); try { stmt =
+	 * Conectar.getInstancia().getConn().createStatement(); rs =
+	 * stmt.executeQuery(sql); if(rs!=null) { while(rs.next()) { Usuario chofer =
+	 * setUsuario(rs);
+	 * 
+	 * choferes.add(chofer); } } } catch (SQLException e) { throw new
+	 * AppDataException(e, "Error al intentar recuperar usuarios");
+	 * 
+	 * 
+	 * } finally { try { if(rs!=null) rs.close(); if(stmt!=null) stmt.close();
+	 * Conectar.getInstancia().releasedConn(); } catch(SQLException e) { throw new
+	 * AppDataException(e, "Error al intentar cerrar la base de datos");
+	 * 
+	 * } }
+	 * 
+	 * return choferes; }
+	 */
 }

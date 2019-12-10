@@ -1,3 +1,4 @@
+<%@page import="controlers.BuscarViajes"%>
 <%@page import="data.DataReservaPlan"%>
 <%@page import="entities.Plan_Reserva"%>
 <%@page import="logic.PlanLogic"%>
@@ -12,35 +13,38 @@
 <%@ page import = "entities.Usuario" %>
 
 
-<% Usuario usuarioActual;%>
+<%
+	Usuario usuarioActual;
+%>
  
-<% 
-HttpSession sesion = request.getSession();
+<%
+ 	HttpSession sesion = request.getSession();
 
-usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");  
-
-
-String origenViaje = (String) sesion.getAttribute("origenViaje");
-String destinoViaje = (String) sesion.getAttribute("destinoViaje");
-java.util.Date fechaViajeDate = (Date) sesion.getAttribute("fechaViaje");
-String fechaViajeString = "-";
-FechaControlers fCon = new FechaControlers();
+ usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");  
 
 
-if(origenViaje==null){origenViaje = "Cualquiera";}
-if(destinoViaje==null){destinoViaje = "Cualquiera";}
+ String origenViaje = (String) sesion.getAttribute("origenViaje");
+ String destinoViaje = (String) sesion.getAttribute("destinoViaje");
+ java.util.Date fechaViajeDate = (Date) sesion.getAttribute("fechaViaje");
+ String fechaViajeString = "-";
+ FechaControlers fCon = new FechaControlers();
 
-if(fechaViajeDate !=null)
-{
-	fechaViajeString = fCon.dateToddMMyyyy(fechaViajeDate);
-}
-else {fechaViajeDate = new Date();}
 
+ if(origenViaje==null){origenViaje = "Cualquiera";}
+ if(destinoViaje==null){destinoViaje = "Cualquiera";}
+
+ if(fechaViajeDate !=null)
+ {
+ 	fechaViajeString = fCon.dateToddMMyyyy(fechaViajeDate);
+ }
+ else {fechaViajeDate = new Date();}
+ %>
+
+<%
+	String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.getApellido();
 %>
 
-<% String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.getApellido(); %>
-
-<title>Próximos viajes para el chofer <%= nombreApellidoChofer %></title>
+<title>Próximos viajes para el chofer <%=nombreApellidoChofer%></title>
 </head>
 <body>
 
@@ -48,13 +52,25 @@ else {fechaViajeDate = new Date();}
 <%@ page import = "data.DataPlan" %>
     <%@ page import = "java.util.*" %>
     <%@ page import = "entities.Plan" %>
-    <% 
-    //Inicialización de variables
-    DataReservaPlan dplan = new DataReservaPlan();
-    ArrayList<Plan_Reserva> planes_reservas = dplan.getViajesxChofer(usuarioActual);
-    Iterator<Plan_Reserva> itr = planes_reservas.iterator();
-    Plan_Reserva plan_reserva = null;
-    
+    <%
+    	//Inicialización de variables
+        BuscarViajes buscador = new BuscarViajes();  
+        ArrayList<Plan_Reserva> planes_reservas = new ArrayList<Plan_Reserva>();
+        
+        String manejoDeError = null;
+
+        
+        try
+        {
+        	planes_reservas = buscador.getViajesxChofer(usuarioActual);
+        }
+        catch(Exception e)
+        {
+        	manejoDeError = e.getMessage();
+        }
+        
+        Iterator<Plan_Reserva> itr = planes_reservas.iterator();
+        Plan_Reserva plan_reserva = null;
     %>
     
     <% 
@@ -144,12 +160,17 @@ else {fechaViajeDate = new Date();}
 			</table>
 			 
 			</div>
-    
-
-
 
 </div>
 
+<div class="row">
+<% if(manejoDeError!=null) { %>
+	<br>
+	<div class="alert alert-danger" role="alert">
+	Error: <%= manejoDeError %>
+	</div> 
+	<%}%>
+</div>
 
 <jsp:include page="/JSPFiles/includefooter.jsp" />
 </body>

@@ -1,5 +1,4 @@
-
-
+<%@page import="controlers.BuscarLocalidadesControlers"%>
 <% 
 HttpSession sesion = request.getSession();
 String origenViaje = (String) sesion.getAttribute("origenViaje");
@@ -13,12 +12,6 @@ String destinoViaje = (String) sesion.getAttribute("destinoViaje");
 <!-- Default form contact -->
 
     <p class="h4 mb-4"><i class="fas fa-bus"></i> Buscador de Viajes</p>
-
-   
-  
-
-
-
 
 
    
@@ -40,8 +33,21 @@ String destinoViaje = (String) sesion.getAttribute("destinoViaje");
       <%@ page import="entities.Localidad" %>
        <%
        	//Inicialización de variables
-           DataLocalidad dloc = new DataLocalidad();
-           ArrayList<Localidad> localidades = dloc.getAll();
+       	
+       BuscarLocalidadesControlers busLoc = new BuscarLocalidadesControlers();
+       ArrayList<Localidad> localidades = new ArrayList<Localidad>();
+       
+       String manejoDeError = null;
+
+       
+       try
+       {
+    	   localidades = busLoc.getAllLocalidades();
+       }
+       catch(Exception e)
+       {
+    		manejoDeError = e.getMessage();
+       }
            Iterator<Localidad> itr1 = localidades.iterator();
            Localidad loc = null;
        %>
@@ -110,3 +116,9 @@ String destinoViaje = (String) sesion.getAttribute("destinoViaje");
 <!-- Default form contact -->
 </div>
 
+	<% if(manejoDeError!=null) { %>
+	<br>
+	<div class="alert alert-danger" role="alert">
+	Error: <%= manejoDeError %>
+	</div> 
+	<%}%>
