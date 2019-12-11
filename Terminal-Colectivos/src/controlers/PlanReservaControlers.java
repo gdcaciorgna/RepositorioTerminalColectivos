@@ -1,17 +1,21 @@
 package controlers;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import data.DataPlan;
 import data.DataReserva;
+import data.DataReservaPlan;
 import entities.Plan;
 import entities.Plan_Reserva;
 import entities.Reserva;
+import entities.Usuario;
+import util.AppDataException;
 
 public class PlanReservaControlers {
 	
 	
-	public Plan_Reserva getReservaPlanbyClavesPrimarias(String fechaHoraReserva, String fechaHoraViaje, String patenteColectivoViaje, int codRutaViaje, String UsernameReserva) 
+	public Plan_Reserva getReservaPlanbyClavesPrimarias(String fechaHoraReserva, String fechaHoraViaje, String patenteColectivoViaje, int codRutaViaje, String UsernameReserva) throws AppDataException 
 	{
 	Reserva reserva = new Reserva();
 	DataReserva dres = new DataReserva();
@@ -38,6 +42,15 @@ public class PlanReservaControlers {
 	return planReserva;
 	
 	
+	}
+	
+	public ArrayList<Plan_Reserva> getReservasxUsuario(Usuario usuario) throws AppDataException
+	{
+		
+	    DataReservaPlan dres = new DataReservaPlan();
+	    
+	    return dres.getReservasxUsuario(usuario);
+
 	}
 	
 

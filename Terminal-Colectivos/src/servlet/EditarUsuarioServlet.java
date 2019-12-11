@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.UsuariosControlers;
 import entities.Usuario;
+import util.AppDataException;
 
 /**
  * Servlet implementation class EditarUsuarioServlet
@@ -54,14 +55,33 @@ public class EditarUsuarioServlet extends HttpServlet {
 		
 		if(mensaje.equals("OK")) 
 		{
-			usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, null, null, null);
-			sesion.setAttribute("UsuarioAModificar", usu); 
+			try 
+			{
+			
+				usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, null, null, null);
+				sesion.setAttribute("UsuarioAModificar", usu); 
+				
+			} catch (AppDataException e) 
+			
+			{
+				
+				sesion.setAttribute("MensajeUsuarioAEditar", e.getMessage()); 		
+			
+			}
+			
+			
+			
+			
 		
 		}
 		
+		if(sesion.getAttribute("MensajeUsuarioAEditar") == null) 
 		
-		sesion.setAttribute("MensajeUsuarioAEditar", mensaje); 		
-		 request.getRequestDispatcher("/WEB-INF/editarUsuario.jsp").forward(request, response);		
+		{
+			sesion.setAttribute("MensajeUsuarioAEditar", mensaje); 		
+		}
+		
+		request.getRequestDispatcher("/WEB-INF/editarUsuario.jsp").forward(request, response);		
 
 		
 	}

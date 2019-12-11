@@ -12,15 +12,9 @@ public class BuscarLocalidadesControlers {
 	
 	public ArrayList<Localidad> getAllLocalidades() throws AppDataException
 	{
-		try {
-		DataLocalidad dloc = new DataLocalidad();
-	    return dloc.getAll();
-		}
-		catch(Exception e) 
-		{
-			throw e;
-		}
 		
+		DataLocalidad dloc = new DataLocalidad();
+	    return dloc.getAll();		
 		
 		
 	}

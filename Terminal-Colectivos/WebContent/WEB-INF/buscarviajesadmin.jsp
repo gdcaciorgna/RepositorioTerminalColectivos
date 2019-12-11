@@ -220,7 +220,7 @@ else
         <% 
               session.setAttribute("planesEliminados",null);
               session.setAttribute("planesEditados",null);
-             %>
+        %>
         <!--Grid column-->
 
 

@@ -109,6 +109,19 @@ Filas Eliminadas: <%= filasAfectadas %>
 </div> 
 <%}%>
 
+<% String mensajeError;%> 
+<% mensajeError = (String) session.getAttribute("mensajeError");%>
+<% if(session.getAttribute("mensajeError")!=null) { %>
+<div class="alert alert-danger" role="alert">
+Error: <%= mensajeError %>
+</div> 
+<%}%>
+
+   <% 
+         session.setAttribute("UsuariosAfectados",null);
+         session.setAttribute("mensajeError",null);
+   %>
+
 <jsp:include page="/JSPFiles/includefooter.jsp" />  
 
 </body>

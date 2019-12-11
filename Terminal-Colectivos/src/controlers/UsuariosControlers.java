@@ -1,6 +1,7 @@
 package controlers;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import data.DataUsuario;
 import entities.Usuario;
@@ -195,6 +196,13 @@ public class UsuariosControlers {
         }
 		
 		return mensaje;
+	}
+	
+	public ArrayList<Usuario> getAllChoferes() throws AppDataException
+	{
+        DataUsuario dusu = new DataUsuario();
+        return dusu.getAll();
+
 	}
 	
 	

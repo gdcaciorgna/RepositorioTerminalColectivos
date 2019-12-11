@@ -308,7 +308,7 @@ public class DataUsuario
 	PreparedStatement pstmt = null;
 	
 	String sqlSinPasswordConEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?, estado=?, rol=? WHERE usuario=?";
-	String sqlConPasswordConEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?,  estado=?, rol=?,   password = ?WHERE usuario=?";
+	String sqlConPasswordConEstado = "UPDATE usuarios SET  nombre=?, apellido=?, email=?, cuil=?,  estado=?, rol=?, password = ? WHERE usuario=?";
 
 	try 
 	{

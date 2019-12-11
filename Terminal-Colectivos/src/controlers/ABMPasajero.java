@@ -25,7 +25,7 @@ public class ABMPasajero {
 
 	
 	
-	public void addPasajero(Pasajero pasajero) 
+	public void addPasajero(Pasajero pasajero) throws AppDataException 
 	{
 		PasajeroLogic plog = new PasajeroLogic();
 		
@@ -40,7 +40,7 @@ public class ABMPasajero {
 	}
 	
 	
-	public void addPasajeros(ArrayList<Pasajero> pasajeros) 
+	public void addPasajeros(ArrayList<Pasajero> pasajeros) throws AppDataException 
 	{
 		for(Pasajero pas : pasajeros) 
 		{
@@ -51,8 +51,7 @@ public class ABMPasajero {
 	
 	public void registrarReserva(ArrayList<Pasajero> pasajeros, String nroTarjeta, Plan viajeSeleccionado, int cantidadPasajeros, Usuario usuarioActual, int codCompania) throws AppDataException 
 	{
-		try 
-		{
+		
 		
 		Compania_Tarjeta companiaTarjeta = new Compania_Tarjeta();
 		DataCompaniaTarjeta dCompaniaTarjeta = new DataCompaniaTarjeta();
@@ -110,13 +109,6 @@ public class ABMPasajero {
 			
 		}
 		
-		
-		
-		
-		}catch(Exception e) 
-		{
-			throw e;
-		}	
 		
 		
 		

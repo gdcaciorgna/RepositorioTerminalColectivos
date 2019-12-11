@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import controlers.CancelarReserva;
 import controlers.PlanReservaControlers;
 import entities.Plan_Reserva;
+import util.AppDataException;
 
 /**
  * Servlet implementation class RedireccionCancelarReserva
@@ -59,10 +60,22 @@ public class RedireccionCancelarReserva extends HttpServlet {
 		
 		
 		
-		Plan_Reserva planReserva =  cResPlan.getReservaPlanbyClavesPrimarias(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva);
+		Plan_Reserva planReserva = new Plan_Reserva();
+		try {
+			planReserva = cResPlan.getReservaPlanbyClavesPrimarias(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva);
+		} catch (AppDataException e) 
+		{
+			sesion.setAttribute("error", e.getMessage());
+		}
 
 		
-		double importeADevolver = cancelarReserva.getImporteADevolver(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva ); //la funcion cancelarReserva devuelve el dinero a devolver. Solo se devolvera el importe total si se cancela la reserva al menos una semana antes. Caso contrario solo se devuelve el 20% 
+		double importeADevolver = 0;
+		try {
+			importeADevolver = cancelarReserva.getImporteADevolver(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva );
+		} catch (AppDataException e) 
+		{
+		 sesion.setAttribute("error", e.getMessage()); 
+		} //la funcion cancelarReserva devuelve el dinero a devolver. Solo se devolvera el importe total si se cancela la reserva al menos una semana antes. Caso contrario solo se devuelve el 20% 
 		
 		
 		

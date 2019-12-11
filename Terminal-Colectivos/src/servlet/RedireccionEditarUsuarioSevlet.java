@@ -38,14 +38,21 @@ public class RedireccionEditarUsuarioSevlet extends HttpServlet {
 		
 		UsuariosControlers usuCon = new UsuariosControlers();
 		
-		Usuario usu = usuCon.getByUsername(username);
+		Usuario usu = new Usuario();
+		
+		try 
+		{
+			usu = usuCon.getByUsername(username);
+		} 
+		catch (Exception e) 
+		{
+			sesion.setAttribute("mensajeError", e.getMessage());
+		}
 		
 		sesion.setAttribute("UsuarioAModificar", usu);
 		
 		request.getRequestDispatcher("/WEB-INF/editarUsuario.jsp").forward(request, response);		
 
-		
-	
 	}
 
 	/**

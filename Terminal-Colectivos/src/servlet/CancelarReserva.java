@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entities.Reserva;
+import util.AppDataException;
 
 /**
  * Servlet implementation class CancelarReserva
@@ -46,7 +47,13 @@ public class CancelarReserva extends HttpServlet {
 		
 		controlers.CancelarReserva cancelarReserva = new controlers.CancelarReserva();
 		
-		cancelarReserva.cancelarReserva(reservaACancelar);
+		try {
+			cancelarReserva.cancelarReserva(reservaACancelar);
+		} catch (AppDataException e) 
+		{
+			sesion.setAttribute("error", e.getMessage());
+
+		}
 		
 		
 		

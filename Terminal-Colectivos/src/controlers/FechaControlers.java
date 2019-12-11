@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
+import util.AppDataException;
+
 
 
 public class FechaControlers {
@@ -23,7 +25,7 @@ public class FechaControlers {
 	
 	//INICIO - STRING TO DATE
 	
-	public Date ddMMyyyyHHmmToDate(String fechaHoraString) 
+	public Date ddMMyyyyHHmmToDate(String fechaHoraString) //throws? 
 	{
 		Date fechaDate = new Date();
 		try {
@@ -38,7 +40,10 @@ public class FechaControlers {
 		
 		catch (ParseException e) {
 			// TODO Auto-generated catch block
+			
 			return null;
+			
+			//throw new AppDataException(e, "Error al convertir fecha");
 		}
 		
 		

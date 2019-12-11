@@ -1,5 +1,6 @@
 package controlers;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,11 +15,12 @@ import entities.Plan_Reserva;
 import entities.Ruta;
 import entities.Usuario;
 import logic.PlanLogic;
+import util.AppDataException;
 
 public class PlanControlers {
 	
 	
-	public int editarPlan(Plan planViejo, Plan planNuevo) 
+	public int editarPlan(Plan planViejo, Plan planNuevo) throws AppDataException 
 	{
 		
 		int planesEditados = 0;
@@ -31,7 +33,7 @@ public class PlanControlers {
 		
 	}
 	
-	public String getMensajeRegistro(String origenPlan,String destinoPlan,String fechaStringPlan,String horaStringPlan,String precioStringPlan,String usuarioChoferPlan,String patenteColectivoPlan)
+	public String getMensajeRegistro(String origenPlan,String destinoPlan,String fechaStringPlan,String horaStringPlan,String precioStringPlan,String usuarioChoferPlan,String patenteColectivoPlan) throws AppDataException
 	{
 		String localidadPrincipal = "VENADO TUERTO"; //Localidad principal de la terminal
 		
@@ -92,7 +94,7 @@ public class PlanControlers {
 
 	}
 	
-	public Plan getPlan(String origenPlan,String destinoPlan,String fechaStringPlan,String horaStringPlan,String precioStringPlan,String usuarioChoferPlan,String patenteColectivoPlan) 
+	public Plan getPlan(String origenPlan,String destinoPlan,String fechaStringPlan,String horaStringPlan,String precioStringPlan,String usuarioChoferPlan,String patenteColectivoPlan) throws AppDataException, SQLException 
 	{
 	
 		Ruta rut = new Ruta();
@@ -131,7 +133,7 @@ public class PlanControlers {
 
 	}
 
-	public int eliminarPlan(String fechaString, String horaString, String codRutaViajeString, String patenteColectivoViaje) 
+	public int eliminarPlan(String fechaString, String horaString, String codRutaViajeString, String patenteColectivoViaje) throws AppDataException 
 	{
 		Plan plan = new Plan();
 		DataPlan dplan = new DataPlan();
@@ -153,7 +155,7 @@ public class PlanControlers {
 		return planesEliminados;
 	}
 	
-	public Plan getPlanByFechaHoraCodRutaPatente(String fechaViajeString, String horaViajeString, String codRutaViajeString, String patenteColectivoViajeString)
+	public Plan getPlanByFechaHoraCodRutaPatente(String fechaViajeString, String horaViajeString, String codRutaViajeString, String patenteColectivoViajeString) throws AppDataException
 	{
 		DataPlan dplan =  new DataPlan();
 		
@@ -170,7 +172,7 @@ public class PlanControlers {
 		return planViejo;
 	}
 	
-	public int agregarPlan(Plan planNuevo) 
+	public int agregarPlan(Plan planNuevo) throws AppDataException 
 	{
 		int planesAgregados = 0;
 		
@@ -181,7 +183,7 @@ public class PlanControlers {
 		return planesAgregados;
 	}
 	
-	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario chofer)
+	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario chofer) throws AppDataException
 	{
 		DataReservaPlan  dplan_reserva = new DataReservaPlan();
 		return dplan_reserva.getViajesxChofer(chofer);

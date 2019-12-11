@@ -31,8 +31,20 @@
 	reservaACancelar = (Reserva) session.getAttribute("reservaACancelar"); 
 	double importeADevolver = (double) session.getAttribute("importeADevolver");
 	
-	ArrayList<Pasajero> pasajeros =   dPasRes.getPasajerosxReserva(reservaACancelar);
+	ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
 	
+	
+    String manejoDeError = null;
+	
+	try
+	{
+		pasajeros =   cancelarReserva.getPasajerosxReserva(reservaACancelar);
+	}
+	catch(Exception e)
+	{
+    	manejoDeError = e.getMessage();
+
+	}
 	
 	
 	// INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
@@ -107,8 +119,32 @@
                  
          </div>
     </div>
-    	 
+    
+    	<% if(manejoDeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= manejoDeError %>
+			</div> 
+		<%}%>
+		
+		
+		
+		<% String error = (String)session.getAttribute("error");%>
+		<% if(session.getAttribute("error")!=null) { %>
+		<br>
+		<div class="alert alert-danger" role="alert">
+		Error: <%= error %>
+		</div> 
+		<%}%>
+	
+       
+       
+        <% 
+        	session.setAttribute("error",null);
+        %>    	 
 </div>
+
+
  
  </form>
 

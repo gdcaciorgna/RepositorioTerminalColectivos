@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,28 +60,31 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		passwordNuevoRep = usuLog.setPasswordNuevoRepNull(passwordNuevoRep);
 
 		if(passwordActual != null || passwordNuevo != null || passwordNuevoRep != null ) {
-		try {
-			mensaje = usuCon.getMensajeEditarUsuario(username, passwordActual, passwordNuevo, passwordNuevoRep);
-		} catch (SQLException e) {
 		
-			throw;
-		}
-		}
-		
-		Usuario usu = new Usuario();
-		
-		
-		if(mensaje.equals("OK")) 
+		try 
 		{
-			usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, passwordActual, passwordNuevo, passwordNuevoRep);
-			sesion.setAttribute("usuarioActual", usu); 
+			
+			mensaje = usuCon.getMensajeEditarUsuario(username, passwordActual, passwordNuevo, passwordNuevoRep);
 		
+			Usuario usu = new Usuario();
+			
+			
+			if(mensaje.equals("OK")) 
+			{
+				usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, passwordActual, passwordNuevo, passwordNuevoRep);
+				sesion.setAttribute("usuarioActual", usu); 
+			
+			}
+			
+			sesion.setAttribute("MensajeMiUsuarioAEditar", mensaje);
+
+		} catch (Exception e) 
+		{
+			sesion.setAttribute("MensajeMiUsuarioAEditar", e.getMessage());
 		}
 		
-		
-		sesion.setAttribute("MensajeMiUsuarioAEditar", mensaje); 
-		
-		 request.getRequestDispatcher("/WEB-INF/micuenta.jsp").forward(request, response);		
+		request.getRequestDispatcher("/WEB-INF/micuenta.jsp").forward(request, response);		
+		}
 		
 	}
 

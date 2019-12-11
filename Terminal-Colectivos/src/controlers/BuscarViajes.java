@@ -11,21 +11,12 @@ import entities.Usuario;
 
 public class BuscarViajes {
 	
-	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario usuarioActual) 
+	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario usuarioActual) throws Exception 
 	{
 		
 	    DataReservaPlan dplan = new DataReservaPlan();
-	    
 
-		try 
-		{
-			return dplan.getViajesxChofer(usuarioActual);
-		}
-		
-		catch(Exception e) 
-		{
-			throw e;
-		}
+		return dplan.getViajesxChofer(usuarioActual);
 		
 		 
 		

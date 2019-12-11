@@ -1,3 +1,4 @@
+<%@page import="data.DataUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -79,12 +80,24 @@ if(precioString==null){precioString="";}
                <div class="form-group">
       <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="usuarioChoferViaje">
       <option>Chofer</option>
-      <%@ page import="data.DataUsuario" %>
+      <%@ page import="controlers.UsuariosControlers" %>
       <%@ page import="entities.Usuario" %>
        <%
        	//Inicialización de variables
-           DataUsuario dusu = new DataUsuario();
-           ArrayList<Usuario> choferes = dusu.getAall();
+       	
+       	ArrayList<Usuario> choferes = new ArrayList<Usuario>();
+       	String mensajeError;
+       
+       	try
+       	{
+       		UsuariosControlers usuCon = new UsuariosControlers();
+       		choferes = usuCon.getAllChoferes();
+       	}
+       	catch(Exception e)
+       	{
+       		mensajeError = e.getMessage();
+       	}
+
            Iterator<Usuario> itr3 = choferes.iterator();
            Usuario chofer = null;
        %>
@@ -218,6 +231,14 @@ if(precioString==null){precioString="";}
 				}
 			} 	
 			%>
+			
+			<% if(mensajeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= mensajeError %>
+			</div> 
+			<%}%>
+			
 			<% 
               session.setAttribute("OK",null);
               session.setAttribute("Error2",null);

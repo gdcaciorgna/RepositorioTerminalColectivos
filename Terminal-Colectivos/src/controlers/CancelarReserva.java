@@ -1,14 +1,19 @@
 package controlers;
 
 
+import java.util.ArrayList;
+
+import data.DataPasajeroReserva;
 import data.DataReserva;
+import entities.Pasajero;
 import entities.Plan_Reserva;
 import entities.Reserva;
 import logic.ReservasPlanesLogic;
+import util.AppDataException;
 
 public class CancelarReserva {
 	
-	public void cancelarReserva(Reserva reservaACancelar) 
+	public void cancelarReserva(Reserva reservaACancelar) throws AppDataException 
 	{
 		DataReserva dRes = new DataReserva();
 
@@ -21,7 +26,7 @@ public class CancelarReserva {
 		
 	}
 	
-	public double getImporteADevolver(String fechaHoraReserva, String fechaHoraViaje, String patenteColectivoViaje, int codRutaViaje, String UsernameReserva) 
+	public double getImporteADevolver(String fechaHoraReserva, String fechaHoraViaje, String patenteColectivoViaje, int codRutaViaje, String UsernameReserva) throws AppDataException 
 	
 	{
 		
@@ -39,11 +44,18 @@ public class CancelarReserva {
 		
 	}
 	
-	public void limpiarAsientos(Reserva reservaACancelar) 
+	public void limpiarAsientos(Reserva reservaACancelar) throws AppDataException 
 	{
 		DataReserva dreserva = new DataReserva();
 		dreserva.limpiarAsientos(reservaACancelar);
 		
+	}
+	
+	
+	public ArrayList<Pasajero> getPasajerosxReserva(Reserva reservaACancelar) throws AppDataException
+	{
+		DataPasajeroReserva dpasRes = new DataPasajeroReserva();
+		return dpasRes.getPasajerosxReserva(reservaACancelar);
 	}
 	
 	

@@ -1,3 +1,4 @@
+<%@page import="controlers.PlanReservaControlers"%>
 <%@page import="controlers.FechaControlers"%>
 <%@page import="data.DataReserva"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -32,20 +33,28 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
       <%@ page import = "entities.Reserva" %>
     <% 
     //Inicialización de variables
+       
+    PlanReservaControlers planResControlers = new PlanReservaControlers();
+    ArrayList<Plan_Reserva> planes_reservas = new ArrayList<Plan_Reserva>();
     
-    DataReservaPlan dres = new DataReservaPlan();
+    String manejoDeError = null;
+
+    try
+    {
+    planes_reservas = planResControlers.getReservasxUsuario(usuario);
+    }
     
+    catch(Exception e)
+    {
+    	manejoDeError = e.getMessage();
+    }
     
-    ArrayList<Plan_Reserva> planes_reservas = dres.getReservasxUsuario(usuario);
     Iterator<Plan_Reserva> itr = planes_reservas.iterator();
     Plan_Reserva planReserva = null;
     
     
     FechaControlers fCon = new FechaControlers();
-	
- 
 
-  
     %>
 
 <jsp:include page="/JSPFiles/includemenu.jsp" />  
@@ -145,15 +154,22 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
 			</div> 
 			<%}%>
 			
-				<% String MensajeCancelarReserva = (String)session.getAttribute("MensajeCancelarReserva");%>
+			<% String MensajeCancelarReserva = (String)session.getAttribute("MensajeCancelarReserva");%>
 			<% if(session.getAttribute("MensajeCancelarReserva")!=null) { %>
 			<br>
 			<div class="alert alert-success" role="alert">
-			Felicitaciones: <%= MensajeCancelarReserva %>
+			Error: <%= MensajeCancelarReserva %>
 			</div> 
 			<%}%>
            <% session.setAttribute("reservaExitosa",null);
            session.setAttribute("MensajeCancelarReserva",null);%>
+           
+           	<% if(manejoDeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= manejoDeError %>
+			</div> 
+			<%}%>
 
 
 
