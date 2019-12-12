@@ -86,11 +86,12 @@ if(precioString==null){precioString="";}
        	//Inicialización de variables
        	
        	ArrayList<Usuario> choferes = new ArrayList<Usuario>();
-       	String mensajeError;
+        UsuariosControlers usuCon = new UsuariosControlers();
+       	String mensajeError = null;
        
        	try
        	{
-       		UsuariosControlers usuCon = new UsuariosControlers();
+       		
        		choferes = usuCon.getAllChoferes();
        	}
        	catch(Exception e)
@@ -117,14 +118,24 @@ if(precioString==null){precioString="";}
   	  <div class="form-group">
       <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="patenteColectivoViaje">
       <option>Patente</option>
-      <%@ page import="data.DataColectivo" %>
+      <%@ page import="controlers.UsuariosControlers" %>
       <%@ page import="entities.Colectivo" %>
        <%
        	//Inicialización de variables
-           DataColectivo dcole= new DataColectivo();
-           ArrayList<Colectivo> colectivos = dcole.getAll();
-           Iterator<Colectivo> itr4 = colectivos.iterator();
-           Colectivo colectivo = null;
+       	
+  
+       ArrayList<Colectivo> colectivos = new ArrayList<Colectivo>();
+       try{    
+       usuCon.getAllColectivos();
+       }
+       catch(Exception e)
+       {
+      		mensajeError = e.getMessage();
+
+       }
+       
+       Iterator<Colectivo> itr4 = colectivos.iterator();
+       Colectivo colectivo = null;
        %>
     
     <%    
@@ -143,15 +154,26 @@ if(precioString==null){precioString="";}
 
       <select class="custom-select" id="origenViaje" name="origenViaje">
       <option>Origen</option>
-      <%@ page import="data.DataLocalidad" %>
+      <%@ page import="controlers.BuscarLocalidadesControlers" %>
       <%@ page import="entities.Localidad" %>
        <%
        	//Inicialización de variables
-           DataLocalidad dloc = new DataLocalidad();
-           ArrayList<Localidad> localidades = dloc.getAll();
-           Iterator<Localidad> itr1 = localidades.iterator();
-           Localidad loc = null;
-       %>
+       	
+       BuscarLocalidadesControlers busLoc = new BuscarLocalidadesControlers();
+       ArrayList<Localidad> localidades = new ArrayList<Localidad>();
+       
+       try{
+       	localidades = busLoc.getAllLocalidades();
+       }
+       catch(Exception e)
+       {
+    	   mensajeError = e.getMessage();
+       }
+       
+        Iterator<Localidad> itr1 = localidades.iterator();
+        Localidad loc = null;
+      
+      %>
     
     <%    
     while(itr1.hasNext()){
@@ -196,41 +218,7 @@ if(precioString==null){precioString="";}
                  
      
             <% String mensajeRegistro = (String) session.getAttribute("mensajeRegistro");%>
-			<% if(mensajeRegistro != null) 
-			{
-				if(mensajeRegistro.equals("OK"))
-				{ %>
-				<div class="alert alert-success text-center" role="alert">Felicitaciones: El Plan se ha registrado exitosamente </div>
-
-				<% 
-				} 
-				else if(mensajeRegistro.equals("Error1")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: Hay campos vacíos</div>
-				<% 
-				} 
-				else if(mensajeRegistro.equals("Error2")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: El origen o el destino debe ser Rosario</div>
-				<%
-				} 
-				else if(mensajeRegistro.equals("Error3")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: El origen y el destino no </div>
-				<%
-				} 
-				else if(mensajeRegistro.equals("Error4")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: No se encontraron rutas existentes para origen y destino indicados</div>
-				<% 
-				}
-				else if(mensajeRegistro.equals("Error5")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: El campo <b>"precio"</b> no es un valor numérico</div>
-				<% 
-				}
-			} 	
-			%>
+			
 			
 			<% if(mensajeError!=null) { %>
 			<br>
@@ -240,12 +228,7 @@ if(precioString==null){precioString="";}
 			<%}%>
 			
 			<% 
-              session.setAttribute("OK",null);
-              session.setAttribute("Error2",null);
-              session.setAttribute("Error3",null);
-              session.setAttribute("Error4",null);
-              session.setAttribute("Error5",null);
-              session.setAttribute("Error1",null);%>
+              session.setAttribute("mensajeRegistro",null);%>
 			
 				<div class="text-center"><a href="BuscarViajesAdmin">Volver al buscador de viajes</a></div>
 			

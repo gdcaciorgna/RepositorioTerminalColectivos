@@ -3,10 +3,13 @@ package controlers;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import data.DataColectivo;
 import data.DataUsuario;
+import entities.Colectivo;
 import entities.Usuario;
 import logic.UsuarioLogic;
 import util.AppDataException;
+import util.AppLogicException;
 
 public class UsuariosControlers {
 	
@@ -77,6 +80,12 @@ public class UsuariosControlers {
    	        	
         }
         
+        else 
+        {
+        	throw new AppLogicException("Usuario y/o contraseña inválido.");
+        }
+        
+        
         
         return usu;
 
@@ -94,31 +103,33 @@ public class UsuariosControlers {
 	
 	
 	
-	public String getMensajeRegistro(String username, String password, String passwordrep) throws Exception 
+	public void validarRegistro(String username, String password, String passwordrep) throws Exception 
 	{
 		DataUsuario dusu = new DataUsuario();
 		
-		String mensaje = "OK";
-			    
-			
+					
 		if((dusu.validarUsuarioInexistente(username) == false))
 		{
-			mensaje = "Error1";  // "El nombre de usuario esta en uso");				 
+			//mensaje = "Error1";  // "El nombre de usuario esta en uso");
+			throw new AppLogicException("El nombre del usuario ya está registrado.");
 		}
 			
 				
 		else if(password.length()<8)
 		{			
-			mensaje = "Error2";  // "La contraseña debe contener 8 caracteres como minimo");		
+			//mensaje = "Error2";  // "La contraseña debe contener 8 caracteres como minimo");
+			throw new AppLogicException("La contraseña debe contener 8 caracteres como mínimo.");
+
 	    }	
 		
 		else if(!password.equals(passwordrep)) 
 		{ 
-			mensaje = "Error 3"; //"Las contraseñas no coinciden");	
+			//mensaje = "Error 3"; //"Las contraseñas no coinciden");	
+			throw new AppLogicException("Las contraseñas no coinciden.");
+
 		 
 	   	}
-		
-		return mensaje;						
+						
 							
 
 	}
@@ -205,6 +216,14 @@ public class UsuariosControlers {
 
 	}
 	
+	
+	
+	public ArrayList<Colectivo> getAllColectivos() throws AppDataException
+	{
+        DataColectivo dusu = new DataColectivo();
+        return dusu.getAll();
+
+	}
 	
 	
 	

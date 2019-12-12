@@ -39,26 +39,18 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        try {
+        try 
+        {
         UsuariosControlers usuCon = new UsuariosControlers();
         
         	
         Usuario usu = usuCon.loginUsuario(username, password);
     	
-    	if(usu.getUsername()!=null)
-    	{
-        
     	sesion.setAttribute("usuarioActual", usu);
     	
     	response.sendRedirect("index.jsp");	
 
-            //redirijo a página con información de login exitoso
         	
-		}
-    	 else 
-    	 { 
- 		 request.getSession().setAttribute("errorLogin", "Usuario y/o contraseña incorrecta");	
-    	 }	
         } 
         
         catch(Exception e) 

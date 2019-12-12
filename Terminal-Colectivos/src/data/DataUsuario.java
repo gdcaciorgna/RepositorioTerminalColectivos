@@ -177,21 +177,20 @@ public class DataUsuario
 		{ 
 			throw new AppDataException(e, "Error en base de datos al validar usuario inexistente");
 		}
-		finally 
+		
+		try 
 		{
-			try 
-			{
-				if(rs!=null) {rs.close();}
-				if(pstmt!=null) {pstmt.close();}
-				Conectar.getInstancia().releasedConn();
-				
-				
-				
-			} catch(SQLException e) 
-			{
-				throw new AppDataException(e, "Error al cerrar la base de datos");
-			}
-		}	
+			if(rs!=null) {rs.close();}
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al cerrar la base de datos");
+		}
+		
 
 		
 

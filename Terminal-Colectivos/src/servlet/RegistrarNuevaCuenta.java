@@ -28,9 +28,10 @@ public class RegistrarNuevaCuenta extends HttpServlet {
     }
 
 	/**
+	 * @throws IOException 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub	
 		
 		HttpSession sesion = request.getSession();	
@@ -50,10 +51,17 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		UsuariosControlers usuCon = new UsuariosControlers(); 
 		
 		try {
-			mensajeRegistro = usuCon.getMensajeRegistro(username, password, passwordrep);
+			
+			usuCon.validarRegistro(username, password, passwordrep);
+			
+			Emailer.getInstance().send(email, "¡Bienvenido a nuestro sitio web!", "Bienvenido" + nombre + " " +  apellido + " a nuestra plataforma digital de reserva y compra de pasajes. ¡Que tengas siempre un buen viaje! :) " );
+			
+	 		sesion.setAttribute("mensajeRegistro", "Te has registrado exitosamente!");	
+	 		response.sendRedirect("login.jsp");
+
 		
 		
-			if(mensajeRegistro.equals("Error1")) 
+			/*if(mensajeRegistro.equals("Error1")) 
 			{
 				sesion.setAttribute("mensajeRegistro", "El nombre de usuario esta en uso");
 				response.sendRedirect("registro.jsp");
@@ -81,11 +89,13 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		 		response.sendRedirect("login.jsp");
 	
 			}
+			*/
 		} 
 		catch (Exception e) {
 			
 			sesion.setAttribute("mensajeRegistro", e.getMessage());	
-			
+			response.sendRedirect("registro.jsp");
+
 			
 		}
 		
