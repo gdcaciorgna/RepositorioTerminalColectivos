@@ -45,9 +45,16 @@ public class RedireccionEditarPlanServlet extends HttpServlet {
 		PlanControlers planCon = new PlanControlers();
 		Plan planViejo = new Plan();
 		
-		planViejo = planCon.getPlanByFechaHoraCodRutaPatente(fechaViajeString, horaViajeString, codRutaViajeString, patenteColectivoViajeString);
+		try 
+		{	
+			planViejo = planCon.getPlanByFechaHoraCodRutaPatente(fechaViajeString, horaViajeString, codRutaViajeString, patenteColectivoViajeString);
+			sesion.setAttribute("PlanViejo", planViejo);
+
+		} catch (Exception e) 
+		{
+			sesion.setAttribute("mensajeError", e.getMessage());
+		}
 		
-		sesion.setAttribute("PlanViejo", planViejo);
 			
 		 request.getRequestDispatcher("/WEB-INF/plandeviaje.jsp").forward(request, response);		
 		

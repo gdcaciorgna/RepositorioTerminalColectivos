@@ -54,30 +54,36 @@ public class EditarPlanServlet extends HttpServlet {
 		PlanControlers planCon = new PlanControlers();
 		Plan planNuevo = new Plan();
 		
-		String mensajeRegistro =  planCon.getMensajeRegistro(origenPlanNuevo, destinoPlanNuevo, fechaStringPlanNuevo, horaStringPlanNuevo, precioStringPlanNuevo, usuarioChoferPlanNuevo, patenteColectivoPlanNuevo);
-		
 		int planesEditados = 0;
 		
-		if(mensajeRegistro.equals("OK"))
+		try 
 		{
+			
+		planCon.validarRegistrarPlan(origenPlanNuevo, destinoPlanNuevo, fechaStringPlanNuevo, horaStringPlanNuevo, precioStringPlanNuevo, usuarioChoferPlanNuevo, patenteColectivoPlanNuevo);
 		
 		planNuevo = planCon.getPlan(origenPlanNuevo, destinoPlanNuevo, fechaStringPlanNuevo, horaStringPlanNuevo, precioStringPlanNuevo, usuarioChoferPlanNuevo, patenteColectivoPlanNuevo);
 	
 		planesEditados = planCon.editarPlan(planViejo, planNuevo);
+		
+		sesion.setAttribute("mensajeExito", "Las modificaciones se han guardado de manera satisfactoria"); 
+
+		
+		}
+		catch(Exception e) 
+		{
+			sesion.setAttribute("mensajeError", e.getMessage()); 
+		}
 
 		sesion.setAttribute("PlanViejo", planNuevo);
 		sesion.setAttribute("planesEditados", planesEditados); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
 		sesion.setAttribute("planesEliminados", null);
+		
+		request.getRequestDispatcher("/WEB-INF/plandeviaje.jsp").forward(request, response);		
 
 		
-		}		
+	}		
 			
 			
-		sesion.setAttribute("mensajeRegistro", mensajeRegistro); 
-			
-		request.getRequestDispatcher("/WEB-INF/plandeviaje.jsp").forward(request, response);		
-	
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -134,31 +134,29 @@ public class UsuariosControlers {
 
 	}
 	
-	public String getMensajeEditarUsuario(String username, String passwordActual, String passwordNuevo, String passwordNuevoRep) throws SQLException, AppDataException 
+	public void validarEditarUsuario(String username, String passwordActual, String passwordNuevo, String passwordNuevoRep) throws SQLException, AppDataException, AppLogicException 
 	{
 		DataUsuario dusu = new DataUsuario();
 		
-		String mensaje = "OK";			
-				
+
 		if(passwordNuevo.length()<8)
 		{			
-			mensaje = "Error2";  // "La nueva contraseña debe contener 8 caracteres como minimo");		
+			throw new AppLogicException("La nueva contraseña debe contener 8 caracteres como minimo");
+	
 	    }	
 		
 		else if(!passwordNuevo.equals(passwordNuevoRep)) 
 		{ 
-			mensaje = "Error3"; //"Las contraseñas no coinciden");	
+			throw new AppLogicException("Las contraseñas no coinciden");
 		 
 	   	}
 		
 		if(!dusu.validarUsuarioyPassword(username, passwordActual)) 
 		{
-			mensaje = "Error4"; //"La contraseña actual ingresada no es correcta"
+			throw new AppLogicException("La contraseña actual ingresada no es correcta");
 		}
-		
-		return mensaje;						
-							
-
+						
+						
 	}
 	
 	public Usuario setUsuario(String username, String password, String nombre, String apellido, String email, String cuil, String rol) throws AppDataException 
@@ -184,29 +182,24 @@ public class UsuariosControlers {
 		
 	}
 	
-	public String getMensajeEliminarUsuario(String username, String password) throws SQLException, AppDataException 
+	public void validarEliminarUsuario(String username, String password) throws SQLException, AppDataException, AppLogicException 
 	{
 		
 		DataUsuario dusu = new DataUsuario();
-		String mensaje = "OK";
 		
 		
-		if(!dusu.validarUsuarioyPassword(username, password)) //En caso de no haber ingresado password correctamente, 
+		if(username.isEmpty() || password.isEmpty()) 
 		{
-				        	
-        		 if (username.isEmpty() || password.isEmpty()) 
-        		 	{ 
- 		        	//lógica para falta de datos
- 		        	mensaje =  "Hay campos vacíos";
- 		        	}
- 		        	else 
- 		        	{
-	 		        mensaje = "Contraseña incorrecta";
- 		        	}
-        		 
-        }
+			throw new AppLogicException("Hay campos vacíos.");
+		}
 		
-		return mensaje;
+		else if(dusu.validarUsuarioyPassword(username, password)) //En caso de no haber ingresado password correctamente, 
+		{
+			throw new AppLogicException("Contraseña incorrecta.");
+		}
+        		 
+		
+		
 	}
 	
 	public ArrayList<Usuario> getAllChoferes() throws AppDataException

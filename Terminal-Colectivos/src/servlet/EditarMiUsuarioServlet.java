@@ -35,8 +35,6 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
-		
-		sesion.setAttribute("MensajeMiUsuarioAEditar", null);
 
 		String username = request.getParameter("username");
 		String nombre = request.getParameter("nombre");
@@ -50,37 +48,31 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		String passwordNuevoRep = request.getParameter("passwordNuevoRep");
 		
 		UsuariosControlers usuCon = new UsuariosControlers();
-		
-		
-		String mensaje = "OK";
+
 		
 		UsuarioLogic usuLog = new UsuarioLogic();
 		passwordActual = usuLog.setPasswordActualNull(passwordActual);
 		passwordNuevo = usuLog.setPasswordNuevoNull(passwordNuevo);
 		passwordNuevoRep = usuLog.setPasswordNuevoRepNull(passwordNuevoRep);
 
-		if(passwordActual != null || passwordNuevo != null || passwordNuevoRep != null ) {
+		if(passwordActual != null || passwordNuevo != null || passwordNuevoRep != null ) 
+		{
 		
 		try 
 		{
 			
-			mensaje = usuCon.getMensajeEditarUsuario(username, passwordActual, passwordNuevo, passwordNuevoRep);
+			usuCon.validarEditarUsuario(username, passwordActual, passwordNuevo, passwordNuevoRep);
 		
 			Usuario usu = new Usuario();
 			
-			
-			if(mensaje.equals("OK")) 
-			{
-				usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, passwordActual, passwordNuevo, passwordNuevoRep);
-				sesion.setAttribute("usuarioActual", usu); 
-			
-			}
-			
-			sesion.setAttribute("MensajeMiUsuarioAEditar", mensaje);
+			usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, passwordActual, passwordNuevo, passwordNuevoRep);
+			sesion.setAttribute("usuarioActual", usu); 
+			sesion.setAttribute("mensajeExito", "Las modificaciones se han guardado de manera satisfactoria"); 
+
 
 		} catch (Exception e) 
 		{
-			sesion.setAttribute("MensajeMiUsuarioAEditar", e.getMessage());
+			sesion.setAttribute("mensajeError", e.getMessage());
 		}
 		
 		request.getRequestDispatcher("/WEB-INF/micuenta.jsp").forward(request, response);		

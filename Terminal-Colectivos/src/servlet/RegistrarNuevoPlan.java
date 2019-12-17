@@ -55,44 +55,32 @@ public class RegistrarNuevoPlan extends HttpServlet {
 		PlanControlers planCon = new PlanControlers();
 		Plan planNuevo = new Plan();
 		
-		String mensajeRegistro =  planCon.getMensajeRegistro(origenViaje, destinoViaje, fechaString, horaString, precioString, usuarioChofer, patente);
 		
-
-		 
-		if(mensajeRegistro.equals("OK"))
-		{
+		try {
+			
+		
+		planCon.validarRegistrarPlan(origenViaje, destinoViaje, fechaString, horaString, precioString, usuarioChofer, patente);
 		
 		planNuevo = planCon.getPlan(origenViaje, destinoViaje, fechaString, horaString, precioString, usuarioChofer, patente);
 	
 		planCon.agregarPlan(planNuevo);
 		
-		}		
-			
-		sesion.setAttribute("mensajeRegistro", mensajeRegistro);
+				
+		sesion.setAttribute("mensajeExito", "Se ha registrado el plan de viaje de manera satisfactoria");
+
 		
-		
-		
-		//INICIO - LIMPIAR CAMPOS
-		sesion.setAttribute("origenViaje", null);
-		sesion.setAttribute("destinoViaje", null);
-		sesion.setAttribute("precioString", null);
-		sesion.setAttribute("usuarioChoferViaje", null);
-		sesion.setAttribute("patenteColectivoViaje", null);
-		sesion.setAttribute("fechaString", null);
-		sesion.setAttribute("horaString", null);
-		//FIN - LIMPIAR CAMPOS
-			
-		
-		
-		 request.getRequestDispatcher("/WEB-INF/registrarNuevoPlan.jsp").forward(request, response);		
+		}
+		catch(Exception e) 
+		{
+			sesion.setAttribute("mensajeError", e.getMessage());
+			request.getRequestDispatcher("/WEB-INF/registrarNuevoPlan.jsp").forward(request, response);
+		}
 
 
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

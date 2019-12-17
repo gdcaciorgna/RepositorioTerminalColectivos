@@ -47,17 +47,19 @@ public class CancelarReserva extends HttpServlet {
 		
 		controlers.CancelarReserva cancelarReserva = new controlers.CancelarReserva();
 		
-		try {
+		try 
+		{
 			cancelarReserva.cancelarReserva(reservaACancelar);
+			sesion.setAttribute("mensajeExito", "Reserva cancelada con éxito. Se devolvió un total de $"+ importeADevolver + " pesos a la cuenta de la compañía " + reservaACancelar.getCompania_tarjeta().getNombre()    );
+
 		} catch (AppDataException e) 
 		{
-			sesion.setAttribute("error", e.getMessage());
+			sesion.setAttribute("mensajeError", e.getMessage());
 
 		}
 		
 		
 		
-		sesion.setAttribute("MensajeCancelarReserva", "Reserva cancelada con éxito. Se devolvió un total de $"+ importeADevolver + " pesos a la cuenta de la compañía " + reservaACancelar.getCompania_tarjeta().getNombre()    );
 		
 		 request.getRequestDispatcher("/WEB-INF/misReservas.jsp").forward(request, response);		
 

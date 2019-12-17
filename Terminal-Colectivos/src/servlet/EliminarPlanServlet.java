@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controlers.PlanControlers;
+import util.AppDataException;
 
 /**
  * Servlet implementation class EliminarPlanServlet
@@ -42,14 +43,19 @@ public class EliminarPlanServlet extends HttpServlet {
 		String codRutaViajeString = request.getParameter("codRutaViajeString");
 		String patenteColectivoViaje = request.getParameter("patenteColectivoViajeString");
 		
-		int planesEliminados = 0;
 		
 		PlanControlers planCon = new PlanControlers();
-		planesEliminados = planCon.eliminarPlan(fechaString, horaString, codRutaViajeString, patenteColectivoViaje);
-
+		
+		try 
+		{
+			planCon.eliminarPlan(fechaString, horaString, codRutaViajeString, patenteColectivoViaje);
+			sesion.setAttribute("mensajeExito", "Se ha eliminado al plan de viaje de manera correcta."); 	
+			
+		} catch (AppDataException e) 
+		{
+			sesion.setAttribute("mensajeError", e.getMessage()); 
+		}
 	
-		sesion.setAttribute("planesEliminados", planesEliminados); 
-		sesion.setAttribute("planesEditados", null);
 		request.getRequestDispatcher("/WEB-INF/buscarviajesadmin.jsp").forward(request, response);		
 
 

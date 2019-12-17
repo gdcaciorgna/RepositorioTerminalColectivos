@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.PlanControlers;
 import entities.Plan;
+import util.AppDataException;
 
 /**
  * Servlet implementation class RedireccionInfoViaje
@@ -42,7 +43,13 @@ public class RedireccionInfoViaje extends HttpServlet {
 		PlanControlers planCon = new PlanControlers();
 		Plan planSeleccionado = new Plan();
 		
-		planSeleccionado = planCon.getPlanByFechaHoraCodRutaPatente(fechaViajeString, horaViajeString, codRutaViajeString, patenteColectivoViajeString);
+		try 
+		{
+			planSeleccionado = planCon.getPlanByFechaHoraCodRutaPatente(fechaViajeString, horaViajeString, codRutaViajeString, patenteColectivoViajeString);
+		} catch (AppDataException e) 
+		{
+			sesion.setAttribute("mensajeError", e.getMessage());
+		}
 		
 		sesion.setAttribute("planSeleccionado", planSeleccionado);
 		request.getRequestDispatcher("/WEB-INF/verInfoViaje.jsp").forward(request, response);

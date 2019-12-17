@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.ABMPasajero;
 import entities.Usuario;
+import util.AppLogicException;
 import entities.Pasajero;
 import entities.Plan;
 
@@ -42,8 +43,13 @@ public class RegistrarNuevaReserva extends HttpServlet {
 		String nroTarjeta = request.getParameter("nro_tarjeta");
 	
 		
-		if( nroTarjeta.length() == 16) {
+		try {
 			
+			if( nroTarjeta.length() == 16) 
+			{
+				throw new AppLogicException("El número de tarjeta debe contener 16 dígitos");
+			}
+		
 			Plan viajeSeleccionado = (Plan) sesion.getAttribute("ViajeSeleccionado");
 			
 			int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
@@ -57,24 +63,19 @@ public class RegistrarNuevaReserva extends HttpServlet {
 			@SuppressWarnings("unchecked")
 			ArrayList<Pasajero> pasajeros = (ArrayList<Pasajero>) sesion.getAttribute("pasajerosViaje");
 			
-			ABMPasajero abmPas = new ABMPasajero();
-			
+			ABMPasajero abmPas = new ABMPasajero();			
 			
 			abmPas.registrarReserva(pasajeros, nroTarjeta, viajeSeleccionado, cantPasajeros, usuarioActual, codCompania);
-			
-			sesion.setAttribute("reservaExitosa", "Tu compra se ha realizado con exito!");
-			sesion.setAttribute("MensajeCancelarReserva", null);
+			sesion.setAttribute("mensajeExito", "Tu compra se ha realizado con exito!");
 			request.getRequestDispatcher("/WEB-INF/misReservas.jsp").forward(request, response);		
-
 			
-			}
-		else {
- 		request.getSession().setAttribute("errorTarjeta", "Los numeros de la tajeta no son correctos");	
- 		
-		request.getRequestDispatcher("/WEB-INF/pagarviaje.jsp").forward(request, response);	
-		}	
-
+		} catch (Exception e) 
 		
+		{	
+			sesion.setAttribute("mensajeError", e.getMessage());
+			request.getRequestDispatcher("/WEB-INF/pagarviaje.jsp").forward(request, response);	
+		}
+			
 		
 		
 	}

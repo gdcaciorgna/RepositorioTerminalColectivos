@@ -49,48 +49,30 @@ public class EditarUsuarioServlet extends HttpServlet {
 		
 		UsuariosControlers usuCon = new UsuariosControlers();
 		
-		String mensaje = "OK"; //NO ES NECESARIO VALIDAR DATOS
 		
 		Usuario usu = new Usuario();
 		
-		if(mensaje.equals("OK")) 
+		try 
 		{
-			try 
-			{
+			usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, null, null, null);
+			sesion.setAttribute("UsuarioAModificar", usu); 
+			sesion.setAttribute("mensajeExito", "Las modificaciones se han guardado de manera satisfactoria"); 
 			
-				usu = usuCon.editarUsuario(username, nombre, apellido, email, cuil, rol, estado, null, null, null);
-				sesion.setAttribute("UsuarioAModificar", usu); 
-				
-			} catch (AppDataException e) 
-			
-			{
-				
-				sesion.setAttribute("MensajeUsuarioAEditar", e.getMessage()); 		
-			
-			}
-			
-			
-			
-			
+		} catch (AppDataException e) 
 		
-		}
-		
-		if(sesion.getAttribute("MensajeUsuarioAEditar") == null) 
-		
-		{
-			sesion.setAttribute("MensajeUsuarioAEditar", mensaje); 		
-		}
+		{		
+			sesion.setAttribute("MensajeUsuarioAEditar", e.getMessage()); 		
+		}	
+	
 		
 		request.getRequestDispatcher("/WEB-INF/editarUsuario.jsp").forward(request, response);		
 
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		doGet(request, response);
 	}
 

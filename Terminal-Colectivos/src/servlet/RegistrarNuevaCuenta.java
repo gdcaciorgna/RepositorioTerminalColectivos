@@ -46,54 +46,22 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		String cuil = request.getParameter("cuil");
 		String rol = request.getParameter("rol");
 		
-		String mensajeRegistro;
 		
 		UsuariosControlers usuCon = new UsuariosControlers(); 
 		
 		try {
 			
 			usuCon.validarRegistro(username, password, passwordrep);
-			
+			usuCon.setUsuario(username, password, nombre, apellido, email, cuil, rol);
 			Emailer.getInstance().send(email, "¡Bienvenido a nuestro sitio web!", "Bienvenido" + nombre + " " +  apellido + " a nuestra plataforma digital de reserva y compra de pasajes. ¡Que tengas siempre un buen viaje! :) " );
 			
 	 		sesion.setAttribute("mensajeRegistro", "Te has registrado exitosamente!");	
 	 		response.sendRedirect("login.jsp");
 
-		
-		
-			/*if(mensajeRegistro.equals("Error1")) 
-			{
-				sesion.setAttribute("mensajeRegistro", "El nombre de usuario esta en uso");
-				response.sendRedirect("registro.jsp");
-			}
-			
-			else if(mensajeRegistro.equals("Error2")) 
-			{
-				sesion.setAttribute("mensajeRegistro", "La contraseña debe contener 8 caracteres como minimo");
-				response.sendRedirect("registro.jsp");
-			}
-			
-			else if(mensajeRegistro.equals("Error3")) 
-			{
-				sesion.setAttribute("mensajeRegistro", "Las contraseñas no coinciden");
-				response.sendRedirect("registro.jsp");
-			}
-			
-			else if(mensajeRegistro.equals("OK")) 
-			{
-				usuCon.setUsuario(username, password, nombre, apellido, email, cuil, rol);
-				
-				Emailer.getInstance().send(email, "¡Bienvenido a nuestro sitio web!", "Bienvenido" + nombre + " " +  apellido + " a nuestra plataforma digital de reserva y compra de pasajes. ¡Que tengas siempre un buen viaje! :) " );
-				
-		 		request.getSession().setAttribute("registroExitoso", "Te has registrado exitosamente!");	
-		 		response.sendRedirect("login.jsp");
-	
-			}
-			*/
 		} 
 		catch (Exception e) {
 			
-			sesion.setAttribute("mensajeRegistro", e.getMessage());	
+			sesion.setAttribute("mensajeError", e.getMessage());	
 			response.sendRedirect("registro.jsp");
 
 			

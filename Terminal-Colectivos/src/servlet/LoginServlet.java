@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
-
 		
 
         String username = request.getParameter("username");
@@ -41,21 +40,21 @@ public class LoginServlet extends HttpServlet {
         
         try 
         {
+        	
         UsuariosControlers usuCon = new UsuariosControlers();
         
         	
         Usuario usu = usuCon.loginUsuario(username, password);
     	
     	sesion.setAttribute("usuarioActual", usu);
-    	
-    	response.sendRedirect("index.jsp");	
+		response.sendRedirect("index.jsp");	
 
         	
         } 
         
         catch(Exception e) 
         {
-        	request.getSession().setAttribute("errorLogin", e.getMessage());
+        	request.getSession().setAttribute("mensajeError", e.getMessage());
         	response.sendRedirect("login.jsp");
 
         }

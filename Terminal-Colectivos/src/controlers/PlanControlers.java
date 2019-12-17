@@ -16,6 +16,7 @@ import entities.Ruta;
 import entities.Usuario;
 import logic.PlanLogic;
 import util.AppDataException;
+import util.AppLogicException;
 
 public class PlanControlers {
 	
@@ -33,17 +34,17 @@ public class PlanControlers {
 		
 	}
 	
-	public String getMensajeRegistro(String origenPlan,String destinoPlan,String fechaStringPlan,String horaStringPlan,String precioStringPlan,String usuarioChoferPlan,String patenteColectivoPlan) throws AppDataException
+	public void validarRegistrarPlan(String origenPlan,String destinoPlan,String fechaStringPlan,String horaStringPlan,String precioStringPlan,String usuarioChoferPlan,String patenteColectivoPlan) throws AppLogicException, AppDataException 
 	{
 		String localidadPrincipal = "VENADO TUERTO"; //Localidad principal de la terminal
 		
-		String mensajeRegistro = "OK";
 		
 		DataPlan dplan = new DataPlan();
 		Ruta rutNuevo = new Ruta();
 		
 		DataRuta drut = new DataRuta();
 		
+			
 		rutNuevo = drut.getByOrigenDestino(origenPlan, destinoPlan);
 		
 		FechaControlers fechaCon = new FechaControlers();
@@ -55,41 +56,38 @@ public class PlanControlers {
 		
 		if(origenPlan.equals("Origen") || destinoPlan.equals("Destino") || fechaStringPlan=="" || horaStringPlan=="" || precioStringPlan=="" || patenteColectivoPlan.equals("Patente") || usuarioChoferPlan.equals("Chofer")) 
 		{
-			mensajeRegistro = "Error1"; //Se deben completar todos los campos
+			throw new AppLogicException("Se deben completar todos los campos.");
 		}
 		
 		else if(! origenPlan.equals(localidadPrincipal) && !destinoPlan.equals(localidadPrincipal)) 
 		{
-		
-			mensajeRegistro = "Error2"; //El origen o el destino debe ser Venado Tuerto
+			throw new AppLogicException("El origen o el destino debe ser Venado Tuerto.");
+
 		}	
 		
 		else if(origenPlan.equals(destinoPlan)) 
 		{
-			mensajeRegistro = "Error3"; //El Origen y el destino no pueden ser iguales 
-
+			throw new AppLogicException("El Origen y el destino no pueden ser iguales.");
 		}
 		
 		
 		else if(rutNuevo.getCod_ruta()==0) 
 		{
-			mensajeRegistro = "Error4"; //RUTA NO ENCONTRADA PARA ORIGEN Y DESTINO 
+			throw new AppLogicException("Ruta no encontrada para origen y destino seleccionados.");
 
 		}
 		
 		else if(planL.validarDouble(precioStringPlan)==false) 
 		{
-			mensajeRegistro = "Error5"; // PRECIO NO ES UN VALOR NUMERICO 
-
+			throw new AppLogicException("El precio no es un valor numérico.");
 		}
 		
 		else if(!dplan.validarPlanSinExistencia(fechaHoraPlanNuevo, rutNuevo.getCod_ruta(), patenteColectivoPlan)) 
 		{
-			mensajeRegistro = "Error6"; // YA EXISTE UN PLAN PARA LA FECHA, HORA, PATENTE Y RUTA DESIGNADA
-
+			throw new AppLogicException("Ya existe un plan para la fecha, hora, patente y ruta designada");
 		}
-		
-		return mensajeRegistro;
+				
+
 	
 
 	}

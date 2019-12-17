@@ -20,17 +20,13 @@ import logic.PasajeroLogic;
 public class RedireccionPagoViajes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public RedireccionPagoViajes() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
@@ -38,6 +34,7 @@ public class RedireccionPagoViajes extends HttpServlet {
 		
 		int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
 		int cont=0;
+	
 		ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
 		
 		//FORMA UN POCO RARA DE TRAER LOS DATOS, pero funciona
@@ -59,7 +56,8 @@ public class RedireccionPagoViajes extends HttpServlet {
 			pasajeros.add(pasajero);
 			cont++;
 			}
-			else {
+			else 
+			{
 				sesion.setAttribute("mensajePasajeros", "Alguno/os  DNI ingresados  son invalidos");
 				request.getRequestDispatcher("/WEB-INF/definirpasajeros.jsp").forward(request, response);		
 

@@ -42,7 +42,15 @@ public class RedireccionReservarViaje extends HttpServlet {
 		PlanControlers planCon = new PlanControlers();
 		Plan viajeSeleccionado = new Plan();
 		
-		viajeSeleccionado = planCon.getPlanByFechaHoraCodRutaPatente(fechaViajeString, horaViajeString, codRutaViajeString, patenteColectivoViajeString);
+		try 
+		{
+			
+			viajeSeleccionado = planCon.getPlanByFechaHoraCodRutaPatente(fechaViajeString, horaViajeString, codRutaViajeString, patenteColectivoViajeString);
+		
+		} catch (Exception e) 
+		{
+			sesion.setAttribute("mensajeError", e.getMessage());
+		}
 		
 		sesion.setAttribute("ViajeSeleccionado", viajeSeleccionado);
 			

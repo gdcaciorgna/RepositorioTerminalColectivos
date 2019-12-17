@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class MisReservas
  */
 @WebServlet("/MisReservas")
-public class MisReservas extends HttpServlet {
+public class RedireccionMisReservas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MisReservas() {
+    public RedireccionMisReservas() {
         super();
         
     }
