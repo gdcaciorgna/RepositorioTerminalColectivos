@@ -93,43 +93,32 @@ usuarioModificar = (Usuario) sesion.getAttribute("UsuarioAModificar");
 			  
 			</form>
 			
-		<!-- INICIO - Mensaje de Error -->	
 		<br>	
 		
 		
-		<% String mensaje = null; %>
-		
-		<% if(sesion.getAttribute("MensajeUsuarioAEditar") != null) 
-		{ mensaje = (String) sesion.getAttribute("MensajeUsuarioAEditar"); 
-			
-			if(mensaje.equals("OK")) 
-			{ %>
-			<div class="text-center alert alert-success" role="alert">
-			¡Felicitaciones: Se ha modificado el usuario de manera correcta!
+		<% 
+    		String mensajeError = (String) session.getAttribute("mensajeError");
+    		String mensajeExito = (String) session.getAttribute("mensajeExito");
+    		
+    		if(mensajeExito!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
 			</div> 
-			<% } else { %>
+			<%}%>
 			
 			
-			<% if(mensaje.equals("Error2")) { %>
-			<div class="text-center alert alert-danger" role="alert">
-			Error: La nueva contraseña debe contener 8 caracteres como minimo
-			</div>
-			<% } else if(mensaje.equals("Error3")) { %>
-			<div class="text-center alert alert-danger" role="alert">
-			Error: Las contraseñas no coinciden
-			</div>
-			<% 
-			} else 
-			if(mensaje.equals("Error4")) { %>
-			<div class="text-center alert alert-danger" role="alert">
-			Error: La contraseña actual ingresada no es correcta
-			</div>
-			<% } } } %>
-			<% 
-              session.setAttribute("OK",null);
-              session.setAttribute("Error2",null);
-              session.setAttribute("Error3",null);
-              session.setAttribute("Error4",null);%>
+			<% if(mensajeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= mensajeError %>
+			</div> 
+			<%}%>
+			
+		<% 
+	        session.setAttribute("mensajeError", null);
+	        session.setAttribute("mensajeExito", null);
+        %> 	 
 			
 			 
 		<!-- FIN - Mensaje de Error -->

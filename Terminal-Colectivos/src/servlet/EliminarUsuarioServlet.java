@@ -66,7 +66,7 @@ public class EliminarUsuarioServlet extends HttpServlet {
 		else  //verifica si es redirigido desde usuarios.jsp -> redirige a usuarios.jsp
 		{
 
-		sesion.setAttribute("UsuariosAfectados", filasEliminadas);
+		sesion.setAttribute("mensajeExito", "Se ha eliminado al usuario de manera satisfactoria.");
 		request.getRequestDispatcher("/WEB-INF/usuarios.jsp").forward(request, response);
 		
 		}

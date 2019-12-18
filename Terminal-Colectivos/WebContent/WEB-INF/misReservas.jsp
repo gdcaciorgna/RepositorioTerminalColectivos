@@ -145,31 +145,29 @@ usuario = (Usuario) session.getAttribute("usuarioActual");
         </div>
         
         
-        <!--Grid column-->
-			<% String reservaExitosa = (String)session.getAttribute("reservaExitosa");%>
-			<% if(session.getAttribute("reservaExitosa")!=null) { %>
+		<% 
+    		String mensajeError = (String) session.getAttribute("mensajeError");
+    		String mensajeExito = (String) session.getAttribute("mensajeExito");
+    		
+    		if(mensajeExito!=null) { %>
 			<br>
 			<div class="alert alert-success" role="alert">
-			Felicitaciones: <%= reservaExitosa %>
+			<%= mensajeExito %>
 			</div> 
 			<%}%>
 			
-			<% String MensajeCancelarReserva = (String)session.getAttribute("MensajeCancelarReserva");%>
-			<% if(session.getAttribute("MensajeCancelarReserva")!=null) { %>
-			<br>
-			<div class="alert alert-success" role="alert">
-			Error: <%= MensajeCancelarReserva %>
-			</div> 
-			<%}%>
-           <% session.setAttribute("reservaExitosa",null);
-           session.setAttribute("MensajeCancelarReserva",null);%>
-           
-           	<% if(manejoDeError!=null) { %>
+			
+			<% if(mensajeError!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Error: <%= manejoDeError %>
+			Error: <%= mensajeError %>
 			</div> 
 			<%}%>
+			
+		<% 
+	        session.setAttribute("mensajeError", null);
+	        session.setAttribute("mensajeExito", null);
+        %> 	 
 
 
 

@@ -1,5 +1,6 @@
 package logic;
 
+import entities.Usuario;
 
 public class UsuarioLogic {
 	
@@ -68,6 +69,34 @@ public class UsuarioLogic {
 		return passwordNuevoRep;
 		
 	}
+	
+	public boolean validarAdministrador(Usuario usuario) throws Exception 
+	{
+		boolean vof = true;
+		
+		if(!usuario.getRol().equals("admin")) //si no es admin, lanza la excepcion
+		{
+			vof = false;
+			throw new Exception("Error. Usted no tiene los permisos para ver esta página");
+		}
+		
+		return vof;	
+	}
+	
+	
+	public boolean validarChofer(Usuario usuario) throws Exception 
+	{
+		boolean vof = true;
+		
+		if(!usuario.getRol().equals("chofer") && !usuario.getRol().equals("admin")) //si no es administrador ni chofer, lanza excepcion
+		{
+			vof = false;
+			throw new Exception("Error. Usted no tiene los permisos para ver esta página");
+		}
+		
+		return vof;
+	}
+	
 	
 
 }

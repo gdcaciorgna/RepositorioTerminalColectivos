@@ -97,9 +97,20 @@
       <%@ page import="data.DataUsuario" %>
       <%@ page import="entities.Usuario" %>
        <%
-       	//Inicialización de variables
-           DataUsuario dusu = new DataUsuario();
-           ArrayList<Usuario> choferes = dusu.getAall();
+       
+       DataUsuario dusu = new DataUsuario();
+       ArrayList<Usuario> choferes = new ArrayList<Usuario>();
+       String mensajeError = null;
+       
+       try
+       {
+           choferes = dusu.getAll();
+       }
+       catch(Exception e)
+       {
+    	   mensajeError = e.getMessage();
+       }
+           
            Iterator<Usuario> itr3 = choferes.iterator();
            Usuario chofer = null;
        %>
@@ -197,47 +208,33 @@
                  </div>
                  
      
-            <% String mensajeRegistro = (String) session.getAttribute("mensajeRegistro");%>
-			<% if(mensajeRegistro != null) 
-			{
-				if(mensajeRegistro.equals("OK"))
-				{ %>
-				<div class="alert alert-success text-center" role="alert">Felicitaciones: El Plan se ha modificado exitosamente </div>
-
-				<% 
-				} 
-				else if(mensajeRegistro.equals("Error1")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: Hay campos vacíos</div>
-				<% 
-				} 
-				else if(mensajeRegistro.equals("Error2")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: El origen o el destino debe ser Rosario</div>
-				<%
-				} 
-				else if(mensajeRegistro.equals("Error3")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: El origen y el destino no </div>
-				<%
-				} 
-				else if(mensajeRegistro.equals("Error4")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: No se encontraron rutas existentes para origen y destino indicados</div>
-				<% 
-				}
-				else if(mensajeRegistro.equals("Error5")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: El campo <b>"precio"</b> no es un valor numérico</div>
-				<% 
-				}
-				else if(mensajeRegistro.equals("Error6")) 
-				{ %>
-				<div class="alert alert-danger text-center" role="alert">Error: Ya existe un plan para la fecha, hora, colectivo y chofer designado</div>
-				<% 
-				}
-			} 	
-			%>
+            <% 
+ 			if(mensajeError == null)
+ 			{
+            mensajeError = (String) session.getAttribute("mensajeError");
+ 			}
+    		
+            String mensajeExito = (String) session.getAttribute("mensajeExito");
+    		
+    		if(mensajeExito!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
+			</div> 
+			<%}%>
+			
+			
+			<% if(mensajeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= mensajeError %>
+			</div> 
+			<%}%>
+			
+			<% 
+		        session.setAttribute("mensajeError", null);
+		        session.setAttribute("mensajeExito", null);
+		    %> 	 
 			
 			<div class="text-center"><a href="buscarviajesadmin.jsp">Volver al buscador de viajes</a></div>
 			

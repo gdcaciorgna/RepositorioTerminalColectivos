@@ -22,6 +22,10 @@ java.util.Date fechaViajeDate = (Date) sesion.getAttribute("fechaViaje");
 String fechaViajeString = "-";
 FechaControlers fCon = new FechaControlers();
 
+String mensajeError = (String) session.getAttribute("mensajeError");
+String mensajeExito = (String) session.getAttribute("mensajeExito");
+
+
 
 if(origenViaje==null){origenViaje = "Cualquiera";}
 if(destinoViaje==null){destinoViaje = "Cualquiera";}
@@ -149,12 +153,21 @@ else {fechaViajeDate = new Date();}
 </div>
 
 <div class="row">
-<% if(manejoDeError!=null) { %>
+	<% if(mensajeExito!=null) { %>
+		<br>
+		<div class="alert alert-success" role="alert">
+		<%= mensajeExito %>
+		</div> 
+	<%}%>
+		
+		
+	<% if(mensajeError!=null) { %>
 	<br>
 	<div class="alert alert-danger" role="alert">
-	Error: <%= manejoDeError %>
+	Error: <%= mensajeError %>
 	</div> 
 	<%}%>
+	
 </div>
 
 <jsp:include page="/JSPFiles/includefooter.jsp" />

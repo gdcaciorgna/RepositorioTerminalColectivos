@@ -36,26 +36,26 @@
             
          
             
-            <% String errorLogin = (String)session.getAttribute("errorLogin");%>
-			<% if(session.getAttribute("errorLogin")!=null) { %>
+            <% String mensajeError = (String)session.getAttribute("mensajeError");%>
+			<% if(session.getAttribute("mensajeError")!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Error: <%= errorLogin %>
+			Error: <%= mensajeError %>
 			</div> 
 			<%}%>
 			
-			<% String mensajeRegistro = (String)session.getAttribute("mensajeRegistro");%>
-			<% if(session.getAttribute("mensajeRegistro")!=null) { %>
+			<% String mensajeExito = (String)session.getAttribute("mensajeExito");%>
+			<% if(session.getAttribute("mensajeExito")!=null) { %>
 			<br>
 			<div class="alert alert-success" role="alert">
-			Felicitaciones: <%= mensajeRegistro %>
+			Felicitaciones: <%= mensajeExito %>
 			</div> 
 			<%}%>
 		
        
        
-        <% session.setAttribute("mensajeRegistro",null);
-              session.setAttribute("errorLogin",null);%>
+        <% session.setAttribute("mensajeError",null);
+           session.setAttribute("mensajeExito",null);%>
               
              </form>
          </div>

@@ -22,6 +22,9 @@
 
  usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");  
 
+ String mensajeError = (String) session.getAttribute("mensajeError");
+ String mensajeExito = (String) session.getAttribute("mensajeExito");
+
 
  String origenViaje = (String) sesion.getAttribute("origenViaje");
  String destinoViaje = (String) sesion.getAttribute("destinoViaje");
@@ -164,13 +167,26 @@
 </div>
 
 <div class="row">
-<% if(manejoDeError!=null) { %>
-	<br>
-	<div class="alert alert-danger" role="alert">
-	Error: <%= manejoDeError %>
-	</div> 
-	<%}%>
-</div>
+			<% if(mensajeExito!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
+			</div> 
+			<%}%>
+			
+			
+			<% if(mensajeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= mensajeError %>
+			</div> 
+			<%}%>
+			
+        </div>
+        <% 
+	        sesion.setAttribute("mensajeError", null);
+	        sesion.setAttribute("mensajeExito", null);
+        %>
 
 <jsp:include page="/JSPFiles/includefooter.jsp" />
 </body>

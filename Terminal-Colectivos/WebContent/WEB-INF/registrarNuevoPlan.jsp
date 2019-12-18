@@ -126,7 +126,7 @@ if(precioString==null){precioString="";}
   
        ArrayList<Colectivo> colectivos = new ArrayList<Colectivo>();
        try{    
-       usuCon.getAllColectivos();
+       colectivos = usuCon.getAllColectivos();
        }
        catch(Exception e)
        {
@@ -217,7 +217,20 @@ if(precioString==null){precioString="";}
                  </div>
                  
      
-            <% String mensajeRegistro = (String) session.getAttribute("mensajeRegistro");%>
+            <% 
+ 			if(mensajeError == null)
+ 			{
+            mensajeError = (String) session.getAttribute("mensajeError");
+ 			}
+    		
+            String mensajeExito = (String) session.getAttribute("mensajeExito");
+    		
+    		if(mensajeExito!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
+			</div> 
+			<%}%>
 			
 			
 			<% if(mensajeError!=null) { %>
@@ -228,8 +241,9 @@ if(precioString==null){precioString="";}
 			<%}%>
 			
 			<% 
-              session.setAttribute("mensajeRegistro",null);%>
-			
+		        session.setAttribute("mensajeError", null);
+		        session.setAttribute("mensajeExito", null);
+		    %> 	 			
 				<div class="text-center"><a href="BuscarViajesAdmin">Volver al buscador de viajes</a></div>
 			
            </div>

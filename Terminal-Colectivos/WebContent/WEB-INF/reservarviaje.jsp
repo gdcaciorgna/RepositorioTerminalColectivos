@@ -137,6 +137,31 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 	 </div>
           
 </div> 
+
+   <% 		
+ 			
+            String mensajeError = (String) session.getAttribute("mensajeError");    		
+            String mensajeExito = (String) session.getAttribute("mensajeExito");
+    		
+    		if(mensajeExito!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
+			</div> 
+			<%}%>
+			
+			
+			<% if(mensajeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= mensajeError %>
+			</div> 
+			<%}%>
+			
+			<% 
+		        session.setAttribute("mensajeError", null);
+		        session.setAttribute("mensajeExito", null);
+		    %> 	 
 </div>
 
 <jsp:include page="/JSPFiles/includefooter.jsp" />  

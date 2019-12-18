@@ -21,9 +21,7 @@
 	<% Usuario usuario= new Usuario();%>
 	<% Reserva reservaACancelar= new Reserva();%>
 	<% CancelarReserva cancelarReserva = new CancelarReserva(); %>
-	
-	
-	
+		
  
 	<%
 	
@@ -34,7 +32,9 @@
 	ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
 	
 	
-    String manejoDeError = null;
+	String mensajeError = (String) session.getAttribute("mensajeError");
+	String mensajeExito = (String) session.getAttribute("mensajeExito");
+
 	
 	try
 	{
@@ -42,7 +42,7 @@
 	}
 	catch(Exception e)
 	{
-    	manejoDeError = e.getMessage();
+    	mensajeError = e.getMessage();
 
 	}
 	
@@ -90,9 +90,7 @@
              <hr>
              
              <% } %>
-             
-             
-             
+
              
              Importe a Devolver: <%= importeADevolver %>
              
@@ -120,28 +118,25 @@
          </div>
     </div>
     
-    	<% if(manejoDeError!=null) { %>
+    		<% if(mensajeExito!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			Error: <%= mensajeExito %>
+			</div> 
+			<%}%>
+			
+			
+			<% if(mensajeError!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Error: <%= manejoDeError %>
+			Error: <%= mensajeError %>
 			</div> 
-		<%}%>
-		
-		
-		
-		<% String error = (String)session.getAttribute("error");%>
-		<% if(session.getAttribute("error")!=null) { %>
-		<br>
-		<div class="alert alert-danger" role="alert">
-		Error: <%= error %>
-		</div> 
-		<%}%>
-	
-       
-       
-        <% 
-        	session.setAttribute("error",null);
-        %>    	 
+			<%}%>
+			
+		<% 
+	        session.setAttribute("mensajeError", null);
+	        session.setAttribute("mensajeExito", null);
+        %> 	 
 </div>
 
 

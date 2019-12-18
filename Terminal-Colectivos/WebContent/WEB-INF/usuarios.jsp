@@ -79,8 +79,9 @@
    
    <form action="RedireccionEditarUsuarioSevlet" method="post">
    <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
-
    <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i></button></form> 
+   
+   
    <form action="EliminarUsuarioServlet" method="post">
    <input type="hidden" value=<%=usu.getUsername()%> name="username"/>
    <input type="hidden" value=<%=usu.getPassword() %> name="password"/>
@@ -100,22 +101,29 @@
  
 </div>
 
-<% Integer filasAfectadas = 0;%> 
-<% filasAfectadas = (Integer) sesion.getAttribute("UsuariosAfectados");%>
-<% if(filasAfectadas != null) { %>
-<br>
-<div class="alert alert-danger" role="alert">
-Filas Eliminadas: <%= filasAfectadas %>
-</div> 
-<%}%>
-
-<% String mensajeError;%> 
-<% mensajeError = (String) session.getAttribute("mensajeError");%>
-<% if(session.getAttribute("mensajeError")!=null) { %>
-<div class="alert alert-danger" role="alert">
-Error: <%= mensajeError %>
-</div> 
-<%}%>
+   <% 
+ 			String mensajeError = (String) session.getAttribute("mensajeError");
+            String mensajeExito = (String) session.getAttribute("mensajeExito");
+    		
+    		if(mensajeExito!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
+			</div> 
+			<%}%>
+			
+			
+			<% if(mensajeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= mensajeError %>
+			</div> 
+			<%}%>
+			
+			<% 
+		        session.setAttribute("mensajeError", null);
+		        session.setAttribute("mensajeExito", null);
+		    %> 	 
 
    <% 
          session.setAttribute("UsuariosAfectados",null);

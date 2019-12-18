@@ -66,15 +66,26 @@ session.setAttribute("errorLogin",null);%>
                <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Registrarse" />
                  </div>
-              		<% String mensajeRegistro = (String)session.getAttribute("mensajeRegistro");%>
-			<% if(session.getAttribute("mensajeRegistro")!=null) { %>
+            
+            <% String mensajeExito = (String)session.getAttribute("mensajeExito");%>
+			<% if(session.getAttribute("mensajeExito")!=null) { %>
+			<br>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
+			</div> 
+			<%}%>
+			
+			<% String mensajeError = (String)session.getAttribute("mensajeError");%>
+			<% if(session.getAttribute("mensajeError")!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Error: <%= mensajeRegistro %>
+			Error: <%= mensajeError %>
 			</div> 
 			<%}%>
 			  
-			  <% session.setAttribute("mensajeRegistro",null);%>
+			  <% session.setAttribute("mensajeExito",null);%>
+			  <% session.setAttribute("mensajeError",null);%>
+			  
               
              </form>
          </div>

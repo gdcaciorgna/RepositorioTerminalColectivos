@@ -37,7 +37,7 @@ String destinoViaje = (String) sesion.getAttribute("destinoViaje");
        BuscarLocalidadesControlers busLoc = new BuscarLocalidadesControlers();
        ArrayList<Localidad> localidades = new ArrayList<Localidad>();
        
-       String manejoDeError = null;
+       String mensajeError = null;
 
        
        try
@@ -46,7 +46,7 @@ String destinoViaje = (String) sesion.getAttribute("destinoViaje");
        }
        catch(Exception e)
        {
-    		manejoDeError = e.getMessage();
+    	   mensajeError = e.getMessage();
        }
            Iterator<Localidad> itr1 = localidades.iterator();
            Localidad loc = null;
@@ -116,9 +116,9 @@ String destinoViaje = (String) sesion.getAttribute("destinoViaje");
 <!-- Default form contact -->
 </div>
 
-	<% if(manejoDeError!=null) { %>
+	<% if(mensajeError!=null) { %>
 	<br>
 	<div class="alert alert-danger" role="alert">
-	Error: <%= manejoDeError %>
+	Error: <%= mensajeError %>
 	</div> 
 	<%}%>

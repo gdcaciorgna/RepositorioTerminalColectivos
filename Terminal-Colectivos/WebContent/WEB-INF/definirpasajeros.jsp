@@ -111,15 +111,32 @@ String fechaHoraString = fCon.dateToddMMyyyyhhmm(viajeSeleccionado.getFechaHora(
 			<button type="submit" class="btn btn-primary">Avanzar</button>
 			</div>
 			<div>
-			<% String mensajePasajeros = (String)session.getAttribute("mensajePasajeros");%>
-			<% if(session.getAttribute("mensajePasajeros")!=null) { %>
+			
+			<% 
+    		String mensajeError = (String) session.getAttribute("mensajeError");
+    		String mensajeExito = (String) session.getAttribute("mensajeExito");
+    		
+    		if(mensajeExito!=null) { %>
 			<br>
-			<div class="alert alert-danger" role="alert">
-			Error: <%= mensajePasajeros%>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
 			</div> 
 			<%}%>
-			<% 
-               session.setAttribute("mensajePasajeros",null);%>
+			
+			
+			<% if(mensajeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= mensajeError %>
+			</div> 
+			<%}%>
+			
+		<% 
+	        session.setAttribute("mensajeError", null);
+	        session.setAttribute("mensajeExito", null);
+        %> 	 
+
+
 			</div>
 		    
 		    </form>

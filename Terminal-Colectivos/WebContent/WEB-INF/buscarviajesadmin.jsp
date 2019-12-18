@@ -21,7 +21,6 @@
 <% 
 HttpSession sesion = request.getSession();
   
-sesion.setAttribute("mensajeRegistro", null);
    
 String origenViaje = (String) sesion.getAttribute("origenViaje");
 String destinoViaje = (String) sesion.getAttribute("destinoViaje");
@@ -58,8 +57,8 @@ else
    
     ArrayList<Plan> planes = new ArrayList<Plan>();
     
-    
-    String manejoDeError = null;
+    String mensajeError = (String) session.getAttribute("mensajeError");
+    String mensajeExito = (String) session.getAttribute("mensajeExito");
     
     
     try
@@ -69,7 +68,7 @@ else
     
     catch(Exception e)
     {
-    	manejoDeError = e.getMessage();
+    	mensajeError = e.getMessage();
     }
     
     
@@ -188,40 +187,28 @@ else
 			</table>
 			 
 			</div>
-			<% Integer planesEditados = 0;%> 
-			<% planesEditados = (Integer) session.getAttribute("planesEditados");%>
-			<% if(session.getAttribute("planesEditados")!=null) { %>
+			
+			<% if(mensajeExito!=null) { %>
 			<br>
-			<div class="alert alert-warning" role="alert">
-			Viajes editados: <%= planesEditados %>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
 			</div> 
 			<%}%>
 			
 			
-			
-			<% Integer planesEliminados = 0;%> 
-			<% planesEliminados = (Integer) session.getAttribute("planesEliminados");%>
-			<% if(session.getAttribute("planesEliminados")!=null) { %>
+			<% if(mensajeError!=null) { %>
 			<br>
 			<div class="alert alert-danger" role="alert">
-			Viajes eliminados: <%= planesEliminados %>
-			</div> 
-			<%}%>
-			
-			
-			<% if(manejoDeError!=null) { %>
-			<br>
-			<div class="alert alert-danger" role="alert">
-			Error: <%= manejoDeError %>
+			Error: <%= mensajeError %>
 			</div> 
 			<%}%>
 			
         </div>
         <% 
-              session.setAttribute("planesEliminados",null);
-              session.setAttribute("planesEditados",null);
+	        sesion.setAttribute("mensajeError", null);
+	        sesion.setAttribute("mensajeExito", null);
         %>
-        <!--Grid column-->
+       
 
 
 

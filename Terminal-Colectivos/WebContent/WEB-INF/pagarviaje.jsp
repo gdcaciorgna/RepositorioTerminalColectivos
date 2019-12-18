@@ -132,16 +132,30 @@ Date diaActual = new Date();
             <div class="form-group">
                      <input type="submit" class="btnSubmit" value="Confirmar pago" />
                  </div>
-          	<% String errorTarjeta = (String)session.getAttribute("errorTarjeta");%>
-			<% if(session.getAttribute("errorTarjeta")!=null) { %>
+		
+		<% 
+    		String mensajeError = (String) session.getAttribute("mensajeError");
+    		String mensajeExito = (String) session.getAttribute("mensajeExito");
+    		
+    		if(mensajeExito!=null) { %>
 			<br>
-			<div class="alert alert-danger" role="alert">
-			Error: <%= errorTarjeta %>
+			<div class="alert alert-success" role="alert">
+			<%= mensajeExito %>
 			</div> 
 			<%}%>
-          
-    <% 
-session.setAttribute("errorTarjeta",null);%>
+			
+			
+			<% if(mensajeError!=null) { %>
+			<br>
+			<div class="alert alert-danger" role="alert">
+			Error: <%= mensajeError %>
+			</div> 
+			<%}%>
+			
+		<% 
+	        session.setAttribute("mensajeError", null);
+	        session.setAttribute("mensajeExito", null);
+        %> 	 
  
 		 </form>
 			</div>

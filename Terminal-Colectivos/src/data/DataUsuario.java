@@ -279,6 +279,44 @@ public class DataUsuario
 	return usuarios;	
 	}
 	
+	public ArrayList <Usuario> getAllChoferes() throws AppDataException
+	{
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "select * from usuarios where rol = 'chofer'";
+		ArrayList<Usuario> usuarios = new ArrayList<>();
+		try 
+		{
+			stmt = Conectar.getInstancia().getConn().createStatement();
+			rs = stmt.executeQuery(sql);
+			if(rs!=null) 
+			{
+				while(rs.next()) 
+				{
+					Usuario usuario = setUsuario(rs);
+					usuarios.add(usuario);
+				}
+			}
+		} catch (SQLException e) {
+			throw new AppDataException(e, "Error recuperar usuarios.");
+			
+		} finally
+		{
+			try 
+			{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				Conectar.getInstancia().releasedConn();
+			} catch(SQLException e) 
+			{
+				throw new AppDataException(e, "Error al cerrar la base de datos.");
+
+			} 
+		}
+		
+	return usuarios;	
+	}
+	
 	private Usuario setUsuario(ResultSet rs) throws AppDataException
 	{
 		Usuario usuario = new Usuario();

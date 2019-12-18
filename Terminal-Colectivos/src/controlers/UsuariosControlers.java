@@ -193,7 +193,7 @@ public class UsuariosControlers {
 			throw new AppLogicException("Hay campos vacíos.");
 		}
 		
-		else if(dusu.validarUsuarioyPassword(username, password)) //En caso de no haber ingresado password correctamente, 
+		else if(!dusu.validarUsuarioyPassword(username, password)) //En caso de no haber ingresado password correctamente, 
 		{
 			throw new AppLogicException("Contraseña incorrecta.");
 		}
@@ -205,7 +205,7 @@ public class UsuariosControlers {
 	public ArrayList<Usuario> getAllChoferes() throws AppDataException
 	{
         DataUsuario dusu = new DataUsuario();
-        return dusu.getAll();
+        return dusu.getAllChoferes();
 
 	}
 	
@@ -213,8 +213,8 @@ public class UsuariosControlers {
 	
 	public ArrayList<Colectivo> getAllColectivos() throws AppDataException
 	{
-        DataColectivo dusu = new DataColectivo();
-        return dusu.getAll();
+        DataColectivo dCol = new DataColectivo();
+        return dCol.getAll();
 
 	}
 	
