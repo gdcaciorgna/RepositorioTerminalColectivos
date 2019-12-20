@@ -67,6 +67,8 @@ public class RegistrarNuevoPlan extends HttpServlet {
 		
 				
 		sesion.setAttribute("mensajeExito", "Se ha registrado el plan de viaje de manera satisfactoria");
+		request.getRequestDispatcher("/WEB-INF/buscarviajesadmin.jsp").forward(request, response);
+
 
 		
 		}

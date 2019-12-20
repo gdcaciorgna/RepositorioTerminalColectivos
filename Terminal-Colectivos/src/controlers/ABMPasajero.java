@@ -16,6 +16,7 @@ import entities.Plan_Reserva;
 import entities.Reserva;
 import entities.Usuario;
 import logic.PasajeroLogic;
+import logic.PasajeroReservaLogic;
 import util.AppDataException;
 
 public class ABMPasajero {
@@ -76,7 +77,6 @@ public class ABMPasajero {
 		DataReserva dres = new DataReserva();
 		
 		
-		
 		this.addPasajeros(pasajeros);
 		
 		dres.agregarReserva(reserva);
@@ -89,18 +89,19 @@ public class ABMPasajero {
 		Pasajero_Reserva pasajeroReserva = new Pasajero_Reserva();
 		
 		DataPasajeroReserva dPasRes = new DataPasajeroReserva();
+		PasajeroReservaLogic lPasRes = new PasajeroReservaLogic();
 		
 		
 		for(Pasajero pasajero : pasajeros) 
 		{
 			
 			
-			int asiento = dPasRes.getUltimoAsientoxPlan(viajeSeleccionado);
+			int asiento = lPasRes.getProximoAsientoxPlan(viajeSeleccionado);
+			
 			
 			pasajeroReserva.setAsiento(asiento);
 			pasajeroReserva.setPasajero(pasajero);
-			pasajeroReserva.setReserva(reserva);
-
+			pasajeroReserva.setReserva(reserva);	
 			
 			
 			dPasRes.agregarPasajeroReserva(pasajeroReserva);

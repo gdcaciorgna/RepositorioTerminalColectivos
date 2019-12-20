@@ -53,13 +53,13 @@ public class EliminarUsuarioServlet extends HttpServlet {
 		
 		usuCon.validarEliminarUsuario(username, password);	
 		
-		int filasEliminadas = usuCon.eliminarUsuario(username, password);
+		usuCon.eliminarUsuario(username, password);
 		
 		if(redirigidoComoAdminVoF == false) //verifica si es redirigido desde micuenta.jsp -> Cierra sesion y redirige a bajasatisfactoria.jsp
 		{
 		sesion.setAttribute("Usuario", null);
 		sesion.invalidate(); //CERRAR SESION
-		request.getRequestDispatcher("/WEB-INF/bajasatisfactoria.jsp").forward(request, response);		
+		request.getRequestDispatcher("bajasatisfactoria.jsp").forward(request, response);		
 
 		}
 			

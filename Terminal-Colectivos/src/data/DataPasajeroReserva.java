@@ -57,7 +57,7 @@ public class DataPasajeroReserva {
 		}
 	}
 	
-	public int getUltimoAsientoxPlan(Plan plan) throws AppDataException 
+	public int getProximoAsientoxPlan(Plan plan) throws AppDataException 
 	{
 		PreparedStatement pstmt = null;
 		
@@ -239,6 +239,51 @@ public class DataPasajeroReserva {
 		}
 		
 	return pasajeros_reservas;	
+	}
+	
+	public void eliminarPasajerosReservaxPlan(Plan plan) throws AppDataException 
+	{
+		PreparedStatement pstmt = null;
+
+		String sql = "DELETE pasres FROM pasajeros_reservas pasres inner join planes_reservas planres on pasres.fecha_res = planres.fecha_res and planres.usuario_reserva = pasres.usuario where planres.fecha_hora_plan = ? and planres.cod_ruta = ? and planres.patente = ? ";
+			
+		
+		try 
+		{
+			
+			
+		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		
+			pstmt.setTimestamp(1, new Timestamp(plan.getFechaHora().getTime()));
+			pstmt.setInt(2, plan.getRuta().getCod_ruta());
+			pstmt.setString(3, plan.getColectivo().getPatente());
+			
+			
+			
+			pstmt.executeUpdate();			
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			
+			throw new AppDataException(e, "Error al intentar eliminar filas de la tabla pasajeros_reservas en baase de datos.");
+
+		}
+		
+		try 
+		{
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos.");
+		
+		}
+
 	}
 	
 	

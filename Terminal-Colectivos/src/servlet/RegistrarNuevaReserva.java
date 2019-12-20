@@ -45,7 +45,7 @@ public class RegistrarNuevaReserva extends HttpServlet {
 		
 		try {
 			
-			if( nroTarjeta.length() == 16) 
+			if( nroTarjeta.length() != 16) 
 			{
 				throw new AppLogicException("El número de tarjeta debe contener 16 dígitos");
 			}

@@ -1,3 +1,4 @@
+<%@page import="controlers.PlanReservaControlers"%>
 <%@page import="entities.Pasajero_Reserva"%>
 <%@page import="data.DataPasajeroReserva"%>
 <%@page import="data.DataReservaPlan"%>
@@ -25,6 +26,8 @@ usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
 
 String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.getApellido(); 
 
+
+
 %>
 
 <title>Información del viaje seleccionado</title>
@@ -35,6 +38,8 @@ String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.ge
 <%@ page import = "data.DataPlan" %>
     <%@ page import = "java.util.*" %>
     <%@ page import = "entities.Plan" %>
+    <%@ page import = "logic.PlanLogic" %>
+    
     <% 
     //Inicialización de variables
     DataPasajeroReserva dPasRes = new DataPasajeroReserva();
@@ -52,6 +57,14 @@ String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.ge
 	   				   
 	   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
     
+	   
+	   
+	   PlanLogic pLog = new PlanLogic();
+	   PlanReservaControlers planResCon = new PlanReservaControlers();
+	   
+	   ArrayList<Plan_Reserva> plan_reservas = new ArrayList<Plan_Reserva>();
+	   plan_reservas = planResCon.getReservasxPlan(planSeleccionado);
+	   
     %>
     
 
@@ -71,6 +84,7 @@ String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.ge
 	Origen: <b><%= planSeleccionado.getOrigen() %></b> <br>
 	Destino: <b><%= planSeleccionado.getDestino() %></b> <br>
 	Colectivo: <b><%= planSeleccionado.getColectivo().getPatente() %></b> <br>
+	Capacidad: <b><%= planSeleccionado.getColectivo().getCapacidad() %></b> | <b> <%= pLog.calcularAsientosReservados(planSeleccionado, plan_reservas) %> </b> reservados - <b><%= pLog.calcularAsientosDisponibles(planSeleccionado, plan_reservas) %></b> disponibles <br>
 	Chofer: <b><%= planSeleccionado.getChofer().getUsername() %></b> <br>
 	Precio: <b><%= planSeleccionado.getPrecio() %></b>
 	</div>

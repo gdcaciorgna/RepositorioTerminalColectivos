@@ -53,6 +53,13 @@ public class PlanReservaControlers {
 
 	}
 	
+	public ArrayList<Plan_Reserva> getReservasxPlan(Plan planElegido) throws AppDataException
+	{
+		DataReservaPlan dResPlan = new DataReservaPlan();
+		return dResPlan.getReservasPlan(planElegido);
+		
+	}
+	
 
 
 

@@ -7,10 +7,12 @@ import entities.Plan_Reserva;
 
 public class PlanLogic {
 	
+	
+	
 	public boolean validarDouble(String num) 
 	{
-		 try 
-	        {
+		try 
+	       {
 	    		Double.parseDouble(num);
 	    		return true;   		
 	    	} catch (NumberFormatException nfe){
@@ -23,6 +25,8 @@ public class PlanLogic {
 		num = num.replaceAll(",",".");
 		return num;
 	}
+	
+	
 	
 	public int calcularAsientosDisponibles(Plan plan, ArrayList<Plan_Reserva> plan_reservas) 
 	{

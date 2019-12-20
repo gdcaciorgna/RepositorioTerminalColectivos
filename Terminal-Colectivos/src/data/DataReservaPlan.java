@@ -32,9 +32,6 @@ public class DataReservaPlan {
 		Plan_Reserva plan_reserva = new Plan_Reserva();
 		
 		
-		
-		
-		
 		try 
 		{
 			pstmt = Conectar.getInstancia().getConn().prepareStatement(sqlReservasdeunPlan);
@@ -327,7 +324,55 @@ public class DataReservaPlan {
 			}
 	
 			
-			return planRes;}
+			return planRes;
+		}
+	
+		
+	public void eliminarPlanesReservasxPlan(Plan plan) throws AppDataException 
+	{
+
+		PreparedStatement pstmt = null;
+
+		String sql = "DELETE FROM planes_reservas where fecha_hora_plan = ? and cod_ruta = ? and patente = ? ";
+			
+		
+		try 
+		{
+			
+			
+		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		
+			pstmt.setTimestamp(1, new Timestamp(plan.getFechaHora().getTime()));
+			pstmt.setInt(2, plan.getRuta().getCod_ruta());
+			pstmt.setString(3, plan.getColectivo().getPatente());
+			
+			
+			
+			pstmt.executeUpdate();			
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			
+			throw new AppDataException(e, "Error al intentar eliminar filas de la tabla pasajeros_reservas en baase de datos.");
+
+		}
+		
+		try 
+		{
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos.");
+		
+		}
+
+	}
 	
 }
 	

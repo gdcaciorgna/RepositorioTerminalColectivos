@@ -131,13 +131,11 @@ public class PlanControlers {
 
 	}
 
-	public int eliminarPlan(String fechaString, String horaString, String codRutaViajeString, String patenteColectivoViaje) throws AppDataException 
+	public void eliminarPlan(String fechaString, String horaString, String codRutaViajeString, String patenteColectivoViaje) throws AppDataException 
 	{
 		Plan plan = new Plan();
 		DataPlan dplan = new DataPlan();
-		
-		int planesEliminados = 0;
-		
+				
 		FechaControlers fCon = new FechaControlers();
 		
 		String fechaHoraString = fCon.unirFechaHora(fechaString, horaString);
@@ -148,9 +146,8 @@ public class PlanControlers {
 		
 		plan = dplan.getByFechaHoraRutaPatente(fechaHora, cod_ruta, patenteColectivoViaje);
 		
-		planesEliminados = dplan.eliminarPlan(plan);
+		dplan.eliminarPlan(plan);
 		
-		return planesEliminados;
 	}
 	
 	public Plan getPlanByFechaHoraCodRutaPatente(String fechaViajeString, String horaViajeString, String codRutaViajeString, String patenteColectivoViajeString) throws AppDataException

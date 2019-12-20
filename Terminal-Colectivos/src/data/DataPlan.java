@@ -335,14 +335,24 @@ public class DataPlan {
 	
 	
 	
-	public Integer eliminarPlan(Plan plan) throws AppDataException 
+	public void eliminarPlan(Plan plan) throws AppDataException 
 	{
 		PreparedStatement pstmt = null;
-		String sql = "DELETE from planes where fecha_hora_plan = ? and cod_ruta = ?  and patente = ? ";
-		Integer filasAfectadas = 0;
+		
+		String sql = "DELETE FROM planes where fecha_hora_plan = ? and cod_ruta = ? and patente = ? ";		
+		
+		DataReserva dRes = new DataReserva();
+		DataPasajeroReserva dPasRes = new DataPasajeroReserva();
+		DataReservaPlan dResPlan = new DataReservaPlan();
+		
+		dPasRes.eliminarPasajerosReservaxPlan(plan);
+		dRes.eliminarReservasxPlan(plan); //probar que funcione correctamente
+		dResPlan.eliminarPlanesReservasxPlan(plan);
 		
 		try 
 		{
+			
+			
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
 		
 			pstmt.setTimestamp(1, new Timestamp(plan.getFechaHora().getTime()));
@@ -350,7 +360,7 @@ public class DataPlan {
 			pstmt.setString(3, plan.getColectivo().getPatente());
 			
 			
-			filasAfectadas = pstmt.executeUpdate();			
+			pstmt.executeUpdate();			
 			
 			
 			
@@ -375,9 +385,6 @@ public class DataPlan {
 		}
 			
 			
-			
-		
-		return filasAfectadas;
 		
 	}
 	

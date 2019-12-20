@@ -10,7 +10,7 @@ import java.util.Date;
 import controlers.FechaControlers;
 
 import entities.Compania_Tarjeta;
-
+import entities.Plan;
 import entities.Reserva;
 
 import entities.Usuario;
@@ -343,16 +343,55 @@ public class DataReserva {
 		{
  			throw new AppDataException(e, "Error al intentar cerrar la base de datos");		
 		}
-			
-			
-			
 		
 		
 		
 	}
 	
 
-	
+	public void eliminarReservasxPlan(Plan plan) throws AppDataException 
+	{
+		PreparedStatement pstmt = null;
+
+		String sql = "DELETE re FROM reservas re inner join planes_reservas pr on re.fecha_res = pr.fecha_res and re.usuario = pr.usuario_reserva where fecha_hora_plan = ? and pr.cod_ruta = ? and pr.patente = ?";
+			
+		
+		try 
+		{
+			
+			
+		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		
+			pstmt.setTimestamp(1, new Timestamp(plan.getFechaHora().getTime()));
+			pstmt.setInt(2, plan.getRuta().getCod_ruta());
+			pstmt.setString(3, plan.getColectivo().getPatente());
+			
+			
+			
+			pstmt.executeUpdate();			
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			
+			throw new AppDataException(e, "Error al intentar eliminar filas de la tabla reservas en baase de datos.");
+
+		}
+		
+		try 
+		{
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos.");
+		
+		}
+	}
 	
 
 }
