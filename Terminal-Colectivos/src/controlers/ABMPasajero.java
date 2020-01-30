@@ -18,6 +18,7 @@ import entities.Usuario;
 import logic.PasajeroLogic;
 import logic.PasajeroReservaLogic;
 import util.AppDataException;
+import util.Emailer;
 
 public class ABMPasajero {
 	
@@ -109,7 +110,7 @@ public class ABMPasajero {
 			
 			
 		}
-		
+		Emailer.getInstance().send(usuarioActual.getEmail(), "¡Su reserva se ha registrado con exito!", "¡Gracias " + usuarioActual.getNombre() + " " +  usuarioActual.getApellido() + "  por viajar con nosotros! Vea sus reservas en: Terminal-Colectivos/MisReservas ¡Que tengas siempre un buen viaje! :) " );
 		
 		
 		

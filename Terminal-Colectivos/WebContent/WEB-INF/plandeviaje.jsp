@@ -236,7 +236,7 @@
 		        session.setAttribute("mensajeExito", null);
 		    %> 	 
 			
-			<div class="text-center"><a href="buscarviajesadmin.jsp">Volver al buscador de viajes</a></div>
+			<div class="text-center"><a href="BuscarViajesAdmin">Volver al buscador de viajes</a></div>
 			
            </div>
                  
