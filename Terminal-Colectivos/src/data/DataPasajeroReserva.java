@@ -168,15 +168,13 @@ public class DataPasajeroReserva {
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT DISTINCT pasres.dni, pasres.fecha_res, pasres.usuario , pasres.asiento\r\n" + 
+		String sql = "SELECT DISTINCT pas.nombre, pas.apellido, pas.dni, pasres.asiento, planres.usuario_reserva , r.fecha_res\r\n" + 
 				"FROM planes_reservas planres\r\n" + 
-				"INNER JOIN reservas r on r.fecha_res = planres.fecha_res and r.usuario= planres.usuario_reserva\r\n" + 
-				"INNER JOIN planes p on p.cod_ruta=planres.cod_ruta and p.patente=planres.patente and p.fecha_hora_plan= planres.fecha_hora_plan\r\n" + 
-				"INNER JOIN pasajeros_reservas  pasres on planres.fecha_res = r.fecha_res and pasres.usuario = planres.usuario_reserva\r\n" + 
-				"INNER JOIN pasajeros pas on pas.dni=pasres.dni\r\n" + 
-				"WHERE (r.fecha_canc is null) and (asiento is not null) \r\n" + 
-				"and p.fecha_hora_plan = ? and p.cod_ruta= ? and p.patente= ? "
-				+ "ORDER BY pasres.asiento";
+				"INNER JOIN reservas r on r.fecha_res = planres.fecha_res and r.usuario = planres.usuario_reserva\r\n" + 
+				"INNER JOIN pasajeros_reservas pasres on r.fecha_res = pasres.fecha_res and r.usuario = pasres.usuario\r\n" + 
+				"INNER JOIN pasajeros pas on pas.dni = pasres.dni\r\n" + 
+				"where planres.fecha_hora_plan = ? and planres.cod_ruta = ? and planres.patente= ? and fecha_canc is null\r\n" + 
+				"order by pasres.asiento\r\n";
 		
 		
 		ArrayList<Pasajero_Reserva> pasajeros_reservas = new ArrayList<Pasajero_Reserva>();
@@ -206,10 +204,10 @@ public class DataPasajeroReserva {
 					DataReserva dRes = new DataReserva();
 					DataPasajero dPas = new DataPasajero();
 					
-					Date fechaReserva = new Date(rs.getTimestamp("pasres.fecha_res").getTime());
-					String usuario = rs.getString("pasres.usuario");
+					Date fechaReserva = new Date(rs.getTimestamp("r.fecha_res").getTime());
+					String usuario = rs.getString("planres.usuario_reserva");
 					
-					int dni = rs.getInt("pasres.dni");
+					int dni = rs.getInt("pas.dni");
 					
 					reserva = dRes.getByFechaUsuario(fechaReserva, usuario);
 					pasajero = dPas.getByDni(dni);
