@@ -58,22 +58,27 @@
     <%
     	//Inicialización de variables
         BuscarViajes buscador = new BuscarViajes();  
-        ArrayList<Plan_Reserva> planes_reservas = new ArrayList<Plan_Reserva>();
+        ArrayList<Plan> planes = new ArrayList<Plan>();
+        
+        
+        
         
         String manejoDeError = null;
 
         
         try
         {
-        	planes_reservas = buscador.getViajesxChofer(usuarioActual);
+        	planes = buscador.getViajesxChofer(usuarioActual);
+        
+        	
         }
         catch(Exception e)
         {
         	manejoDeError = e.getMessage();
         }
         
-        Iterator<Plan_Reserva> itr = planes_reservas.iterator();
-        Plan_Reserva plan_reserva = null;
+        Iterator<Plan> itr = planes.iterator();
+        Plan plan = null;
     %>
     
     <% 
@@ -102,57 +107,49 @@
 			      <th>Hora de Salida</th>
 			      <th>Origen</th>
 			      <th>Destino</th>
-			      <th>Asientos reservados</th>
-			      <th>Capacidad colectivo</th>
-			      <th></th>
+			      <th> </th>
+			
 			    </tr>
 			  </thead>
 			  <tbody>
 			  <tr>
 			   <%  
 			   while(itr.hasNext()){
-				   plan_reserva = itr.next();
+				   plan = itr.next();
 				   // INICIO - RECUPERAR FECHA Y HORA POR SEPARADO
 				   
-				   String fechaPlanString = fCon.dateToddMMyyyy(plan_reserva.getPlan().getFechaHora());
-				   String horaPlanString = fCon.dateTohhmm(plan_reserva.getPlan().getFechaHora());
-				   String fechaHoraPlanString = fCon.dateToddMMyyyyhhmm(plan_reserva.getPlan().getFechaHora());		
+				   String fechaPlanString = fCon.dateToddMMyyyy(plan.getFechaHora());
+				   String horaPlanString = fCon.dateTohhmm(plan.getFechaHora());
+				   String fechaHoraPlanString = fCon.dateToddMMyyyyhhmm(plan.getFechaHora());		
 				   
 				   //FIN - RECUPERAR FECHA Y HORA POR SEPARADO
 				   
 
 				   
 			    %>
-			   <td> <%= plan_reserva.getPlan().getColectivo().getEmpresa().getNombre() %> </td>
+			   <td> <%= plan.getColectivo().getEmpresa().getNombre() %> </td>
 			   <td> <%= fechaPlanString %> </td>
 			   <td> <%= horaPlanString %> </td>
-			   <td> <%= plan_reserva.getPlan().getOrigen()  %> </td>
-			   <td> <%= plan_reserva.getPlan().getDestino()  %> </td>
-			   <td> <%= plogic.calcularAsientosReservados(plan_reserva.getPlan(), planes_reservas) %> </td>
-			   <td> <%= plan_reserva.getPlan().getColectivo().getCapacidad()%> </td>
-
+			   <td> <%= plan.getOrigen()  %> </td>
+			   <td> <%= plan.getDestino()  %> </td>
+			   <td>
 			   
-			   <td> 
-			   
-			   
-				   
-				   <form action="RedireccionInfoViaje" method="post">
-						   
-						   <input type="hidden" value=<%= fechaPlanString %> name="fechaViaje"/>
-						   <input type="hidden" value=<%= horaPlanString %> name="horaViaje"/>
-						   
-						   <input type="hidden" value=<%= plan_reserva.getPlan().getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
-						   <input type="hidden" value=<%= plan_reserva.getPlan().getRuta().getCod_ruta() %> name="codRutaViaje">
-						   <input type="hidden" value=<%= plan_reserva.getPlan().getChofer().getUsername() %> name="choferViaje">
-					       
+					   
+				   	   <form action="RedireccionInfoViaje" method="post">
+					   
+					   <input type="hidden" value=<%= fechaPlanString %> name="fechaViaje"/>
+					   <input type="hidden" value=<%= horaPlanString %> name="horaViaje"/>
+					   
+					   <input type="hidden" value=<%= plan.getColectivo().getPatente()  %> name="patenteColectivoViaje"/>
+					   <input type="hidden" value=<%= plan.getRuta().getCod_ruta() %> name="codRutaViaje">
+					   <input type="hidden" value=<%= plan.getChofer().getUsername() %> name="choferViaje">
 					   <button type="submit" class="btn btn-info"><i class="fa fa-bars"></i></button>
-				   </form> 
-				   
-				   
-				   
-				  
-				
-			    </td>
+			   		   </form> 
+					   
+					   
+			   	
+			   </td>
+	
 			   	   
 			   </tr>
 		

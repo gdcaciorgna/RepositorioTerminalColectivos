@@ -104,7 +104,7 @@
        
        try
        {
-           choferes = dusu.getAll();
+           choferes = dusu.getAllChoferes();
        }
        catch(Exception e)
        {

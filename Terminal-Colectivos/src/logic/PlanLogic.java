@@ -49,10 +49,11 @@ public class PlanLogic {
 		
 		for(Plan_Reserva plan_reserva : plan_reservas) {
 		    
-				if(plan_reserva.getReserva().getFecha_canc() ==null) 
-				{
-				cantAsientosReservados= cantAsientosReservados + plan_reserva.getReserva().getCant_pas();
-				}
+			
+				 
+				
+				cantAsientosReservados ++;
+				
 			
 		}
 				

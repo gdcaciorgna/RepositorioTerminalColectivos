@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
+import controlers.FechaControlers;
 import entities.*;
 import util.AppDataException;
 
@@ -218,6 +219,73 @@ public class DataPlan {
 			} 
 		}
 		return plan;
+		
+		
+	}
+	
+	public ArrayList<Plan> getViajesxChofer(Usuario chofer) throws AppDataException
+	{
+		
+			
+		String sql= "SELECT DISTINCT fecha_hora_plan , patente , cod_ruta  FROM planes \r\n" + 
+				"where usuario_chofer= ? " ;
+		
+		ArrayList<Plan> planes = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+	
+		
+		try 
+		{
+			
+				pstmt = Conectar.getInstancia().getConn().prepareStatement(sql); //Origen y destino sin especificar	
+				pstmt.setString(1, chofer.getUsername());
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs!=null) 
+			{
+				while(rs.next()) 
+				{
+					
+					Plan plan= new Plan();
+					
+					DataPlan dplan= new DataPlan();
+					 FechaControlers fec= new FechaControlers();
+				
+						
+				
+					String fecPlan=(rs.getString("fecha_hora_plan"));
+					Date fechaPlan=fec.fechaConGuion(fecPlan);
+					String patente= rs.getString("patente");
+					int codRuta=rs.getInt("cod_ruta");
+					plan=dplan.getByFechaHoraRutaPatente(fechaPlan, codRuta, patente);
+					
+					planes.add(plan);
+
+				}
+									
+				
+				
+			}
+		}
+		catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar recuperar viajes por chofer en la base de datos");
+		}
+		
+		try 
+		{
+			if(rs!=null) rs.close();
+			if(pstmt!=null) pstmt.close();
+			Conectar.getInstancia().releasedConn();
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
+		} 
+		
+		return planes;
 		
 		
 	}

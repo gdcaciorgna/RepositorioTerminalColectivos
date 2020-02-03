@@ -21,7 +21,7 @@ public class DataReservaPlan {
 			"inner join planes_reservas pr on re.fecha_res = pr.fecha_res and re.usuario = pr.usuario_reserva \r\n" + 
 			"inner join planes pl on pl.fecha_hora_plan = pr.fecha_hora_plan and pr.cod_ruta = pl.cod_ruta and pr.patente = pl.patente \r\n" + 
 			"inner join pasajeros_reservas pasres on pasres.fecha_res = re.fecha_res and pasres.usuario = re.usuario \r\n" + 
-			"where pr.fecha_hora_plan = ? and pr.patente = ? and pr.cod_ruta = ? ";	
+			"where pr.fecha_hora_plan = ? and pr.patente = ? and pr.cod_ruta = ? and re.fecha_canc is null";	
 
 	
 	public ArrayList<Plan_Reserva> getReservasPlan(Plan planElegido) throws AppDataException
@@ -159,81 +159,7 @@ public class DataReservaPlan {
 	
 
 		
-	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario chofer) throws AppDataException
-	{
-		
-			
-		String sql= "SELECT DISTINCT * FROM planes_reservas pr\r\n" + 
-				"INNER JOIN planes p on p.fecha_hora_plan = pr.fecha_hora_plan and p.cod_ruta = pr.cod_ruta and p.patente = pr.patente "
-				+ " where usuario_reserva = ? ";
-		
-		ArrayList<Plan_Reserva> planes_reservas = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		Plan_Reserva plan_reserva = new Plan_Reserva();
-	
-		
-		try 
-		{
-			
-				pstmt = Conectar.getInstancia().getConn().prepareStatement(sql); //Origen y destino sin especificar	
-				pstmt.setString(1, chofer.getUsername());
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs!=null) 
-			{
-				while(rs.next()) 
-				{
-					
-					Plan plan= new Plan();
-					Reserva reserva=new Reserva();
-					DataPlan dplan= new DataPlan();
-					 FechaControlers fec= new FechaControlers();
-				    DataReserva dres= new DataReserva();
-						
-				
-					String fecPlan=(rs.getString("p.fecha_hora_plan"));
-					Date fechaPlan=fec.fechaConGuion(fecPlan);
-					String patente= rs.getString("p.patente");
-					int codRuta=rs.getInt("p.cod_ruta");
-					plan=dplan.getByFechaHoraRutaPatente(fechaPlan, codRuta, patente);
-					
-					String fecRes = rs.getString("pr.fecha_res");
-					String username = rs.getString("pr.usuario_reserva");
-					Date fechaRes= fec.fechaConGuion(fecRes);
-					reserva=dres.getByFechaUsuario( fechaRes,  username);
-					
-					plan_reserva.setReserva(reserva);
-					plan_reserva.setPlan(plan);
 
-					planes_reservas.add(plan_reserva);
-
-				}
-									
-				
-				
-			}
-		}
-		catch(SQLException e) 
-		{
-			throw new AppDataException(e, "Error al intentar recuperar viajes por chofer en la base de datos");
-		}
-		
-		try 
-		{
-			if(rs!=null) rs.close();
-			if(pstmt!=null) pstmt.close();
-			Conectar.getInstancia().releasedConn();
-		} catch(SQLException e) 
-		{
-			throw new AppDataException(e, "Error al intentar cerrar la base de datos");
-		} 
-		
-		return planes_reservas;
-		
-		
-	}
 	
 	
 	
@@ -290,6 +216,8 @@ public class DataReservaPlan {
 	
 		
 	}
+	
+	
 	
 	private Plan_Reserva setPlanReserva(ResultSet rs) throws AppDataException 
 	{   

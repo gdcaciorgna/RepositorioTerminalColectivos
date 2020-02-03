@@ -119,6 +119,7 @@ String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.ge
 			      <th>DNI</th>
 			      <th>Asiento</th>
 			      <th>Usuario que reservó</th>
+			      <% if(usuarioActual.getRol().equals("chofer")) { %><th></th> <% } %>
 			      
 			    </tr>
 			  </thead>
@@ -135,7 +136,13 @@ String nombreApellidoChofer = usuarioActual.getNombre() + " " + usuarioActual.ge
 			   <td> <%= pasajero_reserva.getPasajero().getDni() %> </td>
 			   <td> <%= pasajero_reserva.getAsiento()  %> </td>
 			   <td> <%= pasajero_reserva.getReserva().getUsuario().getUsername() %> </td>
-					   	   
+			   <% if(usuarioActual.getRol().equals("chofer")) { %><td> 
+			   <div class="form-check">
+			   <input class="form-check-input" type="checkbox" value="" id="arriboUsuario">
+			   </div> 
+			   
+			   </td> <% } %>	   	   
+			   
 			   </tr>
 		
 			 <% 

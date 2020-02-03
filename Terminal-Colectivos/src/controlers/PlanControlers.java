@@ -178,10 +178,10 @@ public class PlanControlers {
 		return planesAgregados;
 	}
 	
-	public ArrayList<Plan_Reserva> getViajesxChofer(Usuario chofer) throws AppDataException
+	public ArrayList<Plan> getViajesxChofer(Usuario chofer) throws AppDataException
 	{
-		DataReservaPlan  dplan_reserva = new DataReservaPlan();
-		return dplan_reserva.getViajesxChofer(chofer);
+		DataPlan  dplan = new DataPlan();
+		return dplan.getViajesxChofer(chofer);
 		
 		
 	}
