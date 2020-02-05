@@ -28,8 +28,7 @@ public class DataReservaPlan {
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArrayList<Plan_Reserva> planes_reservas = new ArrayList<>();
-		Plan_Reserva plan_reserva = new Plan_Reserva();
+		ArrayList<Plan_Reserva> planes_reservas = new ArrayList<Plan_Reserva>();
 		
 		
 		try 
@@ -46,6 +45,8 @@ public class DataReservaPlan {
 			{
 				while(rs.next()) 
 				{
+					Plan_Reserva plan_reserva = new Plan_Reserva();
+
 					Reserva reserva = new Reserva();
 					Plan plan = new Plan();
 					

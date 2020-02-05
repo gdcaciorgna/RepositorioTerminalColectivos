@@ -1,11 +1,26 @@
 package logic;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+
 import java.util.Date;
 
-import entities.Plan_Reserva;
+import entities.*;
 
 public class ReservasPlanesLogic {
+	
+	
+	public ArrayList<Reserva> getReservasxPlanesReservas(ArrayList<Plan_Reserva> planes_reservas)
+	{
+		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+		for(Plan_Reserva plan_reserva : planes_reservas) 
+		{
+			reservas.add(plan_reserva.getReserva());
+		}
+		
+		return reservas;
+	}
+	
 	
 	public double getImporteTotal(Plan_Reserva planRes)
 	{

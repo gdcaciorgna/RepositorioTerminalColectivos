@@ -6,6 +6,7 @@ import java.util.Date;
 
 import controlers.FechaControlers;
 import entities.*;
+import logic.ReservasPlanesLogic;
 import util.AppDataException;
 
 public class DataPlan {
@@ -412,10 +413,29 @@ public class DataPlan {
 		DataReserva dRes = new DataReserva();
 		DataPasajeroReserva dPasRes = new DataPasajeroReserva();
 		DataReservaPlan dResPlan = new DataReservaPlan();
+		ReservasPlanesLogic resPlanLogic = new ReservasPlanesLogic();
+		
+		ArrayList<Plan_Reserva> planes_reservas = new ArrayList<Plan_Reserva>();
+		
+		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
+		
+		planes_reservas = dResPlan.getReservasPlan(plan);
+		
+		
+		reservas = resPlanLogic.getReservasxPlanesReservas(planes_reservas);		
+		
+				
 		
 		dPasRes.eliminarPasajerosReservaxPlan(plan);
-		dRes.eliminarReservasxPlan(plan); //probar que funcione correctamente
 		dResPlan.eliminarPlanesReservasxPlan(plan);
+		
+		
+		//Elimina todas las reservas 
+		
+		for(Reserva reserva : reservas) 
+		{
+		dRes.eliminarReserva(reserva); 
+		}
 		
 		try 
 		{

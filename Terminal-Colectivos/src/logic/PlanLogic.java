@@ -52,7 +52,7 @@ public class PlanLogic {
 			
 				 
 				
-				cantAsientosReservados ++;
+				cantAsientosReservados = cantAsientosReservados + plan_reserva.getReserva().getCant_pas();
 				
 			
 		}

@@ -10,7 +10,6 @@ import java.util.Date;
 import controlers.FechaControlers;
 
 import entities.Compania_Tarjeta;
-import entities.Plan;
 import entities.Reserva;
 
 import entities.Usuario;
@@ -349,11 +348,11 @@ public class DataReserva {
 	}
 	
 
-	public void eliminarReservasxPlan(Plan plan) throws AppDataException 
+	public void eliminarReserva(Reserva reserva) throws AppDataException 
 	{
 		PreparedStatement pstmt = null;
 
-		String sql = "DELETE re FROM reservas re inner join planes_reservas pr on re.fecha_res = pr.fecha_res and re.usuario = pr.usuario_reserva where fecha_hora_plan = ? and pr.cod_ruta = ? and pr.patente = ?";
+		String sql = "DELETE FROM reservas where fecha_res = ? and usuario = ? ";
 			
 		
 		try 
@@ -362,9 +361,8 @@ public class DataReserva {
 			
 		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
 		
-			pstmt.setTimestamp(1, new Timestamp(plan.getFechaHora().getTime()));
-			pstmt.setInt(2, plan.getRuta().getCod_ruta());
-			pstmt.setString(3, plan.getColectivo().getPatente());
+			pstmt.setTimestamp(1, new Timestamp(reserva.getFecha_res().getTime()));
+			pstmt.setString(2, reserva.getUsuario().getUsername());
 			
 			
 			
@@ -375,7 +373,7 @@ public class DataReserva {
 		} catch(SQLException e) 
 		{
 			
-			throw new AppDataException(e, "Error al intentar eliminar filas de la tabla reservas en baase de datos.");
+			throw new AppDataException(e, "Error al intentar eliminar filas de la tabla reservas en base de datos.");
 
 		}
 		
