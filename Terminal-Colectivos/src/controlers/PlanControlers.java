@@ -6,6 +6,7 @@ import java.util.Date;
 
 import data.DataColectivo;
 import data.DataPlan;
+import data.DataReservaPlan;
 import data.DataRuta;
 import data.DataUsuario;
 import entities.Colectivo;
@@ -25,6 +26,10 @@ public class PlanControlers {
 		int planesEditados = 0;
 			
 		DataPlan dplan = new DataPlan();			
+		DataReservaPlan drplan= new DataReservaPlan();
+		drplan.editarPlanesReservasxPlan(planViejo, planNuevo);
+		
+		
 		planesEditados = dplan.editarPlan(planViejo, planNuevo);
 	
 		return planesEditados;

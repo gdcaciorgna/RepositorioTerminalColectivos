@@ -303,6 +303,64 @@ public class DataReservaPlan {
 
 	}
 	
+	
+	
+	
+	public void editarPlanesReservasxPlan(Plan planViejo, Plan planNuevo) throws AppDataException 
+	{
+
+		PreparedStatement pstmt = null;
+
+		String sql = "UPDATE planes_reservas SET fecha_hora_plan= ? , patente=? , cod_ruta= ?  where fecha_hora_plan=? and patente=? and cod_ruta= ?";
+			
+		
+		try 
+		{
+			
+			
+		pstmt = Conectar.getInstancia().getConn().prepareStatement(sql);
+		
+			pstmt.setTimestamp(1, new Timestamp(planNuevo.getFechaHora().getTime()));
+			
+			pstmt.setString(2, planNuevo.getColectivo().getPatente());
+			
+			pstmt.setInt(3, planNuevo.getRuta().getCod_ruta());
+			
+			pstmt.setTimestamp(4, new Timestamp(planViejo.getFechaHora().getTime()));
+			
+			pstmt.setString(5, planViejo.getColectivo().getPatente());
+			
+			pstmt.setInt(6, planViejo.getRuta().getCod_ruta());
+			
+			
+			
+			
+			pstmt.executeUpdate();			
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			
+			throw new AppDataException(e, "Error al intentar editar filas de la tabla pasajeros_reservas en baase de datos.");
+
+		}
+		
+		try 
+		{
+			if(pstmt!=null) {pstmt.close();}
+			Conectar.getInstancia().releasedConn();
+			
+			
+			
+		} catch(SQLException e) 
+		{
+			throw new AppDataException(e, "Error al intentar cerrar la base de datos.");
+		
+		}
+
+	}
+	
 }
 	
 	
