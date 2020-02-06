@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `db_terminal` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
+USE `db_terminal`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_terminal
@@ -406,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-05 18:57:20
+-- Dump completed on 2020-02-06 15:44:57
