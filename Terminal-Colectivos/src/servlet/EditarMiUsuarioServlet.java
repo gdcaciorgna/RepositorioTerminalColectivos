@@ -34,7 +34,14 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		HttpSession sesion = request.getSession();
+		HttpSession sesion = request.getSession();Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarCliente(usuarioActual)) 
+		
+		{
 
 		String username = request.getParameter("username");
 		String nombre = request.getParameter("nombre");
@@ -50,7 +57,7 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		UsuariosControlers usuCon = new UsuariosControlers();
 
 		
-		UsuarioLogic usuLog = new UsuarioLogic();
+	
 		passwordActual = usuLog.setPasswordActualNull(passwordActual);
 		passwordNuevo = usuLog.setPasswordNuevoNull(passwordNuevo);
 		passwordNuevoRep = usuLog.setPasswordNuevoRepNull(passwordNuevoRep);
@@ -76,7 +83,16 @@ public class EditarMiUsuarioServlet extends HttpServlet {
 		}
 		
 		request.getRequestDispatcher("/WEB-INF/micuenta.jsp").forward(request, response);		
+		
+	}
+		
+		else
+		{
+				response.sendRedirect("index.jsp"); 
 		}
+
+}
+		
 		
 	}
 

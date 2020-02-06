@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import controlers.UsuariosControlers;
+import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class EliminarUsuarioServlet
@@ -31,6 +33,15 @@ public class EliminarUsuarioServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession sesion = request.getSession();
+Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarAdministrador(usuarioActual)) 
+		
+		{
+		
 		
 		
 		String username =  request.getParameter("username");
@@ -78,7 +89,14 @@ public class EliminarUsuarioServlet extends HttpServlet {
 			sesion.setAttribute("mensajeError", e.getMessage());
 			request.getRequestDispatcher("/WEB-INF/micuenta.jsp").forward(request, response);		
 		}
+	}
 		
+		else
+		{
+				response.sendRedirect("index.jsp"); 
+		}
+
+
         	 
 			
 		}

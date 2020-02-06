@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import controlers.PlanControlers;
 import entities.Plan;
+import entities.Usuario;
+import logic.UsuarioLogic;
 import util.AppDataException;
 
 /**
@@ -33,6 +35,18 @@ public class RedireccionInfoViaje extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession sesion= request.getSession();
+Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarAdministrador(usuarioActual)) 
+		
+		{
+		
+		
+		
+		
 		String fechaViajeString = request.getParameter("fechaViaje");
 		String horaViajeString = request.getParameter("horaViaje");
 		String codRutaViajeString = request.getParameter("codRutaViaje");
@@ -53,6 +67,13 @@ public class RedireccionInfoViaje extends HttpServlet {
 		
 		sesion.setAttribute("planSeleccionado", planSeleccionado);
 		request.getRequestDispatcher("/WEB-INF/verInfoViaje.jsp").forward(request, response);
+	}
+		
+		else
+		{
+				response.sendRedirect("index.jsp"); 
+		}
+
 
 		
 	}

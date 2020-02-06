@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.UsuariosControlers;
 import entities.Usuario;
+import logic.UsuarioLogic;
 import util.AppDataException;
 
 /**
@@ -34,6 +35,15 @@ public class EditarUsuarioServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
+Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarAdministrador(usuarioActual)) 
+		
+		{
+		
 
 		
 		sesion.setAttribute("MensajeUsuarioAEditar", null); //limpia el atributo de la sesion
@@ -67,7 +77,14 @@ public class EditarUsuarioServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("/WEB-INF/editarUsuario.jsp").forward(request, response);		
 
+	}
 		
+		else
+		{
+				response.sendRedirect("index.jsp"); 
+		}
+
+
 	}
 
 	

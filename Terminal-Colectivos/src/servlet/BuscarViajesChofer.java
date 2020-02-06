@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controlers.FechaControlers;
+import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class BuscarViajesChofer
@@ -32,7 +34,16 @@ public class BuscarViajesChofer extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession sesion = request.getSession();			
+		HttpSession sesion = request.getSession();		
+Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarChofer(usuarioActual)) 
+		
+		{
+		
 
 		FechaControlers fechaCon = new FechaControlers();
 
@@ -70,7 +81,14 @@ public class BuscarViajesChofer extends HttpServlet {
 		
 
         request.getRequestDispatcher("/WEB-INF/buscarviajeschofer.jsp").forward(request, response);
+	}
 		
+		else
+		{
+				response.sendRedirect("index.jsp"); 
+		}
+
+
 	
 	}
 

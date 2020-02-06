@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.UsuariosControlers;
 import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class RedireccionEditarUsuarioSevlet
@@ -33,6 +34,15 @@ public class RedireccionEditarUsuarioSevlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
+Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarAdministrador(usuarioActual)) 
+		
+		{
+		
 		
 		String username = request.getParameter("username");
 		
@@ -51,7 +61,15 @@ public class RedireccionEditarUsuarioSevlet extends HttpServlet {
 		
 		sesion.setAttribute("UsuarioAModificar", usu);
 		
-		request.getRequestDispatcher("/WEB-INF/editarUsuario.jsp").forward(request, response);		
+		request.getRequestDispatcher("/WEB-INF/editarUsuario.jsp").forward(request, response);
+	}
+		
+		else
+		{
+				response.sendRedirect("index.jsp"); 
+		}
+
+
 
 	}
 
