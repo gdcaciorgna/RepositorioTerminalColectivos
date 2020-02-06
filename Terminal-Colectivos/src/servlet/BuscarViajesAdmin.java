@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controlers.FechaControlers;
+import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class BuscarViajesAdmin
@@ -34,7 +36,16 @@ public class BuscarViajesAdmin extends HttpServlet {
 		// TODO Auto-generated method stub
 			
 		
-		HttpSession sesion = request.getSession();			
+		HttpSession sesion = request.getSession();
+		
+		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		try {
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		usuLog.validarAdministrador(usuarioActual);
+		
 
 		FechaControlers fechaCon = new FechaControlers();
 
@@ -65,10 +76,27 @@ public class BuscarViajesAdmin extends HttpServlet {
         
         
         
+        
+        
 		
 
     	//response.sendRedirect("buscarviajesadmin.jsp");	
         request.getRequestDispatcher("/WEB-INF/buscarviajesadmin.jsp").forward(request, response);
+        
+		}
+		
+		catch( Exception e) 
+		{
+			if(usuarioActual == null) 
+			{
+				response.sendRedirect("login.jsp");
+			}
+			
+			else 
+			{
+				response.sendRedirect("index.jsp"); 
+			}
+		}
 
 
 	
