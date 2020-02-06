@@ -70,33 +70,58 @@ public class UsuarioLogic {
 		
 	}
 	
-	public boolean validarAdministrador(Usuario usuario) throws Exception 
+	public boolean validarAdministrador (Usuario usuario) throws Exception 
 	{
-		boolean vof = true;
+		boolean vof = false;
 		
-		if(!usuario.getRol().equals("admin")) //si no es admin, lanza la excepcion
+		if(usuario.getRol().equals("admin")) 
 		{
-			vof = false;
-			throw new Exception("Error. Usted no tiene los permisos para ver esta página");
+			vof = true;
+			
 		}
-		
-		return vof;	
-	}
-	
-	
-	public boolean validarChofer(Usuario usuario) throws Exception 
-	{
-		boolean vof = true;
-		
-		if(!usuario.getRol().equals("chofer") && !usuario.getRol().equals("admin")) //si no es administrador ni chofer, lanza excepcion
+		else 
 		{
-			vof = false;
 			throw new Exception("Error. Usted no tiene los permisos para ver esta página");
 		}
 		
 		return vof;
 	}
 	
+	
+	public boolean validarChofer(Usuario usuario) throws Exception 
+	{
+		boolean vof = false;
+		
+		if(usuario.getRol().equals("chofer") || usuario.getRol().equals("admin")) 
+		{
+			vof = true;
+			
+		}
+		else 
+		{
+			throw new Exception("Error. Usted no tiene los permisos para ver esta página");
+		}
+		
+		return vof;
+	}
+	
+	
+	public boolean validarCliente(Usuario usuario) throws Exception 
+	{
+		boolean vof = false;
+		
+		if(usuario.getRol().equals("cliente") || usuario.getRol().equals("chofer") || usuario.getRol().equals("admin")) 
+		{
+			vof = true;
+			
+		}
+		else 
+		{
+			throw new Exception("Error. Usted no tiene los permisos para ver esta página");
+		}
+		
+		return vof;
+	}
 	
 
 }

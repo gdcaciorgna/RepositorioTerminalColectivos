@@ -33,6 +33,7 @@ public class BuscarViajesAdmin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 			
+		
 		HttpSession sesion = request.getSession();			
 
 		FechaControlers fechaCon = new FechaControlers();

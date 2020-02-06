@@ -75,7 +75,7 @@ public class EditarPlanServlet extends HttpServlet {
 		}
 
 		sesion.setAttribute("PlanViejo", planNuevo);
-		sesion.setAttribute("planesEditados", planesEditados); //Se ha registrado exitosamente el nuevo Plan! - Se puede obviar esta linea
+		sesion.setAttribute("planesEditados", planesEditados);
 		sesion.setAttribute("planesEliminados", null);
 		
 		request.getRequestDispatcher("/WEB-INF/plandeviaje.jsp").forward(request, response);		
