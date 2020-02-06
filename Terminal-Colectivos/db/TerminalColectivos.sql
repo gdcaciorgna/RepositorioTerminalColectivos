@@ -1,15 +1,15 @@
-CREATE DATABASE  IF NOT EXISTS `db_terminal` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
+CREATE DATABASE  IF NOT EXISTS `db_terminal` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_terminal`;
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: db_terminal
 -- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Server version	8.0.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,13 +23,13 @@ USE `db_terminal`;
 
 DROP TABLE IF EXISTS `colectivos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `colectivos` (
-  `patente` varchar(45) COLLATE utf8_bin NOT NULL,
+  `patente` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `id_empresa_colectivo` int(11) DEFAULT NULL,
   `capacidad` int(11) DEFAULT NULL,
-  `estado` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `tipo_colectivo` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `estado` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `tipo_colectivo` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`patente`),
   KEY `id_empresa_colectivo_idx` (`id_empresa_colectivo`),
   CONSTRAINT `id_empresa_colectivo` FOREIGN KEY (`id_empresa_colectivo`) REFERENCES `empresas_colectivos` (`id_empresa_colectivo`)
@@ -52,10 +52,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `companias_tarjetas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `companias_tarjetas` (
   `cod_compania` int(11) NOT NULL,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`cod_compania`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -76,10 +76,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `empresas_colectivos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `empresas_colectivos` (
   `id_empresa_colectivo` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id_empresa_colectivo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -100,7 +100,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `escalas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `escalas` (
   `cod_ruta` int(11) NOT NULL,
   `orden` int(11) NOT NULL,
@@ -127,11 +127,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `localidades`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `localidades` (
   `id_localidad` int(11) NOT NULL,
   `id_provincia` int(11) DEFAULT NULL,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `cod_postal` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_localidad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -153,11 +153,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pasajeros`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `pasajeros` (
   `dni` int(11) NOT NULL,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `apellido` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `apellido` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -178,11 +178,11 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `pasajeros_reservas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `pasajeros_reservas` (
   `dni` int(11) NOT NULL,
   `fecha_res` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `usuario` varchar(45) COLLATE utf8_bin NOT NULL,
+  `usuario` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `asiento` int(11) DEFAULT NULL,
   PRIMARY KEY (`dni`,`fecha_res`,`usuario`),
   KEY `fecha_res_idx` (`fecha_res`),
@@ -198,7 +198,7 @@ CREATE TABLE `pasajeros_reservas` (
 
 LOCK TABLES `pasajeros_reservas` WRITE;
 /*!40000 ALTER TABLE `pasajeros_reservas` DISABLE KEYS */;
-INSERT INTO `pasajeros_reservas` VALUES (38884376,'2020-02-01 21:15:39','carlosbenjamin',1);
+INSERT INTO `pasajeros_reservas` VALUES (123456,'2020-02-06 19:16:02','admin',1),(38884376,'2020-02-01 21:15:39','carlosbenjamin',1);
 /*!40000 ALTER TABLE `pasajeros_reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -208,13 +208,13 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `planes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `planes` (
   `fecha_hora_plan` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `patente` varchar(45) COLLATE utf8_bin NOT NULL,
+  `patente` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `cod_ruta` int(11) NOT NULL,
   `precio` double DEFAULT NULL,
-  `usuario_chofer` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `usuario_chofer` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`fecha_hora_plan`,`cod_ruta`,`patente`),
   KEY `plan_ruta_idx` (`cod_ruta`),
   KEY `patente_colectivo_idx` (`patente`),
@@ -231,7 +231,7 @@ CREATE TABLE `planes` (
 
 LOCK TABLES `planes` WRITE;
 /*!40000 ALTER TABLE `planes` DISABLE KEYS */;
-INSERT INTO `planes` VALUES ('2019-01-07 03:30:00','AGW-351',1,1515,'osopratto'),('2019-01-08 23:20:00','AGW-351',1,2500.54,'lionelmessi'),('2019-01-14 10:30:00','ANX-123',2,12314,'federico'),('2019-01-15 13:30:00','AYE-152',1,1500.5,'lionelmessi'),('2019-01-29 16:45:00','AGW-351',1,2500,'lionelmessi'),('2019-08-10 02:35:00','AGW-351',1,1037,'lionelmessi'),('2019-08-30 18:45:00','AYE-152',2,1500.5,'cristianoronaldo'),('2019-09-08 13:30:00','ANX-123',2,1239,'neymarjr'),('2019-11-19 21:00:00','AGW-351',1,500,'cristianoronaldo'),('2019-11-23 22:00:00','ABC-123',1,800,'federico'),('2019-11-25 21:00:00','AGW-351',2,600,'neymarjr'),('2019-11-28 01:50:00','AGW-351',1,273,'neymarjr'),('2019-12-21 00:59:00','ANX-123',1,250,'federico'),('2020-01-01 16:30:00','ABC-123',1,523,'lionelmessi'),('2020-01-01 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-01 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-02 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-02 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-03 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-03 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-04 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-04 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-05 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-05 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-06 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-06 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-07 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-07 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-02-01 20:40:00','AGW-351',1,250,'neymarjr'),('2020-02-02 08:25:00','AGW-351',2,250,'neymarjr'),('2020-02-03 20:45:00','AGW-351',1,213,'federico'),('2020-02-04 00:45:00','AYE-152',1,213,'neymarjr'),('2020-02-06 15:00:00','ABC-123',1,300,'cristianoronaldo'),('2020-02-09 17:00:00','ANX-123',2,840,'neymarjr'),('2020-02-13 16:00:00','ABC-123',1,2000,'cristianoronaldo'),('2020-03-05 20:25:00','ANX-123',2,2139,'neymarjr'),('2020-03-07 07:20:00','AGW-351',1,92183,'cristianoronaldo'),('2020-04-01 09:30:00','ANX-123',1,21039,'neymarjr'),('2020-07-20 17:26:00','YEM-194',1,1342,'federico');
+INSERT INTO `planes` VALUES ('2019-01-07 03:30:00','AGW-351',1,1515,'osopratto'),('2019-01-08 23:20:00','AGW-351',1,2500.54,'lionelmessi'),('2019-01-14 10:30:00','ANX-123',2,12314,'federico'),('2019-01-15 13:30:00','AYE-152',1,1500.5,'lionelmessi'),('2019-01-29 16:45:00','AGW-351',1,2500,'lionelmessi'),('2019-08-10 02:35:00','AGW-351',1,1037,'lionelmessi'),('2019-08-30 18:45:00','AYE-152',2,1500.5,'cristianoronaldo'),('2019-09-08 13:30:00','ANX-123',2,1239,'neymarjr'),('2019-11-19 21:00:00','AGW-351',1,500,'cristianoronaldo'),('2019-11-23 22:00:00','ABC-123',1,800,'federico'),('2019-11-25 21:00:00','AGW-351',2,600,'neymarjr'),('2019-11-28 01:50:00','AGW-351',1,273,'neymarjr'),('2019-12-21 00:59:00','ANX-123',1,250,'federico'),('2020-01-01 16:30:00','ABC-123',1,523,'lionelmessi'),('2020-01-01 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-01 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-02 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-02 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-03 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-03 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-04 19:00:00','ABC-123',1,500,'lionelmessi'),('2020-01-04 23:00:00','ABC-123',2,500,'lionelmessi'),('2020-01-05 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-05 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-06 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-06 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-01-07 19:00:00','ABC-123',1,650,'lionelmessi'),('2020-01-07 23:00:00','ABC-123',2,650,'lionelmessi'),('2020-02-01 20:40:00','AGW-351',1,250,'neymarjr'),('2020-02-02 08:25:00','AGW-351',2,250,'neymarjr'),('2020-02-03 20:45:00','AGW-351',1,213,'federico'),('2020-02-04 00:45:00','AYE-152',1,213,'neymarjr'),('2020-02-06 15:00:00','ABC-123',1,300,'cristianoronaldo'),('2020-02-09 17:00:00','ANX-123',2,840,'neymarjr'),('2020-02-13 16:00:00','ABC-123',1,2000,'cristianoronaldo'),('2020-02-15 17:00:00','ABC-123',1,650,'cristianoronaldo'),('2020-03-05 20:25:00','ANX-123',2,2139,'neymarjr'),('2020-03-07 07:20:00','AGW-351',1,92183,'cristianoronaldo'),('2020-04-01 09:30:00','ANX-123',1,21039,'neymarjr'),('2020-07-20 17:26:00','YEM-194',1,1342,'federico');
 /*!40000 ALTER TABLE `planes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -241,14 +241,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `planes_reservas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `planes_reservas` (
-  `fecha_res` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `fecha_hora_plan` timestamp NOT NULL,
-  `patente` varchar(45) COLLATE utf8_bin NOT NULL,
-  `usuario_reserva` varchar(45) COLLATE utf8_bin NOT NULL,
+  `patente` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `usuario_reserva` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `cod_ruta` int(11) NOT NULL,
-  PRIMARY KEY (`fecha_res`,`fecha_hora_plan`,`patente`,`usuario_reserva`,`cod_ruta`),
+  `fecha_res` timestamp NOT NULL,
+  PRIMARY KEY (`fecha_hora_plan`,`patente`,`usuario_reserva`,`cod_ruta`,`fecha_res`),
   KEY `usuario_res_idx` (`usuario_reserva`),
   KEY `ruta_plan_idx` (`cod_ruta`),
   KEY `patente_plan_idx` (`patente`)
@@ -261,7 +261,7 @@ CREATE TABLE `planes_reservas` (
 
 LOCK TABLES `planes_reservas` WRITE;
 /*!40000 ALTER TABLE `planes_reservas` DISABLE KEYS */;
-INSERT INTO `planes_reservas` VALUES ('2019-12-20 01:02:23','2019-12-21 00:59:00','ANX-123','admin',1),('2019-12-20 01:08:35','2019-12-21 00:59:00','ANX-123','admin',1),('2019-12-20 01:10:50','2019-12-21 00:59:00','ANX-123','admin',1),('2019-12-20 01:13:34','2019-12-21 00:59:00','ANX-123','admin',1),('2020-02-01 20:43:46','2020-02-01 20:40:00','AGW-351','admin',1),('2020-02-01 21:15:39','2020-02-06 15:00:00','ABC-123','carlosbenjamin',1),('2020-02-01 21:19:33','2020-02-06 15:00:00','ABC-123','reservaprueba',1),('2020-02-01 21:21:29','2020-02-06 15:00:00','ABC-123','reservaprueba',1),('2020-02-05 21:11:36','2020-03-07 07:20:00','AGW-351','admin',1),('2020-02-05 21:12:14','2020-03-07 07:20:00','AGW-351','cliente',1),('2020-02-05 21:26:51','2020-04-01 09:30:00','ANX-123','admin',1),('2020-02-05 21:27:45','2020-04-01 09:30:00','ANX-123','admin',1),('2020-02-05 21:29:31','2020-04-01 09:30:00','ANX-123','cliente',1),('2020-02-01 20:47:21','2020-02-02 08:25:00','AGW-351','admin',2),('2020-02-01 21:23:12','2020-02-02 08:25:00','AGW-351','reservaprueba',2),('2020-02-05 20:38:37','2020-03-05 20:25:00','ANX-123','admin',2),('2020-02-05 20:39:16','2020-03-05 20:25:00','ANX-123','cliente',2);
+INSERT INTO `planes_reservas` VALUES ('2019-12-21 00:59:00','ANX-123','admin',1,'2019-12-20 01:02:23'),('2019-12-21 00:59:00','ANX-123','admin',1,'2019-12-20 01:08:35'),('2019-12-21 00:59:00','ANX-123','admin',1,'2019-12-20 01:10:50'),('2019-12-21 00:59:00','ANX-123','admin',1,'2019-12-20 01:13:34'),('2020-02-01 20:40:00','AGW-351','admin',1,'2020-02-01 20:43:46'),('2020-02-06 15:00:00','ABC-123','carlosbenjamin',1,'2020-02-01 21:15:39'),('2020-02-06 15:00:00','ABC-123','reservaprueba',1,'2020-02-01 21:19:33'),('2020-02-06 15:00:00','ABC-123','reservaprueba',1,'2020-02-01 21:21:29'),('2020-02-15 17:00:00','ABC-123','admin',1,'2020-02-06 19:16:46'),('2020-03-07 07:20:00','AGW-351','admin',1,'2020-02-05 21:11:36'),('2020-03-07 07:20:00','AGW-351','cliente',1,'2020-02-05 21:12:14'),('2020-04-01 09:30:00','ANX-123','admin',1,'2020-02-05 21:26:51'),('2020-04-01 09:30:00','ANX-123','admin',1,'2020-02-05 21:27:45'),('2020-04-01 09:30:00','ANX-123','cliente',1,'2020-02-05 21:29:31'),('2020-02-02 08:25:00','AGW-351','admin',2,'2020-02-01 20:47:21'),('2020-02-02 08:25:00','AGW-351','reservaprueba',2,'2020-02-01 21:23:12'),('2020-03-05 20:25:00','ANX-123','admin',2,'2020-02-05 20:38:37'),('2020-03-05 20:25:00','ANX-123','cliente',2,'2020-02-05 20:39:16');
 /*!40000 ALTER TABLE `planes_reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -271,10 +271,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `provincias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `provincias` (
   `id_provincia` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id_provincia`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -295,14 +295,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `reservas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `reservas` (
-  `fecha_res` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `usuario` varchar(45) COLLATE utf8_bin NOT NULL,
+  `fecha_res` timestamp NOT NULL,
+  `usuario` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `cant_pas` int(11) DEFAULT NULL,
   `fecha_canc` timestamp NULL DEFAULT NULL,
   `cod_compania` int(11) DEFAULT NULL,
-  `nro_tarjeta` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `nro_tarjeta` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`fecha_res`,`usuario`),
   KEY `usuario_reserva_idx` (`usuario`),
   KEY `compania_reserva_idx` (`cod_compania`),
@@ -317,7 +317,7 @@ CREATE TABLE `reservas` (
 
 LOCK TABLES `reservas` WRITE;
 /*!40000 ALTER TABLE `reservas` DISABLE KEYS */;
-INSERT INTO `reservas` VALUES ('2019-12-20 01:09:47','admin',2,'2019-12-20 01:09:44',1,'1234567891234567'),('2019-12-20 01:10:50','admin',3,NULL,1,'1234567891234567'),('2019-12-20 01:12:09','admin',2,'2019-12-20 01:12:03',1,'1234567891234567'),('2019-12-20 01:13:34','admin',3,NULL,1,'1234567891234567'),('2020-02-01 20:43:46','admin',2,NULL,1,'1234567891234567'),('2020-02-01 20:47:21','admin',1,NULL,1,'1234567891234567'),('2020-02-01 21:15:39','carlosbenjamin',1,NULL,2,'1234567891234567'),('2020-02-01 21:19:33','reservaprueba',2,NULL,1,'1234567891234567'),('2020-02-01 21:21:29','reservaprueba',1,NULL,1,'1234567891234567'),('2020-02-01 21:23:12','reservaprueba',1,NULL,1,'1234567891234567'),('2020-02-05 19:03:39','reservaprueba',2,NULL,1,'1234567891234567'),('2020-02-05 19:15:17','reservaprueba',2,NULL,1,'1234567891234567'),('2020-02-05 19:20:30','reservaprueba',1,NULL,1,'1234567891234567'),('2020-02-05 20:12:40','admin',1,NULL,1,'1234567891234567'),('2020-02-05 20:24:40','admin',3,NULL,1,'1234567891234567'),('2020-02-05 20:31:05','admin',2,NULL,1,'1234567891234567'),('2020-02-05 20:38:37','admin',2,NULL,1,'1234567891234567'),('2020-02-05 20:39:16','cliente',1,NULL,1,'1234567891234567'),('2020-02-05 20:50:33','admin',1,NULL,1,'1234567891234567'),('2020-02-05 21:07:09','admin',3,NULL,1,'1234567891234567'),('2020-02-05 21:11:36','admin',2,NULL,1,'1234567891234567'),('2020-02-05 21:12:14','cliente',1,NULL,1,'1234567891234567'),('2020-02-05 21:20:04','admin',2,NULL,1,'1234567891234567'),('2020-02-05 21:26:51','admin',2,NULL,1,'1234567891234567'),('2020-02-05 21:27:45','admin',1,NULL,1,'1234567891234567'),('2020-02-05 21:29:31','cliente',1,NULL,1,'1234567891234567'),('2020-02-05 21:49:23','admin',2,'2020-02-05 21:49:24',1,'1234567891234567');
+INSERT INTO `reservas` VALUES ('2019-12-20 01:09:47','admin',2,'2019-12-20 01:09:44',1,'1234567891234567'),('2019-12-20 01:12:09','admin',2,'2019-12-20 01:12:03',1,'1234567891234567'),('2020-02-01 21:15:39','carlosbenjamin',1,NULL,2,'1234567891234567'),('2020-02-01 21:19:33','reservaprueba',2,NULL,1,'1234567891234567'),('2020-02-01 21:21:29','reservaprueba',1,NULL,1,'1234567891234567'),('2020-02-01 21:23:12','reservaprueba',1,NULL,1,'1234567891234567'),('2020-02-05 19:03:39','reservaprueba',2,NULL,1,'1234567891234567'),('2020-02-05 19:15:17','reservaprueba',2,NULL,1,'1234567891234567'),('2020-02-05 19:20:30','reservaprueba',1,NULL,1,'1234567891234567'),('2020-02-05 20:12:40','admin',1,NULL,1,'1234567891234567'),('2020-02-05 20:24:40','admin',3,NULL,1,'1234567891234567'),('2020-02-05 20:31:05','admin',2,NULL,1,'1234567891234567'),('2020-02-05 20:39:16','cliente',1,NULL,1,'1234567891234567'),('2020-02-05 20:50:33','admin',1,NULL,1,'1234567891234567'),('2020-02-05 21:07:09','admin',3,NULL,1,'1234567891234567'),('2020-02-05 21:12:14','cliente',1,NULL,1,'1234567891234567'),('2020-02-05 21:20:04','admin',2,NULL,1,'1234567891234567'),('2020-02-05 21:27:45','admin',1,NULL,1,'1234567891234567'),('2020-02-05 21:29:31','cliente',1,NULL,1,'1234567891234567'),('2020-02-05 21:49:23','admin',2,'2020-02-05 21:49:24',1,'1234567891234567'),('2020-02-06 19:16:02','admin',1,NULL,1,'1234567891234567'),('2020-02-06 19:19:25','admin',3,'2020-02-06 19:19:25',1,'1234567891234567'),('2020-02-06 19:19:27','admin',3,'2020-02-06 19:19:27',1,'1234567891234567'),('2020-02-06 19:19:29','admin',2,'2020-02-06 19:19:29',1,'1234567891234567'),('2020-02-06 19:19:34','admin',1,'2020-02-06 19:19:34',1,'1234567891234567'),('2020-02-06 19:19:35','admin',2,'2020-02-06 19:19:36',1,'1234567891234567'),('2020-02-06 19:19:37','admin',2,'2020-02-06 19:19:38',1,'1234567891234567'),('2020-02-06 19:19:40','admin',2,'2020-02-06 19:19:40',1,'1234567891234567');
 /*!40000 ALTER TABLE `reservas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -327,10 +327,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `rutas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `rutas` (
   `cod_ruta` int(11) NOT NULL AUTO_INCREMENT,
-  `dias_sem` varchar(300) COLLATE utf8_bin DEFAULT NULL,
+  `dias_sem` varchar(300) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`cod_ruta`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -351,7 +351,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `terminales`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `terminales` (
   `cod_terminal` int(11) NOT NULL AUTO_INCREMENT,
   `id_localidad` int(11) DEFAULT NULL,
@@ -375,16 +375,16 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `usuarios` (
-  `usuario` varchar(45) COLLATE utf8_bin NOT NULL,
-  `nombre` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `apellido` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `rol` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `email` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `password` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `cuil` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `estado` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `usuario` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `apellido` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `rol` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `email` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `password` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `cuil` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `estado` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -408,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-06 15:44:57
+-- Dump completed on 2020-02-06 16:52:56
