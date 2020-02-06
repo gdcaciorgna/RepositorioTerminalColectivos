@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entities.Pasajero;
+import entities.Usuario;
 import logic.PasajeroLogic;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class RedireccionPagoViajes
@@ -31,6 +33,14 @@ public class RedireccionPagoViajes extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
+		
+		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarCliente(usuarioActual)==true) 
+		
+		{
 		
 		int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
 		int cont=0;
@@ -74,6 +84,13 @@ public class RedireccionPagoViajes extends HttpServlet {
 		sesion.setAttribute("pasajerosViaje", pasajeros); // Guarda los pasajeros del viaje en la sesion del usuario
 		
 		request.getRequestDispatcher("/WEB-INF/pagarviaje.jsp").forward(request, response);		
+		
+		}
+		
+		else
+		{
+			response.sendRedirect("index.jsp"); 
+		}
 		}
 		
 		

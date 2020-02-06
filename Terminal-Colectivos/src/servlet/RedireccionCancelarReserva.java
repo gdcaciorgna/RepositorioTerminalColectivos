@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import controlers.CancelarReserva;
 import controlers.PlanReservaControlers;
 import entities.Plan_Reserva;
+import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class RedireccionCancelarReserva
@@ -33,6 +35,14 @@ public class RedireccionCancelarReserva extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession sesion= request.getSession();
+		
+		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarCliente(usuarioActual)==true) 
+		
+		{
 		
 		String fechaReserva = request.getParameter("fechaReserva");
 		String horaReserva = request.getParameter("horaReserva");
@@ -77,7 +87,14 @@ public class RedireccionCancelarReserva extends HttpServlet {
 		}
 
 		
-		request.getRequestDispatcher("/WEB-INF/confirmarCancelacion.jsp").forward(request, response);		
+		request.getRequestDispatcher("/WEB-INF/confirmarCancelacion.jsp").forward(request, response);	
+		
+	}
+		
+		else
+		{
+				response.sendRedirect("index.jsp"); 
+		}
 
 
 		

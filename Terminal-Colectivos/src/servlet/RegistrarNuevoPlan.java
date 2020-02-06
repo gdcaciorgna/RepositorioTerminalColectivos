@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import controlers.PlanControlers;
 import entities.Plan;
+import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class RegistrarNuevoPlan
@@ -35,6 +37,14 @@ public class RegistrarNuevoPlan extends HttpServlet {
 		
 		
 		HttpSession sesion = request.getSession();
+		
+		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarCliente(usuarioActual)==true) 
+		
+		{
 
 		String origenViaje = request.getParameter("origenViaje");
 		String destinoViaje = request.getParameter("destinoViaje");
@@ -76,6 +86,13 @@ public class RegistrarNuevoPlan extends HttpServlet {
 		{
 			sesion.setAttribute("mensajeError", e.getMessage());
 			request.getRequestDispatcher("/WEB-INF/registrarNuevoPlan.jsp").forward(request, response);
+		}
+		
+		}
+		
+		else
+		{
+			response.sendRedirect("index.jsp"); 
 		}
 
 

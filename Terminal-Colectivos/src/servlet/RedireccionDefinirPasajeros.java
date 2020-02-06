@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entities.Usuario;
+import logic.UsuarioLogic;
+
 /**
  * Servlet implementation class RedireccionDefinirPasajeros
  */
@@ -31,6 +34,15 @@ public class RedireccionDefinirPasajeros extends HttpServlet {
 		
 		HttpSession sesion= request.getSession();
 		
+		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarCliente(usuarioActual)==true) 
+		
+		{
+		
+		
 		String cantidadPasajerosString = request.getParameter("cantidadPasajeros");
 		
 		
@@ -40,6 +52,13 @@ public class RedireccionDefinirPasajeros extends HttpServlet {
 		
 		request.getRequestDispatcher("/WEB-INF/definirpasajeros.jsp").forward(request, response);
 		
+	}
+		
+	else
+	{
+			response.sendRedirect("index.jsp"); 
+	}
+	
 	}
 
 	/**

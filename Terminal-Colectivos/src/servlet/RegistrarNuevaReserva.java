@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.ABMPasajero;
 import entities.Usuario;
+import logic.UsuarioLogic;
 import util.AppLogicException;
 import entities.Pasajero;
 import entities.Plan;
@@ -39,6 +40,14 @@ public class RegistrarNuevaReserva extends HttpServlet {
 		
 		HttpSession sesion = request.getSession();
 		
+		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarCliente(usuarioActual)==true) 
+		
+		{
+			
 		
 		String nroTarjeta = request.getParameter("nro_tarjeta");
 	
@@ -53,9 +62,7 @@ public class RegistrarNuevaReserva extends HttpServlet {
 			Plan viajeSeleccionado = (Plan) sesion.getAttribute("ViajeSeleccionado");
 			
 			int cantPasajeros = (int) sesion.getAttribute("cantidadPasajeros");
-			
-			Usuario usuarioActual = (Usuario)sesion.getAttribute("usuarioActual");
-			
+						
 			String codCompaniaString=  request.getParameter("codCompania");
 			
 			int codCompania = Integer.parseInt(codCompaniaString);
@@ -75,10 +82,18 @@ public class RegistrarNuevaReserva extends HttpServlet {
 			sesion.setAttribute("mensajeError", e.getMessage());
 			request.getRequestDispatcher("/WEB-INF/pagarviaje.jsp").forward(request, response);	
 		}
+		
+		}
+		
+		else
+		{
+			response.sendRedirect("index.jsp"); 
+		}
 			
-		
-		
 	}
+	
+	
+		
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
