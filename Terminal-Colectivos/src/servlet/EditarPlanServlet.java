@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import controlers.PlanControlers;
 import entities.Plan;
+import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class EditarPlanServlet
@@ -34,6 +36,17 @@ public class EditarPlanServlet extends HttpServlet {
 
 
 		HttpSession sesion = request.getSession();
+		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarAdministrador(usuarioActual)) 
+		
+		{
+		
+		
+		
 		
 		sesion.setAttribute("mensajeRegistro", null);
 		
@@ -79,6 +92,13 @@ public class EditarPlanServlet extends HttpServlet {
 		sesion.setAttribute("planesEliminados", null);
 		
 		request.getRequestDispatcher("/WEB-INF/plandeviaje.jsp").forward(request, response);		
+	}
+		
+		else
+		{
+				response.sendRedirect("index.jsp"); 
+		}
+
 
 		
 	}		

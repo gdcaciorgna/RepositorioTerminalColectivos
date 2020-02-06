@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entities.Usuario;
+import logic.UsuarioLogic;
+
 /**
  * Servlet implementation class LogoutServlet
  */
@@ -29,11 +32,15 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession sesion = request.getSession();
+	
 		sesion.setAttribute("usuarioActual", null);
 		sesion.invalidate();
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("login.jsp");	}
+		
+		
+
 	
-	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

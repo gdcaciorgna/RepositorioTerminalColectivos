@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entities.Reserva;
+import entities.Usuario;
+import logic.UsuarioLogic;
 import util.AppDataException;
 
 /**
@@ -34,6 +36,15 @@ public class CancelarReserva extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession sesion = request.getSession();
+Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarCliente(usuarioActual)) 
+		
+		{
+		
 		
 		Reserva reservaACancelar = (Reserva) sesion.getAttribute("reservaACancelar");
 		
@@ -64,7 +75,14 @@ public class CancelarReserva extends HttpServlet {
 		 request.getRequestDispatcher("/WEB-INF/misReservas.jsp").forward(request, response);		
 
 		
+	}
 		
+		else
+		{
+				response.sendRedirect("index.jsp"); 
+		}
+
+
 		
 	}
 

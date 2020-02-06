@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controlers.PlanControlers;
+import entities.Usuario;
+import logic.UsuarioLogic;
 import util.AppDataException;
 
 /**
@@ -36,6 +38,15 @@ public class EliminarPlanServlet extends HttpServlet {
 		
 
 	HttpSession sesion = request.getSession();
+	Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+	
+	
+	UsuarioLogic usuLog = new UsuarioLogic();
+	
+	if(usuLog.validarAdministrador(usuarioActual)) 
+	
+	{
+	
 		
 	
 		String fechaString = request.getParameter("fechaViajeString");
@@ -57,6 +68,13 @@ public class EliminarPlanServlet extends HttpServlet {
 		}
 	
 		request.getRequestDispatcher("/WEB-INF/buscarviajesadmin.jsp").forward(request, response);		
+	}
+	
+	else
+	{
+			response.sendRedirect("index.jsp"); 
+	}
+
 
 
 		

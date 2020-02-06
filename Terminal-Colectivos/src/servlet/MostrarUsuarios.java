@@ -6,6 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class MostrarUsuarios
@@ -27,7 +31,24 @@ public class MostrarUsuarios extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 request.getRequestDispatcher("/WEB-INF/usuarios.jsp").forward(request, response);	}
+		HttpSession sesion = request.getSession();
+Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		
+		
+		UsuarioLogic usuLog = new UsuarioLogic();
+		
+		if(usuLog.validarAdministrador(usuarioActual)) 
+		
+		{
+		
+		 request.getRequestDispatcher("/WEB-INF/usuarios.jsp").forward(request, response);	
+	}
+	
+	else
+	{
+			response.sendRedirect("index.jsp"); }
+	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

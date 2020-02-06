@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.UsuariosControlers;
 import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class LoginServlet
@@ -33,6 +34,11 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
+
+		
+	
+		
+		
 		
 
         String username = request.getParameter("username");
@@ -59,7 +65,8 @@ public class LoginServlet extends HttpServlet {
 
         }
         
-        
+		
+	
     		 	
     }				    
 	

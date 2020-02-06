@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controlers.FechaControlers;
+import entities.Usuario;
+import logic.UsuarioLogic;
 
 /**
  * Servlet implementation class BuscarViajesCliente
@@ -34,7 +36,9 @@ public class BuscarViajesCliente extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		HttpSession sesion = request.getSession();			
+		HttpSession sesion = request.getSession();
+
+		
 		
 		FechaControlers fechaCon = new FechaControlers();
 
@@ -70,9 +74,13 @@ public class BuscarViajesCliente extends HttpServlet {
         
     //	response.sendRedirect("buscarviajescliente.jsp");	
         request.getRequestDispatcher("/WEB-INF/buscarviajescliente.jsp").forward(request, response);
- 
+	}
+		
+	
+
+
         
-    	}
+    	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

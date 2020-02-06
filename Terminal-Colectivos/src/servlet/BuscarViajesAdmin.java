@@ -43,7 +43,7 @@ public class BuscarViajesAdmin extends HttpServlet {
 		
 		UsuarioLogic usuLog = new UsuarioLogic();
 		
-		if(usuLog.validarAdministrador(usuarioActual)==true) 
+		if(usuLog.validarAdministrador(usuarioActual)) 
 		
 		{
 		

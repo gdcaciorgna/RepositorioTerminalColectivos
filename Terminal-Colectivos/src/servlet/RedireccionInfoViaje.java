@@ -64,13 +64,15 @@ public class RedireccionInfoViaje extends HttpServlet {
 		
 		sesion.setAttribute("planSeleccionado", planSeleccionado);
 		request.getRequestDispatcher("/WEB-INF/verInfoViaje.jsp").forward(request, response);
-		
-		}
+
+	}
 		
 		else
 		{
 				response.sendRedirect("index.jsp"); 
 		}
+
+
 		
 	}
 
