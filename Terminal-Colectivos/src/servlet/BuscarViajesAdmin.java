@@ -40,11 +40,13 @@ public class BuscarViajesAdmin extends HttpServlet {
 		
 		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
 		
-		try {
 		
 		UsuarioLogic usuLog = new UsuarioLogic();
 		
-		usuLog.validarAdministrador(usuarioActual);
+		if(usuLog.validarAdministrador(usuarioActual)==true) 
+		
+		{
+		
 		
 
 		FechaControlers fechaCon = new FechaControlers();
@@ -85,17 +87,9 @@ public class BuscarViajesAdmin extends HttpServlet {
         
 		}
 		
-		catch( Exception e) 
+		else
 		{
-			if(usuarioActual == null) 
-			{
-				response.sendRedirect("login.jsp");
-			}
-			
-			else 
-			{
 				response.sendRedirect("index.jsp"); 
-			}
 		}
 
 

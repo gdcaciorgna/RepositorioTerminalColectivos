@@ -70,54 +70,55 @@ public class UsuarioLogic {
 		
 	}
 	
-	public boolean validarAdministrador (Usuario usuario) throws Exception 
+	public boolean validarAdministrador (Usuario usuario) 
 	{
 		boolean vof = false;
 		
-		if(usuario.getRol().equals("admin")) 
+		if(usuario!= null)
 		{
-			vof = true;
-			
+		
+			if(usuario.getRol().equals("admin")) 
+			{
+				vof = true;
+				
+			}
 		}
-		else 
+
+		return vof;
+	}
+	
+	
+	public boolean validarChofer(Usuario usuario) 
+	{
+		boolean vof = false;
+		
+		if(usuario!= null)
 		{
-			throw new Exception("Error. Usted no tiene los permisos para ver esta página");
+		
+			if(usuario.getRol().equals("chofer") || usuario.getRol().equals("admin")) 
+			{
+				vof = true;
+				
+			}
 		}
 		
 		return vof;
 	}
 	
 	
-	public boolean validarChofer(Usuario usuario) throws Exception 
+	public boolean validarCliente(Usuario usuario) 
 	{
 		boolean vof = false;
 		
-		if(usuario.getRol().equals("chofer") || usuario.getRol().equals("admin")) 
+		if(usuario!= null)
 		{
-			vof = true;
-			
-		}
-		else 
-		{
-			throw new Exception("Error. Usted no tiene los permisos para ver esta página");
-		}
 		
-		return vof;
-	}
-	
-	
-	public boolean validarCliente(Usuario usuario) throws Exception 
-	{
-		boolean vof = false;
 		
-		if(usuario.getRol().equals("cliente") || usuario.getRol().equals("chofer") || usuario.getRol().equals("admin")) 
-		{
-			vof = true;
-			
-		}
-		else 
-		{
-			throw new Exception("Error. Usted no tiene los permisos para ver esta página");
+			if(usuario.getRol().equals("cliente") || usuario.getRol().equals("chofer") || usuario.getRol().equals("admin")) 
+			{
+				vof = true;
+				
+			}
 		}
 		
 		return vof;
