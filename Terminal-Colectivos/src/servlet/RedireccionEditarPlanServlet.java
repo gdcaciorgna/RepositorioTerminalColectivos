@@ -36,14 +36,6 @@ public class RedireccionEditarPlanServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
-Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
-		
-		
-		UsuarioLogic usuLog = new UsuarioLogic();
-		
-		if(usuLog.validarAdministrador(usuarioActual)) 
-		
-		{
 		
 		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
 		
