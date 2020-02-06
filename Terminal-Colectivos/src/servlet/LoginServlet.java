@@ -34,14 +34,11 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		HttpSession sesion = request.getSession();
-Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+
+		
+	
 		
 		
-		UsuarioLogic usuLog = new UsuarioLogic();
-		
-		if(usuLog.validarCliente(usuarioActual)) 
-		
-		{
 		
 
         String username = request.getParameter("username");
@@ -68,14 +65,8 @@ Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
 
         }
         
-	}
 		
-		else
-		{
-				response.sendRedirect("index.jsp"); 
-		}
-
- 
+	
     		 	
     }				    
 	

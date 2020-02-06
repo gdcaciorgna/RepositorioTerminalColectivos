@@ -37,14 +37,7 @@ public class BuscarViajesCliente extends HttpServlet {
 		
 		
 		HttpSession sesion = request.getSession();
-Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
-		
-		
-		UsuarioLogic usuLog = new UsuarioLogic();
-		
-		if(usuLog.validarCliente(usuarioActual)) 
-		
-		{
+
 		
 		
 		FechaControlers fechaCon = new FechaControlers();
@@ -83,14 +76,11 @@ Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
         request.getRequestDispatcher("/WEB-INF/buscarviajescliente.jsp").forward(request, response);
 	}
 		
-		else
-		{
-				response.sendRedirect("index.jsp"); 
-		}
+	
 
 
         
-    	}
+    	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
