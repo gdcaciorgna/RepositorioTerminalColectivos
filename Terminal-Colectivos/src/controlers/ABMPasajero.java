@@ -110,7 +110,8 @@ public class ABMPasajero {
 			
 			
 		}
-		Emailer.getInstance().send(usuarioActual.getEmail(), "¡Su reserva se ha registrado con exito!", "¡Gracias " + usuarioActual.getNombre() + " " +  usuarioActual.getApellido() + "  por viajar con nosotros! Vea sus reservas en: Terminal-Colectivos/MisReservas ¡Que tengas siempre un buen viaje! :) " );
+		
+		//Emailer.getInstance().send(usuarioActual.getEmail(), "¡Su reserva se ha registrado con exito!", "¡Gracias " + usuarioActual.getNombre() + " " +  usuarioActual.getApellido() + "  por viajar con nosotros! Vea sus reservas en: Terminal-Colectivos/MisReservas ¡Que tengas siempre un buen viaje! :) " );
 		
 		
 		

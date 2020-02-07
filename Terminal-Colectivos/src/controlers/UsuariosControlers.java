@@ -10,6 +10,7 @@ import entities.Usuario;
 import logic.UsuarioLogic;
 import util.AppDataException;
 import util.AppLogicException;
+import util.Emailer;
 
 public class UsuariosControlers {
 	
@@ -101,6 +102,14 @@ public class UsuariosControlers {
         return usu;
 	}
 	
+	
+	public void registrarUsuario(String username, String password, String passwordrep, String nombre, String apellido, String email, String cuil, String rol) throws Exception
+	{
+		this.validarRegistro(username, password, passwordrep);
+		this.setUsuario(username, password, nombre, apellido, email, cuil, rol);
+		//Emailer.getInstance().send(email, "¡Bienvenido a nuestro sitio web!", "Bienvenido" + nombre + " " +  apellido + " a nuestra plataforma digital de reserva y compra de pasajes. ¡Que tengas siempre un buen viaje! :) " );
+
+	}
 	
 	
 	public void validarRegistro(String username, String password, String passwordrep) throws Exception 

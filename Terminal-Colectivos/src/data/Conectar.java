@@ -9,16 +9,16 @@ public class Conectar {
 
 	public static String driver = "com.mysql.jdbc.Driver";
 	
-	private String host ="node43052-terminallaveloz.jelastic.saveincloud.net";
-	//private String host ="localhost";
+	//private String host ="node43052-terminallaveloz.jelastic.saveincloud.net";
+	private String host ="localhost";
 	
 	private String port = "3306";
 	
-	private String user ="root";
 	//private String user ="root";
+	private String user ="root";
 	
-	private String pass="HZPild30277";
-	//private String pass="root";
+	//private String pass="HZPild30277";
+	private String pass="root";
 
 	
 	private String db= "db_terminal";
@@ -61,7 +61,7 @@ public class Conectar {
 		
 		if(conn==null || conn.isClosed()) 
 		{
-			conn = DriverManager.getConnection("jdbc:mysql://"+ host + ":"+ port+"/" + db , user, pass);
+			conn = DriverManager.getConnection("jdbc:mysql://"+ host + ":"+ port +"/" + db , user, pass);
 
 		}
 		

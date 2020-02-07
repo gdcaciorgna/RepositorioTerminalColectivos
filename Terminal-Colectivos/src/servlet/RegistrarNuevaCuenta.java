@@ -47,13 +47,12 @@ public class RegistrarNuevaCuenta extends HttpServlet {
 		String rol = request.getParameter("rol");
 		
 		
-		UsuariosControlers usuCon = new UsuariosControlers(); 
 		
 		try {
 			
-			usuCon.validarRegistro(username, password, passwordrep);
-			usuCon.setUsuario(username, password, nombre, apellido, email, cuil, rol);
-			Emailer.getInstance().send(email, "¡Bienvenido a nuestro sitio web!", "Bienvenido" + nombre + " " +  apellido + " a nuestra plataforma digital de reserva y compra de pasajes. ¡Que tengas siempre un buen viaje! :) " );
+			UsuariosControlers usuCon = new UsuariosControlers(); 
+			
+			usuCon.registrarUsuario(username, password, passwordrep, nombre, apellido, email, cuil, rol);
 			
 	 		sesion.setAttribute("mensajeRegistro", "Te has registrado exitosamente!");	
 	 		response.sendRedirect("login.jsp");
