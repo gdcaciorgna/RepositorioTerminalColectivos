@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controlers.PlanReservaControlers;
 import entities.Reserva;
 import entities.Usuario;
 import logic.UsuarioLogic;
@@ -56,7 +57,7 @@ Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
 		double importeADevolver = (double) sesion.getAttribute("importeADevolver");
 		
 		
-		controlers.CancelarReserva cancelarReserva = new controlers.CancelarReserva();
+		PlanReservaControlers cancelarReserva = new PlanReservaControlers();
 		
 		try 
 		{

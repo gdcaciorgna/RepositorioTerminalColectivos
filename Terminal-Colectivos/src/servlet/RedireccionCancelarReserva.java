@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controlers.CancelarReserva;
 import controlers.PlanReservaControlers;
 import entities.Plan_Reserva;
 import entities.Usuario;
@@ -63,7 +62,7 @@ public class RedireccionCancelarReserva extends HttpServlet {
 		
 		int codRutaViaje = Integer.parseInt(codRutaViajeString);
 		
-		CancelarReserva cancelarReserva = new CancelarReserva();
+		PlanReservaControlers planReservaControlers = new PlanReservaControlers();
 		
 		PlanReservaControlers cResPlan = new PlanReservaControlers();
 		
@@ -76,7 +75,7 @@ public class RedireccionCancelarReserva extends HttpServlet {
 		{
 		
 			planReserva = cResPlan.getReservaPlanbyClavesPrimarias(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva);
-			importeADevolver = cancelarReserva.getImporteADevolver(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva );
+			importeADevolver = planReservaControlers.getImporteADevolver(fechaHoraReserva, fechaHoraViaje, patenteColectivoViaje, codRutaViaje, UsernameReserva );
 			sesion.setAttribute("importeADevolver", importeADevolver);
 			sesion.setAttribute("reservaACancelar", planReserva.getReserva());
 		
