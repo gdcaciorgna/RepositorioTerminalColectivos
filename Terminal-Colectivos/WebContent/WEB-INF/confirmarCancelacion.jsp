@@ -16,11 +16,11 @@
 	<%@ page import = "java.util.*" %>
 
 	<%@ page import = "entities.*" %>
-	<%@ page import = "controlers.CancelarReserva" %>
+	<%@ page import = "controlers.PlanReservaControlers" %>
 	
 	<% Usuario usuario= new Usuario();%>
 	<% Reserva reservaACancelar= new Reserva();%>
-	<% CancelarReserva cancelarReserva = new CancelarReserva(); %>
+	<% PlanReservaControlers cancelarReserva = new PlanReservaControlers(); %>
 		
  
 	<%
