@@ -37,7 +37,7 @@ public class CancelarReserva extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession sesion = request.getSession();
-Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
+		Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioActual");
 		
 		
 		UsuarioLogic usuLog = new UsuarioLogic();
